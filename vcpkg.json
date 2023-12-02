@@ -4,6 +4,7 @@
   "dependencies": [
     "nlohmann-json",
     "glm",
-	"catch2"
+	"catch2",
+	"boost-graph"
   ]
 }
