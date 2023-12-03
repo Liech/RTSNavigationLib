@@ -5,8 +5,8 @@ find_package(Catch2 REQUIRED)
 
 
 set(Test_Files
-	"Tests/HelloWorldTest.cpp"
 	"Tests/RectangleFormatterTest.cpp"
+	"Tests/BodyUtilTest.cpp"
 )
 source_group("Tests" FILES ${Test_Files})
 set(Main_Files

@@ -4,12 +4,12 @@ project(RTSPathingLib)
 find_package(glm REQUIRED)
 
 set(Source_Files
-    "Source/RTSPathingLib/HelloWorld.h"
-    "Source/RTSPathingLib/HelloWorld.cpp"
     "Source/RTSPathingLib/Body.h"
     "Source/RTSPathingLib/Body.cpp"
     "Source/RTSPathingLib/RectangleFormatter.h"
     "Source/RTSPathingLib/RectangleFormatter.cpp"
+    "Source/RTSPathingLib/BodyUtil.h"
+    "Source/RTSPathingLib/BodyUtil.cpp"
 )
 source_group("Source" FILES ${Source_Files})
 
