@@ -10,6 +10,8 @@ set(Source_Files
     "Source/RTSPathingLib/RectangleFormatter.cpp"
     "Source/RTSPathingLib/BodyUtil.h"
     "Source/RTSPathingLib/BodyUtil.cpp"
+    "Source/RTSPathingLib/Usher.h"
+    "Source/RTSPathingLib/Usher.cpp"
 )
 source_group("Source" FILES ${Source_Files})
 
