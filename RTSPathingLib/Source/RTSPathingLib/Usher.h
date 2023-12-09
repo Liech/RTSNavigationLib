@@ -3,7 +3,7 @@
 #include <vector>
 
 namespace RTSPathingLib {
-  class Body;
+  struct Body;
 
   class Usher {
   public:

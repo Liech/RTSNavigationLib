@@ -58,3 +58,17 @@ TEST_CASE("BodyUtil/multi", "[BodyUtilMulti]") {
   REQUIRE(result[1].position[0] == 5);
   REQUIRE(result[1].position[1] == 7);
 }
+
+TEST_CASE("BodyUtil/center", "[BodyUtilCenter]") {
+  std::vector<RTSPathingLib::Body> input = { 
+    RTSPathingLib::Body(glm::vec2(5+-1,7 + 0),0),
+    RTSPathingLib::Body(glm::vec2(5+1 ,7 + 0) ,0),
+    RTSPathingLib::Body(glm::vec2(5+0 ,7 + 1) ,0),
+    RTSPathingLib::Body(glm::vec2(5+0 ,7 + -1),0)
+  };
+
+  glm::vec2 result = RTSPathingLib::BodyUtil::getCenter(input);
+
+  REQUIRE(result[0] == 5);
+  REQUIRE(result[1] == 7);
+}
