@@ -23,5 +23,5 @@ TEST_CASE("Util/rtree2dremove", "[rtree2dremove]") {
   tree.remove(1);
   auto result = tree.nearestNeighbour(glm::vec2(1.1, 0));
   REQUIRE(result.size() == 1);
-  REQUIRE(result[0] == 1);
+  REQUIRE(result[0] == 2);
 }

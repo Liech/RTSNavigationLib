@@ -10,6 +10,16 @@
 BOOST_GEOMETRY_REGISTER_POINT_2D(glm::vec2, float, cs::cartesian, x, y)
 BOOST_GEOMETRY_REGISTER_BOX(glm2dBox, glm::vec2, lowLeft, upRight)
 
+//https://stackoverflow.com/questions/34951426/cannot-remove-element-from-boostgeometryindexrtree-by-its-index
+template <typename Rtree, typename Id>
+size_t remove_ids_bulk(Rtree& rtree, Id const& id) {
+  using V = typename Rtree::value_type;
+  std::vector<V> v;
+  std::copy_if(rtree.begin(), rtree.end(), back_inserter(v), [id](V const& v) { return v.second == id; });
+
+  return rtree.remove(v.begin(), v.end());
+}
+
 class RTree2D::RTreeImpl {
 public:
   std::unique_ptr<boost::geometry::index::rtree<std::pair<glm::vec2, size_t>, boost::geometry::index::dynamic_rstar>> tree = nullptr;
@@ -53,6 +63,6 @@ std::vector<size_t> RTree2D::nearestNeighbour(const glm::vec2 position, size_t a
 }
 
 void RTree2D::remove(size_t index) {
-  p->tree->remove(p->data[index]);
+  remove_ids_bulk(*p->tree, index);
   p->data.erase(index);
 }
