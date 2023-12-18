@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8...3.20)
 project(RTSPathingLib)
 
 find_package(glm REQUIRED)
+find_package(Boost)
 
 set(Source_Files
     "Source/RTSPathingLib/Body.h"
@@ -15,8 +16,17 @@ set(Source_Files
 )
 source_group("Source" FILES ${Source_Files})
 
+set(Util_Files
+    "Source/RTSPathingLib/Util/glmBoostGeometry.h"
+    "Source/RTSPathingLib/Util/glmBoostGeometry.cpp"
+    "Source/RTSPathingLib/Util/RTree2D.h"
+    "Source/RTSPathingLib/Util/RTree2D.cpp"
+)
+source_group("Util" FILES ${Util_Files})
+
 set(ALL_FILES
     ${Source_Files}
+    ${Util_Files}
 )
 
 ############################################################################
@@ -28,6 +38,7 @@ set_property(TARGET RTSPathingLib PROPERTY CXX_STANDARD 20)
 
 target_link_libraries(RTSPathingLib PUBLIC 
 glm::glm
+${Boost_LIBRARIES}
 )
 
 target_include_directories(RTSPathingLib PUBLIC 

@@ -1,9 +1,9 @@
 #include "Usher.h"
 
+
 #include "Body.h"
 #include "BodyUtil.h"
 
-#include <iostream>
 
 //https://stackoverflow.com/questions/35746487/min-cost-max-flow-with-boostsuccessive-shortest-path-nonnegative-weights
 //https://www.boost.org/doc/libs/1_83_0/libs/graph/doc/successive_shortest_path_nonnegative_weights.html
