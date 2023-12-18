@@ -17,6 +17,49 @@ namespace RTSPathingLib {
     std::vector<size_t> result;
     result.resize(units.size());
 
+    std::unique_ptr<RTree2D>   placesTree = buildTree(places);
+    std::vector<Usher::ticket> ranking    = firstEstimate(units, places, *placesTree);
+
+    while (ranking.size() > 1) {
+      std::sort(ranking.begin(), ranking.end(), [](const Usher::ticket& a, const Usher::ticket& b) {
+        return a.distance > b.distance;
+        });
+      Usher::ticket worst = ranking[0];
+      ranking.erase(ranking.begin() + 0);
+      placesTree->remove(worst.place);
+      result[worst.unit] = worst.place;
+
+      //repair ranking
+      for (auto& x : ranking) {
+        if (x.place == worst.place) {
+          x.place = placesTree->nearestNeighbour(units[x.unit].position)[0];
+          x.distance = glm::distance(units[x.unit].position, places[x.place].position);
+        }
+      }
+    }
+    if (ranking.size() == 1)
+      result[ranking[0].unit] = ranking[0].place;
+
+    return result;
+  }
+
+  std::vector<Usher::ticket> Usher::firstEstimate(const std::vector<Body>& units, const std::vector<Body>& places, RTree2D& placesTree) {
+    std::vector<ticket> result;
+    size_t unitCounter = 0;
+
+    for (const auto& x : units) {
+      ticket sub;
+      sub.unit = unitCounter;
+      size_t neighbor = placesTree.nearestNeighbour(x.position)[0];
+      sub.place = neighbor;
+      sub.distance = glm::distance(units[sub.unit].position, places[sub.place].position);
+      result.push_back(sub);
+      unitCounter++;
+    }
+    return result;
+  }
+
+  std::unique_ptr<RTree2D> Usher::buildTree(const std::vector<Body>& places) {
     std::vector<std::pair<glm::vec2, size_t>> placesTreeInput;
     placesTreeInput.reserve(places.size());
     size_t placeCounter = 0;
@@ -24,39 +67,7 @@ namespace RTSPathingLib {
       placesTreeInput.push_back(std::make_pair(x.position, placeCounter));
       placeCounter++;
     }
-    RTree2D placesTree(placesTreeInput);
-
-    struct walk {
-      size_t place;
-      size_t unit;
-      float distance;
-    };
-    std::vector<walk> distances;
-    size_t unitCounter = 0;
-    //flawed: instead search iterativly for the greatest distance
-    
-    for (const auto& x : units) {
-      walk sub;
-      sub.unit = unitCounter;
-      size_t neighbor = placesTree.nearestNeighbour(x.position)[0];
-      placesTree.remove(neighbor);
-      sub.place = neighbor;
-      sub.distance = glm::distance(units[sub.unit].position, places[sub.place].position);
-      distances.push_back(sub);
-      unitCounter++;
-    }
-
-
-    glm::vec2 PlaceCenter = BodyUtil::getCenter(places);
-    glm::vec2 mainDirection = glm::vec2(1, 0);
-    glm::vec2 sideDirection = glm::vec2(0, 1);
-
-    //just assign naive as ordered
-    for (size_t i = 0; i < units.size(); i++)
-      result[i] = i;
-    
-    return result;
+    return std::make_unique<RTree2D>(placesTreeInput);
   }
 
-  
 }
