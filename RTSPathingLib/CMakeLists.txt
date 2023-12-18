@@ -16,17 +16,29 @@ set(Source_Files
 )
 source_group("Source" FILES ${Source_Files})
 
+set(Hexagon_Files
+    "Source/RTSPathingLib/Hexagon/HexGridUtils.h"
+    "Source/RTSPathingLib/Hexagon/HexGridUtils.cpp"
+    "Source/RTSPathingLib/Hexagon/Hex2DVoxelizer.h"
+    "Source/RTSPathingLib/Hexagon/Hex2DVoxelizer.cpp"
+    "Source/RTSPathingLib/Hexagon/HexGrid.h"
+    "Source/RTSPathingLib/Hexagon/HexGrid.cpp"
+)
+source_group("Source/Hexagon" FILES ${Hexagon_Files})
+
 set(Util_Files
     "Source/RTSPathingLib/Util/glmBoostGeometry.h"
     "Source/RTSPathingLib/Util/glmBoostGeometry.cpp"
     "Source/RTSPathingLib/Util/RTree2D.h"
     "Source/RTSPathingLib/Util/RTree2D.cpp"
+	
 )
-source_group("Util" FILES ${Util_Files})
+source_group("Source/Util" FILES ${Util_Files})
 
 set(ALL_FILES
     ${Source_Files}
     ${Util_Files}
+    ${Hexagon_Files}
 )
 
 ############################################################################
