@@ -9,6 +9,7 @@ set(Test_Files
 	"Tests/BodyUtilTest.cpp"
 	"Tests/UsherTest.cpp"
 	"Tests/RTree2DTest.cpp"
+	"Tests/HexagonTest.cpp"
 )
 source_group("Tests" FILES ${Test_Files})
 set(Main_Files

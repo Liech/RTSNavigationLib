@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 
 namespace RTSPathingLib {
-  class Body;
+  struct Body;
 
   class RectangleFormatter {
   public:

@@ -21,8 +21,10 @@ set(Hexagon_Files
     "Source/RTSPathingLib/Hexagon/HexGridUtils.cpp"
     "Source/RTSPathingLib/Hexagon/Hex2DVoxelizer.h"
     "Source/RTSPathingLib/Hexagon/Hex2DVoxelizer.cpp"
-    "Source/RTSPathingLib/Hexagon/HexGrid.h"
-    "Source/RTSPathingLib/Hexagon/HexGrid.cpp"
+    "Source/RTSPathingLib/Hexagon/TopFlatHexGrid.h"
+    "Source/RTSPathingLib/Hexagon/TopFlatHexGrid.cpp"
+    "Source/RTSPathingLib/Hexagon/HexGridSvg.h"
+    "Source/RTSPathingLib/Hexagon/HexGridSvg.cpp"
 )
 source_group("Source/Hexagon" FILES ${Hexagon_Files})
 
@@ -31,7 +33,10 @@ set(Util_Files
     "Source/RTSPathingLib/Util/glmBoostGeometry.cpp"
     "Source/RTSPathingLib/Util/RTree2D.h"
     "Source/RTSPathingLib/Util/RTree2D.cpp"
-	
+    "Source/RTSPathingLib/Util/svg.h"
+    "Source/RTSPathingLib/Util/svg.cpp"	
+    "Source/RTSPathingLib/Util/String2File.h"
+    "Source/RTSPathingLib/Util/String2File.cpp"	
 )
 source_group("Source/Util" FILES ${Util_Files})
 
@@ -55,4 +60,7 @@ ${Boost_LIBRARIES}
 
 target_include_directories(RTSPathingLib PUBLIC 
 ./Source/
+)
+target_include_directories(RTSPathingLib PRIVATE 
+./Source/RTSPathingLib/
 )
