@@ -6,13 +6,12 @@
 #include "HexGridUtils.h"
 #include "Util/svg.h"
 
-void HexGridSvg::write(const std::string& filename, const TopFlatHexGrid<bool>& grid) {
+std::vector<svg> HexGridSvg::write(const TopFlatHexGrid<bool>& grid, float scale) {  
   std::vector<svg> toWrite;
   std::vector<svg> overlay;
-  float scale = 1;
   for (size_t i = 0; i < grid.data.size(); i++) {
     svg v;
-    glm::vec2 hexCenter = HexGridUtils::getTopFlatOffset(glm::ivec2(i % grid.dimension.x, i / grid.dimension.x), glm::vec2(5, 5), scale);
+    glm::vec2 hexCenter = HexGridUtils::getTopFlatOffset(glm::ivec2(i % grid.dimension.x, i / grid.dimension.x), glm::vec2(0, 0), scale);
     v.streak = getHexagon(hexCenter, scale);
     v.filled = grid.data[i];
     toWrite.push_back(v);
@@ -21,7 +20,7 @@ void HexGridSvg::write(const std::string& filename, const TopFlatHexGrid<bool>& 
     overlay.push_back(v);
   }
   toWrite.insert(toWrite.end(), overlay.begin(), overlay.end());
-  svg::write(filename, toWrite,glm::vec2(0,0),glm::vec2(20,20));
+  return toWrite;
 }
 
 std::vector<glm::vec2> HexGridSvg::getHexagon(const glm::vec2& offset, float radius) {
