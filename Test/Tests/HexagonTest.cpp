@@ -1,9 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <RTSPathingLib/Hexagon/TopFlatHexGrid.h>
-#include <RTSPathingLib/Hexagon/HexGridSvg.h>
+#include <RTSPathingLib/Util/Hexagon/TopFlatHexGrid.h>
+#include <RTSPathingLib/Util/Hexagon/HexGridSvg.h>
+#include <RTSPathingLib/Util/Hexagon/Hex2DVoxelizer.h>
 #include <RTSPathingLib/Util/svg.h>
-#include <RTSPathingLib/Hexagon/Hex2DVoxelizer.h>
 
 TEST_CASE("Hexagon/voxelizer", "[HexagonVoxelizer]") {
   glm::ivec2 dimension = glm::ivec2(6, 6);

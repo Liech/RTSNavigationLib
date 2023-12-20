@@ -17,16 +17,16 @@ set(Source_Files
 source_group("Source" FILES ${Source_Files})
 
 set(Hexagon_Files
-    "Source/RTSPathingLib/Hexagon/HexGridUtils.h"
-    "Source/RTSPathingLib/Hexagon/HexGridUtils.cpp"
-    "Source/RTSPathingLib/Hexagon/Hex2DVoxelizer.h"
-    "Source/RTSPathingLib/Hexagon/Hex2DVoxelizer.cpp"
-    "Source/RTSPathingLib/Hexagon/TopFlatHexGrid.h"
-    "Source/RTSPathingLib/Hexagon/TopFlatHexGrid.cpp"
-    "Source/RTSPathingLib/Hexagon/HexGridSvg.h"
-    "Source/RTSPathingLib/Hexagon/HexGridSvg.cpp"
+    "Source/RTSPathingLib/Util/Hexagon/HexGridUtils.h"
+    "Source/RTSPathingLib/Util/Hexagon/HexGridUtils.cpp"
+    "Source/RTSPathingLib/Util/Hexagon/Hex2DVoxelizer.h"
+    "Source/RTSPathingLib/Util/Hexagon/Hex2DVoxelizer.cpp"
+    "Source/RTSPathingLib/Util/Hexagon/TopFlatHexGrid.h"
+    "Source/RTSPathingLib/Util/Hexagon/TopFlatHexGrid.cpp"
+    "Source/RTSPathingLib/Util/Hexagon/HexGridSvg.h"
+    "Source/RTSPathingLib/Util/Hexagon/HexGridSvg.cpp"
 )
-source_group("Source/Hexagon" FILES ${Hexagon_Files})
+source_group("Source/Util/Hexagon" FILES ${Hexagon_Files})
 
 set(Util_Files
     "Source/RTSPathingLib/Util/glmBoostGeometry.h"
