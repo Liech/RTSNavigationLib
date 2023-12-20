@@ -16,17 +16,27 @@ set(Source_Files
 )
 source_group("Source" FILES ${Source_Files})
 
-set(Hexagon_Files
-    "Source/RTSPathingLib/Util/Hexagon/HexGridUtils.h"
-    "Source/RTSPathingLib/Util/Hexagon/HexGridUtils.cpp"
-    "Source/RTSPathingLib/Util/Hexagon/Hex2DVoxelizer.h"
-    "Source/RTSPathingLib/Util/Hexagon/Hex2DVoxelizer.cpp"
-    "Source/RTSPathingLib/Util/Hexagon/TopFlatHexGrid.h"
-    "Source/RTSPathingLib/Util/Hexagon/TopFlatHexGrid.cpp"
-    "Source/RTSPathingLib/Util/Hexagon/HexGridSvg.h"
-    "Source/RTSPathingLib/Util/Hexagon/HexGridSvg.cpp"
+set(HexagonGrid_Files
+    "Source/RTSPathingLib/Util/HexagonGrid/HexGridUtils.h"
+    "Source/RTSPathingLib/Util/HexagonGrid/HexGridUtils.cpp"
+    "Source/RTSPathingLib/Util/HexagonGrid/Hex2DVoxelizer.h"
+    "Source/RTSPathingLib/Util/HexagonGrid/Hex2DVoxelizer.cpp"
+    "Source/RTSPathingLib/Util/HexagonGrid/TopFlatHexGrid.h"
+    "Source/RTSPathingLib/Util/HexagonGrid/TopFlatHexGrid.cpp"
+    "Source/RTSPathingLib/Util/HexagonGrid/HexGridSvg.h"
+    "Source/RTSPathingLib/Util/HexagonGrid/HexGridSvg.cpp"
 )
-source_group("Source/Util/Hexagon" FILES ${Hexagon_Files})
+source_group("Source/Util/HexagonGrid" FILES ${HexagonGrid_Files})
+
+set(RectangleGrid_Files
+    "Source/RTSPathingLib/Util/RectangleGrid/RectangleGrid.h"
+    "Source/RTSPathingLib/Util/RectangleGrid/RectangleGrid.cpp"
+    "Source/RTSPathingLib/Util/RectangleGrid/RectangleGridVoxelizer.h"
+    "Source/RTSPathingLib/Util/RectangleGrid/RectangleGridVoxelizer.cpp"
+    "Source/RTSPathingLib/Util/RectangleGrid/RectangleGridSvg.h"
+    "Source/RTSPathingLib/Util/RectangleGrid/RectangleGridSvg.cpp"
+)
+source_group("Source/Util/RectangleGrid" FILES ${RectangleGrid_Files})
 
 set(Util_Files
     "Source/RTSPathingLib/Util/glmBoostGeometry.h"
@@ -37,6 +47,8 @@ set(Util_Files
     "Source/RTSPathingLib/Util/svg.cpp"	
     "Source/RTSPathingLib/Util/String2File.h"
     "Source/RTSPathingLib/Util/String2File.cpp"	
+    "Source/RTSPathingLib/Util/Geometry2D.h"
+    "Source/RTSPathingLib/Util/Geometry2D.cpp"	
 )
 source_group("Source/Util" FILES ${Util_Files})
 
@@ -66,7 +78,8 @@ source_group("Source/Formation" FILES ${Formation_Files})
 set(ALL_FILES
     ${Source_Files}
     ${Util_Files}
-    ${Hexagon_Files}
+    ${HexagonGrid_Files}
+    ${RectangleGrid_Files}
     ${FormationShape_Files}
     ${Formation_Files}
 )
