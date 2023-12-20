@@ -41,17 +41,19 @@ set(Util_Files
 source_group("Source/Util" FILES ${Util_Files})
 
 set(Formation_Files
-    "Source/RTSPathingLib/Formation/ArcFormationShape.h"
-    "Source/RTSPathingLib/Formation/ArcFormationShape.cpp"
-    "Source/RTSPathingLib/Formation/FormationShape.h"
-    "Source/RTSPathingLib/Formation/FormationShape.cpp"
-    "Source/RTSPathingLib/Formation/RectangleFormationShape.h"
-    "Source/RTSPathingLib/Formation/RectangleFormationShape.cpp"	
-    "Source/RTSPathingLib/Formation/TriangleFormationShape.h"
-    "Source/RTSPathingLib/Formation/TriangleFormationShape.cpp"	
-    "Source/RTSPathingLib/Formation/FormationShapeFactory.h"
-    "Source/RTSPathingLib/Formation/FormationShapeFactory.cpp"	
-    "Source/RTSPathingLib/Formation/ScalingBehavior.h"	
+    "Source/RTSPathingLib/Formation/FormationShape/ArcFormationShape.h"
+    "Source/RTSPathingLib/Formation/FormationShape/ArcFormationShape.cpp"
+    "Source/RTSPathingLib/Formation/FormationShape/FormationShape.h"
+    "Source/RTSPathingLib/Formation/FormationShape/FormationShape.cpp"
+    "Source/RTSPathingLib/Formation/FormationShape/RectangleFormationShape.h"
+    "Source/RTSPathingLib/Formation/FormationShape/RectangleFormationShape.cpp"	
+    "Source/RTSPathingLib/Formation/FormationShape/TriangleFormationShape.h"
+    "Source/RTSPathingLib/Formation/FormationShape/TriangleFormationShape.cpp"	
+    "Source/RTSPathingLib/Formation/FormationShape/FormationShapeFactory.h"
+    "Source/RTSPathingLib/Formation/FormationShape/FormationShapeFactory.cpp"	
+    "Source/RTSPathingLib/Formation/FormationShape/ScalingBehavior.h"	
+    "Source/RTSPathingLib/Formation/Formation.h"	
+    "Source/RTSPathingLib/Formation/Formation.cpp"	
 )
 source_group("Source/Formation" FILES ${Formation_Files})
 
