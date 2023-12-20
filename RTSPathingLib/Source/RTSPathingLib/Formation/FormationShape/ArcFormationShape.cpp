@@ -62,3 +62,15 @@ float ArcFormationShape::getArcAngle() const {
 void ArcFormationShape::setArcAngle(float valueRadian) {
   arcAngleRadian = valueRadian;
 }
+
+glm::vec2 ArcFormationShape::getInterfaceNormal(size_t number) const {
+  if (number == 0)
+    return glm::vec2(0, 1);
+  size_t edge = (number - 1) % numberPolygons;
+  auto poly = getPolygon();
+  glm::vec2 result = glm::normalize(poly[(edge + 1) % numberPolygons] - poly[edge]);
+  result = glm::vec2(-result.y, result.x);
+  if (glm::length(result) < 1e-5)
+    return glm::vec2(0, 1);
+  return result;
+}

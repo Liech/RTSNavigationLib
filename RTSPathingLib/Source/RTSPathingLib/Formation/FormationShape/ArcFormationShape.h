@@ -12,6 +12,7 @@ public:
   virtual std::vector<glm::vec2> getPolygon() const        override;
   virtual size_t getNumberOfInterfacePoints() const        override;
   virtual glm::vec2 getInterfacePoint(size_t number) const override; //center, border+1/36, border+2/36,...
+  virtual glm::vec2 getInterfaceNormal(size_t number) const override;
   virtual float getInterfaceWidth(size_t number) const;
 
   float getArcAngle() const;

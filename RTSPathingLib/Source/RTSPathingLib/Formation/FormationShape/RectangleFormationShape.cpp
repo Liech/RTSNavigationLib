@@ -49,3 +49,18 @@ float RectangleFormationShape::getInterfaceWidth(size_t number) const {
   float result = glm::distance(poly[edge], poly[(edge + 1) % 4]);
   return result;
 }
+
+glm::vec2 RectangleFormationShape::getInterfaceNormal(size_t number) const {
+  if (number == 0)
+    return glm::vec2(0, 1);
+  size_t edge = (number - 1) % 4;
+  bool center = (number - 1) % 2 == 0;
+  if (!center)
+    return glm::vec2(0, 1);
+  auto poly = getPolygon();
+  glm::vec2 result = glm::normalize(poly[(edge + 1) % 4] - poly[edge]);
+  result = glm::vec2(-result.y, result.x);
+  if (glm::length(result) < 1e-5)
+    return glm::vec2(0, 1);
+  return result;
+}

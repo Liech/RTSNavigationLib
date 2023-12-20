@@ -20,6 +20,10 @@ glm::vec2 FormationShape::getInterfacePoint(size_t number) const {
   return glm::vec2(0, 0);
 }
 
+glm::vec2 FormationShape::getInterfaceNormal(size_t number) const {
+  return glm::vec2(0, 1);
+}
+
 std::vector<glm::vec2> FormationShape::getPolygon() const {
   return {};
 }
