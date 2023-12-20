@@ -4,7 +4,7 @@
 
 namespace RTSPathingLib {
   glm::vec2 HexGridUtils::getTopFlatOffset(const glm::ivec2& position, const glm::vec2& offset, float scale) {
-    float scaley = scale * std::sqrt(3) * 0.5f;
+    float scaley = scale * (float)std::sqrt(3) * 0.5f;
     float scalex = scale * 0.75f;
     glm::vec2 result = offset + glm::vec2(position.x * scalex, position.y * scaley);
     if (position.x % 2 == 0)

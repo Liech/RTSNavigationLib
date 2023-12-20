@@ -7,7 +7,7 @@ namespace RTSPathingLib {
   template<typename T>
   class RectangleGrid {
   public:
-    glm::ivec2 dimension;
+    glm::ivec2 dimension = glm::ivec2(1,1);
     std::vector<T> data;
   };
 }

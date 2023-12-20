@@ -7,8 +7,6 @@ find_package(Boost)
 set(Source_Files
     "Source/RTSPathingLib/Body.h"
     "Source/RTSPathingLib/Body.cpp"
-    "Source/RTSPathingLib/RectangleFormatter.h"
-    "Source/RTSPathingLib/RectangleFormatter.cpp"
     "Source/RTSPathingLib/BodyUtil.h"
     "Source/RTSPathingLib/BodyUtil.cpp"
     "Source/RTSPathingLib/Usher.h"

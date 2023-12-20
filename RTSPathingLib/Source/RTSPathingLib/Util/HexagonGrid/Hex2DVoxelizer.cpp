@@ -27,8 +27,8 @@ namespace RTSPathingLib {
         glm::vec2 intersectionPoint;
         bool intersect = Geometry2D::LineLineIntersect(prev, next, origin, down, intersectionPoint);
         if (intersect) {
-          float scaley = scale * std::sqrt(3) * 0.5f;
-          int start = ((intersectionPoint.y - offset.y) / scaley + 0.5f);
+          float scaley = scale * (float)std::sqrt(3) * 0.5f;
+          int start = (int)((intersectionPoint.y - offset.y) / scaley + 0.5f);
 
           for (size_t y = start; y < dimension.y; y++) {
             result.data[x + y * dimension.x] = result.data[x + y * dimension.x] ^ true;

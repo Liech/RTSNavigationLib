@@ -5,7 +5,6 @@ find_package(Catch2 REQUIRED)
 
 
 set(Test_Files
-	"Tests/RectangleFormatterTest.cpp"
 	"Tests/BodyUtilTest.cpp"
 	"Tests/UsherTest.cpp"
 	"Tests/RTree2DTest.cpp"

@@ -28,7 +28,7 @@ namespace RTSPathingLib {
   }
 
   const Formation& Formation::getParent() const {
-    return parent;
+    return *parent;
   }
 
   size_t Formation::getOwnInterfacePoint() const {
