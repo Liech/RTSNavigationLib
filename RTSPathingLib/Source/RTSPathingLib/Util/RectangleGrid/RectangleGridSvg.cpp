@@ -29,6 +29,7 @@ namespace RTSPathingLib {
     result.push_back(offset + glm::vec2( 0.5,-0.5) * scale);
     result.push_back(offset + glm::vec2( 0.5, 0.5) * scale);
     result.push_back(offset + glm::vec2(-0.5, 0.5) * scale);
+    result.push_back(result[0]);
     return result;
   }
 }
