@@ -1,5 +1,7 @@
 #pragma once
 
-enum class ScalingBehavior {
-  PureX, PureY, Isotropic, X75Y25, X25Y75
-};
+namespace RTSPathingLib {
+  enum class ScalingBehavior {
+    PureX, PureY, Isotropic, X75Y25, X25Y75
+  };
+}

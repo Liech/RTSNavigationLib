@@ -3,12 +3,14 @@
 #include <string>
 #include "TopFlatHexGrid.h"
 
-class svg;
+namespace RTSPathingLib {
+  class svg;
 
-class HexGridSvg {
-public:
-  static std::vector<svg> write(const TopFlatHexGrid<bool>& grid, float scale = 1);
+  class HexGridSvg {
+  public:
+    static std::vector<svg> write(const TopFlatHexGrid<bool>& grid, float scale = 1);
 
-private:
-  static std::vector<glm::vec2> getHexagon(const glm::vec2& offset, float radius);
-};
+  private:
+    static std::vector<glm::vec2> getHexagon(const glm::vec2& offset, float radius);
+  };
+}

@@ -2,7 +2,6 @@
 
 #include <string>
 
-namespace Tools
-{
+namespace RTSPathingLib {
   void String2File(const std::string& filename, const std::string& data);
 }

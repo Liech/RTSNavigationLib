@@ -17,14 +17,14 @@ TEST_CASE("Hexagon/voxelizer", "[HexagonVoxelizer]") {
   polygon.push_back(offset + glm::vec2(0, 4) * scale);  
   polygon.push_back(offset + glm::vec2(1, 0) * scale);
 
-  auto t = Hex2DVoxelizer::voxelize(polygon, dimension, glm::vec2(0,0),1);
+  auto t = RTSPathingLib::Hex2DVoxelizer::voxelize(polygon, dimension, glm::vec2(0,0),1);
   if (false) {
-    svg v;
+    RTSPathingLib::svg v;
     v.streak = polygon;
     v.color = "blue";
-    std::vector<svg> x = HexGridSvg::write(t, 1);
+    std::vector<RTSPathingLib::svg> x = RTSPathingLib::HexGridSvg::write(t, 1);
     x.push_back(v);
-    svg::write("VoxelizerTest.svg", x, glm::vec2(-5, -5), glm::vec2(30, 30));
+    RTSPathingLib::svg::write("VoxelizerTest.svg", x, glm::vec2(-5, -5), glm::vec2(30, 30));
   }
 
   std::vector<bool> r = {

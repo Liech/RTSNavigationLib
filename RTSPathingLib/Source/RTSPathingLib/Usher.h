@@ -3,10 +3,10 @@
 #include <vector>
 #include <memory>
 
-class RTree2D;
 
 namespace RTSPathingLib {
   struct Body;
+  class RTree2D;
 
   class Usher {
   public:

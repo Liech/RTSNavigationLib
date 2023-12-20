@@ -52,14 +52,14 @@ set(FormationShape_Files
     "Source/RTSPathingLib/Formation/FormationShape/FormationShapeFactory.h"
     "Source/RTSPathingLib/Formation/FormationShape/FormationShapeFactory.cpp"	
     "Source/RTSPathingLib/Formation/FormationShape/ScalingBehavior.h"	
-    "Source/RTSPathingLib/Formation/Formation.h"	
-    "Source/RTSPathingLib/Formation/Formation.cpp"	
 )
 source_group("Source/Formation/FormationShape" FILES ${FormationShape_Files})
 
 set(Formation_Files
     "Source/RTSPathingLib/Formation/Formation.h"	
     "Source/RTSPathingLib/Formation/Formation.cpp"	
+    "Source/RTSPathingLib/Formation/FormationCalculator.h"	
+    "Source/RTSPathingLib/Formation/FormationCalculator.cpp"	
 )
 source_group("Source/Formation" FILES ${Formation_Files})
 
