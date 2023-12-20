@@ -8,26 +8,38 @@ FormationShape::~FormationShape() {
 
 }
 
+std::string FormationShape::getType() const {
+  return "Base";
+}
+
+size_t FormationShape::getNumberOfInterfacePoints() const {
+  return 1;
+}
+
+glm::vec2 FormationShape::getInterfacePoint(size_t number) const {
+  return glm::vec2(0, 0);
+}
+
 std::vector<glm::vec2> FormationShape::getPolygon() const {
   return {};
 }
 
-float FormationShape::getAngle() const {
-  return angle;
-}
-
-void FormationShape::setAngle(float angle_) {
-  angle = angle_;
-}
-
-float FormationShape::getInterfaceWidth() const {
+float FormationShape::getInterfaceWidth(size_t) const {
   return 0;
 }
 
-void FormationShape::setLayoutCentered(bool v) {
-  layoutCentered = v;
+ScalingBehavior FormationShape::getScalingBehavior() const {
+  return scaling;
 }
 
-bool FormationShape::getLayoutCentered() const {
-  return layoutCentered;
+void FormationShape::setScalingBehavior(const ScalingBehavior& behavior) {
+  scaling = behavior;
+}
+
+glm::vec2 FormationShape::getBaseSize() const {
+  return baseSize;
+}
+
+void FormationShape::setBaseSize(const glm::vec2& size) {
+  baseSize = size;
 }

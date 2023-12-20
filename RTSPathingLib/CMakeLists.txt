@@ -51,6 +51,7 @@ set(Formation_Files
     "Source/RTSPathingLib/Formation/TriangleFormationShape.cpp"	
     "Source/RTSPathingLib/Formation/FormationShapeFactory.h"
     "Source/RTSPathingLib/Formation/FormationShapeFactory.cpp"	
+    "Source/RTSPathingLib/Formation/ScalingBehavior.h"	
 )
 source_group("Source/Formation" FILES ${Formation_Files})
 
