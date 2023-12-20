@@ -30,19 +30,23 @@ namespace RTSPathingLib {
 
     size_t getUnitCategory() const;
     void   setUnitCategory(size_t);
+    float  getUnitDistributionWeight() const; // if multiple formation nodes have the same category, this can adjust the distribution weighting (higher numbers->more Units)
+    void   setUnitDistributionWeight(float v);
 
     void setShape(std::unique_ptr<FormationShape> shape);
     FormationShape& getShape();
+    FormationShape& getShape() const;
 
   private:
-    std::unique_ptr<FormationShape> shape;
-    size_t ownInterfacePoint = 0;
-    size_t parentInterfacePoint = 0;
+    std::unique_ptr<FormationShape> shape   = nullptr;
+    size_t ownInterfacePoint                = 0;
+    size_t parentInterfacePoint             = 0;
     bool   overwriteWidthWithInterfaceWidth = false;
-    bool   rotateWithInterface = false;
-    bool   linkSizeWithParent = false;
+    bool   rotateWithInterface              = false;
+    bool   linkSizeWithParent               = false;
 
     size_t unitCategory = 0;
+    float  unitDistributionWeight = 1;
 
     std::vector<std::unique_ptr<Formation>> children;
     const Formation* parent = nullptr;

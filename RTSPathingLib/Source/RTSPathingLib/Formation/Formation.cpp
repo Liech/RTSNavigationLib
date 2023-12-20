@@ -1,10 +1,12 @@
 #include "Formation.h"
 
 #include "FormationShape/FormationShape.h"
+#include "FormationShape/RectangleFormationShape.h"
 
 namespace RTSPathingLib {
   Formation::Formation(const Formation* parent_) {
     parent = parent_;
+    shape = std::make_unique<RectangleFormationShape>();
   }
 
   Formation::~Formation() {
@@ -79,11 +81,23 @@ namespace RTSPathingLib {
     unitCategory = category;
   }
 
+  float Formation::getUnitDistributionWeight() const {
+    return unitDistributionWeight;
+  }
+
+  void Formation::setUnitDistributionWeight(float v) {
+    unitDistributionWeight = v;
+  }
+
   void Formation::setShape(std::unique_ptr<FormationShape> shape_) {
     shape = std::move(shape_);
   }
 
   FormationShape& Formation::getShape() {
+    return *shape;
+  }
+
+  FormationShape& Formation::getShape() const {
     return *shape;
   }
 }

@@ -10,6 +10,7 @@ set(Test_Files
 	"Tests/RTree2DTest.cpp"
 	"Tests/HexagonGridTest.cpp"
 	"Tests/RectangleGridTest.cpp"
+	"Tests/FormationTest.cpp"
 )
 source_group("Tests" FILES ${Test_Files})
 set(Main_Files

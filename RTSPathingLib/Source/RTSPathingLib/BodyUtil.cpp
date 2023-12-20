@@ -5,8 +5,7 @@
 namespace RTSPathingLib {
 
   Body BodyUtil::transform(const Body& b, const glm::mat4& transformation) {
-    Body result;
-    result.blueprintID = b.blueprintID;
+    Body result = b;
     result.position = transformation * glm::vec4(b.position,0,1);
     return result;
   }
@@ -16,7 +15,7 @@ namespace RTSPathingLib {
     result.resize(b.size());
 
     for (size_t i = 0; i < b.size();i++) {
-      result[i].blueprintID = b[i].blueprintID;
+      result[i] = b[i];
       result[i].position = transformation * glm::vec4(b[i].position, 0, 1);
     }
 
