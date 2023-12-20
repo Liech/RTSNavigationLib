@@ -40,7 +40,7 @@ set(Util_Files
 )
 source_group("Source/Util" FILES ${Util_Files})
 
-set(Formation_Files
+set(FormationShape_Files
     "Source/RTSPathingLib/Formation/FormationShape/ArcFormationShape.h"
     "Source/RTSPathingLib/Formation/FormationShape/ArcFormationShape.cpp"
     "Source/RTSPathingLib/Formation/FormationShape/FormationShape.h"
@@ -55,12 +55,19 @@ set(Formation_Files
     "Source/RTSPathingLib/Formation/Formation.h"	
     "Source/RTSPathingLib/Formation/Formation.cpp"	
 )
+source_group("Source/Formation/FormationShape" FILES ${FormationShape_Files})
+
+set(Formation_Files
+    "Source/RTSPathingLib/Formation/Formation.h"	
+    "Source/RTSPathingLib/Formation/Formation.cpp"	
+)
 source_group("Source/Formation" FILES ${Formation_Files})
 
 set(ALL_FILES
     ${Source_Files}
     ${Util_Files}
     ${Hexagon_Files}
+    ${FormationShape_Files}
     ${Formation_Files}
 )
 
