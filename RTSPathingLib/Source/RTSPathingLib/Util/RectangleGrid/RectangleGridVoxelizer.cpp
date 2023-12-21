@@ -34,7 +34,7 @@ namespace RTSPathingLib {
         }
       }
     }
-
+    result.offset = offset;
     return result;
   }
 }

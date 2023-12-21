@@ -6,25 +6,94 @@
 #include "Body.h"
 #include "Formation/FormationShape/FormationShape.h"
 
+#include "Util/svg.h"
+#include "Util/RectangleGrid/RectangleGridVoxelizer.h"
+#include "Util/RectangleGrid/RectangleGridSvg.h"
+
 namespace RTSPathingLib {
   std::vector<Body> FormationCalculator::calculate(const Formation& formation, const std::vector<Body>& units) {
     glm::mat4 currentTransformation = glm::mat4(1);
     auto overall = getSizesPerCategory(units);
     auto current = overall;
-    auto maxWeights = getCategoryWeightSum(formation);
 
     float scale = 1;
+    bool bigEnough = false;
+    std::vector<Body> result = formate(scale, current,overall,currentTransformation,formation, bigEnough);
+   
+
+    return result;
+  }
+
+  std::vector<Body> FormationCalculator::formate(float scale, std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::mat4& currentTransformation, const Formation& formation, bool& bigEnough) {
     auto unitsPlacedHere  = gatherUnits(formation, overall, current);
     auto formationSize    = getSizeSum(unitsPlacedHere);
     auto localTransform   = getLocalTransformation(formation, scale);
     currentTransformation = currentTransformation * localTransform;
-    //create polygon
-    //create grid
-    //voxelize
-    //count if it fits
-    //repeat until fits
+    RectangleGrid<bool> grid = getGrid(formation, currentTransformation);
 
-    return units;
+
+    std::vector<Body> placedUnits = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), bigEnough);
+
+
+    return placedUnits;
+  }
+
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::mat4& transformation) {
+    auto polygon = formation.getShape().getPolygon();
+    for (auto& x : polygon)
+      x = glm::vec4(x, 0, 1) * transformation;
+
+    auto       minMax    = getMinMax(polygon);
+    glm::ivec2 dimension = (glm::ivec2)(minMax.second - minMax.first) + glm::ivec2(3, 3);
+    glm::vec2  offset    = (glm::vec2)((glm::ivec2)(minMax.first)) - glm::vec2(2, 2);
+
+    auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
+
+    auto svgDebug = RectangleGridSvg::write(grid, 1);
+    svg debug;
+    debug.streak = polygon;
+    debug.wrapAround = true;
+    debug.color = "green";
+    debug.thickness = 0.1;
+    svgDebug.push_back(debug);
+    svg::write("FormationCalculator.svg", svgDebug, glm::vec2(-5, -5), glm::vec2(10, 10));
+
+    return grid;
+  }
+
+  std::vector<Body> FormationCalculator::placeUnits(const RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::vec2& offset, size_t category, bool& ok) {
+    std::vector<Body> result;
+    size_t currentSize = 1;
+    long long unitsToPlace = (long long)units.at(currentSize);
+    for (size_t i = 0; i < grid.data.size(); i++) {
+      if (grid.data[i]) {
+        glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, (i / grid.dimension.x) % grid.dimension.y);
+        Body sub;
+        sub.category = category;
+        sub.size = currentSize;
+        sub.position = (glm::vec2)pos + offset;
+        result.push_back(sub);
+        unitsToPlace--;
+      }      
+    }
+    if (unitsToPlace == 0)
+      ok = true;
+
+    return result;
+  }
+
+  std::pair<glm::vec2, glm::vec2> FormationCalculator::getMinMax(const std::vector<glm::vec2>& polygon) {
+    glm::vec2 min = glm::vec2( std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+    glm::vec2 max = glm::vec2(-std::numeric_limits<float>::max(),-std::numeric_limits<float>::max());
+
+    for (auto& x : polygon) {
+      min.x = std::min(x.x, min.x);
+      min.y = std::min(x.y, min.y);
+      max.x = std::max(x.x, max.x);
+      max.y = std::max(x.y, max.y);
+    }
+
+    return std::make_pair(min, max);
   }
 
   //rotation, parent transformation etc missing
