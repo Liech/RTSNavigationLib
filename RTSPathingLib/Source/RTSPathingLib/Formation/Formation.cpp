@@ -104,4 +104,12 @@ namespace RTSPathingLib {
   FormationShape& Formation::getShape() const {
     return *shape;
   }
+
+  float Formation::getUnitPadding() const {
+    return unitPadding;
+  }
+
+  void Formation::setUnitPadding(float padding) {
+    unitPadding = padding;
+  }
 }
