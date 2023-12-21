@@ -1,5 +1,7 @@
 #include "FormationCalculator.h"
 
+#include <glm/ext/matrix_transform.hpp>
+
 #include "Formation.h"
 #include "Body.h"
 #include "Formation/FormationShape/FormationShape.h"
@@ -11,13 +13,30 @@ namespace RTSPathingLib {
     auto current = overall;
     auto maxWeights = getCategoryWeightSum(formation);
 
-
-    auto unitsPlacedHere = gatherUnits(formation, overall, current);
-    auto formationSize   = getSizeSum(unitsPlacedHere);
-    auto shape           = formation.getShape().getPolygon();
-
+    float scale = 1;
+    auto unitsPlacedHere  = gatherUnits(formation, overall, current);
+    auto formationSize    = getSizeSum(unitsPlacedHere);
+    auto localTransform   = getLocalTransformation(formation, scale);
+    currentTransformation = currentTransformation * localTransform;
+    //create polygon
+    //create grid
+    //voxelize
+    //count if it fits
+    //repeat until fits
 
     return units;
+  }
+
+  //rotation, parent transformation etc missing
+  glm::mat4 FormationCalculator::getLocalTransformation(const Formation& formation, float scale) {
+    FormationShape& shape = formation.getShape();
+    glm::mat4 parentTransform = glm::mat4(1);
+
+    glm::vec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
+    glm::mat4 result = glm::mat4(1);
+    result = glm::translate(result, glm::vec3(interfacePoint * scale, 0));
+    result *= parentTransform;
+    return result;
   }
 
   size_t FormationCalculator::getSizeSum(const std::map<size_t, size_t>& units) {

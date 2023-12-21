@@ -32,6 +32,10 @@ namespace RTSPathingLib {
   const Formation& Formation::getParent() const {
     return *parent;
   }
+  
+  bool Formation::hasParent() const {
+    return parent != nullptr;
+  }
 
   size_t Formation::getOwnInterfacePoint() const {
     return ownInterfacePoint;

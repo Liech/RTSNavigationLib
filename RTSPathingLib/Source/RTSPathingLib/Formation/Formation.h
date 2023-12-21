@@ -14,6 +14,7 @@ namespace RTSPathingLib {
     size_t getChildrenCount() const;
     Formation& getChild(size_t) const;
     const Formation& getParent() const;
+    bool hasParent() const;
     void removeChild(size_t);
     void addChild(std::unique_ptr<Formation>);
 
