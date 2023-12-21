@@ -16,26 +16,32 @@ namespace RTSPathingLib {
     auto overall = getSizesPerCategory(units);
     auto current = overall;
 
-    float scale = 1;
     bool bigEnough = false;
-    std::vector<Body> result = formate(scale, current,overall,currentTransformation,formation, bigEnough);
+    std::vector<Body> result = formate(current,overall,currentTransformation,formation, bigEnough);
    
 
     return result;
   }
 
-  std::vector<Body> FormationCalculator::formate(float scale, std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::mat4& currentTransformation, const Formation& formation, bool& bigEnough) {
-    auto unitsPlacedHere  = gatherUnits(formation, overall, current);
-    auto formationSize    = getSizeSum(unitsPlacedHere);
-    auto localTransform   = getLocalTransformation(formation, scale);
-    currentTransformation = currentTransformation * localTransform;
-    RectangleGrid<bool> grid = getGrid(formation, currentTransformation);
+  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::mat4& currentTransformation, const Formation& formation, bool& bigEnough) {
+    size_t scale              = 1;
+    auto  unitsPlacedHere    = gatherUnits(formation, overall, current);
+    auto  formationSize      = getSizeSum(unitsPlacedHere);
+    std::vector<Body> result;
 
+    long long lastPlaced = -1;
+    bool allPlaced = false;
+    while (!allPlaced && lastPlaced != result.size()) {
+      lastPlaced = result.size();
+      auto  localTransform = getLocalTransformation(formation, scale);
+      currentTransformation = currentTransformation * localTransform;
+      RectangleGrid<bool> grid = getGrid(formation, currentTransformation);
+      result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
+      scale ++;
+    }
 
-    std::vector<Body> placedUnits = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), bigEnough);
-
-
-    return placedUnits;
+    bigEnough = true;
+    return result;
   }
 
   RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::mat4& transformation) {
@@ -44,8 +50,8 @@ namespace RTSPathingLib {
       x = glm::vec4(x, 0, 1) * transformation;
 
     auto       minMax    = getMinMax(polygon);
-    glm::ivec2 dimension = (glm::ivec2)(minMax.second - minMax.first) + glm::ivec2(3, 3);
-    glm::vec2  offset    = (glm::vec2)((glm::ivec2)(minMax.first)) - glm::vec2(2, 2);
+    glm::ivec2 dimension = (glm::ivec2)(minMax.second - minMax.first) + glm::ivec2(2, 2);
+    glm::vec2  offset    = minMax.first - glm::vec2(1, 1);
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
@@ -61,23 +67,23 @@ namespace RTSPathingLib {
     return grid;
   }
 
-  std::vector<Body> FormationCalculator::placeUnits(const RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::vec2& offset, size_t category, bool& ok) {
+  std::vector<Body> FormationCalculator::placeUnits(const RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::vec2& offset, size_t category, bool& allPlaced) {
     std::vector<Body> result;
     size_t currentSize = 1;
     long long unitsToPlace = (long long)units.at(currentSize);
-    for (size_t i = 0; i < grid.data.size(); i++) {
+    for (size_t i = 0; i < grid.data.size() && unitsToPlace>0; i++) {
       if (grid.data[i]) {
         glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, (i / grid.dimension.x) % grid.dimension.y);
         Body sub;
         sub.category = category;
         sub.size = currentSize;
-        sub.position = (glm::vec2)pos + offset;
+        sub.position = (glm::vec2)pos + offset + glm::vec2(0.5,0.5);
         result.push_back(sub);
         unitsToPlace--;
       }      
     }
-    if (unitsToPlace == 0)
-      ok = true;
+    if (unitsToPlace <= 0)
+      allPlaced = true;
 
     return result;
   }
@@ -97,13 +103,14 @@ namespace RTSPathingLib {
   }
 
   //rotation, parent transformation etc missing
-  glm::mat4 FormationCalculator::getLocalTransformation(const Formation& formation, float scale) {
+  glm::mat4 FormationCalculator::getLocalTransformation(const Formation& formation, size_t scale) {
     FormationShape& shape = formation.getShape();
     glm::mat4 parentTransform = glm::mat4(1);
 
     glm::vec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::mat4 result = glm::mat4(1);
-    result = glm::translate(result, glm::vec3(interfacePoint * scale, 0));
+    result = glm::scale(result, glm::vec3(scale,1,1));
+    result = glm::translate(result, glm::vec3(interfacePoint.x,interfacePoint.y, 0));
     result *= parentTransform;
     return result;
   }

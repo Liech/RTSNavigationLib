@@ -36,10 +36,10 @@ TEST_CASE("Formation/double", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == 0);
+  REQUIRE(places[0].position.x == -0.5);
   REQUIRE(places[0].position.y == 0);
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == 1);
+  REQUIRE(places[1].position.x == 0.5);
   REQUIRE(places[1].position.y == 0);
 }
