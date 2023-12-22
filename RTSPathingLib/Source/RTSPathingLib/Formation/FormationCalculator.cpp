@@ -5,6 +5,7 @@
 #include "Formation.h"
 #include "Body.h"
 #include "Formation/FormationShape/FormationShape.h"
+#include "Util/Geometry2D.h"
 
 #include "Util/svg.h"
 #include "Util/RectangleGrid/RectangleGridVoxelizer.h"
@@ -58,9 +59,10 @@ namespace RTSPathingLib {
       x = transformation*glm::vec4(x, 0, 1);
 
     auto        minMax    = getMinMax(polygon);
+    glm::dvec2  centroid  = Geometry2D::findCentroid(polygon);
     glm::dvec2  span      = glm::vec2(minMax.second - minMax.first);
     glm::ivec2  dimension = glm::ivec2((int)std::ceil(span.x),(int)std::ceil(span.y)) + glm::ivec2(2, 2);
-    glm::dvec2  offset    = (minMax.first+span/2.0) - ((glm::dvec2)dimension)/2.0;
+    glm::dvec2  offset    = centroid - ((glm::dvec2)dimension)/2.0;
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 

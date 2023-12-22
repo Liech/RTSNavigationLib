@@ -34,4 +34,36 @@ namespace RTSPathingLib {
 
     return true;
   }
+  //https://www.geeksforgeeks.org/find-the-centroid-of-a-non-self-intersecting-closed-polygon/
+	glm::dvec2 Geometry2D::findCentroid(const std::vector<glm::dvec2>& v)
+	{
+		glm::dvec2 ans = glm::dvec2(0,0);
+
+		int n = v.size();
+		double signedArea = 0;
+
+		// For all vertices
+		for (int i = 0; i < v.size(); i++) {
+
+			double x0 = v[i].x, y0 = v[i].y;
+			double x1 = v[(i + 1) % n].x, y1 =
+				v[(i + 1) % n].y;
+
+			// Calculate value of A
+			// using shoelace formula
+			double A = (x0 * y1) - (x1 * y0);
+			signedArea += A;
+
+			// Calculating coordinates of
+			// centroid of polygon
+			ans.x += (x0 + x1) * A;
+			ans.y += (y0 + y1) * A;
+		}
+
+		signedArea *= 0.5;
+		ans.x = (ans.x) / (6 * signedArea);
+		ans.y = (ans.y) / (6 * signedArea);
+
+		return ans;
+	}
 }

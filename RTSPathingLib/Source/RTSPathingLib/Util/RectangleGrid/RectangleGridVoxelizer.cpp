@@ -41,7 +41,7 @@ namespace RTSPathingLib {
 
           if (
             (previousPolygonStart != start) ||//make sure if intersections falls on a point of two edges only one is used, but if they are not too colinear its allowed
-            (i==polygon.size()-1 && firstStart == start) || noncolinearity > 0.3) { 
+            (i==polygon.size()-1 && firstStart == start) || noncolinearity < 0.7) { 
             previousPolygonStart = start;
             if (i == 0)
               firstStart = start;

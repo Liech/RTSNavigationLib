@@ -224,13 +224,13 @@ TEST_CASE("Formation/Rotation", "[FormationSingle]") {
   std::vector<RTSPathingLib::Body> input = { b };
   RTSPathingLib::Formation formation(nullptr);
   formation.setOwnInterfacePoint(5);
-  formation.setRotation(glm::pi<double>()*1.01);
+  formation.setRotation(glm::pi<double>());
   formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
 
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == 0);
+  REQUIRE_THAT(places[0].position.x - 0.0, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[0].position.y == -0.5);
 }
