@@ -111,10 +111,29 @@ namespace RTSPathingLib {
     glm::mat4 result = glm::mat4(1);
 
     //first scale only x and than both, this hopefully allows more subtle formation grow
+    glm::vec3 vectorScale;
     bool   xScalesFirst = scale % 2 == 0;
     size_t translatedScale = 1 + (scale-1) / 2;
-    glm::vec3 vectorScale = glm::vec3(translatedScale + (xScalesFirst?1:0), translatedScale,1);
     
+    switch (formation.getShape().getScalingBehavior()) {
+      case ScalingBehavior::PureX:
+        vectorScale = glm::vec3(scale, 1, 1);
+        break;
+      case ScalingBehavior::PureY:
+        vectorScale = glm::vec3(1, scale, 1);
+        break;
+      case ScalingBehavior::X25Y75:
+        vectorScale = glm::vec3(1+scale/4,1+ scale - (scale%4==0?1:0), 1);
+        break;
+      case ScalingBehavior::X75Y25:
+        vectorScale = glm::vec3(1 + scale - (scale % 4 == 0 ? 1 : 0), 1 + scale / 4, 1);
+        break;
+      case ScalingBehavior::Isotropic:
+      default:
+        vectorScale = glm::vec3(translatedScale + (xScalesFirst ? 1 : 0), translatedScale, 1);
+        break;
+    }
+
     result = glm::scale(result, vectorScale);
     result = glm::translate(result, glm::vec3(interfacePoint.x,interfacePoint.y, 0));
     result *= parentTransform;
