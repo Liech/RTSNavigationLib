@@ -253,11 +253,25 @@ TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>(&formation);
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation2->setUnitCategory(1);
-  formation2->setParentInterfacePoint(5);
-  formation2->setOwnInterfacePoint(9);
+  formation2->setParentInterfacePoint(9);
+  formation2->setOwnInterfacePoint(5);
   formation.addChild(std::move(formation2));
 
   auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
 
   REQUIRE(places.size() == input.size());
+  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[0].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[1].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE(places[0].category == a.category);
+  REQUIRE(places[1].category == a.category);
+
+  REQUIRE_THAT(places[2].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[2].position.y - 1  , Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[3].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[3].position.y - 1  , Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE(places[2].category == b.category);
+  REQUIRE(places[3].category == b.category);
+
 }

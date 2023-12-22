@@ -18,18 +18,21 @@ namespace RTSPathingLib {
     auto current = overall;
     std::vector<std::vector<glm::dvec2>> allPolygons;
 
-    bool bigEnough = false;
-    std::vector<Body> result = formate(current,overall,currentTransformation,formation, allPolygons, bigEnough);
+    glm::dvec2 startPoint = glm::dvec2(0, 0);
+    std::vector<Body> result = formate(current,overall, startPoint,formation, allPolygons);
    
 
     return result;
   }
 
-  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::dmat4& currentTransformation, const Formation& formation, std::vector<std::vector<glm::dvec2>>& allPolygons, bool& bigEnough) {
+  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, const glm::dvec2& startPoint, const Formation& formation, std::vector<std::vector<glm::dvec2>>& allPolygons) {
     size_t scale             = 1;
     auto  unitsPlacedHere    = gatherUnits(formation, overall, current);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
     std::vector<Body> result;
+
+    glm::dmat4 toFormationCenter;
+    RectangleGrid<bool> grid;
 
     int tries = 5;
     long long lastPlaced = -1;
@@ -42,19 +45,74 @@ namespace RTSPathingLib {
       }
       else 
         tries = 5;
+
       lastPlaced = result.size();
-      auto  localTransform = getLocalTransformation(formation, scale);
-      currentTransformation = localTransform;
+      toFormationCenter = getLocalTransformation(formation, startPoint, scale);
+      
       std::vector<glm::dvec2> polygon;
-      RectangleGrid<bool> grid = getGrid(formation, currentTransformation, polygon);
+      grid = getGrid(formation, toFormationCenter, polygon);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
-      if (allPlaced)
+      
+      if (allPlaced) {
         allPolygons.push_back(polygon);
+        break;
+      }
       scale ++;      
     }
 
-    bigEnough = true;
+    if (tries <= 0)
+      return {};
+
+    glm::dvec2 formationCenter = toFormationCenter * glm::dvec4(0, 0, 0, 1);
+    for (size_t i = 0; i < formation.getChildrenCount(); i++) {
+      auto& child = formation.getChild(i);
+
+      glm::dmat4 deeper      = glm::dmat4(1);
+      glm::dvec3 vectorScale = getScalingVector(formation, scale);
+      glm::dvec2 parentInterfacePoint = formation.getShape().getInterfacePoint(child.getParentInterfacePoint());
+
+      deeper = glm::rotate   (deeper, formation.getRotation(), glm::dvec3(0, 0, 1));
+      deeper = glm::scale    (deeper, vectorScale);
+      deeper = glm::translate(deeper, glm::dvec3(parentInterfacePoint.x, parentInterfacePoint.y, 0));
+
+      glm::dvec2 nextOffset = deeper * glm::dvec4(0, 0, 0, 1);
+
+      auto sub = formate(current, overall, formationCenter- nextOffset, child, allPolygons);
+      result.insert(result.end(), sub.begin(), sub.end());
+    }
+
+    saveAsSvg(result, allPolygons, grid);
     return result;
+  }
+  
+  
+  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const std::vector<std::vector<glm::dvec2>>& polygons, const RectangleGrid<bool>& grid) {
+    //https://graphviz.org/doc/info/colors.html
+    std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
+
+    auto svgDebug = RectangleGridSvg::write(grid, 1);
+    for (auto& polygon : polygons) {
+      svg debug;
+      debug.streak = polygon;
+      debug.wrapAround = true;
+      debug.color = "green";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
+    for (auto& body : bodies) {
+      svg debug;
+      debug.streak = {
+            body.position + glm::dvec2(-0.5 ,-0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2( 0.5 ,-0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2( 0.5 , 0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2(-0.5 , 0.5) * (double)body.size * 0.5,
+      };
+      debug.filled = true;
+      debug.color = colors[body.category%colors.size()];
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
+    svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
 
   RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon) {
@@ -70,16 +128,7 @@ namespace RTSPathingLib {
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
-    if (true) {
-      auto svgDebug = RectangleGridSvg::write(grid, 1);
-      svg debug;
-      debug.streak = polygon;
-      debug.wrapAround = true;
-      debug.color = "green";
-      debug.thickness = 0.1;
-      svgDebug.push_back(debug);
-      svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
-    }
+
     return grid;
   }
 
@@ -118,19 +167,18 @@ namespace RTSPathingLib {
   }
 
   //rotation, parent transformation etc missing
-  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, size_t scale) {
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& startPoint, size_t scale) {
     FormationShape& shape = formation.getShape();
-    glm::dmat4 parentTransform = glm::dmat4(1);
 
     glm::dvec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::dmat4 result = glm::dmat4(1);
 
     glm::dvec3 vectorScale = getScalingVector(formation, scale);
 
+    result = glm::translate(result, glm::dvec3(startPoint.x, startPoint.y, 0));
     result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
     result = glm::translate(result, glm::dvec3(interfacePoint.x,interfacePoint.y, 0));
     result = glm::scale(result, vectorScale);
-    result *= parentTransform;
     return result;
   }
 
