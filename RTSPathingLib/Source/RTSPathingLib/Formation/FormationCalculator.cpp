@@ -51,7 +51,7 @@ namespace RTSPathingLib {
 
     auto       minMax    = getMinMax(polygon);
     glm::ivec2 dimension = (glm::ivec2)(minMax.second - minMax.first) + glm::ivec2(2, 2);
-    glm::vec2  offset    = minMax.first - glm::vec2(1, 1);
+    glm::vec2  offset    = (glm::vec2)((glm::ivec2)(minMax.first+(minMax.second - minMax.first)/2.0f)) - ((glm::vec2)dimension)/2.0f;
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 

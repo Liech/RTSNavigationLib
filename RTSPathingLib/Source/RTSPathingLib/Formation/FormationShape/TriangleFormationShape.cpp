@@ -32,11 +32,11 @@ namespace RTSPathingLib {
   }
 
   std::vector<glm::vec2> TriangleFormationShape::getPolygon() const {
-    glm::vec2 size = getBaseSize();
+    glm::vec2 size = getBaseSize() * 0.95f;
     return std::vector<glm::vec2>{
-      glm::vec2(size.x* std::cos(0), size.y* std::sin(0)),
-        glm::vec2(size.x* std::cos((glm::pi<float>() * 2.0f) / 3), size.y* std::sin((glm::pi<float>() * 2.0f) / 3)),
-        glm::vec2(size.x* std::cos(2 * (glm::pi<float>() * 2.0f) / 3), size.y* std::sin(2 * (glm::pi<float>() * 2.0f) / 3)),
+      glm::vec2(size.x* std::sin((glm::pi<float>() * 2.0f) * (0.0000 + 0.5)), size.y* std::cos((glm::pi<float>() * 2.0f) * (0.0000 + 0.5))),
+      glm::vec2(size.x* std::sin((glm::pi<float>() * 2.0f) * (0.3333 + 0.5)), size.y* std::cos((glm::pi<float>() * 2.0f) * (0.3333 + 0.5))),
+      glm::vec2(size.x* std::sin((glm::pi<float>() * 2.0f) * (0.6666 + 0.5)), size.y* std::cos((glm::pi<float>() * 2.0f) * (0.6666 + 0.5))),
     };
   }
 
