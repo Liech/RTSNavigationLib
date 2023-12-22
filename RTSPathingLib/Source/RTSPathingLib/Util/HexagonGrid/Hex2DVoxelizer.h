@@ -8,6 +8,6 @@
 namespace RTSPathingLib {
   class Hex2DVoxelizer {
   public:
-    static TopFlatHexGrid<bool> voxelize(const std::vector<glm::vec2>& polygon, const glm::ivec2& dimension, const glm::vec2& offset, float scale = 1);
+    static TopFlatHexGrid<bool> voxelize(const std::vector<glm::dvec2>& polygon, const glm::ivec2& dimension, const glm::dvec2& offset, double scale = 1);
   };
 }

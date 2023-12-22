@@ -22,12 +22,12 @@ namespace RTSPathingLib {
     return result;
   }
   
-  glm::vec2 BodyUtil::getCenter(const std::vector<Body>& b) {
-    glm::vec2 result = glm::vec2(0,0);
+  glm::dvec2 BodyUtil::getCenter(const std::vector<Body>& b) {
+    glm::dvec2 result = glm::dvec2(0,0);
     for (const auto& x : b) {
       result += x.position;
     }
-    result = glm::vec2(result[0] / b.size(), result[1] / b.size());
+    result = glm::dvec2(result[0] / b.size(), result[1] / b.size());
     return result;
   }
 }

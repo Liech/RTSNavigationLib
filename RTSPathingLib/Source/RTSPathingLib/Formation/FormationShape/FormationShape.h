@@ -14,19 +14,19 @@ namespace RTSPathingLib {
 
     virtual std::string getType() const;
 
-    virtual std::vector<glm::vec2> getPolygon() const;
+    virtual std::vector<glm::dvec2> getPolygon() const;
     virtual size_t getNumberOfInterfacePoints() const;
-    virtual glm::vec2 getInterfacePoint(size_t number) const;
-    virtual glm::vec2 getInterfaceNormal(size_t number) const;
-    virtual float     getInterfaceWidth(size_t number) const;
+    virtual glm::dvec2 getInterfacePoint(size_t number) const;
+    virtual glm::dvec2 getInterfaceNormal(size_t number) const;
+    virtual double     getInterfaceWidth(size_t number) const;
 
     ScalingBehavior getScalingBehavior() const;
     void setScalingBehavior(const ScalingBehavior& behavior);
-    glm::vec2 getBaseSize() const;
-    void setBaseSize(const glm::vec2&);
+    glm::dvec2 getBaseSize() const;
+    void setBaseSize(const glm::dvec2&);
 
   private:
     ScalingBehavior scaling = ScalingBehavior::Isotropic;
-    glm::vec2       baseSize = glm::vec2(1, 1);
+    glm::dvec2       baseSize = glm::dvec2(1, 1);
   };
 }

@@ -18,7 +18,7 @@ namespace RTSPathingLib {
     struct ticket {
       size_t place;
       size_t unit;
-      float distance;
+      double distance;
     };
     static std::vector<ticket> firstEstimate(const std::vector<Body>& units, const std::vector<Body>& places, RTree2D& tree);
     static std::unique_ptr<RTree2D> buildTree(const std::vector<Body>& places);

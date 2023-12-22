@@ -51,7 +51,7 @@ namespace RTSPathingLib {
 
     auto       minMax    = getMinMax(polygon);
     glm::ivec2 dimension = (glm::ivec2)(minMax.second - minMax.first) + glm::ivec2(2, 2);
-    glm::vec2  offset    = (glm::vec2)((glm::ivec2)(minMax.first+(minMax.second - minMax.first)/2.0f)) - ((glm::vec2)dimension)/2.0f;
+    glm::dvec2  offset    = (glm::dvec2)((glm::ivec2)(minMax.first+(minMax.second - minMax.first)/2.0)) - ((glm::dvec2)dimension)/2.0;
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
@@ -62,12 +62,12 @@ namespace RTSPathingLib {
     debug.color = "green";
     debug.thickness = 0.1;
     svgDebug.push_back(debug);
-    svg::write("FormationCalculator.svg", svgDebug, glm::vec2(-5, -5), glm::vec2(10, 10));
+    svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-5, -5), glm::dvec2(10, 10));
 
     return grid;
   }
 
-  std::vector<Body> FormationCalculator::placeUnits(const RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::vec2& offset, size_t category, bool& allPlaced) {
+  std::vector<Body> FormationCalculator::placeUnits(const RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::dvec2& offset, size_t category, bool& allPlaced) {
     std::vector<Body> result;
     size_t currentSize = 1;
     long long unitsToPlace = (long long)units.at(currentSize);
@@ -77,7 +77,7 @@ namespace RTSPathingLib {
         Body sub;
         sub.category = category;
         sub.size = currentSize;
-        sub.position = (glm::vec2)pos + offset + glm::vec2(0.5,0.5);
+        sub.position = (glm::dvec2)pos + offset + glm::dvec2(0.5,0.5);
         result.push_back(sub);
         unitsToPlace--;
       }      
@@ -88,9 +88,9 @@ namespace RTSPathingLib {
     return result;
   }
 
-  std::pair<glm::vec2, glm::vec2> FormationCalculator::getMinMax(const std::vector<glm::vec2>& polygon) {
-    glm::vec2 min = glm::vec2( std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-    glm::vec2 max = glm::vec2(-std::numeric_limits<float>::max(),-std::numeric_limits<float>::max());
+  std::pair<glm::dvec2, glm::dvec2> FormationCalculator::getMinMax(const std::vector<glm::dvec2>& polygon) {
+    glm::dvec2 min = glm::dvec2( std::numeric_limits<double>::max(), std::numeric_limits<double>::max());
+    glm::dvec2 max = glm::dvec2(-std::numeric_limits<double>::max(),-std::numeric_limits<double>::max());
 
     for (auto& x : polygon) {
       min.x = std::min(x.x, min.x);
@@ -107,7 +107,7 @@ namespace RTSPathingLib {
     FormationShape& shape = formation.getShape();
     glm::mat4 parentTransform = glm::mat4(1);
 
-    glm::vec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
+    glm::dvec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::mat4 result = glm::mat4(1);
     result = glm::scale(result, glm::vec3(scale,1,1));
     result = glm::translate(result, glm::vec3(interfacePoint.x,interfacePoint.y, 0));
@@ -125,10 +125,10 @@ namespace RTSPathingLib {
 
   std::map<size_t, size_t> FormationCalculator::gatherUnits(const Formation& formation, const std::map<size_t, std::map<size_t, size_t>>& OverallUnits, std::map<size_t, std::map<size_t, size_t>>& availableUnits) {
     size_t category = formation.getUnitCategory();
-    float weight = formation.getUnitDistributionWeight();
+    double weight = formation.getUnitDistributionWeight();
     std::map<size_t, size_t> unitAmount;
     for (const auto& size : OverallUnits.at(category)) {
-      size_t amount = std::ceil(weight * size.second);
+      size_t amount = std::ceil(weight * (double)size.second);
       size_t available = availableUnits[category][size.first];
       if (available > amount)
         amount = available;
@@ -138,8 +138,8 @@ namespace RTSPathingLib {
     return unitAmount;
   }
 
-  std::map<size_t, float> FormationCalculator::getCategoryWeightSum(const Formation& formation) {
-    std::map<size_t, float> result;
+  std::map<size_t, double> FormationCalculator::getCategoryWeightSum(const Formation& formation) {
+    std::map<size_t, double> result;
     size_t category = formation.getUnitCategory();
     if (result.count(category) == 0)
       result[category] = 0;

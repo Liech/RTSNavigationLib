@@ -60,7 +60,7 @@ namespace RTSPathingLib {
   }
 
   std::unique_ptr<RTree2D> Usher::buildTree(const std::vector<Body>& places) {
-    std::vector<std::pair<glm::vec2, size_t>> placesTreeInput;
+    std::vector<std::pair<glm::dvec2, size_t>> placesTreeInput;
     placesTreeInput.reserve(places.size());
     size_t placeCounter = 0;
     for (auto& x : places) {

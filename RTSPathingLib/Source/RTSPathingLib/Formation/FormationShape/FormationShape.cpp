@@ -17,19 +17,19 @@ namespace RTSPathingLib {
     return 1;
   }
 
-  glm::vec2 FormationShape::getInterfacePoint(size_t number) const {
-    return glm::vec2(0, 0);
+  glm::dvec2 FormationShape::getInterfacePoint(size_t number) const {
+    return glm::dvec2(0, 0);
   }
 
-  glm::vec2 FormationShape::getInterfaceNormal(size_t number) const {
-    return glm::vec2(0, 1);
+  glm::dvec2 FormationShape::getInterfaceNormal(size_t number) const {
+    return glm::dvec2(0, 1);
   }
 
-  std::vector<glm::vec2> FormationShape::getPolygon() const {
+  std::vector<glm::dvec2> FormationShape::getPolygon() const {
     return {};
   }
 
-  float FormationShape::getInterfaceWidth(size_t) const {
+  double FormationShape::getInterfaceWidth(size_t) const {
     return 0;
   }
 
@@ -41,11 +41,11 @@ namespace RTSPathingLib {
     scaling = behavior;
   }
 
-  glm::vec2 FormationShape::getBaseSize() const {
+  glm::dvec2 FormationShape::getBaseSize() const {
     return baseSize;
   }
 
-  void FormationShape::setBaseSize(const glm::vec2& size) {
+  void FormationShape::setBaseSize(const glm::dvec2& size) {
     baseSize = size;
   }
 }

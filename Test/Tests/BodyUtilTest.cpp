@@ -7,7 +7,7 @@
 
 TEST_CASE("BodyUtil/identitySingle", "[BodyUtilidentitySingle]") {
   RTSPathingLib::Body b;
-  b.position = glm::vec2(2, 3);
+  b.position = glm::dvec2(2, 3);
   b.category = 3;
   b.size = 5;
   glm::mat4 identity = glm::mat4(1);
@@ -22,7 +22,7 @@ TEST_CASE("BodyUtil/identitySingle", "[BodyUtilidentitySingle]") {
 
 TEST_CASE("BodyUtil/single", "[BodyUtilSingle]") {
   RTSPathingLib::Body b;
-  b.position = glm::vec2(2, 3);
+  b.position = glm::dvec2(2, 3);
   b.category = 5;
   b.size = 2;
   glm::vec3 move = glm::vec3(3, 4, 0);
@@ -40,12 +40,12 @@ TEST_CASE("BodyUtil/multi", "[BodyUtilMulti]") {
   std::vector< RTSPathingLib::Body> input;  
 
   RTSPathingLib::Body a;
-  a.position = glm::vec2(2, 3);
+  a.position = glm::dvec2(2, 3);
   a.category = 5;
   input.push_back(a);
 
   RTSPathingLib::Body b;
-  b.position = glm::vec2(4, 5);
+  b.position = glm::dvec2(4, 5);
   b.category = 7;
   input.push_back(b);
 
@@ -65,13 +65,13 @@ TEST_CASE("BodyUtil/multi", "[BodyUtilMulti]") {
 
 TEST_CASE("BodyUtil/center", "[BodyUtilCenter]") {
   std::vector<RTSPathingLib::Body> input = { 
-    RTSPathingLib::Body(glm::vec2(5+-1,7 + 0),0),
-    RTSPathingLib::Body(glm::vec2(5+1 ,7 + 0) ,0),
-    RTSPathingLib::Body(glm::vec2(5+0 ,7 + 1) ,0),
-    RTSPathingLib::Body(glm::vec2(5+0 ,7 + -1),0)
+    RTSPathingLib::Body(glm::dvec2(5+-1,7 + 0),0),
+    RTSPathingLib::Body(glm::dvec2(5+1 ,7 + 0) ,0),
+    RTSPathingLib::Body(glm::dvec2(5+0 ,7 + 1) ,0),
+    RTSPathingLib::Body(glm::dvec2(5+0 ,7 + -1),0)
   };
 
-  glm::vec2 result = RTSPathingLib::BodyUtil::getCenter(input);
+  glm::dvec2 result = RTSPathingLib::BodyUtil::getCenter(input);
 
   REQUIRE(result[0] == 5);
   REQUIRE(result[1] == 7);

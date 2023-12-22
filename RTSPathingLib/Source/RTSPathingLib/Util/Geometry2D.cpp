@@ -2,9 +2,9 @@
 
 namespace RTSPathingLib {
   //https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
-  bool Geometry2D::LineLineIntersect(glm::vec2 p0, glm::vec2 p1, glm::vec2 p2, glm::vec2 p3, glm::vec2& i) //Output 
+  bool Geometry2D::LineLineIntersect(glm::dvec2 p0, glm::dvec2 p1, glm::dvec2 p2, glm::dvec2 p3, glm::dvec2& i) //Output 
   {
-    float s02_x, s02_y, s10_x, s10_y, s32_x, s32_y, s_numer, t_numer, denom, t;
+    double s02_x, s02_y, s10_x, s10_y, s32_x, s32_y, s_numer, t_numer, denom, t;
     s10_x = p1.x - p0.x;
     s10_y = p1.y - p0.y;
     s32_x = p3.x - p2.x;
@@ -18,11 +18,11 @@ namespace RTSPathingLib {
     s02_x = p0.x - p2.x;
     s02_y = p0.y - p2.y;
     s_numer = s10_x * s02_y - s10_y * s02_x;
-    if ((s_numer < 1e-5) == denomPositive)
+    if ((s_numer < 1e-16) == denomPositive)
       return false; // No collision
 
     t_numer = s32_x * s02_y - s32_y * s02_x;
-    if ((t_numer < 1e-5) == denomPositive)
+    if ((t_numer < 1e-16) == denomPositive)
       return false; // No collision
 
     if (((s_numer > denom) == denomPositive) || ((t_numer > denom) == denomPositive))

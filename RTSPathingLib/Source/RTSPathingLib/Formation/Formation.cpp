@@ -85,11 +85,11 @@ namespace RTSPathingLib {
     unitCategory = category;
   }
 
-  float Formation::getUnitDistributionWeight() const {
+  double Formation::getUnitDistributionWeight() const {
     return unitDistributionWeight;
   }
 
-  void Formation::setUnitDistributionWeight(float v) {
+  void Formation::setUnitDistributionWeight(double v) {
     unitDistributionWeight = v;
   }
 
@@ -105,11 +105,11 @@ namespace RTSPathingLib {
     return *shape;
   }
 
-  float Formation::getUnitPadding() const {
+  double Formation::getUnitPadding() const {
     return unitPadding;
   }
 
-  void Formation::setUnitPadding(float padding) {
+  void Formation::setUnitPadding(double padding) {
     unitPadding = padding;
   }
 }

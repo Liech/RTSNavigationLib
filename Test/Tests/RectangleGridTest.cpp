@@ -8,23 +8,23 @@
 TEST_CASE("RectangleGrid/voxelizer", "[RectangleGridVoxelizer]") {
   glm::ivec2 dimension = glm::ivec2(6, 6);
 
-  std::vector<glm::vec2> polygon;
-  glm::vec2 offset = glm::vec2(1, 1);
-  float scale = 0.6;
-  polygon.push_back(offset + glm::vec2(1, 0) * scale);
-  polygon.push_back(offset + glm::vec2(4, 3) * scale);
-  polygon.push_back(offset + glm::vec2(4.5, 6) * scale);
-  polygon.push_back(offset + glm::vec2(0, 4) * scale);  
-  polygon.push_back(offset + glm::vec2(1, 0) * scale);
+  std::vector<glm::dvec2> polygon;
+  glm::dvec2 offset = glm::dvec2(1, 1);
+  double scale = 0.6;
+  polygon.push_back(offset + glm::dvec2(1, 0) * scale);
+  polygon.push_back(offset + glm::dvec2(4, 3) * scale);
+  polygon.push_back(offset + glm::dvec2(4.5, 6) * scale);
+  polygon.push_back(offset + glm::dvec2(0, 4) * scale);  
+  polygon.push_back(offset + glm::dvec2(1, 0) * scale);
 
-  auto t = RTSPathingLib::RectangleGridVoxelizer::voxelize(polygon, dimension, glm::vec2(0,0),1);
+  auto t = RTSPathingLib::RectangleGridVoxelizer::voxelize(polygon, dimension, glm::dvec2(0,0),1);
   if (true) {
     RTSPathingLib::svg v;
     v.streak = polygon;
     v.color = "blue";
     std::vector<RTSPathingLib::svg> x = RTSPathingLib::RectangleGridSvg::write(t, 1);
     x.push_back(v);
-    RTSPathingLib::svg::write("VoxelizerTest.svg", x, glm::vec2(-5, -5), glm::vec2(30, 30));
+    RTSPathingLib::svg::write("VoxelizerTest.svg", x, glm::dvec2(-5, -5), glm::dvec2(30, 30));
   }
 
   std::vector<bool> r = {

@@ -3,11 +3,11 @@
 #include "String2File.h"
 
 namespace RTSPathingLib {
-  void svg::write(const std::string& filename, const glm::vec2& startRegion, const glm::vec2& size) const {
+  void svg::write(const std::string& filename, const glm::dvec2& startRegion, const glm::dvec2& size) const {
     write(filename, { *this }, startRegion,size);
   }
 
-  void svg::write(const std::string& filename, const std::vector<svg>& streaks, const glm::vec2& startRegion, const glm::vec2& size) {
+  void svg::write(const std::string& filename, const std::vector<svg>& streaks, const glm::dvec2& startRegion, const glm::dvec2& size) {
     std::string data = "<svg viewBox=\"" + std::to_string(startRegion.x) + " " + std::to_string(startRegion.y) + " " + std::to_string(size.x) + " " + std::to_string(size.x) + "\" xmlns=\"http://www.w3.org/2000/svg\">\n";
 
     for (const auto& x : streaks)

@@ -3,12 +3,12 @@
 //https://www.redblobgames.com/grids/hexagons/
 
 namespace RTSPathingLib {
-  glm::vec2 HexGridUtils::getTopFlatOffset(const glm::ivec2& position, const glm::vec2& offset, float scale) {
-    float scaley = scale * (float)std::sqrt(3) * 0.5f;
-    float scalex = scale * 0.75f;
-    glm::vec2 result = offset + glm::vec2(position.x * scalex, position.y * scaley);
+  glm::dvec2 HexGridUtils::getTopFlatOffset(const glm::ivec2& position, const glm::dvec2& offset, double scale) {
+    double scaley = scale * (double)std::sqrt(3) * 0.5;
+    double scalex = scale * 0.75;
+    glm::dvec2 result = offset + glm::dvec2(position.x * scalex, position.y * scaley);
     if (position.x % 2 == 0)
-      result += glm::vec2(0.0f, scaley * 0.5f);
+      result += glm::dvec2(0.0, scaley * 0.5);
     return result;
   }
 
