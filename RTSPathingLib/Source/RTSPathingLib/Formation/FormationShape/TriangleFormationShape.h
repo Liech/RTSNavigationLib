@@ -15,7 +15,5 @@ namespace RTSPathingLib {
     virtual glm::dvec2 getInterfaceNormal(size_t number) const override;
     virtual double getInterfaceWidth(size_t number) const;
 
-  private:
-    int  layoutEdge = 0; //-1 for centered
   };
 }

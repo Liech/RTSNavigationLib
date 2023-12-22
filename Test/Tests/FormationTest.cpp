@@ -121,6 +121,24 @@ TEST_CASE("Formation/ArcMany", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
 }
 
+TEST_CASE("Formation/PartialArc", "[FormationDouble]") {
+  RTSPathingLib::Body b;
+  b.category = 0;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { };
+  for (int i = 0; i < 16; i++)
+    input.push_back(b);
+  RTSPathingLib::Formation formation(nullptr);
+  auto shape = std::make_unique<RTSPathingLib::ArcFormationShape>();
+  shape->setArcAngle(glm::pi<double>() * 1);
+  formation.setShape(std::move(shape));
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+}
+
 TEST_CASE("Formation/TriangleSingle", "[FormationSingle]") {
   RTSPathingLib::Body b;
   b.category = 0;
@@ -153,11 +171,11 @@ TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == -1);
+  REQUIRE(places[0].position.x == -0.5);
   REQUIRE(places[0].position.y == 0);
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == 0.0);
+  REQUIRE(places[1].position.x == 0.5);
   REQUIRE(places[1].position.y == 0);
 }
 

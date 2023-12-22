@@ -9,7 +9,7 @@ namespace RTSPathingLib {
     RectangleGrid<bool> result;
     result.data.resize(dimension.x * dimension.y);
     result.dimension = dimension;
-
+    
     for (size_t x = 0; x < dimension.x; x++) {
       glm::dvec2 origin = offset + glm::dvec2((x+0.5) * scale,-1.0);
       glm::dvec2 down = origin + glm::dvec2(0, scale * 10 * dimension.y);
@@ -32,9 +32,16 @@ namespace RTSPathingLib {
         bool intersect = Geometry2D::LineLineIntersect(prev, next, origin, down, intersectionPoint);
         if (intersect) {
           int start = (int)((intersectionPoint.y - offset.y) / scale + 0.5);
+
+          size_t prevprev = i - 2;
+          if (i <= 1)
+            prevprev = polygon.size() + i - 2;
+          const glm::dvec2& prevprevVec = polygon[prevprev];
+          float noncolinearity = std::abs(glm::dot(glm::normalize(prev - prevprevVec), glm::normalize(next - prev))); //0==colinear
+
           if (
             (previousPolygonStart != start) ||//make sure if intersections falls on a point of two edges only one is used, but if they are not too colinear its allowed
-            (i==polygon.size()-1 && firstStart == start)) { 
+            (i==polygon.size()-1 && firstStart == start) || noncolinearity > 0.3) { 
             previousPolygonStart = start;
             if (i == 0)
               firstStart = start;

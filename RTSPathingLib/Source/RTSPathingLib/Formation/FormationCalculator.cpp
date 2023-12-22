@@ -29,15 +29,23 @@ namespace RTSPathingLib {
     auto  formationSize      = getSizeSum(unitsPlacedHere);
     std::vector<Body> result;
 
+    int tries = 5;
     long long lastPlaced = -1;
     bool allPlaced = false;
-    while (!allPlaced && lastPlaced != result.size()) {
+    while (!allPlaced) {
+      if (lastPlaced == result.size()) {
+        tries--;
+        if (tries <= 0)
+          break;
+      }
+      else 
+        tries = 5;
       lastPlaced = result.size();
       auto  localTransform = getLocalTransformation(formation, scale);
       currentTransformation = localTransform;
       RectangleGrid<bool> grid = getGrid(formation, currentTransformation);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
-      scale ++;
+      scale ++;      
     }
 
     bigEnough = true;
@@ -49,21 +57,23 @@ namespace RTSPathingLib {
     for (auto& x : polygon)
       x = glm::vec4(x, 0, 1) * transformation;
 
-    auto       minMax    = getMinMax(polygon);
-    glm::ivec2 dimension = (glm::ivec2)(minMax.second - minMax.first) + glm::ivec2(2, 2);
+    auto        minMax    = getMinMax(polygon);
+    glm::vec2   span      = glm::vec2(minMax.second - minMax.first);
+    glm::ivec2  dimension = glm::ivec2((int)std::ceil(span.x),(int)std::ceil(span.y)) + glm::ivec2(2, 2);
     glm::dvec2  offset    = (glm::dvec2)((glm::ivec2)(minMax.first+(minMax.second - minMax.first)/2.0)) - ((glm::dvec2)dimension)/2.0;
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
-    auto svgDebug = RectangleGridSvg::write(grid, 1);
-    svg debug;
-    debug.streak = polygon;
-    debug.wrapAround = true;
-    debug.color = "green";
-    debug.thickness = 0.1;
-    svgDebug.push_back(debug);
-    svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-5, -5), glm::dvec2(10, 10));
-
+    if (true) {
+      auto svgDebug = RectangleGridSvg::write(grid, 1);
+      svg debug;
+      debug.streak = polygon;
+      debug.wrapAround = true;
+      debug.color = "green";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+      svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
+    }
     return grid;
   }
 

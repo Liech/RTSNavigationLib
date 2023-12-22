@@ -18,22 +18,22 @@ namespace RTSPathingLib {
     void removeChild(size_t);
     void addChild(std::unique_ptr<Formation>);
 
-    size_t getOwnInterfacePoint() const;
+    size_t getOwnInterfacePoint() const; //untested
     void   setOwnInterfacePoint(size_t);
-    size_t getParentInterfacePoint() const;
+    size_t getParentInterfacePoint() const;//unimplemented
     void   setParentInterfacePoint(size_t);
-    bool   getOverwriteWidthWithInterfaceWidth() const;
+    bool   getOverwriteWidthWithInterfaceWidth() const;//unimplemented
     void   setOverwriteWidthWithInterfaceWidth(bool doIt);
-    bool   getRotateWithInterface() const;
+    bool   getRotateWithInterface() const;//unimplemented
     void   setRotateWithInterface(bool v);
-    bool   getLinkSizeWithParent() const;
+    bool   getLinkSizeWithParent() const;//unimplemented
     void   setLinkSizeWithParent(bool v);
 
     size_t getUnitCategory() const;
     void   setUnitCategory(size_t);
-    double  getUnitDistributionWeight() const; // if multiple formation nodes have the same category, this can adjust the distribution weighting (higher numbers->more Units)
+    double getUnitDistributionWeight() const; //untested // if multiple formation nodes have the same category, this can adjust the distribution weighting (higher numbers->more Units)
     void   setUnitDistributionWeight(double v);
-    double  getUnitPadding() const; //how much the units are appart from eachother
+    double getUnitPadding() const; //unimplemented //how much the units are appart from eachother
     void   setUnitPadding(double padding);
 
     void setShape(std::unique_ptr<FormationShape> shape);

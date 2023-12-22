@@ -36,15 +36,17 @@ namespace RTSPathingLib {
     double till = glm::pi<double>() * 2 - from;
 
     for (size_t i = 0; i < numberPolygons; i++) {
-      double perc = (double)i / (double)numberPolygons;
+      double perc = (double)i / (double)(numberPolygons-1);
       double angle = from + (till - from) * perc;
-      glm::dvec2 pos = glm::dvec2(std::cos(angle) * size.x * 0.5, std::sin(angle) * size.y * 0.5);
+      glm::dvec2 pos = glm::dvec2(std::sin(angle) * size.x * 0.5, std::cos(angle) * size.y * 0.5);
       result.push_back(pos);
     }
-    if (arcAngleRadian != 0)
-      result.push_back(glm::dvec2(0, 0));
+    if (arcAngleRadian != 0) {
+      glm::dvec2 pos = glm::dvec2(std::sin(0) * size.x * 0.01, std::cos(0) * size.y * 0.01);
+      result.push_back(pos);
+    }
     else {
-      glm::dvec2 pos = glm::dvec2(std::cos(0) * size.x * 0.5, std::sin(0) * size.y * 0.5);
+      glm::dvec2 pos = glm::dvec2(std::sin(0) * size.x * 0.5, std::cos(0) * size.y * 0.5);
       result.push_back(pos);
     }
 
