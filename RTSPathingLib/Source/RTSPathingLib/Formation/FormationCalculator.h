@@ -15,6 +15,7 @@ namespace RTSPathingLib {
     static std::vector<Body> calculate(const Formation&, const std::vector<Body>& units);
 
   private:
+    static glm::dvec3                                 getScalingVector(const Formation&, size_t scale);
     static std::vector<Body>                          formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::mat4& transformation, const Formation&, bool& bigEnough);
     static RectangleGrid<bool>                        getGrid(const Formation&, const glm::mat4& transformation);
     static std::vector<Body>                          placeUnits(const RectangleGrid<bool>&, const std::map<size_t, size_t>&, const glm::dvec2& offset, size_t category, bool& allPlaced);
