@@ -112,4 +112,12 @@ namespace RTSPathingLib {
   void Formation::setUnitPadding(double padding) {
     unitPadding = padding;
   }
+
+  double Formation::getRotation() const {
+    return rotation;
+  }
+
+  void Formation::setRotation(double rotation_) {
+    rotation = rotation_;
+  }
 }

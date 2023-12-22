@@ -29,10 +29,8 @@ namespace RTSPathingLib {
       return false; // No collision
     // Collision detected
     t = t_numer / denom;
-    if (i.x != NULL)
-      i.x = p0.x + (t * s10_x);
-    if (i.y != NULL)
-      i.y = p0.y + (t * s10_y);
+    i.x = p0.x + (t * s10_x);
+    i.y = p0.y + (t * s10_y);
 
     return true;
   }

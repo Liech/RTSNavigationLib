@@ -4,13 +4,13 @@
 
 namespace RTSPathingLib {
 
-  Body BodyUtil::transform(const Body& b, const glm::mat4& transformation) {
+  Body BodyUtil::transform(const Body& b, const glm::dmat4& transformation) {
     Body result = b;
     result.position = transformation * glm::vec4(b.position,0,1);
     return result;
   }
 
-  std::vector<Body> BodyUtil::transform(const std::vector<Body>& b, const glm::mat4& transformation) {
+  std::vector<Body> BodyUtil::transform(const std::vector<Body>& b, const glm::dmat4& transformation) {
     std::vector<Body> result;
     result.resize(b.size());
 

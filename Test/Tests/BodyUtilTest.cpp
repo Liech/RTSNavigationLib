@@ -10,7 +10,7 @@ TEST_CASE("BodyUtil/identitySingle", "[BodyUtilidentitySingle]") {
   b.position = glm::dvec2(2, 3);
   b.category = 3;
   b.size = 5;
-  glm::mat4 identity = glm::mat4(1);
+  glm::dmat4 identity = glm::dmat4(1);
 
   RTSPathingLib::Body result = RTSPathingLib::BodyUtil::transform(b, identity);
 
@@ -25,8 +25,8 @@ TEST_CASE("BodyUtil/single", "[BodyUtilSingle]") {
   b.position = glm::dvec2(2, 3);
   b.category = 5;
   b.size = 2;
-  glm::vec3 move = glm::vec3(3, 4, 0);
-  glm::mat4 transform = glm::translate(glm::mat4(1), move);
+  glm::dvec3 move = glm::dvec3(3, 4, 0);
+  glm::dmat4 transform = glm::translate(glm::dmat4(1), move);
 
   RTSPathingLib::Body result = RTSPathingLib::BodyUtil::transform(b, transform);
 
@@ -49,8 +49,8 @@ TEST_CASE("BodyUtil/multi", "[BodyUtilMulti]") {
   b.category = 7;
   input.push_back(b);
 
-  glm::vec3 move = glm::vec3(1, 2, 0);
-  glm::mat4 transform = glm::translate(glm::mat4(1), move);
+  glm::dvec3 move = glm::dvec3(1, 2, 0);
+  glm::dmat4 transform = glm::translate(glm::dmat4(1), move);
 
   std::vector<RTSPathingLib::Body> result = RTSPathingLib::BodyUtil::transform(input, transform);
 

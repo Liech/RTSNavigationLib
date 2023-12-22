@@ -1,4 +1,3 @@
-HalfArc test
 layout own interface point test
 rotate implementation
 rotate test

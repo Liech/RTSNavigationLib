@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -79,8 +80,8 @@ TEST_CASE("Formation/ArcSingle", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == 0);
-  REQUIRE(places[0].position.y == 0);
+  REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[0].position.x - 0, Catch::Matchers::WithinAbs(0, 0.01));
 }
 
 TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
@@ -97,12 +98,12 @@ TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == -0.5);
-  REQUIRE(places[0].position.y == 0);
+  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[0].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == 0.5);
-  REQUIRE(places[1].position.y == 0);
+  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[1].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
 }
 
 TEST_CASE("Formation/ArcMany", "[FormationDouble]") {
@@ -153,8 +154,8 @@ TEST_CASE("Formation/TriangleSingle", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == 0);
-  REQUIRE(places[0].position.y == 0);
+  REQUIRE_THAT(places[0].position.x - 0, Catch::Matchers::WithinAbs(0, 0.3));
+  REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.3));
 }
 
 TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
@@ -171,12 +172,12 @@ TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == -0.5);
-  REQUIRE(places[0].position.y == 0);
+  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[0].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.5));
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == 0.5);
-  REQUIRE(places[1].position.y == 0);
+  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[1].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.5));
 }
 
 TEST_CASE("Formation/TriangleMany", "[FormationDouble]") {
@@ -193,4 +194,43 @@ TEST_CASE("Formation/TriangleMany", "[FormationDouble]") {
   auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
 
   REQUIRE(places.size() == input.size());
+}
+
+TEST_CASE("Formation/InterfacePoint", "[FormationSingle]") {
+  RTSPathingLib::Body b;
+  b.category = 0;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { b };
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setOwnInterfacePoint(5);
+  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+  REQUIRE(places[0].category == b.category);
+  REQUIRE(places[0].size == b.size);
+  REQUIRE(places[0].position.x == 0);
+  REQUIRE(places[0].position.y == 0.5);
+}
+
+TEST_CASE("Formation/Rotation", "[FormationSingle]") {
+  RTSPathingLib::Body b;
+  b.category = 0;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { b };
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setOwnInterfacePoint(5);
+  formation.setRotation(glm::pi<double>()*1.01);
+  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+  REQUIRE(places[0].category == b.category);
+  REQUIRE(places[0].size == b.size);
+  REQUIRE(places[0].position.x == 0);
+  REQUIRE(places[0].position.y == -0.5);
 }

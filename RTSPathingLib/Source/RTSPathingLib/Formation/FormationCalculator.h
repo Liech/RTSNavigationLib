@@ -16,11 +16,11 @@ namespace RTSPathingLib {
 
   private:
     static glm::dvec3                                 getScalingVector(const Formation&, size_t scale);
-    static std::vector<Body>                          formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::mat4& transformation, const Formation&, bool& bigEnough);
-    static RectangleGrid<bool>                        getGrid(const Formation&, const glm::mat4& transformation);
+    static std::vector<Body>                          formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::dmat4& transformation, const Formation&, bool& bigEnough);
+    static RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation);
     static std::vector<Body>                          placeUnits(const RectangleGrid<bool>&, const std::map<size_t, size_t>&, const glm::dvec2& offset, size_t category, bool& allPlaced);
     static std::pair<glm::dvec2, glm::dvec2>            getMinMax(const std::vector<glm::dvec2>&);
-    static glm::mat4                                  getLocalTransformation(const Formation&, size_t scale);
+    static glm::dmat4                                  getLocalTransformation(const Formation&, size_t scale);
     static size_t                                     getSizeSum(const std::map<size_t, size_t>&);
     static std::map<size_t, size_t>                   gatherUnits(const Formation&, const std::map<size_t, std::map<size_t, size_t>>& OverallUnits, std::map<size_t, std::map<size_t, size_t>>& availableUnits);
     static std::map<size_t, std::map<size_t, size_t>> getSizesPerCategory(const std::vector<Body>& units);

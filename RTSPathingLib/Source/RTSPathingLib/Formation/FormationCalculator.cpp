@@ -12,7 +12,7 @@
 
 namespace RTSPathingLib {
   std::vector<Body> FormationCalculator::calculate(const Formation& formation, const std::vector<Body>& units) {
-    glm::mat4 currentTransformation = glm::mat4(1);
+    glm::dmat4 currentTransformation = glm::dmat4(1);
     auto overall = getSizesPerCategory(units);
     auto current = overall;
 
@@ -23,7 +23,7 @@ namespace RTSPathingLib {
     return result;
   }
 
-  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::mat4& currentTransformation, const Formation& formation, bool& bigEnough) {
+  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::dmat4& currentTransformation, const Formation& formation, bool& bigEnough) {
     size_t scale              = 1;
     auto  unitsPlacedHere    = gatherUnits(formation, overall, current);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
@@ -52,15 +52,15 @@ namespace RTSPathingLib {
     return result;
   }
 
-  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::mat4& transformation) {
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation) {
     auto polygon = formation.getShape().getPolygon();
     for (auto& x : polygon)
-      x = glm::vec4(x, 0, 1) * transformation;
+      x = transformation*glm::vec4(x, 0, 1);
 
     auto        minMax    = getMinMax(polygon);
-    glm::vec2   span      = glm::vec2(minMax.second - minMax.first);
+    glm::dvec2  span      = glm::vec2(minMax.second - minMax.first);
     glm::ivec2  dimension = glm::ivec2((int)std::ceil(span.x),(int)std::ceil(span.y)) + glm::ivec2(2, 2);
-    glm::dvec2  offset    = (glm::dvec2)((glm::ivec2)(minMax.first+(minMax.second - minMax.first)/2.0)) - ((glm::dvec2)dimension)/2.0;
+    glm::dvec2  offset    = (minMax.first+span/2.0) - ((glm::dvec2)dimension)/2.0;
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
@@ -108,22 +108,22 @@ namespace RTSPathingLib {
       max.x = std::max(x.x, max.x);
       max.y = std::max(x.y, max.y);
     }
-
     return std::make_pair(min, max);
   }
 
   //rotation, parent transformation etc missing
-  glm::mat4 FormationCalculator::getLocalTransformation(const Formation& formation, size_t scale) {
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, size_t scale) {
     FormationShape& shape = formation.getShape();
-    glm::mat4 parentTransform = glm::mat4(1);
+    glm::dmat4 parentTransform = glm::dmat4(1);
 
     glm::dvec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
-    glm::mat4 result = glm::mat4(1);
+    glm::dmat4 result = glm::dmat4(1);
 
-    glm::vec3 vectorScale = getScalingVector(formation, scale);
+    glm::dvec3 vectorScale = getScalingVector(formation, scale);
 
+    result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
+    result = glm::translate(result, glm::dvec3(interfacePoint.x,interfacePoint.y, 0));
     result = glm::scale(result, vectorScale);
-    result = glm::translate(result, glm::vec3(interfacePoint.x,interfacePoint.y, 0));
     result *= parentTransform;
     return result;
   }
@@ -167,7 +167,7 @@ namespace RTSPathingLib {
     double weight = formation.getUnitDistributionWeight();
     std::map<size_t, size_t> unitAmount;
     for (const auto& size : OverallUnits.at(category)) {
-      size_t amount = std::ceil(weight * (double)size.second);
+      size_t amount = (size_t)std::ceil(weight * (double)size.second);
       size_t available = availableUnits[category][size.first];
       if (available > amount)
         amount = available;
