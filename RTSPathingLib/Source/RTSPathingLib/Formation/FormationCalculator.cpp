@@ -34,7 +34,7 @@ namespace RTSPathingLib {
     while (!allPlaced && lastPlaced != result.size()) {
       lastPlaced = result.size();
       auto  localTransform = getLocalTransformation(formation, scale);
-      currentTransformation = currentTransformation * localTransform;
+      currentTransformation = localTransform;
       RectangleGrid<bool> grid = getGrid(formation, currentTransformation);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
       scale ++;
@@ -109,7 +109,13 @@ namespace RTSPathingLib {
 
     glm::dvec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::mat4 result = glm::mat4(1);
-    result = glm::scale(result, glm::vec3(scale,1,1));
+
+    //first scale only x and than both, this hopefully allows more subtle formation grow
+    bool   xScalesFirst = scale % 2 == 0;
+    size_t translatedScale = 1 + (scale-1) / 2;
+    glm::vec3 vectorScale = glm::vec3(translatedScale + (xScalesFirst?1:0), translatedScale,1);
+    
+    result = glm::scale(result, vectorScale);
     result = glm::translate(result, glm::vec3(interfacePoint.x,interfacePoint.y, 0));
     result *= parentTransform;
     return result;

@@ -49,6 +49,22 @@ TEST_CASE("Formation/RectangleDouble", "[FormationDouble]") {
   REQUIRE(places[1].position.y == 0);
 }
 
+TEST_CASE("Formation/RectangleMany", "[FormationDouble]") {
+  RTSPathingLib::Body b;
+  b.category = 0;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { };
+  for (int i = 0; i < 16; i++)
+    input.push_back(b);
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+}
+
 TEST_CASE("Formation/ArcSingle", "[FormationSingle]") {
   RTSPathingLib::Body b;
   b.category = 0;
@@ -89,6 +105,22 @@ TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
   REQUIRE(places[1].position.y == 0);
 }
 
+TEST_CASE("Formation/ArcMany", "[FormationDouble]") {
+  RTSPathingLib::Body b;
+  b.category = 0;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { };
+  for (int i = 0; i < 16; i++)
+    input.push_back(b);
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setShape(std::make_unique<RTSPathingLib::ArcFormationShape>());
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+}
+
 TEST_CASE("Formation/TriangleSingle", "[FormationSingle]") {
   RTSPathingLib::Body b;
   b.category = 0;
@@ -127,4 +159,20 @@ TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
   REQUIRE(places[1].size == b.size);
   REQUIRE(places[1].position.x == 0.0);
   REQUIRE(places[1].position.y == 0);
+}
+
+TEST_CASE("Formation/TriangleMany", "[FormationDouble]") {
+  RTSPathingLib::Body b;
+  b.category = 0;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { };
+  for (int i = 0; i < 16; i++)
+    input.push_back(b);
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
 }
