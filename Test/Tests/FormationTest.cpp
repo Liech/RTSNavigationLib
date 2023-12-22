@@ -234,3 +234,30 @@ TEST_CASE("Formation/Rotation", "[FormationSingle]") {
   REQUIRE_THAT(places[0].position.x - 0.0, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[0].position.y == -0.5);
 }
+
+TEST_CASE("Formation/OneChild", "[FormationSingle]") {
+  RTSPathingLib::Body a;
+  a.category = 0;
+  a.size = 1;
+  a.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body b;
+  b.category = 1;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { a, a, b, b };
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation.setUnitCategory(0);
+
+  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>(&formation);
+  formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation2->setUnitCategory(1);
+  formation2->setParentInterfacePoint(5);
+  formation2->setOwnInterfacePoint(9);
+  formation.addChild(std::move(formation2));
+
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+}

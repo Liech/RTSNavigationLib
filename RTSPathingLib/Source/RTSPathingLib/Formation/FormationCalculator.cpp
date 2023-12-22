@@ -16,16 +16,17 @@ namespace RTSPathingLib {
     glm::dmat4 currentTransformation = glm::dmat4(1);
     auto overall = getSizesPerCategory(units);
     auto current = overall;
+    std::vector<std::vector<glm::dvec2>> allPolygons;
 
     bool bigEnough = false;
-    std::vector<Body> result = formate(current,overall,currentTransformation,formation, bigEnough);
+    std::vector<Body> result = formate(current,overall,currentTransformation,formation, allPolygons, bigEnough);
    
 
     return result;
   }
 
-  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::dmat4& currentTransformation, const Formation& formation, bool& bigEnough) {
-    size_t scale              = 1;
+  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, glm::dmat4& currentTransformation, const Formation& formation, std::vector<std::vector<glm::dvec2>>& allPolygons, bool& bigEnough) {
+    size_t scale             = 1;
     auto  unitsPlacedHere    = gatherUnits(formation, overall, current);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
     std::vector<Body> result;
@@ -44,8 +45,11 @@ namespace RTSPathingLib {
       lastPlaced = result.size();
       auto  localTransform = getLocalTransformation(formation, scale);
       currentTransformation = localTransform;
-      RectangleGrid<bool> grid = getGrid(formation, currentTransformation);
+      std::vector<glm::dvec2> polygon;
+      RectangleGrid<bool> grid = getGrid(formation, currentTransformation, polygon);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
+      if (allPlaced)
+        allPolygons.push_back(polygon);
       scale ++;      
     }
 
@@ -53,8 +57,8 @@ namespace RTSPathingLib {
     return result;
   }
 
-  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation) {
-    auto polygon = formation.getShape().getPolygon();
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon) {
+    polygon = formation.getShape().getPolygon();
     for (auto& x : polygon)
       x = transformation*glm::vec4(x, 0, 1);
 
