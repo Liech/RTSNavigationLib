@@ -11,8 +11,8 @@ namespace RTSPathingLib {
     result.dimension = dimension;
     
     for (size_t x = 0; x < dimension.x; x++) {
-      glm::dvec2 origin = offset + glm::dvec2((x+0.5) * scale,-1.0);
-      glm::dvec2 down = origin + glm::dvec2(0, scale * 10 * dimension.y);
+      glm::dvec2 origin = offset + glm::dvec2((x+0.5) * scale,-1000.0);
+      glm::dvec2 down = origin + glm::dvec2(0, scale * 10 * dimension.y + 2000);
       glm::dvec2 dir2 = glm::normalize(down - origin);
 
       int previousPolygonStart = -9999; //make sure if intersections falls on a point of two edges only one is used
