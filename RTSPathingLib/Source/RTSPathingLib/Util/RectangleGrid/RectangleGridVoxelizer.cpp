@@ -37,7 +37,7 @@ namespace RTSPathingLib {
           if (i <= 1)
             prevprev = polygon.size() + i - 2;
           const glm::dvec2& prevprevVec = polygon[prevprev];
-          float noncolinearity = std::abs(glm::dot(glm::normalize(prev - prevprevVec), glm::normalize(next - prev))); //0==colinear
+          float noncolinearity = glm::dot(glm::normalize(prev - prevprevVec), glm::normalize(next - prev)); //0==colinear
 
           if (
             (previousPolygonStart != start) ||//make sure if intersections falls on a point of two edges only one is used, but if they are not too colinear its allowed

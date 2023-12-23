@@ -18,6 +18,7 @@ namespace RTSPathingLib {
     RectangleGrid<T> result;
     result.data.resize(a.data.size());
     result.dimension = a.dimension;
+    result.offset = a.offset;
     for (size_t i = 0; i < a.data.size(); i++)
       result.data[i] = a.data[i] & b.data[i];
     return result;
@@ -28,6 +29,7 @@ namespace RTSPathingLib {
     RectangleGrid<T> result;
     result.data.resize(a.data.size());
     result.dimension = a.dimension;
+    result.offset = a.offset;
     for (size_t i = 0; i < a.data.size(); i++)
       result.data[i] = a.data[i] | b.data[i];
     return result;
@@ -38,6 +40,7 @@ namespace RTSPathingLib {
     RectangleGrid<T> result;
     result.data.resize(a.data.size());
     result.dimension = a.dimension;
+    result.offset = a.offset;
     for (size_t i = 0; i < a.data.size(); i++) {
       bool aV = a.data[i];
       bool bV = b.data[i];

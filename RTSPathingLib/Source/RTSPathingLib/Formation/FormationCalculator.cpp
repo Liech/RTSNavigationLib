@@ -50,7 +50,7 @@ namespace RTSPathingLib {
       toFormationCenter = getLocalTransformation(formation, startPoint, scale);
       
       std::vector<glm::dvec2> polygon;
-      grid = getGrid(formation, toFormationCenter, polygon);
+      grid = getGrid(formation, toFormationCenter, polygon,allPolygons);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
       
       if (allPlaced) {
@@ -115,7 +115,7 @@ namespace RTSPathingLib {
     svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
 
-  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon) {
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon, const std::vector<std::vector<glm::dvec2>>& allPolygons) {
     polygon = formation.getShape().getPolygon();
     for (auto& x : polygon)
       x = transformation*glm::vec4(x, 0, 1);
@@ -124,10 +124,20 @@ namespace RTSPathingLib {
     glm::dvec2  centroid  = Geometry2D::findCentroid(polygon);
     glm::dvec2  span      = glm::vec2(minMax.second - minMax.first);
     glm::ivec2  dimension = glm::ivec2((int)std::ceil(span.x),(int)std::ceil(span.y)) + glm::ivec2(2, 2);
-    glm::dvec2  offset    = centroid - ((glm::dvec2)dimension)/2.0;
+    glm::ivec2  offset    = centroid - ((glm::dvec2)dimension)/2.0;
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
+    RectangleGrid<bool> negativeGrid;
+    negativeGrid.offset = grid.offset;
+    negativeGrid.dimension = grid.dimension;
+    negativeGrid.data.resize(grid.data.size());
+
+    for (const auto& poly : allPolygons) {
+      auto sub = RectangleGridVoxelizer::voxelize(poly, dimension,offset);
+      negativeGrid = negativeGrid | sub;
+    }
+    grid = grid - negativeGrid;
 
     return grid;
   }

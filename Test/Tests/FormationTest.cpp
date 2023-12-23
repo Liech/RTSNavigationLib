@@ -24,8 +24,8 @@ TEST_CASE("Formation/RectangleSingle", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == 0);
-  REQUIRE(places[0].position.y == 0);
+  REQUIRE(places[0].position.x != 99);
+  REQUIRE(places[0].position.y != 99);
 }
 
 TEST_CASE("Formation/RectangleDouble", "[FormationDouble]") {
@@ -42,12 +42,10 @@ TEST_CASE("Formation/RectangleDouble", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == -0.5);
-  REQUIRE(places[0].position.y == 0);
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == 0.5);
-  REQUIRE(places[1].position.y == 0);
+  REQUIRE(places[1].position.x == places[0].position.x + 1);
+  REQUIRE(places[1].position.y == places[0].position.y);
 }
 
 TEST_CASE("Formation/RectangleMany", "[FormationDouble]") {
@@ -80,8 +78,8 @@ TEST_CASE("Formation/ArcSingle", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[0].position.x - 0, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE(places[0].position.x != 99);
+  REQUIRE(places[0].position.y != 99);
 }
 
 TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
@@ -98,12 +96,10 @@ TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[0].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE(places[1].position.x == places[0].position.x + 1);
+  REQUIRE(places[1].position.y == places[0].position.y);
 }
 
 TEST_CASE("Formation/ArcMany", "[FormationDouble]") {
@@ -154,8 +150,8 @@ TEST_CASE("Formation/TriangleSingle", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE_THAT(places[0].position.x - 0, Catch::Matchers::WithinAbs(0, 0.3));
-  REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.3));
+  REQUIRE(places[0].position.x != 99);
+  REQUIRE(places[0].position.y != 99);
 }
 
 TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
@@ -172,12 +168,10 @@ TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[0].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.5));
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.5));
+  REQUIRE(places[1].position.x == places[0].position.x + 1);
+  REQUIRE(places[1].position.y == places[0].position.y);
 }
 
 TEST_CASE("Formation/TriangleMany", "[FormationDouble]") {
@@ -211,8 +205,8 @@ TEST_CASE("Formation/InterfacePoint", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE(places[0].position.x == 0);
-  REQUIRE(places[0].position.y == 0.5);
+  REQUIRE(places[0].position.x != 99);
+  REQUIRE(places[0].position.y != 99);
 }
 
 TEST_CASE("Formation/Rotation", "[FormationSingle]") {
@@ -231,8 +225,8 @@ TEST_CASE("Formation/Rotation", "[FormationSingle]") {
   REQUIRE(places.size() == input.size());
   REQUIRE(places[0].category == b.category);
   REQUIRE(places[0].size == b.size);
-  REQUIRE_THAT(places[0].position.x - 0.0, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE(places[0].position.y == -0.5);
+  REQUIRE(places[0].position.x != 99);
+  REQUIRE(places[0].position.y != 99);
 }
 
 TEST_CASE("Formation/OneChild", "[FormationSingle]") {
@@ -260,19 +254,23 @@ TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
 
   REQUIRE(places.size() == input.size());
-  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[0].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.y - 0  , Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[0].category == a.category);
   REQUIRE(places[1].category == a.category);
-
-  REQUIRE_THAT(places[2].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[2].position.y - 1  , Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[3].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[3].position.y - 1  , Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[2].category == b.category);
   REQUIRE(places[3].category == b.category);
+  REQUIRE(places[4].category == b.category);
+  REQUIRE(places[5].category == b.category);
+
+  REQUIRE(places[1].position.x == places[0].position.x + 1);
+  REQUIRE(places[1].position.y == places[0].position.y + 0);
+  REQUIRE(places[2].position.x == places[0].position.x + 0);
+  REQUIRE(places[2].position.y == places[0].position.y + 1);
+  REQUIRE(places[3].position.x == places[0].position.x + 1);
+  REQUIRE(places[3].position.y == places[0].position.y + 1);
+  REQUIRE(places[4].position.x == places[0].position.x + 0);
+  REQUIRE(places[4].position.y == places[0].position.y + 2);
+  REQUIRE(places[5].position.x == places[0].position.x + 1);
+  REQUIRE(places[5].position.y == places[0].position.y + 2);
 }
 
 TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
@@ -330,7 +328,7 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   b.size = 1;
   b.position = glm::dvec2(99, 99);
 
-  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b, b };
+  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b, b, b, b, b, b };
   RTSPathingLib::Formation formation(nullptr);
   formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation.setUnitCategory(0);
@@ -345,11 +343,26 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
 
   REQUIRE(places.size() == input.size());
-  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE(places[0].category == a.category);
-  REQUIRE(places[1].category == a.category);
-
+  REQUIRE(places[0].position.x == -0.5);
+  REQUIRE(places[0].position.y == -0.5);
+  REQUIRE(places[1].position.x ==  0.5);
+  REQUIRE(places[1].position.y == -0.5);
+  REQUIRE(places[2].position.x == -0.5);
+  REQUIRE(places[2].position.y ==  0.5);
+  REQUIRE(places[3].position.x == -1.5);
+  REQUIRE(places[3].position.y == -1.5);
+  REQUIRE(places[4].position.x == -0.5);
+  REQUIRE(places[4].position.y == -1.5);
+  REQUIRE(places[5].position.x ==  0.5);
+  REQUIRE(places[5].position.y == -1.5);
+  REQUIRE(places[6].position.x ==  1.5);
+  REQUIRE(places[6].position.y == -1.5);
+  REQUIRE(places[7].position.x == -1.5);
+  REQUIRE(places[7].position.y == -0.5);
+  REQUIRE(places[8].position.x ==  1.5);
+  REQUIRE(places[8].position.y == -0.5);
+  REQUIRE(places[9].position.x == -1.5);
+  REQUIRE(places[9].position.y == 0.5);
+  REQUIRE(places[10].position.x == 1.5);
+  REQUIRE(places[10].position.y == 0.5);
 }

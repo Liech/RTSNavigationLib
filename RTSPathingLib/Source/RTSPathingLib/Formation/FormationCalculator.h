@@ -18,7 +18,7 @@ namespace RTSPathingLib {
     static std::vector<Body>                          formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, const glm::dvec2& startPoint, const Formation&, std::vector<std::vector<glm::dvec2>>& allPolygons);
     static void                                       saveAsSvg(const std::vector<Body>& bodies, const std::vector<std::vector<glm::dvec2>>& polygons, const RectangleGrid<bool>& grid);
     static glm::dvec3                                 getScalingVector(const Formation&, size_t scale);
-    static RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon);
+    static RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon, const std::vector<std::vector<glm::dvec2>>& polygons);
     static std::vector<Body>                          placeUnits(const RectangleGrid<bool>&, const std::map<size_t, size_t>&, const glm::dvec2& offset, size_t category, bool& allPlaced);
     static std::pair<glm::dvec2, glm::dvec2>          getMinMax(const std::vector<glm::dvec2>&);
     static glm::dmat4                                 getLocalTransformation(const Formation&, const glm::dvec2& startPoint, size_t scale);
