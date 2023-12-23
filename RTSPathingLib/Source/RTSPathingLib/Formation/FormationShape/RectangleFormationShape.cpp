@@ -33,8 +33,8 @@ namespace RTSPathingLib {
     glm::dvec2 size = getBaseSize();
     return {
       glm::dvec2(-0.5 * size.x,-0.5 * size.y),
-      glm::dvec2(0.5 * size.x,-0.5 * size.y),
-      glm::dvec2(0.5 * size.x, 0.5 * size.y),
+      glm::dvec2(0.5 * size.x,-0.5 * size.y) ,
+      glm::dvec2(0.5 * size.x, 0.5 * size.y) ,
       glm::dvec2(-0.5 * size.x, 0.5 * size.y),
     };
   }

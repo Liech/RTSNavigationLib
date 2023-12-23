@@ -366,3 +366,41 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   REQUIRE(places[10].position.x == 1.5);
   REQUIRE(places[10].position.y == 0.5);
 }
+
+TEST_CASE("Formation/RotateChild", "[FormationSingle]") {
+  RTSPathingLib::Body a;
+  a.category = 0;
+  a.size = 1;
+  a.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body b;
+  b.category = 1;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b,};
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation.setUnitCategory(0);
+
+  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>(&formation);
+  formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation2->setUnitCategory(1);
+  formation2->setParentInterfacePoint(9);
+  formation2->setOwnInterfacePoint(5);
+  formation2->setRotation(glm::pi<float>() * 0.5);
+  formation.addChild(std::move(formation2));
+
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+  REQUIRE(places[1].position.x == places[0].position.x + 1);
+  REQUIRE(places[1].position.y == places[0].position.y + 0);
+  REQUIRE(places[2].position.x == places[0].position.x + 0);
+  REQUIRE(places[2].position.y == places[0].position.y + 1);
+  REQUIRE(places[3].position.x == places[0].position.x - 1);
+  REQUIRE(places[3].position.y == places[0].position.y + 1);
+  REQUIRE(places[4].position.x == places[0].position.x - 1);
+  REQUIRE(places[4].position.y == places[0].position.y + 2);
+  REQUIRE(places[5].position.x == places[0].position.x - 0);
+  REQUIRE(places[5].position.y == places[0].position.y + 2);
+}
