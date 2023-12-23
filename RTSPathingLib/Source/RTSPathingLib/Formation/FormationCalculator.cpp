@@ -34,7 +34,8 @@ namespace RTSPathingLib {
     glm::dmat4 toFormationCenter;
     RectangleGrid<bool> grid;
 
-    int tries = 5;
+    int maxTries = 50;
+    int tries = maxTries;
     long long lastPlaced = -1;
     bool allPlaced = false;
     while (!allPlaced) {
@@ -44,7 +45,7 @@ namespace RTSPathingLib {
           break;
       }
       else 
-        tries = 5;
+        tries = maxTries;
 
       lastPlaced = result.size();
       toFormationCenter = getLocalTransformation(formation, startPoint, scale);
@@ -52,7 +53,8 @@ namespace RTSPathingLib {
       std::vector<glm::dvec2> polygon;
       grid = getGrid(formation, toFormationCenter, polygon,allPolygons);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
-      
+
+      saveAsSvg(result, allPolygons, grid, polygon);
       if (allPlaced) {
         allPolygons.push_back(polygon);
         break;
@@ -81,12 +83,12 @@ namespace RTSPathingLib {
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
-    saveAsSvg(result, allPolygons, grid);
+    saveAsSvg(result, allPolygons, grid, {});
     return result;
   }
   
   
-  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const std::vector<std::vector<glm::dvec2>>& polygons, const RectangleGrid<bool>& grid) {
+  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const std::vector<std::vector<glm::dvec2>>& polygons, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
     //https://graphviz.org/doc/info/colors.html
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
 
@@ -96,6 +98,14 @@ namespace RTSPathingLib {
       debug.streak = polygon;
       debug.wrapAround = true;
       debug.color = "green";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
+    if (currentPolygon.size() != 0) {
+      svg debug;
+      debug.streak = currentPolygon;
+      debug.wrapAround = true;
+      debug.color = "red";
       debug.thickness = 0.1;
       svgDebug.push_back(debug);
     }

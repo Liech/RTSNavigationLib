@@ -4,8 +4,7 @@
 #include "FormationShape/RectangleFormationShape.h"
 
 namespace RTSPathingLib {
-  Formation::Formation(const Formation* parent_) {
-    parent = parent_;
+  Formation::Formation() {
     shape = std::make_unique<RectangleFormationShape>();
   }
 
@@ -26,6 +25,7 @@ namespace RTSPathingLib {
   }
 
   void Formation::addChild(std::unique_ptr<Formation> child) {
+    child->parent = this;
     children.push_back(std::move(child));
   }
 

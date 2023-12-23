@@ -8,7 +8,7 @@ namespace RTSPathingLib {
 
   class Formation {
   public:
-    Formation(const Formation* parent);
+    Formation();
     virtual ~Formation();
 
     size_t getChildrenCount() const;
