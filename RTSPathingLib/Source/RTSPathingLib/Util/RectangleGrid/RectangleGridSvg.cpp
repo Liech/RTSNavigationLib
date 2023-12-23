@@ -11,7 +11,7 @@ namespace RTSPathingLib {
     for (size_t i = 0; i < grid.data.size(); i++) {
       svg v;
       glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, i / grid.dimension.x);
-      glm::dvec2 rectCenter = glm::dvec2((pos.x+0.5)*scale,(pos.y+0.5)*scale) + grid.offset;
+      glm::dvec2 rectCenter = glm::dvec2((pos.x+0.5)*scale,(pos.y+0.5)*scale) + (glm::dvec2)grid.offset;
       v.streak = getRectangle(rectCenter, scale);
       v.filled = grid.data[i];
       toWrite.push_back(v);

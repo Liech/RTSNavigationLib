@@ -16,16 +16,18 @@ namespace RTSPathingLib {
     glm::dmat4 currentTransformation = glm::dmat4(1);
     auto overall = getSizesPerCategory(units);
     auto current = overall;
-    std::vector<std::vector<glm::dvec2>> allPolygons;
+    std::vector<RectangleGrid<bool>> allGrids;
 
     glm::dvec2 startPoint = glm::dvec2(0, 0);
-    std::vector<Body> result = formate(current,overall, startPoint,formation, allPolygons);
+    std::vector<Body> result = formate(current,overall, startPoint,formation, allGrids);
    
 
     return result;
   }
 
-  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, const glm::dvec2& startPoint, const Formation& formation, std::vector<std::vector<glm::dvec2>>& allPolygons) {
+  std::vector<glm::dvec2> lastpolygon;
+
+  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, const glm::dvec2& startPoint, const Formation& formation, std::vector<RectangleGrid<bool>>& allGrids) {
     size_t scale             = 1;
     auto  unitsPlacedHere    = gatherUnits(formation, overall, current);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
@@ -51,12 +53,13 @@ namespace RTSPathingLib {
       toFormationCenter = getLocalTransformation(formation, startPoint, scale);
       
       std::vector<glm::dvec2> polygon;
-      grid = getGrid(formation, toFormationCenter, polygon,allPolygons);
+      grid = getGrid(formation, toFormationCenter, polygon, allGrids);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
+      lastpolygon = polygon;
 
-      saveAsSvg(result, allPolygons, grid, polygon);
+      //saveAsSvg(result, allGrids, grid, polygon);
       if (allPlaced) {
-        allPolygons.push_back(polygon);
+        allGrids.push_back(grid);
         break;
       }
       scale ++;      
@@ -79,28 +82,20 @@ namespace RTSPathingLib {
 
       glm::dvec2 nextOffset = deeper * glm::dvec4(0, 0, 0, 1);
 
-      auto sub = formate(current, overall, formationCenter- nextOffset, child, allPolygons);
+      auto sub = formate(current, overall, formationCenter- nextOffset, child, allGrids);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
-    saveAsSvg(result, allPolygons, grid, {});
+    saveAsSvg(result, allGrids, grid, lastpolygon);
     return result;
   }
   
   
-  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const std::vector<std::vector<glm::dvec2>>& polygons, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
+  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, std::vector<RectangleGrid<bool>>& allGrids, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
     //https://graphviz.org/doc/info/colors.html
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
 
     auto svgDebug = RectangleGridSvg::write(grid, 1);
-    for (auto& polygon : polygons) {
-      svg debug;
-      debug.streak = polygon;
-      debug.wrapAround = true;
-      debug.color = "green";
-      debug.thickness = 0.1;
-      svgDebug.push_back(debug);
-    }
     if (currentPolygon.size() != 0) {
       svg debug;
       debug.streak = currentPolygon;
@@ -125,7 +120,7 @@ namespace RTSPathingLib {
     svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
 
-  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon, const std::vector<std::vector<glm::dvec2>>& allPolygons) {
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon, const std::vector<RectangleGrid<bool>>& allGrids) {
     polygon = formation.getShape().getPolygon();
     for (auto& x : polygon)
       x = transformation*glm::vec4(x, 0, 1);
@@ -138,23 +133,21 @@ namespace RTSPathingLib {
 
     auto grid = RectangleGridVoxelizer::voxelize(polygon, dimension, offset);
 
-    RectangleGrid<bool> negativeGrid;
-    negativeGrid.offset = grid.offset;
-    negativeGrid.dimension = grid.dimension;
-    negativeGrid.data.resize(grid.data.size());
 
-    for (const auto& poly : allPolygons) {
-      auto sub = RectangleGridVoxelizer::voxelize(poly, dimension,offset);
-      negativeGrid = negativeGrid | sub;
+    for (const auto& subGrid : allGrids) {
+      grid = grid - subGrid;
     }
-    grid = grid - negativeGrid;
 
     return grid;
   }
 
-  std::vector<Body> FormationCalculator::placeUnits(const RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::dvec2& offset, size_t category, bool& allPlaced) {
+  std::vector<Body> FormationCalculator::placeUnits(RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::dvec2& offset, size_t category, bool& allPlaced) {
     std::vector<Body> result;
     size_t currentSize = 1;
+    RectangleGrid<bool> actuallyPlaced;
+    actuallyPlaced.dimension = grid.dimension;
+    actuallyPlaced.offset = grid.offset;
+    actuallyPlaced.data.resize(grid.data.size());
     long long unitsToPlace = (long long)units.at(currentSize);
     for (size_t i = 0; i < grid.data.size() && unitsToPlace>0; i++) {
       if (grid.data[i]) {
@@ -164,12 +157,13 @@ namespace RTSPathingLib {
         sub.size = currentSize;
         sub.position = (glm::dvec2)pos + offset + glm::dvec2(0.5,0.5);
         result.push_back(sub);
+        actuallyPlaced.data[i] = true;
         unitsToPlace--;
       }      
     }
     if (unitsToPlace <= 0)
       allPlaced = true;
-
+    grid = actuallyPlaced;
     return result;
   }
 

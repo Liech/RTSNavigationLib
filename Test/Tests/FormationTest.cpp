@@ -328,7 +328,7 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   b.size = 1;
   b.position = glm::dvec2(99, 99);
 
-  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b, b, b, b, b, b };
+  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b, b, b, b, b, b, b };
   RTSPathingLib::Formation formation;
   formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation.setUnitCategory(0);
@@ -363,8 +363,10 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   REQUIRE(places[8].position.y == -0.5);
   REQUIRE(places[9].position.x == -1.5);
   REQUIRE(places[9].position.y == 0.5);
-  REQUIRE(places[10].position.x == 1.5);
+  REQUIRE(places[10].position.x == 0.5);
   REQUIRE(places[10].position.y == 0.5);
+  REQUIRE(places[11].position.x == 1.5);
+  REQUIRE(places[11].position.y == 0.5);
 }
 
 TEST_CASE("Formation/RotateChild", "[FormationSingle]") {
