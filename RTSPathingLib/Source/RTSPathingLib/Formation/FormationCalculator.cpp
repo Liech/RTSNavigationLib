@@ -176,9 +176,9 @@ namespace RTSPathingLib {
     glm::dvec3 vectorScale = getScalingVector(formation, scale);
 
     result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
-    result = glm::translate(result, glm::dvec3(interfacePoint.x,interfacePoint.y, 0));
-    result = glm::scale(result, vectorScale);
     result = glm::translate(result, glm::dvec3(startPoint.x, startPoint.y, 0));
+    result = glm::scale(result, vectorScale);
+    result = glm::translate(result, glm::dvec3(interfacePoint.x, interfacePoint.y, 0));
     return result;
   }
 

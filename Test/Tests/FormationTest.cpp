@@ -301,51 +301,55 @@ TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
 
   REQUIRE(places.size() == input.size());
   REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[0].position.y + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[1].position.y + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE(places[0].category == a.category);
+  REQUIRE(places[1].category == a.category);
+  REQUIRE(places[2].category == a.category);
+  REQUIRE(places[3].category == a.category);
+
+  REQUIRE_THAT(places[4].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[4].position.y - 1.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[5].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE_THAT(places[5].position.y - 1.5, Catch::Matchers::WithinAbs(0, 0.01));
+  REQUIRE(places[4].category == b.category);
+  REQUIRE(places[5].category == b.category);
+  REQUIRE(places[6].category == b.category);
+  REQUIRE(places[7].category == b.category);
+}
+
+
+TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
+  RTSPathingLib::Body a;
+  a.category = 0;
+  a.size = 1;
+  a.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body b;
+  b.category = 1;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b, b };
+  RTSPathingLib::Formation formation(nullptr);
+  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation.setUnitCategory(0);
+
+  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>(&formation);
+  formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation2->setUnitCategory(1);
+  formation2->setParentInterfacePoint(9);
+  formation2->setOwnInterfacePoint(9); 
+  formation.addChild(std::move(formation2));
+
+  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
+
+  REQUIRE(places.size() == input.size());
+  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE_THAT(places[1].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[0].category == a.category);
   REQUIRE(places[1].category == a.category);
 
-  REQUIRE_THAT(places[2].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[2].position.y - 1, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[3].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[3].position.y - 1, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE(places[2].category == b.category);
-  REQUIRE(places[3].category == b.category);
 }
-
-//
-//TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
-//  RTSPathingLib::Body a;
-//  a.category = 0;
-//  a.size = 1;
-//  a.position = glm::dvec2(99, 99);
-//  RTSPathingLib::Body b;
-//  b.category = 1;
-//  b.size = 1;
-//  b.position = glm::dvec2(99, 99);
-//
-//  std::vector<RTSPathingLib::Body> input = { a,a, a, b, b, b, b };
-//  RTSPathingLib::Formation formation(nullptr);
-//  formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
-//  formation.setUnitCategory(0);
-//
-//  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>(&formation);
-//  formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
-//  formation2->setUnitCategory(1);
-//  formation2->setParentInterfacePoint(9);
-//  formation2->setOwnInterfacePoint(9); 
-//  formation.addChild(std::move(formation2));
-//
-//  auto places = RTSPathingLib::FormationCalculator::calculate(formation, input);
-//
-//  REQUIRE(places.size() == input.size());
-//  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-//  REQUIRE_THAT(places[0].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
-//  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-//  REQUIRE_THAT(places[1].position.y - 0, Catch::Matchers::WithinAbs(0, 0.01));
-//  REQUIRE(places[0].category == a.category);
-//  REQUIRE(places[1].category == a.category);
-//
-//}
