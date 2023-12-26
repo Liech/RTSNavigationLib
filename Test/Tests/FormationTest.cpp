@@ -231,6 +231,38 @@ TEST_CASE("Formation/Rotation", "[FormationSingle]") {
   REQUIRE(places[0].position.y != 99);
 }
 
+
+TEST_CASE("Formation/RotationWithInterface", "[FormationSingle]") {
+  RTSPathingLib::Body a;
+  a.category = 0;
+  a.size = 1;
+  a.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body b;
+  b.category = 1;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { a,a,a,a,b,b,b,b };
+  RTSPathingLib::Formation formation;
+  formation.setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::LeftMiddle);
+  formation.setRotation(glm::pi<double>());
+  formation.setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+
+
+  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
+  formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation2->setUnitCategory(1);
+  formation2->setParentInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::LeftMiddle);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
+  formation2->setRotateWithInterface(true);
+  formation.addChild(std::move(formation2));
+
+  auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
+
+  REQUIRE(places.size() == input.size());
+
+}
+
 TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   RTSPathingLib::Body a;
   a.category = 0;
@@ -473,7 +505,6 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
   REQUIRE(places[9].position.x == places[0].position.x + 1);
   REQUIRE(places[9].position.y == places[0].position.y + 4);
 }
-
 
 TEST_CASE("Formation/PraiseTheSun", "[FormationSingle]") {
 

@@ -22,10 +22,10 @@ namespace RTSPathingLib {
     void   setOwnInterfacePoint(size_t);
     size_t getParentInterfacePoint() const;
     void   setParentInterfacePoint(size_t);
-    //bool   getOverwriteWidthWithInterfaceWidth() const;
-    //void   setOverwriteWidthWithInterfaceWidth(bool doIt);
-    //bool   getRotateWithInterface() const;
-    //void   setRotateWithInterface(bool v);
+    bool   getOverwriteWidthWithInterfaceWidth() const;
+    void   setOverwriteWidthWithInterfaceWidth(bool doIt);
+    bool   getRotateWithInterface() const;
+    void   setRotateWithInterface(bool v);
     //bool   getLinkSizeWithParent() const;
     //void   setLinkSizeWithParent(bool v);
 
@@ -46,8 +46,8 @@ namespace RTSPathingLib {
     std::unique_ptr<FormationShape> shape   = nullptr;
     size_t ownInterfacePoint                = 0;
     size_t parentInterfacePoint             = 0;
-    //bool   overwriteWidthWithInterfaceWidth = false;
-    //bool   rotateWithInterface              = false;
+    bool   overwriteWidthWithInterfaceWidth = false;
+    bool   rotateWithInterface              = false;
     //bool   linkSizeWithParent               = false;
     //double unitPadding                      = 1.1;
     double rotation                         = 0.0;

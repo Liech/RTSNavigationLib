@@ -53,21 +53,21 @@ namespace RTSPathingLib {
     parentInterfacePoint = p;
   }
 
-  //bool Formation::getOverwriteWidthWithInterfaceWidth() const {
-  //  return overwriteWidthWithInterfaceWidth;
-  //}
+  bool Formation::getOverwriteWidthWithInterfaceWidth() const {
+    return overwriteWidthWithInterfaceWidth;
+  }
 
-  //void Formation::setOverwriteWidthWithInterfaceWidth(bool doIt) {
-  //  overwriteWidthWithInterfaceWidth = doIt;
-  //}
+  void Formation::setOverwriteWidthWithInterfaceWidth(bool doIt) {
+    overwriteWidthWithInterfaceWidth = doIt;
+  }
 
-  //bool Formation::getRotateWithInterface() const {
-  //  return rotateWithInterface;
-  //}
+  bool Formation::getRotateWithInterface() const {
+    return rotateWithInterface;
+  }
 
-  //void Formation::setRotateWithInterface(bool v) {
-  //  rotateWithInterface = v;
-  //}
+  void Formation::setRotateWithInterface(bool v) {
+    rotateWithInterface = v;
+  }
 
   //bool Formation::getLinkSizeWithParent() const {
   //  return linkSizeWithParent;

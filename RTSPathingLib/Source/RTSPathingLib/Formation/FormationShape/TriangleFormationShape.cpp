@@ -44,7 +44,7 @@ namespace RTSPathingLib {
     if (number == 0)
       return 0;
     size_t edge = ((number - 1) / 2) % 3;
-    bool center = (number - 1) % 2 == 0;
+    bool center = (number - 1) % 2 == 1;
     if (!center)
       return 0;
     auto poly = getPolygon();
@@ -56,7 +56,7 @@ namespace RTSPathingLib {
     if (number == 0)
       return glm::dvec2(0, 1);
     size_t edge = (number - 1) % 3;
-    bool center = (number - 1) % 2 == 0;
+    bool center = (number - 1) % 2 == 1;
     if (!center)
       return glm::dvec2(0, 1);
     auto poly = getPolygon();

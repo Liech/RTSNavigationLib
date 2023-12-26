@@ -1,5 +1,7 @@
 #include "Geometry2D.h"
 
+#include <glm/gtx/vector_angle.hpp>
+
 namespace RTSPathingLib {
   //https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
   bool Geometry2D::LineLineIntersect(glm::dvec2 p0, glm::dvec2 p1, glm::dvec2 p2, glm::dvec2 p3, glm::dvec2& i) //Output 
@@ -66,4 +68,9 @@ namespace RTSPathingLib {
 
 		return ans;
 	}
+
+  //https://stackoverflow.com/a/67719217
+  double Geometry2D::getAngle(const glm::dvec2& a, const glm::dvec2& b) {
+    return glm::orientedAngle(a, b);
+  }
 }

@@ -25,14 +25,15 @@ namespace RTSPathingLib {
 
     glm::dvec2 parentCenter = glm::dvec2(0, 0);
     size_t     parentSize = 1;
-    std::vector<Body> result = recurse(parentCenter,parentSize,rootFormation);
+    double     parentRotation = 0;
+    std::vector<Body> result = recurse(parentCenter, parentSize, parentRotation, rootFormation);
    
 
     return result;
   }
 
 
-  std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, const Formation& formation) {
+  std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, const Formation& formation) {
     size_t scale             = 1;
     auto  unitsPlacedHere    = gatherUnits(formation);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
@@ -56,7 +57,7 @@ namespace RTSPathingLib {
         tries = maxTries;
 
       lastPlaced = result.size();
-      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter,parentSize, scale);
+      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, parentRotation, scale);
       formationCenter = toFormationCenter * glm::dvec4(0, 0, 0, 1);
 
       std::vector<glm::dvec2> polygon;
@@ -67,6 +68,7 @@ namespace RTSPathingLib {
       saveAsSvg(result, grid, polygon);
       if (allPlaced) {
         allGrids.push_back(grid);
+        allPolygons.push_back(polygon);
         break;
       }
       scale ++;      
@@ -75,10 +77,9 @@ namespace RTSPathingLib {
     if (tries <= 0)
       return {};
 
-
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
-      auto sub = recurse(formationCenter, scale, child);
+      auto sub = recurse(formationCenter, scale, parentRotation, child);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
@@ -86,14 +87,16 @@ namespace RTSPathingLib {
     return result;
   }
   
-  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& parentCenter, size_t parentScale, size_t scale) {
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& parentCenter, size_t parentScale, double& parentRotation, size_t scale) {
     FormationShape& shape = formation.getShape();
 
-    glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);;
+    glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);
+    glm::dvec2 parentInterfaceNormal = glm::dvec2(0, 1);
     if (formation.hasParent()) {
       glm::dvec3 vectorScale = getScalingVector(formation.getParent(), parentScale);
       parentInterfacePoint = formation.getParent().getShape().getInterfacePoint(formation.getParentInterfacePoint());
       parentInterfacePoint = glm::dvec2(parentInterfacePoint.x * vectorScale.x, parentInterfacePoint.y * vectorScale.y);
+      parentInterfaceNormal = formation.getParent().getShape().getInterfaceNormal(formation.getParentInterfacePoint());
     }
 
     glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
@@ -101,9 +104,15 @@ namespace RTSPathingLib {
 
     glm::dvec3 vectorScale = getScalingVector(formation, scale);
 
+    double rotation = formation.getRotation() + parentRotation;
+    if (formation.getRotateWithInterface()) {
+      double angle = Geometry2D::getAngle(glm::dvec2(0,1), parentInterfaceNormal);
+      rotation = parentRotation + angle;
+    }
+
     result = glm::translate(result, glm::dvec3(parentCenter, 0));
     result = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
-    result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
+    result = glm::rotate(result, rotation, glm::dvec3(0, 0, 1));
     result = glm::scale(result, vectorScale);
     result = glm::translate(result, glm::dvec3(interfacePoint, 0));
     return result;
@@ -115,14 +124,23 @@ namespace RTSPathingLib {
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
 
     std::vector<svg> svgDebug = {};// RectangleGridSvg::write(grid, 1);
-    //if (currentPolygon.size() != 0) {
-    //  svg debug;
-    //  debug.streak = currentPolygon;
-    //  debug.wrapAround = true;
-    //  debug.color = "red";
-    //  debug.thickness = 0.1;
-    //  svgDebug.push_back(debug);
-    //}
+
+    for (auto& x : allPolygons) {
+      svg debug;
+      debug.streak = x;
+      debug.wrapAround = true;
+      debug.color = "blue";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
+    if (currentPolygon.size() != 0) {
+      svg debug;
+      debug.streak = currentPolygon;
+      debug.wrapAround = true;
+      debug.color = "red";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
     for (auto& body : bodies) {
       svg debug;
       debug.streak = {
