@@ -9,7 +9,7 @@ namespace RTSPathingLib {
   public:
     void write(const std::string& filename, const glm::dvec2& startRegion = glm::dvec2(0, 0), const glm::dvec2& size = glm::dvec2(5, 5)) const;
     static void write(const std::string& filename, const std::vector<svg>& streaks, const glm::dvec2& startRegion = glm::dvec2(0, 0), const glm::dvec2& size = glm::dvec2(5, 5));
-    std::string getXML() const;
+    std::string getXML(const glm::dvec2& startRegion, const glm::dvec2& size) const;
 
     std::vector<glm::dvec2> streak;
     std::string            color = "black";

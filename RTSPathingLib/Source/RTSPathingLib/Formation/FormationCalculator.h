@@ -30,7 +30,7 @@ namespace RTSPathingLib {
     RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon);
     std::vector<Body>                          placeUnits(RectangleGrid<bool>&, const std::map<size_t, size_t>&, const glm::dvec2& offset, size_t category, bool& allPlaced);
     std::pair<glm::dvec2, glm::dvec2>          getMinMax(const std::vector<glm::dvec2>&);
-    glm::dmat4                                 getLocalTransformation(const Formation&, const glm::dvec2& startPoint, glm::dvec2& nextOffset, size_t scale);
+    glm::dmat4                                 getLocalTransformation(const Formation&, const glm::dvec2& parentCenter, size_t parentScale, size_t scale);
     size_t                                     getSizeSum(const std::map<size_t, size_t>&);
     std::map<size_t, size_t>                   gatherUnits(const Formation&, std::map<size_t, std::map<size_t, size_t>>& availableUnits);
     std::map<size_t, std::map<size_t, size_t>> getSizesPerCategory(const std::vector<Body>& units);

@@ -37,7 +37,6 @@ namespace RTSPathingLib {
     auto  formationSize      = getSizeSum(unitsPlacedHere);
     std::vector<Body> result;
 
-    glm::dvec2 nextOffset = glm::vec2(0, 0);
     RectangleGrid<bool> grid;
 
     int maxTries = 50;
@@ -54,7 +53,7 @@ namespace RTSPathingLib {
         tries = maxTries;
 
       lastPlaced = result.size();
-      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, nextOffset, scale);
+      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter,parentSize, scale);
       
       std::vector<glm::dvec2> polygon;
       grid = getGrid(formation, toFormationCenter, polygon);
@@ -72,9 +71,11 @@ namespace RTSPathingLib {
     if (tries <= 0)
       return {};
 
+    glm::dvec2 formationCenter = glm::dvec2(0,0);
+
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
-      auto sub = recurse(current, nextOffset, scale, child);
+      auto sub = recurse(current, formationCenter, scale, child);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
@@ -82,13 +83,15 @@ namespace RTSPathingLib {
     return result;
   }
   
-  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& startPoint, glm::dvec2& nextOffset, size_t scale) {
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& parentCenter, size_t parentScale, size_t scale) {
     FormationShape& shape = formation.getShape();
 
     glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);;
-    if (formation.hasParent())
+    if (formation.hasParent()) {
+      glm::dvec3 vectorScale = getScalingVector(formation.getParent(), parentScale);
       parentInterfacePoint = formation.getParent().getShape().getInterfacePoint(formation.getParentInterfacePoint());
-    //the parentInterfacePoint must be scaled
+      parentInterfacePoint = glm::dvec2(parentInterfacePoint.x * vectorScale.x, parentInterfacePoint.y * vectorScale.y);
+    }
 
     glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::dmat4 result = glm::dmat4(1);

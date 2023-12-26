@@ -9,6 +9,8 @@
 #include "RTSPathingLib/Formation/FormationShape/RectangleFormationShape.h"
 #include "RTSPathingLib/Formation/FormationShape/ArcFormationShape.h"
 #include "RTSPathingLib/Formation/FormationShape/TriangleFormationShape.h"
+#include "RTSPathingLib/Formation/FormationShape/RectangleInterfacePoint.h"
+#include "RTSPathingLib/Formation/FormationShape/TriangleInterfacePoint.h"
 
 TEST_CASE("Formation/RectangleSingle", "[FormationSingle]") {
   RTSPathingLib::Body b;
@@ -198,7 +200,7 @@ TEST_CASE("Formation/InterfacePoint", "[FormationSingle]") {
 
   std::vector<RTSPathingLib::Body> input = { b };
   RTSPathingLib::Formation formation;
-  formation.setOwnInterfacePoint(5);
+  formation.setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
   formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
@@ -217,7 +219,7 @@ TEST_CASE("Formation/Rotation", "[FormationSingle]") {
 
   std::vector<RTSPathingLib::Body> input = { b };
   RTSPathingLib::Formation formation;
-  formation.setOwnInterfacePoint(5);
+  formation.setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
   formation.setRotation(glm::pi<double>());
   formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
@@ -247,8 +249,8 @@ TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation2->setUnitCategory(1);
-  formation2->setParentInterfacePoint(2);
-  formation2->setOwnInterfacePoint(6);
+  formation2->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Bottom);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
   formation.addChild(std::move(formation2));
 
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
@@ -291,30 +293,37 @@ TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
   std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation2->setUnitCategory(1);
-  formation2->setParentInterfacePoint(2);
-  formation2->setOwnInterfacePoint(6);
+  formation2->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Bottom);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
   formation.addChild(std::move(formation2));
 
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
   REQUIRE(places.size() == input.size());
-  REQUIRE_THAT(places[0].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[0].position.y + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[1].position.y + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[0].category == a.category);
   REQUIRE(places[1].category == a.category);
   REQUIRE(places[2].category == a.category);
   REQUIRE(places[3].category == a.category);
-
-  REQUIRE_THAT(places[4].position.x + 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[4].position.y - 1.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[5].position.x - 0.5, Catch::Matchers::WithinAbs(0, 0.01));
-  REQUIRE_THAT(places[5].position.y - 1.5, Catch::Matchers::WithinAbs(0, 0.01));
   REQUIRE(places[4].category == b.category);
   REQUIRE(places[5].category == b.category);
   REQUIRE(places[6].category == b.category);
   REQUIRE(places[7].category == b.category);
+
+  REQUIRE(places[1].position.x == places[0].position.x + 1);
+  REQUIRE(places[1].position.y == places[0].position.y + 0);
+  REQUIRE(places[2].position.x == places[0].position.x + 0);
+  REQUIRE(places[2].position.y == places[0].position.y + 1);
+  REQUIRE(places[3].position.x == places[0].position.x + 1);
+  REQUIRE(places[3].position.y == places[0].position.y + 1);
+
+  REQUIRE(places[4].position.x == places[0].position.x + 0);
+  REQUIRE(places[4].position.y == places[0].position.y - 2);
+  REQUIRE(places[5].position.x == places[0].position.x + 1);
+  REQUIRE(places[5].position.y == places[0].position.y - 2);
+  REQUIRE(places[6].position.x == places[0].position.x + 0);
+  REQUIRE(places[6].position.y == places[0].position.y - 1);
+  REQUIRE(places[7].position.x == places[0].position.x + 1);
+  REQUIRE(places[7].position.y == places[0].position.y - 1);
 }
 
 
@@ -336,8 +345,8 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation2->setUnitCategory(1);
-  formation2->setParentInterfacePoint(9);
-  formation2->setOwnInterfacePoint(9); 
+  formation2->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
   formation.addChild(std::move(formation2));
 
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
@@ -387,8 +396,8 @@ TEST_CASE("Formation/RotateChild", "[FormationSingle]") {
   std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation2->setUnitCategory(1);
-  formation2->setParentInterfacePoint(9);
-  formation2->setOwnInterfacePoint(5);
+  formation2->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Bottom);
   formation2->setRotation(glm::pi<float>() * 0.5);
   formation.addChild(std::move(formation2));
 
@@ -428,17 +437,17 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
 
   std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
 
-  //std::unique_ptr<RTSPathingLib::Formation> formation3 = std::make_unique<RTSPathingLib::Formation>();
-  //formation3->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
-  //formation3->setUnitCategory(2);
-  //formation3->setParentInterfacePoint(5);
-  //formation3->setOwnInterfacePoint(5);
-  //formation2->addChild(std::move(formation3));
+  std::unique_ptr<RTSPathingLib::Formation> formation3 = std::make_unique<RTSPathingLib::Formation>();
+  formation3->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+  formation3->setUnitCategory(2);
+  formation3->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
+  formation3->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Bottom);
+  formation2->addChild(std::move(formation3));
 
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation2->setUnitCategory(1);
-  formation2->setParentInterfacePoint(5);
-  //formation2->setOwnInterfacePoint(5);
+  formation2->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Bottom);
   formation.addChild(std::move(formation2));
 
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
