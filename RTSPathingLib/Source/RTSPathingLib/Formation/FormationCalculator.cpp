@@ -110,6 +110,8 @@ namespace RTSPathingLib {
   }
   
   void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
+    if (!saveSVG)
+      return;
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
 
     auto svgDebug = RectangleGridSvg::write(grid, 1);

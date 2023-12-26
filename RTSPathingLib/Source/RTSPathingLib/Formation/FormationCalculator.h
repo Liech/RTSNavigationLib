@@ -26,6 +26,8 @@ namespace RTSPathingLib {
     std::vector<glm::dvec2> lastpolygon;
     std::map<size_t, double> weightSumPerCategory;
 
+    bool saveSVG = false;
+
     std::vector<Body>                          recurse( const glm::dvec2& parentCenter, size_t parentSize, const Formation&);
     void                                       saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon);
     glm::dvec3                                 getScalingVector(const Formation&, size_t scale);
