@@ -39,6 +39,8 @@ namespace RTSPathingLib {
 
     RectangleGrid<bool> grid;
 
+    glm::dvec2 formationCenter = glm::dvec2(0, 0);
+
     int maxTries = 50;
     int tries = maxTries;
     long long lastPlaced = -1;
@@ -54,7 +56,8 @@ namespace RTSPathingLib {
 
       lastPlaced = result.size();
       glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter,parentSize, scale);
-      
+      formationCenter = toFormationCenter * glm::dvec4(0, 0, 0, 1);
+
       std::vector<glm::dvec2> polygon;
       grid = getGrid(formation, toFormationCenter, polygon);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
@@ -71,7 +74,6 @@ namespace RTSPathingLib {
     if (tries <= 0)
       return {};
 
-    glm::dvec2 formationCenter = glm::dvec2(0,0);
 
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
@@ -98,6 +100,7 @@ namespace RTSPathingLib {
 
     glm::dvec3 vectorScale = getScalingVector(formation, scale);
 
+    result = glm::translate(result, glm::dvec3(parentCenter, 0));
     result = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
     result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
     result = glm::scale(result, vectorScale);

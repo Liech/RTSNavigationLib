@@ -430,7 +430,7 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
   c.size = 1;
   c.position = glm::dvec2(99, 99);
 
-  std::vector<RTSPathingLib::Body> input = { a, a, b,b,b,b,c, c };
+  std::vector<RTSPathingLib::Body> input = { a, a, b,b,b,b,c, c,c, c };
   RTSPathingLib::Formation formation;
   formation.setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
   formation.setUnitCategory(0);
@@ -441,7 +441,7 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
   formation3->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
   formation3->setUnitCategory(2);
   formation3->setParentInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
-  formation3->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Bottom);
+  formation3->setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::BottomCenter);
   formation2->addChild(std::move(formation3));
 
   formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
@@ -454,18 +454,24 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
 
   REQUIRE(places[1].position.x == places[0].position.x + 1);
   REQUIRE(places[1].position.y == places[0].position.y + 0);
+
   REQUIRE(places[2].position.x == places[0].position.x + 0);
-  REQUIRE(places[2].position.y == places[0].position.y - 1);
+  REQUIRE(places[2].position.y == places[0].position.y + 1);
   REQUIRE(places[3].position.x == places[0].position.x + 1);
-  REQUIRE(places[3].position.y == places[0].position.y - 1);
+  REQUIRE(places[3].position.y == places[0].position.y + 1);
   REQUIRE(places[4].position.x == places[0].position.x + 0);
-  REQUIRE(places[4].position.y == places[0].position.y - 2);
+  REQUIRE(places[4].position.y == places[0].position.y + 2);
   REQUIRE(places[5].position.x == places[0].position.x + 1);
-  REQUIRE(places[5].position.y == places[0].position.y - 2);
+  REQUIRE(places[5].position.y == places[0].position.y + 2);
+
   REQUIRE(places[6].position.x == places[0].position.x + 0);
-  REQUIRE(places[6].position.y == places[0].position.y - 3);
+  REQUIRE(places[6].position.y == places[0].position.y + 3);
   REQUIRE(places[7].position.x == places[0].position.x + 1);
-  REQUIRE(places[7].position.y == places[0].position.y - 3);
+  REQUIRE(places[7].position.y == places[0].position.y + 3);
+  REQUIRE(places[8].position.x == places[0].position.x + 0);
+  REQUIRE(places[8].position.y == places[0].position.y + 4);
+  REQUIRE(places[9].position.x == places[0].position.x + 1);
+  REQUIRE(places[9].position.y == places[0].position.y + 4);
 }
 
 //
