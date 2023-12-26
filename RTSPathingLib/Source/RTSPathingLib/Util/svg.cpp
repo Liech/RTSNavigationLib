@@ -13,6 +13,16 @@ namespace RTSPathingLib {
     for (const auto& x : streaks)
       data += x.getXML();
 
+
+    glm::dvec2 arrowFoot  = startRegion + glm::dvec2(3,3+0);
+    glm::dvec2 arrowTip   = startRegion + glm::dvec2(3,3+2);
+    glm::dvec2 arrowLeft  = startRegion + glm::dvec2(2,4);
+    glm::dvec2 arrowRight = startRegion + glm::dvec2(4,4);
+    data += "  <line x1=\"" + std::to_string(arrowFoot.x) + "\" y1=\"" + std::to_string(arrowFoot.y) + "\" x2=\"" + std::to_string(arrowTip.x) + "\" y2=\"" + std::to_string(arrowTip.y) + "\" stroke=\"black\"   stroke-width=\"0.1\"/>";
+    data += "  <line x1=\"" + std::to_string(arrowTip.x) + "\" y1=\"" + std::to_string(arrowTip.y) + "\" x2=\"" + std::to_string(arrowLeft.x) + "\" y2=\"" + std::to_string(arrowLeft.y) + "\" stroke=\"black\"   stroke-width=\"0.1\"/>";
+    data += "  <line x1=\"" + std::to_string(arrowTip.x) + "\" y1=\"" + std::to_string(arrowTip.y) + "\" x2=\"" + std::to_string(arrowRight.x) + "\" y2=\"" + std::to_string(arrowRight.y) + "\" stroke=\"black\" stroke-width=\"0.1\"/>";
+
+
     data += "\n</svg>";
     RTSPathingLib::String2File(filename, data);
   }
@@ -36,6 +46,7 @@ namespace RTSPathingLib {
       }
       result += "\" fill=\"" + color + "\" />\n";
     }
+
     return result;
   }
 }

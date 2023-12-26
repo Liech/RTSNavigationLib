@@ -23,7 +23,7 @@ namespace RTSPathingLib {
     if (number == 0)
       return glm::dvec2(0, 0);
     size_t edge = ((number - 1) / 2) % 3;
-    bool center = (number - 1) % 2 == 0;
+    bool center = (number - 1) % 2 == 1;
     auto poly = getPolygon();
     glm::dvec2 result = poly[edge];
     if (center)
@@ -32,11 +32,11 @@ namespace RTSPathingLib {
   }
 
   std::vector<glm::dvec2> TriangleFormationShape::getPolygon() const {
-    glm::dvec2 size = getBaseSize() * 0.5;
+    glm::dvec2 size = getBaseSize() ;
     return std::vector<glm::dvec2>{
-      glm::dvec2(size.x* std::sin((glm::pi<double>() * 2.0) * (0.0000 + 0.5)), size.y* std::cos((glm::pi<double>() * 2.0) * (0.0000 + 0.5))),
-      glm::dvec2(size.x* std::sin((glm::pi<double>() * 2.0) * (0.3333 + 0.5)), size.y* std::cos((glm::pi<double>() * 2.0) * (0.3333 + 0.5))),
-      glm::dvec2(size.x* std::sin((glm::pi<double>() * 2.0) * (0.6666 + 0.5)), size.y* std::cos((glm::pi<double>() * 2.0) * (0.6666 + 0.5))),
+      glm::dvec2(size.x * -0.5, size.y *  0.5),
+      glm::dvec2(size.x *  0.0, size.y * -0.5),
+      glm::dvec2(size.x *  0.5, size.y *  0.5),
     };
   }
 

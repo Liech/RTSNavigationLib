@@ -12,28 +12,32 @@
 #include "Util/RectangleGrid/RectangleGridSvg.h"
 
 namespace RTSPathingLib {
-  std::vector<Body> FormationCalculator::calculate(const Formation& formation, const std::vector<Body>& units) {
-    glm::dmat4 currentTransformation = glm::dmat4(1);
-    auto overall = getSizesPerCategory(units);
-    auto current = overall;
-    std::vector<RectangleGrid<bool>> allGrids;
+  FormationCalculator::FormationCalculator(const Formation& formation, const std::vector<Body>& units) :
+  rootFormation(formation), inputUnits(units)
+  {
+    overall = getSizesPerCategory(units);
+  }
 
-    glm::dvec2 startPoint = glm::dvec2(0, 0);
-    std::vector<Body> result = formate(current,overall, startPoint,formation, allGrids);
+  std::vector<Body> FormationCalculator::calculate() {
+    glm::dmat4 currentTransformation = glm::dmat4(1);
+    auto current = overall;
+
+    glm::dvec2 parentCenter = glm::dvec2(0, 0);
+    size_t     parentSize = 1;
+    std::vector<Body> result = formate(current, parentCenter,parentSize,rootFormation);
    
 
     return result;
   }
 
-  std::vector<glm::dvec2> lastpolygon;
 
-  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const std::map<size_t, std::map<size_t, size_t>>& overall, const glm::dvec2& startPoint, const Formation& formation, std::vector<RectangleGrid<bool>>& allGrids) {
+  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const glm::dvec2& parentCenter, size_t parentSize, const Formation& formation) {
     size_t scale             = 1;
-    auto  unitsPlacedHere    = gatherUnits(formation, overall, current);
+    auto  unitsPlacedHere    = gatherUnits(formation, current);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
     std::vector<Body> result;
 
-    glm::dmat4 toFormationCenter;
+    glm::dvec2 nextOffset = glm::vec2(0, 0);
     RectangleGrid<bool> grid;
 
     int maxTries = 50;
@@ -50,14 +54,14 @@ namespace RTSPathingLib {
         tries = maxTries;
 
       lastPlaced = result.size();
-      toFormationCenter = getLocalTransformation(formation, startPoint, scale);
+      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, nextOffset, scale);
       
       std::vector<glm::dvec2> polygon;
-      grid = getGrid(formation, toFormationCenter, polygon, allGrids);
+      grid = getGrid(formation, toFormationCenter, polygon);
       result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
       lastpolygon = polygon;
 
-      //saveAsSvg(result, allGrids, grid, polygon);
+      saveAsSvg(result, grid, polygon);
       if (allPlaced) {
         allGrids.push_back(grid);
         break;
@@ -68,31 +72,18 @@ namespace RTSPathingLib {
     if (tries <= 0)
       return {};
 
-    glm::dvec2 formationCenter = toFormationCenter * glm::dvec4(0, 0, 0, 1);
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
-
-      glm::dmat4 deeper      = glm::dmat4(1);
-      glm::dvec3 vectorScale = getScalingVector(formation, scale);
-      glm::dvec2 parentInterfacePoint = formation.getShape().getInterfacePoint(child.getParentInterfacePoint());
-
-      deeper = glm::rotate   (deeper, formation.getRotation(), glm::dvec3(0, 0, 1));
-      deeper = glm::scale    (deeper, vectorScale);
-      deeper = glm::translate(deeper, glm::dvec3(parentInterfacePoint.x, parentInterfacePoint.y, 0));
-
-      glm::dvec2 nextOffset = deeper * glm::dvec4(0, 0, 0, 1);
-
-      auto sub = formate(current, overall, formationCenter- nextOffset, child, allGrids);
+      auto sub = formate(current, nextOffset, scale, child);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
-    saveAsSvg(result, allGrids, grid, lastpolygon);
+    saveAsSvg(result, grid, lastpolygon);
     return result;
   }
   
   
-  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, std::vector<RectangleGrid<bool>>& allGrids, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
-    //https://graphviz.org/doc/info/colors.html
+  void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
 
     auto svgDebug = RectangleGridSvg::write(grid, 1);
@@ -120,7 +111,7 @@ namespace RTSPathingLib {
     svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
 
-  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon, const std::vector<RectangleGrid<bool>>& allGrids) {
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon) {
     polygon = formation.getShape().getPolygon();
     for (auto& x : polygon)
       x = transformation*glm::vec4(x, 0, 1);
@@ -181,18 +172,23 @@ namespace RTSPathingLib {
   }
 
   //rotation, parent transformation etc missing
-  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& startPoint, size_t scale) {
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& startPoint, glm::dvec2& nextOffset, size_t scale) {
     FormationShape& shape = formation.getShape();
 
-    glm::dvec2 interfacePoint = shape.getInterfacePoint(formation.getOwnInterfacePoint());
+    glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);;
+    if (formation.hasParent())
+      parentInterfacePoint = formation.getParent().getShape().getInterfacePoint(formation.getParentInterfacePoint());
+    //the parentInterfacePoint must be scaled
+
+    glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::dmat4 result = glm::dmat4(1);
 
     glm::dvec3 vectorScale = getScalingVector(formation, scale);
 
-    result = glm::translate(result, glm::dvec3(startPoint.x, startPoint.y, 0));
+    result = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
     result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
     result = glm::scale(result, vectorScale);
-    result = glm::translate(result, glm::dvec3(interfacePoint.x, interfacePoint.y, 0));
+    result = glm::translate(result, glm::dvec3(interfacePoint, 0));
     return result;
   }
 
@@ -230,11 +226,11 @@ namespace RTSPathingLib {
     return result;
   }
 
-  std::map<size_t, size_t> FormationCalculator::gatherUnits(const Formation& formation, const std::map<size_t, std::map<size_t, size_t>>& OverallUnits, std::map<size_t, std::map<size_t, size_t>>& availableUnits) {
+  std::map<size_t, size_t> FormationCalculator::gatherUnits(const Formation& formation, std::map<size_t, std::map<size_t, size_t>>& availableUnits) {
     size_t category = formation.getUnitCategory();
     double weight = formation.getUnitDistributionWeight();
     std::map<size_t, size_t> unitAmount;
-    for (const auto& size : OverallUnits.at(category)) {
+    for (const auto& size : overall.at(category)) {
       size_t amount = (size_t)std::ceil(weight * (double)size.second);
       size_t available = availableUnits[category][size.first];
       if (available > amount)

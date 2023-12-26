@@ -39,3 +39,7 @@ target_include_directories(RTSPathingLibTests SYSTEM PUBLIC
 #               COMMAND ${CMAKE_COMMAND} -E copy_directory 
 #               "${RTSPathingLibTests_SOURCE_DIR}/TestData"              
 #                $<TARGET_FILE_DIR:RTSPathingLibTests>/TestData)
+
+include(CTest)
+include(Catch)
+catch_discover_tests(RTSPathingLibTests)

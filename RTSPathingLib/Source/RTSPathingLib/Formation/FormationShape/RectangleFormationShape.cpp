@@ -21,7 +21,7 @@ namespace RTSPathingLib {
     if (number == 0)
       return glm::dvec2(0, 0);
     size_t edge = ((number - 1) / 2) % 4;
-    bool center = (number - 1) % 2 == 0;
+    bool center = (number - 1) % 2 == 1;
     auto poly = getPolygon();
     glm::dvec2 result = poly[edge];
     if (center)
