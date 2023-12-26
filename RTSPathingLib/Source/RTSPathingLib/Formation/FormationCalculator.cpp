@@ -24,14 +24,14 @@ namespace RTSPathingLib {
 
     glm::dvec2 parentCenter = glm::dvec2(0, 0);
     size_t     parentSize = 1;
-    std::vector<Body> result = formate(current, parentCenter,parentSize,rootFormation);
+    std::vector<Body> result = recurse(current, parentCenter,parentSize,rootFormation);
    
 
     return result;
   }
 
 
-  std::vector<Body> FormationCalculator::formate(std::map<size_t, std::map<size_t, size_t>>& current, const glm::dvec2& parentCenter, size_t parentSize, const Formation& formation) {
+  std::vector<Body> FormationCalculator::recurse(std::map<size_t, std::map<size_t, size_t>>& current, const glm::dvec2& parentCenter, size_t parentSize, const Formation& formation) {
     size_t scale             = 1;
     auto  unitsPlacedHere    = gatherUnits(formation, current);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
@@ -74,7 +74,7 @@ namespace RTSPathingLib {
 
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
-      auto sub = formate(current, nextOffset, scale, child);
+      auto sub = recurse(current, nextOffset, scale, child);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
@@ -82,6 +82,25 @@ namespace RTSPathingLib {
     return result;
   }
   
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& startPoint, glm::dvec2& nextOffset, size_t scale) {
+    FormationShape& shape = formation.getShape();
+
+    glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);;
+    if (formation.hasParent())
+      parentInterfacePoint = formation.getParent().getShape().getInterfacePoint(formation.getParentInterfacePoint());
+    //the parentInterfacePoint must be scaled
+
+    glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
+    glm::dmat4 result = glm::dmat4(1);
+
+    glm::dvec3 vectorScale = getScalingVector(formation, scale);
+
+    result = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
+    result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
+    result = glm::scale(result, vectorScale);
+    result = glm::translate(result, glm::dvec3(interfacePoint, 0));
+    return result;
+  }
   
   void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid,const std::vector<glm::dvec2>& currentPolygon) {
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
@@ -171,26 +190,6 @@ namespace RTSPathingLib {
     return std::make_pair(min, max);
   }
 
-  //rotation, parent transformation etc missing
-  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& startPoint, glm::dvec2& nextOffset, size_t scale) {
-    FormationShape& shape = formation.getShape();
-
-    glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);;
-    if (formation.hasParent())
-      parentInterfacePoint = formation.getParent().getShape().getInterfacePoint(formation.getParentInterfacePoint());
-    //the parentInterfacePoint must be scaled
-
-    glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
-    glm::dmat4 result = glm::dmat4(1);
-
-    glm::dvec3 vectorScale = getScalingVector(formation, scale);
-
-    result = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
-    result = glm::rotate(result, formation.getRotation(), glm::dvec3(0, 0, 1));
-    result = glm::scale(result, vectorScale);
-    result = glm::translate(result, glm::dvec3(interfacePoint, 0));
-    return result;
-  }
 
   glm::dvec3 FormationCalculator::getScalingVector(const Formation& formation, size_t scale) {
     glm::dvec3 result;

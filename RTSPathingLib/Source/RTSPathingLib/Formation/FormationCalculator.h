@@ -24,7 +24,7 @@ namespace RTSPathingLib {
     std::vector<RectangleGrid<bool>> allGrids;
     std::vector<glm::dvec2> lastpolygon;
 
-    std::vector<Body>                          formate(std::map<size_t, std::map<size_t, size_t>>& current, const glm::dvec2& parentCenter, size_t parentSize, const Formation&);
+    std::vector<Body>                          recurse(std::map<size_t, std::map<size_t, size_t>>& current, const glm::dvec2& parentCenter, size_t parentSize, const Formation&);
     void                                       saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon);
     glm::dvec3                                 getScalingVector(const Formation&, size_t scale);
     RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon);
