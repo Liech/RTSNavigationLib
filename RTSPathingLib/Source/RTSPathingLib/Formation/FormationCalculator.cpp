@@ -114,15 +114,15 @@ namespace RTSPathingLib {
       return;
     std::vector<std::string> colors = { "red", "green", "blue", "yellow", "grey", "lime", "navy", "aqua" };
 
-    auto svgDebug = RectangleGridSvg::write(grid, 1);
-    if (currentPolygon.size() != 0) {
-      svg debug;
-      debug.streak = currentPolygon;
-      debug.wrapAround = true;
-      debug.color = "red";
-      debug.thickness = 0.1;
-      svgDebug.push_back(debug);
-    }
+    std::vector<svg> svgDebug = {};// RectangleGridSvg::write(grid, 1);
+    //if (currentPolygon.size() != 0) {
+    //  svg debug;
+    //  debug.streak = currentPolygon;
+    //  debug.wrapAround = true;
+    //  debug.color = "red";
+    //  debug.thickness = 0.1;
+    //  svgDebug.push_back(debug);
+    //}
     for (auto& body : bodies) {
       svg debug;
       debug.streak = {
