@@ -474,46 +474,70 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
   REQUIRE(places[9].position.y == places[0].position.y + 4);
 }
 
-//
-//TEST_CASE("Formation/PraiseTheSun", "[FormationSingle]") {
-//  return;
-//  RTSPathingLib::Body a;
-//  a.category = 0;
-//  a.size = 1;
-//  a.position = glm::dvec2(99, 99);
-//  RTSPathingLib::Body b;
-//  b.category = 1;
-//  b.size = 1;
-//  b.position = glm::dvec2(99, 99);
-//  RTSPathingLib::Body c;
-//  c.category = 2;
-//  c.size = 1;
-//  c.position = glm::dvec2(99, 99);
-//
-//  std::vector<RTSPathingLib::Body> input;
-//  for (size_t i = 0; i < 30; i++)
-//    input.push_back(a);
-//  for (size_t i = 0; i < 66; i++)
-//    input.push_back(b);
-//  for (size_t i = 0; i < 5; i++)
-//    input.push_back(c);
-//  RTSPathingLib::Formation formation;
-//  formation.setShape(std::make_unique<RTSPathingLib::ArcFormationShape>());
-//  formation.setUnitCategory(0);
-//
-//  std::unique_ptr<RTSPathingLib::Formation> spike = std::make_unique<RTSPathingLib::Formation>();
-//  spike->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
-//  spike->setUnitCategory(2);
-//  spike->setOwnInterfacePoint(0);
-//  spike->setParentInterfacePoint(5);
-//
-//  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
-//  formation2->addChild(std::move(spike));
-//  formation2->setShape(std::make_unique<RTSPathingLib::ArcFormationShape>());
-//  formation2->setUnitCategory(1);
-//  formation.addChild(std::move(formation2));
-//
-//  auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
-//
-//  REQUIRE(places.size() == input.size());
-//}
+
+TEST_CASE("Formation/PraiseTheSun", "[FormationSingle]") {
+
+  RTSPathingLib::Body a;
+  a.category = 0;
+  a.size = 1;
+  a.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body b;
+  b.category = 1;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body c;
+  c.category = 2;
+  c.size = 1; 
+  c.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input;
+  for (size_t i = 0; i < 30; i++)
+    input.push_back(a);
+  for (size_t i = 0; i < 70; i++)
+    input.push_back(b);
+  for (size_t i = 0; i < 50; i++)
+    input.push_back(c);
+  RTSPathingLib::Formation formation;
+  formation.setShape(std::make_unique<RTSPathingLib::ArcFormationShape>());
+  formation.setUnitCategory(0);
+
+  std::unique_ptr<RTSPathingLib::Formation> spike = std::make_unique<RTSPathingLib::Formation>();
+  spike->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+  spike->setUnitCategory(2);
+  spike->setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::BottomCenter);
+  spike->setParentInterfacePoint(1);
+
+  std::unique_ptr<RTSPathingLib::Formation> spike2 = std::make_unique<RTSPathingLib::Formation>();
+  spike2->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+  spike2->setUnitCategory(2);
+  spike2->setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::BottomCenter);
+  spike2->setParentInterfacePoint(10);
+  spike2->setRotation(-glm::pi<double>() * 0.5);
+
+  std::unique_ptr<RTSPathingLib::Formation> spike3 = std::make_unique<RTSPathingLib::Formation>();
+  spike3->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+  spike3->setUnitCategory(2);
+  spike3->setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::BottomCenter);
+  spike3->setParentInterfacePoint(27);
+  spike3->setRotation(glm::pi<double>() * 0.5);
+
+  std::unique_ptr<RTSPathingLib::Formation> spike4 = std::make_unique<RTSPathingLib::Formation>();
+  spike4->setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+  spike4->setUnitCategory(2);
+  spike4->setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::BottomCenter);
+  spike4->setParentInterfacePoint(18);
+  spike4->setRotation(glm::pi<double>());
+
+  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
+  formation2->addChild(std::move(spike));
+  formation2->addChild(std::move(spike2));
+  formation2->addChild(std::move(spike3));
+  formation2->addChild(std::move(spike4));
+  formation2->setShape(std::make_unique<RTSPathingLib::ArcFormationShape>());
+  formation2->setUnitCategory(1);
+  formation.addChild(std::move(formation2));
+
+  auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
+
+  REQUIRE(places.size() == input.size());
+}

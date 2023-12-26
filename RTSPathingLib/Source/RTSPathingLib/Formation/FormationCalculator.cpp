@@ -20,20 +20,21 @@ namespace RTSPathingLib {
 
   std::vector<Body> FormationCalculator::calculate() {
     glm::dmat4 currentTransformation = glm::dmat4(1);
-    auto current = overall;
+    currentUnits = overall;
+    weightSumPerCategory = getCategoryWeightSum(rootFormation);
 
     glm::dvec2 parentCenter = glm::dvec2(0, 0);
     size_t     parentSize = 1;
-    std::vector<Body> result = recurse(current, parentCenter,parentSize,rootFormation);
+    std::vector<Body> result = recurse(parentCenter,parentSize,rootFormation);
    
 
     return result;
   }
 
 
-  std::vector<Body> FormationCalculator::recurse(std::map<size_t, std::map<size_t, size_t>>& current, const glm::dvec2& parentCenter, size_t parentSize, const Formation& formation) {
+  std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, const Formation& formation) {
     size_t scale             = 1;
-    auto  unitsPlacedHere    = gatherUnits(formation, current);
+    auto  unitsPlacedHere    = gatherUnits(formation);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
     std::vector<Body> result;
 
@@ -77,7 +78,7 @@ namespace RTSPathingLib {
 
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
-      auto sub = recurse(current, formationCenter, scale, child);
+      auto sub = recurse(formationCenter, scale, child);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
@@ -231,17 +232,17 @@ namespace RTSPathingLib {
     return result;
   }
 
-  std::map<size_t, size_t> FormationCalculator::gatherUnits(const Formation& formation, std::map<size_t, std::map<size_t, size_t>>& availableUnits) {
+  std::map<size_t, size_t> FormationCalculator::gatherUnits(const Formation& formation) {
     size_t category = formation.getUnitCategory();
-    double weight = formation.getUnitDistributionWeight();
+    double weight = formation.getUnitDistributionWeight() / weightSumPerCategory[category];
     std::map<size_t, size_t> unitAmount;
     for (const auto& size : overall.at(category)) {
       size_t amount = (size_t)std::ceil(weight * (double)size.second);
-      size_t available = availableUnits[category][size.first];
-      if (available > amount)
+      size_t available = currentUnits[category][size.first];
+      if (amount > available)
         amount = available;
       unitAmount[size.first] = amount;
-      availableUnits[category][size.first] -= amount;
+      currentUnits[category][size.first] -= amount;
     }
     return unitAmount;
   }
