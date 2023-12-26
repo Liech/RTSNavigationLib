@@ -53,29 +53,29 @@ namespace RTSPathingLib {
     parentInterfacePoint = p;
   }
 
-  bool Formation::getOverwriteWidthWithInterfaceWidth() const {
-    return overwriteWidthWithInterfaceWidth;
-  }
+  //bool Formation::getOverwriteWidthWithInterfaceWidth() const {
+  //  return overwriteWidthWithInterfaceWidth;
+  //}
 
-  void Formation::setOverwriteWidthWithInterfaceWidth(bool doIt) {
-    overwriteWidthWithInterfaceWidth = doIt;
-  }
+  //void Formation::setOverwriteWidthWithInterfaceWidth(bool doIt) {
+  //  overwriteWidthWithInterfaceWidth = doIt;
+  //}
 
-  bool Formation::getRotateWithInterface() const {
-    return rotateWithInterface;
-  }
+  //bool Formation::getRotateWithInterface() const {
+  //  return rotateWithInterface;
+  //}
 
-  void Formation::setRotateWithInterface(bool v) {
-    rotateWithInterface = v;
-  }
+  //void Formation::setRotateWithInterface(bool v) {
+  //  rotateWithInterface = v;
+  //}
 
-  bool Formation::getLinkSizeWithParent() const {
-    return linkSizeWithParent;
-  }
+  //bool Formation::getLinkSizeWithParent() const {
+  //  return linkSizeWithParent;
+  //}
 
-  void Formation::setLinkSizeWithParent(bool v) {
-    linkSizeWithParent = v;
-  }
+  //void Formation::setLinkSizeWithParent(bool v) {
+  //  linkSizeWithParent = v;
+  //}
 
   size_t Formation::getUnitCategory() const {
     return unitCategory;
@@ -105,13 +105,13 @@ namespace RTSPathingLib {
     return *shape;
   }
 
-  double Formation::getUnitPadding() const {
-    return unitPadding;
-  }
+  //double Formation::getUnitPadding() const {
+  //  return unitPadding;
+  //}
 
-  void Formation::setUnitPadding(double padding) {
-    unitPadding = padding;
-  }
+  //void Formation::setUnitPadding(double padding) {
+  //  unitPadding = padding;
+  //}
 
   double Formation::getRotation() const {
     return rotation;
