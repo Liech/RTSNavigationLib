@@ -261,6 +261,22 @@ TEST_CASE("Formation/RotationWithInterface", "[FormationSingle]") {
 
   REQUIRE(places.size() == input.size());
 
+
+  REQUIRE(places[1].position.x == places[0].position.x - 1);
+  REQUIRE(places[1].position.y == places[0].position.y + 1);
+  REQUIRE(places[2].position.x == places[0].position.x + 0);
+  REQUIRE(places[2].position.y == places[0].position.y + 1);
+  REQUIRE(places[3].position.x == places[0].position.x - 1);
+  REQUIRE(places[3].position.y == places[0].position.y + 2);
+
+  REQUIRE(places[4].position.x == places[0].position.x - 2);
+  REQUIRE(places[4].position.y == places[0].position.y - 1);
+  REQUIRE(places[5].position.x == places[0].position.x - 2);
+  REQUIRE(places[5].position.y == places[0].position.y + 0);
+  REQUIRE(places[6].position.x == places[0].position.x - 1);
+  REQUIRE(places[6].position.y == places[0].position.y + 0);
+  REQUIRE(places[7].position.x == places[0].position.x - 2);
+  REQUIRE(places[7].position.y == places[0].position.y + 1);
 }
 
 TEST_CASE("Formation/OneChild", "[FormationSingle]") {
