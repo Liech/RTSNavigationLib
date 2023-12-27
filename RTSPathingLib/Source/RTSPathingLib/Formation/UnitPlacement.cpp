@@ -41,7 +41,7 @@ namespace RTSPathingLib {
     RectangleGrid<bool> possiblePlaces = grid;
     auto get = [this](const glm::ivec2& pos){return grid.data[pos.x+pos.y* grid.dimension.x]; };
     for (size_t i = 0; i < grid.data.size(); i++) {
-      if (!grid.data[i])
+      if (!grid.data[i] || !possiblePlaces.data[i])
         continue;
       glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, i / grid.dimension.x);
       bool ok = true;
@@ -51,6 +51,12 @@ namespace RTSPathingLib {
           bool inBoundY = y + pos.y < grid.dimension.y;
           ok &= inBoundX&&inBoundY&&get(pos + glm::ivec2(x, y));
         }
+      if (ok) {
+        for (size_t x = 0; x < size && x + pos.x < grid.dimension.x; x++)
+          for (size_t y = 0; y < size && y + pos.y < grid.dimension.y; y++) {
+            possiblePlaces.data[(pos.x+x) + (pos.y+y) * grid.dimension.x] = false;
+          }
+      }
       possiblePlaces.data[i] = ok;
     }
     auto possible = getAllPlaces(possiblePlaces);

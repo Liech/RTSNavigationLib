@@ -97,7 +97,6 @@ namespace BodyUtilTests {
     REQUIRE(result.size() == 0);
   }
 
-
   TEST_CASE("UnitPlacement/TwoSizeTwo", "[UnitPlacement]") {
     RTSPathingLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(4, 2);
@@ -115,6 +114,9 @@ namespace BodyUtilTests {
     REQUIRE(success);
     REQUIRE(result.size() == 2);
     REQUIRE(result[0].category == category);
-    REQUIRE(result[0].position.x == result[1].position.x - 2);
+    REQUIRE(
+      (result[0].position.x == result[1].position.x - 2 ||
+      result[1].position.x == result[0].position.x - 2)
+    );
   }
 }
