@@ -54,11 +54,10 @@ namespace RTSPathingLib {
 
   std::vector<Body> UnitPlacement::placeSizeN(size_t size, size_t amount, bool& success) {
     std::vector<Body> result;
-    RectangleGrid<bool> base = grid - usedPositions;
-    RectangleGrid<bool> possiblePlaces = base;
-    auto get = [&base](const glm::ivec2& pos){return base.data[pos.x+pos.y* base.dimension.x]; };
-    for (size_t i = 0; i < base.data.size(); i++) {
-      if (!base.data[i] || !possiblePlaces.data[i])
+    RectangleGrid<bool> possiblePlaces = grid - usedPositions;
+    auto get = [&possiblePlaces](const glm::ivec2& pos){return possiblePlaces.data[pos.x+pos.y* possiblePlaces.dimension.x]; };
+    for (size_t i = 0; i < possiblePlaces.data.size(); i++) {
+      if (!possiblePlaces.data[i])
         continue;
       glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, i / grid.dimension.x);
       bool ok = true;
@@ -85,7 +84,7 @@ namespace RTSPathingLib {
     if (smallestSize == size)
       possible = centerSort(possible);
     else
-      distributeSort(possible, amount);
+      possible = distributeSort(possible, amount);
 
     for (size_t i = 0; i < amount; i++) {
       Body sub;
@@ -148,7 +147,7 @@ namespace RTSPathingLib {
     glm::dvec2 center = glm::dvec2(0,0);
     for (auto& x : input)
       center += (glm::dvec2)x;
-    center /= input.size();
+    center =  glm::dvec2(center.x/(double)input.size(), center.y / (double)input.size());
 
     std::sort(result.begin(), result.end(),
       [center](const glm::ivec2& a, const glm::ivec2& b)
@@ -175,7 +174,7 @@ namespace RTSPathingLib {
           double distanceSumB = 0;
           for (auto& x : result) {
             distanceSumA += glm::distance((glm::dvec2)a, (glm::dvec2)x);
-            distanceSumB += glm::distance((glm::dvec2)a, (glm::dvec2)x);
+            distanceSumB += glm::distance((glm::dvec2)b, (glm::dvec2)x);
           }
           return distanceSumA > distanceSumB;
         });

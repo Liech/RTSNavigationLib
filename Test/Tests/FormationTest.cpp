@@ -594,6 +594,10 @@ namespace FormationTests {
     a.category = 0;
     a.size = 1;
     a.position = glm::dvec2(99, 99);
+    RTSPathingLib::Body a2;
+    a2.category = 0;
+    a2.size = 2;
+    a2.position = glm::dvec2(99, 99);
     RTSPathingLib::Body b;
     b.category = 1;
     b.size = 1;
@@ -606,6 +610,8 @@ namespace FormationTests {
     std::vector<RTSPathingLib::Body> input;
     for (size_t i = 0; i < 30; i++)
       input.push_back(a);
+    for (size_t i = 0; i < 5; i++)
+      input.push_back(a2);
     for (size_t i = 0; i < 70; i++)
       input.push_back(b);
     for (size_t i = 0; i < 50; i++)
@@ -655,7 +661,7 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
 
     auto categories = countCategories(places);
-    REQUIRE(categories[0] == 30);
+    REQUIRE(categories[0] == 35);
     REQUIRE(categories[1] == 70);
     REQUIRE(categories[2] == 50);
   }
