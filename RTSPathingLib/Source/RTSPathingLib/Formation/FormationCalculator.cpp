@@ -5,8 +5,9 @@
 #include "Formation.h"
 #include "Body.h"
 #include "Formation/FormationShape/FormationShape.h"
-#include "Util/Geometry2D.h"
+#include "UnitPlacement.h"
 
+#include "Util/Geometry2D.h"
 #include "Util/svg.h"
 #include "Util/RectangleGrid/RectangleGridVoxelizer.h"
 #include "Util/RectangleGrid/RectangleGridSvg.h"
@@ -28,11 +29,9 @@ namespace RTSPathingLib {
     double     parentRotation = 0;
     double     parentInterfaceWidth = 0;
     std::vector<Body> result = recurse(parentCenter, parentSize, parentRotation, parentInterfaceWidth, rootFormation);
-   
 
     return result;
   }
-
 
   std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation& formation) {
     size_t scale             = 1;
@@ -63,7 +62,7 @@ namespace RTSPathingLib {
 
       std::vector<glm::dvec2> polygon;
       grid = getGrid(formation, toFormationCenter, polygon);
-      result = placeUnits(grid, unitsPlacedHere, grid.offset, formation.getUnitCategory(), allPlaced);
+      result = UnitPlacement(grid, unitsPlacedHere, formation.getUnitCategory()).place(allPlaced);
       lastpolygon = polygon;
 
       saveAsSvg(result, grid, polygon);
@@ -180,32 +179,6 @@ namespace RTSPathingLib {
     }
 
     return grid;
-  }
-
-  std::vector<Body> FormationCalculator::placeUnits(RectangleGrid<bool>& grid, const std::map<size_t, size_t>& units, const glm::dvec2& offset, size_t category, bool& allPlaced) {
-    std::vector<Body> result;
-    size_t currentSize = 1;
-    RectangleGrid<bool> actuallyPlaced;
-    actuallyPlaced.dimension = grid.dimension;
-    actuallyPlaced.offset = grid.offset;
-    actuallyPlaced.data.resize(grid.data.size());
-    long long unitsToPlace = (long long)units.at(currentSize);
-    for (size_t i = 0; i < grid.data.size() && unitsToPlace>0; i++) {
-      if (grid.data[i]) {
-        glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, (i / grid.dimension.x) % grid.dimension.y);
-        Body sub;
-        sub.category = category;
-        sub.size = currentSize;
-        sub.position = (glm::dvec2)pos + offset + glm::dvec2(0.5,0.5);
-        result.push_back(sub);
-        actuallyPlaced.data[i] = true;
-        unitsToPlace--;
-      }      
-    }
-    if (unitsToPlace <= 0)
-      allPlaced = true;
-    grid = actuallyPlaced;
-    return result;
   }
 
   std::pair<glm::dvec2, glm::dvec2> FormationCalculator::getMinMax(const std::vector<glm::dvec2>& polygon) {
