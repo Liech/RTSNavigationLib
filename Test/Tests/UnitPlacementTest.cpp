@@ -141,9 +141,54 @@ namespace BodyUtilTests {
     REQUIRE(result[2].size == 1);
     REQUIRE(result[3].size == 1);
     REQUIRE(result[4].size == 1);
+    REQUIRE(glm::distance(result[0].position, result[1].position) >= 1.5);
+    REQUIRE(glm::distance(result[0].position, result[2].position) >= 1.5);
+    REQUIRE(glm::distance(result[0].position, result[3].position) >= 1.5);
+    REQUIRE(glm::distance(result[0].position, result[4].position) >= 1.5);
+  }
+
+
+  TEST_CASE("UnitPlacement/ThreeSizes", "[UnitPlacement]") {
+    RTSPathingLib::RectangleGrid<bool> grid;
+    grid.dimension = glm::ivec2(6, 3);
+    grid.data = { true , true , true , true , true , true ,
+                  true , true , true , true , true , true ,
+                  true , true , true , true , true , true , };
+    grid.offset = glm::dvec2(82, 82);
+    std::map<size_t, size_t> unitsToPlace;
+    unitsToPlace[1] = 5;
+    unitsToPlace[2] = 1;
+    unitsToPlace[3] = 1;
+    size_t category = 123;
+    RTSPathingLib::UnitPlacement placement(grid, unitsToPlace, 123);
+
+    bool success = false;
+    std::vector<RTSPathingLib::Body> result = placement.place(success);
+    REQUIRE(success);
+    REQUIRE(result.size() == 7);
+    REQUIRE(result[0].size == 3);
+    REQUIRE(result[1].size == 2);
+    REQUIRE(result[2].size == 1);
+    REQUIRE(result[3].size == 1);
+    REQUIRE(result[4].size == 1);
+    REQUIRE(result[5].size == 1);
+    REQUIRE(result[6].size == 1);
+
+    //size3
     REQUIRE(glm::distance(result[0].position, result[1].position) >= 2);
     REQUIRE(glm::distance(result[0].position, result[2].position) >= 2);
     REQUIRE(glm::distance(result[0].position, result[3].position) >= 2);
     REQUIRE(glm::distance(result[0].position, result[4].position) >= 2);
+    REQUIRE(glm::distance(result[0].position, result[5].position) >= 2);
+    REQUIRE(glm::distance(result[0].position, result[6].position) >= 2);
+
+    //size2
+    REQUIRE(glm::distance(result[1].position, result[2].position) >= 1.5);
+    REQUIRE(glm::distance(result[1].position, result[3].position) >= 1.5);
+    REQUIRE(glm::distance(result[1].position, result[4].position) >= 1.5);
+    REQUIRE(glm::distance(result[1].position, result[5].position) >= 1.5);
+    REQUIRE(glm::distance(result[1].position, result[6].position) >= 1.5);
+
+
   }
 }

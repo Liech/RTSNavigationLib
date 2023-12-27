@@ -309,8 +309,8 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(1, 1)));
     REQUIRE(result.contains(glm::dvec2(1, 2)));
     REQUIRE(result.contains(glm::dvec2(1, 3)));
-    REQUIRE(result.contains(glm::dvec2(2, 1)));
     REQUIRE(result.contains(glm::dvec2(2, 2)));
+    REQUIRE(result.contains(glm::dvec2(2, 3)));
   }
 
   TEST_CASE("Formation/InterfaceWidth", "[FormationSingle]") {
@@ -351,16 +351,16 @@ namespace FormationTests {
     auto result = setisfy(places);
     REQUIRE(result.contains(glm::dvec2(0, 0)));
     REQUIRE(result.contains(glm::dvec2(0, 1)));
-    REQUIRE(result.contains(glm::dvec2(1, -1)));
+    REQUIRE(result.contains(glm::dvec2(1,-2)));
+    REQUIRE(result.contains(glm::dvec2(1,-1)));
     REQUIRE(result.contains(glm::dvec2(1, 0)));
     REQUIRE(result.contains(glm::dvec2(1, 1)));
-    REQUIRE(result.contains(glm::dvec2(2, -1)));
+    REQUIRE(result.contains(glm::dvec2(2,-2)));
+    REQUIRE(result.contains(glm::dvec2(2,-1)));
     REQUIRE(result.contains(glm::dvec2(2, 0)));
     REQUIRE(result.contains(glm::dvec2(2, 1)));
-    REQUIRE(result.contains(glm::dvec2(3, -1)));
+    REQUIRE(result.contains(glm::dvec2(3,-1)));
     REQUIRE(result.contains(glm::dvec2(3, 0)));
-    REQUIRE(result.contains(glm::dvec2(3, 1)));
-    REQUIRE(result.contains(glm::dvec2(4, 1)));
 
   }
 
