@@ -34,6 +34,16 @@ std::set<glm::dvec2, lex_compare> setisfy(const std::vector<RTSPathingLib::Body>
   return result;
 }
 
+std::map<size_t, size_t> countCategories(const std::vector<RTSPathingLib::Body>& places) {
+  std::map<size_t, size_t> result;
+  for (auto& x : places){
+    if (result.count(x.category) == 0)
+      result[x.category] = 0;
+    result[x.category]++;
+  }
+  return result;
+}
+
 
 TEST_CASE("Formation/RectangleSingle", "[FormationSingle]") {
   RTSPathingLib::Body b;
@@ -287,6 +297,10 @@ TEST_CASE("Formation/RotationWithInterface", "[FormationSingle]") {
 
   REQUIRE(places.size() == input.size());
 
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 4);
+  REQUIRE(categories[1] == 4);
+
   auto result = setisfy(places);
   REQUIRE(result.contains(glm::dvec2(0, 0)));
   REQUIRE(result.contains(glm::dvec2(0, 1)));
@@ -329,6 +343,10 @@ TEST_CASE("Formation/InterfaceWidth", "[FormationSingle]") {
 
   REQUIRE(places.size() == input.size());
 
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 4);
+  REQUIRE(categories[1] == 8);
+
   auto result = setisfy(places);
   REQUIRE(result.contains(glm::dvec2(0, 0)));
   REQUIRE(result.contains(glm::dvec2(0, 1)));
@@ -370,12 +388,11 @@ TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
   REQUIRE(places.size() == input.size());
-  REQUIRE(places[0].category == a.category);
-  REQUIRE(places[1].category == a.category);
-  REQUIRE(places[2].category == b.category);
-  REQUIRE(places[3].category == b.category);
-  REQUIRE(places[4].category == b.category);
-  REQUIRE(places[5].category == b.category);
+
+
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 2);
+  REQUIRE(categories[1] == 4);
 
   auto result = setisfy(places);
   REQUIRE(result.contains(glm::dvec2(0, 0)));
@@ -412,14 +429,10 @@ TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
   REQUIRE(places.size() == input.size());
-  REQUIRE(places[0].category == a.category);
-  REQUIRE(places[1].category == a.category);
-  REQUIRE(places[2].category == a.category);
-  REQUIRE(places[3].category == a.category);
-  REQUIRE(places[4].category == b.category);
-  REQUIRE(places[5].category == b.category);
-  REQUIRE(places[6].category == b.category);
-  REQUIRE(places[7].category == b.category);
+
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 4);
+  REQUIRE(categories[1] == 4);
 
   auto result = setisfy(places);
   REQUIRE(result.contains(glm::dvec2(0, 0)));
@@ -459,6 +472,10 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
 
   REQUIRE(places.size() == input.size());
 
+
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 3);
+  REQUIRE(categories[1] == 9);
 
   auto result = setisfy(places);
   REQUIRE(result.contains(glm::dvec2(0, 0)));
@@ -500,17 +517,20 @@ TEST_CASE("Formation/RotateChild", "[FormationSingle]") {
 
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
+
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 3);
+  REQUIRE(categories[1] == 3);
+
   REQUIRE(places.size() == input.size());
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y + 0);
-  REQUIRE(places[2].position.x == places[0].position.x + 0);
-  REQUIRE(places[2].position.y == places[0].position.y + 1);
-  REQUIRE(places[3].position.x == places[0].position.x - 1);
-  REQUIRE(places[3].position.y == places[0].position.y + 1);
-  REQUIRE(places[4].position.x == places[0].position.x - 1);
-  REQUIRE(places[4].position.y == places[0].position.y + 2);
-  REQUIRE(places[5].position.x == places[0].position.x - 0);
-  REQUIRE(places[5].position.y == places[0].position.y + 2);
+
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(1,-1)));
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(2,-1)));
 }
 
 TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
@@ -549,26 +569,22 @@ TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
 
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y + 0);
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 2);
+  REQUIRE(categories[1] == 4);
+  REQUIRE(categories[2] == 4);
 
-  REQUIRE(places[2].position.x == places[0].position.x + 0);
-  REQUIRE(places[2].position.y == places[0].position.y + 1);
-  REQUIRE(places[3].position.x == places[0].position.x + 1);
-  REQUIRE(places[3].position.y == places[0].position.y + 1);
-  REQUIRE(places[4].position.x == places[0].position.x + 0);
-  REQUIRE(places[4].position.y == places[0].position.y + 2);
-  REQUIRE(places[5].position.x == places[0].position.x + 1);
-  REQUIRE(places[5].position.y == places[0].position.y + 2);
-
-  REQUIRE(places[6].position.x == places[0].position.x + 0);
-  REQUIRE(places[6].position.y == places[0].position.y + 3);
-  REQUIRE(places[7].position.x == places[0].position.x + 1);
-  REQUIRE(places[7].position.y == places[0].position.y + 3);
-  REQUIRE(places[8].position.x == places[0].position.x + 0);
-  REQUIRE(places[8].position.y == places[0].position.y + 4);
-  REQUIRE(places[9].position.x == places[0].position.x + 1);
-  REQUIRE(places[9].position.y == places[0].position.y + 4);
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(0, 2)));
+  REQUIRE(result.contains(glm::dvec2(0, 3)));
+  REQUIRE(result.contains(glm::dvec2(0, 4)));
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(1, 2)));
+  REQUIRE(result.contains(glm::dvec2(1, 3)));
+  REQUIRE(result.contains(glm::dvec2(1, 4)));
 }
 
 TEST_CASE("Formation/PraiseTheSun", "[FormationSingle]") {
@@ -636,4 +652,9 @@ TEST_CASE("Formation/PraiseTheSun", "[FormationSingle]") {
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
   REQUIRE(places.size() == input.size());
+
+  auto categories = countCategories(places);
+  REQUIRE(categories[0] == 30);
+  REQUIRE(categories[1] == 70);
+  REQUIRE(categories[2] == 50);
 }
