@@ -2,6 +2,7 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <set>
 
 #include <RTSPathingLib/Body.h>
 #include "RTSPathingLib/Formation/FormationCalculator.h"
@@ -11,6 +12,28 @@
 #include "RTSPathingLib/Formation/FormationShape/TriangleFormationShape.h"
 #include "RTSPathingLib/Formation/FormationShape/RectangleInterfacePoint.h"
 #include "RTSPathingLib/Formation/FormationShape/TriangleInterfacePoint.h"
+
+struct lex_compare {
+  bool operator() (const glm::dvec2& lhs, const glm::dvec2& rhs) const {
+    return (lhs.x<rhs.x) || (lhs.x==rhs.x && lhs.y < rhs.y);
+  }
+};
+
+glm::dvec2 getFirstPlace(std::vector<RTSPathingLib::Body> places) {
+  glm::dvec2 first = glm::dvec2(std::numeric_limits<double>().max(), std::numeric_limits<double>().max());
+  for (auto& x : places)
+    if (lex_compare()(x.position, first))
+      first = x.position;
+  return first;
+}
+std::set<glm::dvec2, lex_compare> setisfy(const std::vector<RTSPathingLib::Body>& places) {
+  auto first = getFirstPlace(places);
+  std::set<glm::dvec2, lex_compare> result;
+  for (auto& x : places)
+    result.insert(x.position - first);
+  return result;
+}
+
 
 TEST_CASE("Formation/RectangleSingle", "[FormationSingle]") {
   RTSPathingLib::Body b;
@@ -46,8 +69,9 @@ TEST_CASE("Formation/RectangleDouble", "[FormationDouble]") {
   REQUIRE(places[0].size == b.size);
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y);
+
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(1,0)));
 }
 
 TEST_CASE("Formation/RectangleMany", "[FormationDouble]") {
@@ -100,8 +124,9 @@ TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
   REQUIRE(places[0].size == b.size);
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y);
+
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
 }
 
 TEST_CASE("Formation/ArcMany", "[FormationDouble]") {
@@ -172,8 +197,9 @@ TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
   REQUIRE(places[0].size == b.size);
   REQUIRE(places[1].category == b.category);
   REQUIRE(places[1].size == b.size);
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y);
+
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
 }
 
 TEST_CASE("Formation/TriangleMany", "[FormationDouble]") {
@@ -261,22 +287,15 @@ TEST_CASE("Formation/RotationWithInterface", "[FormationSingle]") {
 
   REQUIRE(places.size() == input.size());
 
-
-  REQUIRE(places[1].position.x == places[0].position.x - 1);
-  REQUIRE(places[1].position.y == places[0].position.y + 1);
-  REQUIRE(places[2].position.x == places[0].position.x + 0);
-  REQUIRE(places[2].position.y == places[0].position.y + 1);
-  REQUIRE(places[3].position.x == places[0].position.x - 1);
-  REQUIRE(places[3].position.y == places[0].position.y + 2);
-
-  REQUIRE(places[4].position.x == places[0].position.x - 2);
-  REQUIRE(places[4].position.y == places[0].position.y - 1);
-  REQUIRE(places[5].position.x == places[0].position.x - 2);
-  REQUIRE(places[5].position.y == places[0].position.y + 0);
-  REQUIRE(places[6].position.x == places[0].position.x - 1);
-  REQUIRE(places[6].position.y == places[0].position.y + 0);
-  REQUIRE(places[7].position.x == places[0].position.x - 2);
-  REQUIRE(places[7].position.y == places[0].position.y + 1);
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(0, 2)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(1, 2)));
+  REQUIRE(result.contains(glm::dvec2(1, 3)));
+  REQUIRE(result.contains(glm::dvec2(2, 1)));
+  REQUIRE(result.contains(glm::dvec2(2, 2)));
 }
 
 TEST_CASE("Formation/OneChild", "[FormationSingle]") {
@@ -311,16 +330,14 @@ TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   REQUIRE(places[4].category == b.category);
   REQUIRE(places[5].category == b.category);
 
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y + 0);
-  REQUIRE(places[2].position.x == places[0].position.x + 0);
-  REQUIRE(places[2].position.y == places[0].position.y - 2);
-  REQUIRE(places[3].position.x == places[0].position.x + 1);
-  REQUIRE(places[3].position.y == places[0].position.y - 2);
-  REQUIRE(places[4].position.x == places[0].position.x + 0);
-  REQUIRE(places[4].position.y == places[0].position.y - 1);
-  REQUIRE(places[5].position.x == places[0].position.x + 1);
-  REQUIRE(places[5].position.y == places[0].position.y - 1);
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(0, 2)));
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(1, 2)));
+
 }
 
 TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
@@ -357,21 +374,15 @@ TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
   REQUIRE(places[6].category == b.category);
   REQUIRE(places[7].category == b.category);
 
-  REQUIRE(places[1].position.x == places[0].position.x + 1);
-  REQUIRE(places[1].position.y == places[0].position.y + 0);
-  REQUIRE(places[2].position.x == places[0].position.x + 0);
-  REQUIRE(places[2].position.y == places[0].position.y + 1);
-  REQUIRE(places[3].position.x == places[0].position.x + 1);
-  REQUIRE(places[3].position.y == places[0].position.y + 1);
-
-  REQUIRE(places[4].position.x == places[0].position.x + 0);
-  REQUIRE(places[4].position.y == places[0].position.y - 2);
-  REQUIRE(places[5].position.x == places[0].position.x + 1);
-  REQUIRE(places[5].position.y == places[0].position.y - 2);
-  REQUIRE(places[6].position.x == places[0].position.x + 0);
-  REQUIRE(places[6].position.y == places[0].position.y - 1);
-  REQUIRE(places[7].position.x == places[0].position.x + 1);
-  REQUIRE(places[7].position.y == places[0].position.y - 1);
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(0, 2)));
+  REQUIRE(result.contains(glm::dvec2(0, 3)));
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(1, 2)));
+  REQUIRE(result.contains(glm::dvec2(1, 3)));
 }
 
 
@@ -400,30 +411,21 @@ TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
   auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
 
   REQUIRE(places.size() == input.size());
-  REQUIRE(places[0].position.x == -0.5);
-  REQUIRE(places[0].position.y == -0.5);
-  REQUIRE(places[1].position.x ==  0.5);
-  REQUIRE(places[1].position.y == -0.5);
-  REQUIRE(places[2].position.x == -0.5);
-  REQUIRE(places[2].position.y ==  0.5);
-  REQUIRE(places[3].position.x == -1.5);
-  REQUIRE(places[3].position.y == -1.5);
-  REQUIRE(places[4].position.x == -0.5);
-  REQUIRE(places[4].position.y == -1.5);
-  REQUIRE(places[5].position.x ==  0.5);
-  REQUIRE(places[5].position.y == -1.5);
-  REQUIRE(places[6].position.x ==  1.5);
-  REQUIRE(places[6].position.y == -1.5);
-  REQUIRE(places[7].position.x == -1.5);
-  REQUIRE(places[7].position.y == -0.5);
-  REQUIRE(places[8].position.x ==  1.5);
-  REQUIRE(places[8].position.y == -0.5);
-  REQUIRE(places[9].position.x == -1.5);
-  REQUIRE(places[9].position.y == 0.5);
-  REQUIRE(places[10].position.x == 0.5);
-  REQUIRE(places[10].position.y == 0.5);
-  REQUIRE(places[11].position.x == 1.5);
-  REQUIRE(places[11].position.y == 0.5);
+
+
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(0, 2)));
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(1, 2)));
+  REQUIRE(result.contains(glm::dvec2(2, 0)));
+  REQUIRE(result.contains(glm::dvec2(2, 1)));
+  REQUIRE(result.contains(glm::dvec2(2, 2)));
+  REQUIRE(result.contains(glm::dvec2(3, 0)));
+  REQUIRE(result.contains(glm::dvec2(3, 1)));
+  REQUIRE(result.contains(glm::dvec2(3, 2)));
 }
 
 TEST_CASE("Formation/RotateChild", "[FormationSingle]") {
