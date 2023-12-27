@@ -15,6 +15,10 @@ namespace RTSPathingLib {
     std::vector<Body> place(bool& success) const;
 
   private:
+    std::vector<Body> placeSizeN(size_t size, size_t amount, bool& success) const;
+    std::vector<Body> placeSize1(bool& success) const;
+    std::vector<glm::ivec2> getAllPlaces(const RectangleGrid<bool>&) const;
+
     RectangleGrid<bool>&            grid;
     const std::map<size_t, size_t>& unitsToPlace;
     size_t                          category;
