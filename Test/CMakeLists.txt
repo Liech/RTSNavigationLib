@@ -11,6 +11,7 @@ set(Test_Files
 	"Tests/HexagonGridTest.cpp"
 	"Tests/RectangleGridTest.cpp"
 	"Tests/FormationTest.cpp"
+	"Tests/UnitPlacementTest.cpp"
 )
 source_group("Tests" FILES ${Test_Files})
 set(Main_Files
