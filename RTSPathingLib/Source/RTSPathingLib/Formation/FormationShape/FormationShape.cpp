@@ -29,7 +29,7 @@ namespace RTSPathingLib {
     return {};
   }
 
-  double FormationShape::getInterfaceWidth(size_t) const {
+  double FormationShape::getInterfaceWidth(size_t, const glm::dvec2& scale) const {
     return 0;
   }
 

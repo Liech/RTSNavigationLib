@@ -26,14 +26,15 @@ namespace RTSPathingLib {
     glm::dvec2 parentCenter = glm::dvec2(0, 0);
     size_t     parentSize = 1;
     double     parentRotation = 0;
-    std::vector<Body> result = recurse(parentCenter, parentSize, parentRotation, rootFormation);
+    double     parentInterfaceWidth = 0;
+    std::vector<Body> result = recurse(parentCenter, parentSize, parentRotation, parentInterfaceWidth, rootFormation);
    
 
     return result;
   }
 
 
-  std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, const Formation& formation) {
+  std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation& formation) {
     size_t scale             = 1;
     auto  unitsPlacedHere    = gatherUnits(formation);
     auto  formationSize      = getSizeSum(unitsPlacedHere);
@@ -57,7 +58,7 @@ namespace RTSPathingLib {
         tries = maxTries;
 
       lastPlaced = result.size();
-      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, parentRotation, scale);
+      glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, parentRotation, parentInterfaceWidth ,scale);
       formationCenter = toFormationCenter * glm::dvec4(0, 0, 0, 1);
 
       std::vector<glm::dvec2> polygon;
@@ -79,7 +80,8 @@ namespace RTSPathingLib {
 
     for (size_t i = 0; i < formation.getChildrenCount(); i++) {
       auto& child = formation.getChild(i);
-      auto sub = recurse(formationCenter, scale, parentRotation, child);
+      glm::dvec3 vectorScale = getScalingVector(formation, parentInterfaceWidth, parentSize);
+      auto sub = recurse(formationCenter, scale, parentRotation, formation.getShape().getInterfaceWidth(child.getParentInterfacePoint(), vectorScale), child);
       result.insert(result.end(), sub.begin(), sub.end());
     }
 
@@ -87,22 +89,24 @@ namespace RTSPathingLib {
     return result;
   }
   
-  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& parentCenter, size_t parentScale, double& parentRotation, size_t scale) {
+  glm::dmat4 FormationCalculator::getLocalTransformation(const Formation& formation, const glm::dvec2& parentCenter, size_t parentScale, double& parentRotation, double parentparentInterfaceWidth, size_t scale) {
     FormationShape& shape = formation.getShape();
 
     glm::dvec2 parentInterfacePoint = glm::dvec2(0, 0);
     glm::dvec2 parentInterfaceNormal = glm::dvec2(0, 1);
+    double parentInterfaceWidth = 1;
     if (formation.hasParent()) {
-      glm::dvec3 vectorScale = getScalingVector(formation.getParent(), parentScale);
+      glm::dvec3 vectorScale = getScalingVector(formation.getParent(), parentparentInterfaceWidth, parentScale);
       parentInterfacePoint = formation.getParent().getShape().getInterfacePoint(formation.getParentInterfacePoint());
       parentInterfacePoint = glm::dvec2(parentInterfacePoint.x * vectorScale.x, parentInterfacePoint.y * vectorScale.y);
       parentInterfaceNormal = formation.getParent().getShape().getInterfaceNormal(formation.getParentInterfacePoint());
+      parentInterfaceWidth = formation.getParent().getShape().getInterfaceWidth(formation.getParentInterfacePoint(), vectorScale);
     }
 
     glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
     glm::dmat4 result = glm::dmat4(1);
 
-    glm::dvec3 vectorScale = getScalingVector(formation, scale);
+    glm::dvec3 vectorScale = getScalingVector(formation, parentInterfaceWidth, scale);
 
     double rotation = formation.getRotation() + parentRotation;
     if (formation.getRotateWithInterface()) {
@@ -218,29 +222,37 @@ namespace RTSPathingLib {
   }
 
 
-  glm::dvec3 FormationCalculator::getScalingVector(const Formation& formation, size_t scale) {
+  glm::dvec3 FormationCalculator::getScalingVector(const Formation& formation, double parentInterfaceWidth, size_t scale) {
     glm::dvec3 result;
-    switch (formation.getShape().getScalingBehavior()) {
+    auto behavior = formation.getShape().getScalingBehavior();
+
+    switch (behavior) {
     case ScalingBehavior::PureX:
-      result = glm::vec3(scale, 1, 1);
+      result = glm::dvec3(scale, 1, 1);
       break;
     case ScalingBehavior::PureY:
-      result = glm::vec3(1, scale, 1);
+      result = glm::dvec3(1, scale, 1);
       break;
     case ScalingBehavior::X25Y75:
-      result = glm::vec3(1 + scale / 4, 1 + scale - (scale % 4 == 0 ? 1 : 0), 1);
+      result = glm::dvec3(1 + scale / 4, 1 + scale - (scale % 4 == 0 ? 1 : 0), 1);
       break;
     case ScalingBehavior::X75Y25:
-      result = glm::vec3(1 + scale - (scale % 4 == 0 ? 1 : 0), 1 + scale / 4, 1);
+      result = glm::dvec3(1 + scale - (scale % 4 == 0 ? 1 : 0), 1 + scale / 4, 1);
       break;
     case ScalingBehavior::Isotropic:
     default:
       //first scale only x and than both, this hopefully allows more subtle formation grow
       bool   xScalesFirst = scale % 2 == 0;
       size_t translatedScale = 1 + (scale - 1) / 2;
-      result = glm::vec3(translatedScale + (xScalesFirst ? 1 : 0), translatedScale, 1);
+      result = glm::dvec3(translatedScale + (xScalesFirst ? 1 : 0), translatedScale, 1);
       break;
     }
+
+    if (formation.getOverwriteWidthWithInterfaceWidth()) {
+      double base = formation.getShape().getBaseSize().x;
+      result = glm::dvec3(parentInterfaceWidth / base, scale, 1);
+    }
+
     return result;
   }
 

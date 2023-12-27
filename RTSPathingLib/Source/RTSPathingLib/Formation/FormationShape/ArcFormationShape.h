@@ -14,7 +14,7 @@ namespace RTSPathingLib {
     virtual size_t getNumberOfInterfacePoints() const        override;
     virtual glm::dvec2 getInterfacePoint(size_t number) const override; //center, border+1/36, border+2/36,...
     virtual glm::dvec2 getInterfaceNormal(size_t number) const override;
-    virtual double getInterfaceWidth(size_t number) const;
+    virtual double getInterfaceWidth(size_t number, const glm::dvec2& scale) const;
 
     double getArcAngle() const;
     void setArcAngle(double valueRadian);

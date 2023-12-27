@@ -54,12 +54,12 @@ namespace RTSPathingLib {
     return result;
   }
 
-  double ArcFormationShape::getInterfaceWidth(size_t number) const {
+  double ArcFormationShape::getInterfaceWidth(size_t number, const glm::dvec2& scale) const {
     if (number == 0)
       return 0;
     size_t edge = (number - 1) % numberPolygons;
     auto poly = getPolygon();
-    double result = glm::distance(poly[edge], poly[(edge + 1) % numberPolygons]);
+    double result = glm::distance(poly[edge]*scale, poly[(edge + 1) % numberPolygons]*scale);
     return result;
   }
 

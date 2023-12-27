@@ -298,6 +298,53 @@ TEST_CASE("Formation/RotationWithInterface", "[FormationSingle]") {
   REQUIRE(result.contains(glm::dvec2(2, 2)));
 }
 
+TEST_CASE("Formation/InterfaceWidth", "[FormationSingle]") {
+  RTSPathingLib::Body a;
+  a.category = 0;
+  a.size = 1;
+  a.position = glm::dvec2(99, 99);
+  RTSPathingLib::Body b;
+  b.category = 1;
+  b.size = 1;
+  b.position = glm::dvec2(99, 99);
+
+  std::vector<RTSPathingLib::Body> input = { a,a,a,a,b,b,b,b,b,b,b,b };
+  RTSPathingLib::Formation formation;
+  formation.setOwnInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::Center);
+  formation.setRotation(glm::pi<double>());
+  formation.setShape(std::make_unique<RTSPathingLib::TriangleFormationShape>());
+
+
+  std::unique_ptr<RTSPathingLib::Formation> formation2 = std::make_unique<RTSPathingLib::Formation>();
+  formation2->setShape(std::make_unique<RTSPathingLib::RectangleFormationShape>());
+  formation2->setUnitCategory(1);
+  formation2->setParentInterfacePoint((int)RTSPathingLib::TriangleInterfacePoint::RightMiddle);
+  formation2->setOwnInterfacePoint((int)RTSPathingLib::RectangleInterfacePoint::Top);
+  formation2->setRotateWithInterface(true);
+  formation2->setOverwriteWidthWithInterfaceWidth(true);
+  formation2->getShape().setBaseSize(glm::dvec2(5, 0.1));
+  formation.addChild(std::move(formation2));
+
+  auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
+
+  REQUIRE(places.size() == input.size());
+
+  auto result = setisfy(places);
+  REQUIRE(result.contains(glm::dvec2(0, 0)));
+  REQUIRE(result.contains(glm::dvec2(0, 1)));
+  REQUIRE(result.contains(glm::dvec2(1,-1)));
+  REQUIRE(result.contains(glm::dvec2(1, 0)));
+  REQUIRE(result.contains(glm::dvec2(1, 1)));
+  REQUIRE(result.contains(glm::dvec2(2,-1)));
+  REQUIRE(result.contains(glm::dvec2(2, 0)));
+  REQUIRE(result.contains(glm::dvec2(2, 1)));
+  REQUIRE(result.contains(glm::dvec2(3,-1)));
+  REQUIRE(result.contains(glm::dvec2(3, 0)));
+  REQUIRE(result.contains(glm::dvec2(3, 1)));
+  REQUIRE(result.contains(glm::dvec2(4, 1)));
+
+}
+
 TEST_CASE("Formation/OneChild", "[FormationSingle]") {
   RTSPathingLib::Body a;
   a.category = 0;

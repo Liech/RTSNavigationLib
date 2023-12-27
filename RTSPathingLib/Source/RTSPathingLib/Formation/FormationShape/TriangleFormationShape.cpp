@@ -40,7 +40,7 @@ namespace RTSPathingLib {
     };
   }
 
-  double TriangleFormationShape::getInterfaceWidth(size_t number) const {
+  double TriangleFormationShape::getInterfaceWidth(size_t number, const glm::dvec2& scale) const {
     if (number == 0)
       return 0;
     size_t edge = ((number - 1) / 2) % 3;
@@ -48,7 +48,7 @@ namespace RTSPathingLib {
     if (!center)
       return 0;
     auto poly = getPolygon();
-    double result = glm::distance(poly[edge], poly[(edge + 1) % 3]);
+    double result = glm::distance(poly[edge]*scale, poly[(edge + 1) % 3]*scale);
     return result;
   }
 

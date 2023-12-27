@@ -18,7 +18,7 @@ namespace RTSPathingLib {
     virtual size_t getNumberOfInterfacePoints() const;
     virtual glm::dvec2 getInterfacePoint(size_t number) const;
     virtual glm::dvec2 getInterfaceNormal(size_t number) const;
-    virtual double     getInterfaceWidth(size_t number) const;
+    virtual double     getInterfaceWidth(size_t number, const glm::dvec2& scale) const;
 
     ScalingBehavior getScalingBehavior() const;
     void setScalingBehavior(const ScalingBehavior& behavior);
