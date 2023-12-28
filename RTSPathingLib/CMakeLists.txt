@@ -62,6 +62,7 @@ set(FormationShape_Files
     "Source/RTSPathingLib/Formation/FormationShape/FormationShapeFactory.h"
     "Source/RTSPathingLib/Formation/FormationShape/FormationShapeFactory.cpp"	
     "Source/RTSPathingLib/Formation/FormationShape/ScalingBehavior.h"	
+    "Source/RTSPathingLib/Formation/FormationShape/ScalingBehavior.cpp"	
     "Source/RTSPathingLib/Formation/FormationShape/RectangleInterfacePoint.h"	
     "Source/RTSPathingLib/Formation/FormationShape/TriangleInterfacePoint.h"	
 )

@@ -66,4 +66,14 @@ namespace RTSPathingLib {
       return glm::dvec2(0, 1);
     return result;
   }
+
+  void TriangleFormationShape::fromJson(const nlohmann::json& input) {
+    FormationShape::fromJson(input);
+  }
+
+  nlohmann::json TriangleFormationShape::toJson() {
+    nlohmann::json result = FormationShape::toJson();
+    result["Type"] = "Triangle";
+    return result;
+  }
 }

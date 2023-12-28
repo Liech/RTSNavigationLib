@@ -82,4 +82,16 @@ namespace RTSPathingLib {
       return glm::dvec2(0, 1);
     return result;
   }
+
+  void ArcFormationShape::fromJson(const nlohmann::json& input) {
+    FormationShape::fromJson(input);
+    arcAngleRadian = input["ArcAngle"];
+  }
+
+  nlohmann::json ArcFormationShape::toJson() {
+    nlohmann::json result = FormationShape::toJson();
+    result["ArcAngle"] = arcAngleRadian;
+    result["Type"] = "Arc";
+    return result;
+  }
 }

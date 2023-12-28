@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <glm/glm.hpp>
+#include <nlohmann/json.hpp>
 
 #include "ScalingBehavior.h"
 
@@ -20,13 +21,16 @@ namespace RTSPathingLib {
     virtual glm::dvec2 getInterfaceNormal(size_t number) const;
     virtual double     getInterfaceWidth(size_t number, const glm::dvec2& scale) const;
 
+    virtual void fromJson(const nlohmann::json&);
+    virtual nlohmann::json toJson();
+
     ScalingBehavior getScalingBehavior() const;
     void setScalingBehavior(const ScalingBehavior& behavior);
     glm::dvec2 getBaseSize() const;
     void setBaseSize(const glm::dvec2&);
 
   private:
-    ScalingBehavior scaling = ScalingBehavior::Isotropic;
+    ScalingBehavior scaling   = ScalingBehavior::Isotropic;
     glm::dvec2       baseSize = glm::dvec2(1, 1);
   };
 }

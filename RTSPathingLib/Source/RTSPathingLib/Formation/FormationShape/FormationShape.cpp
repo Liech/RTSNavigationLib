@@ -48,4 +48,16 @@ namespace RTSPathingLib {
   void FormationShape::setBaseSize(const glm::dvec2& size) {
     baseSize = size;
   }
+
+  void FormationShape::fromJson(const nlohmann::json& input) {
+    baseSize = glm::dvec2(input["Size"][0], input["Size"][1]);
+    scaling  = String2ScalingBehavior(input["Scaling"]);
+  }
+  
+  nlohmann::json FormationShape::toJson() {
+    nlohmann::json result;
+    result["Size"]    = std::array<double,2>{ baseSize[0],baseSize[0]};
+    result["Scaling"] = ScalingBehavior2String(scaling);
+    return result;
+  }
 }

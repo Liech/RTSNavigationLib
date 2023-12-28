@@ -16,6 +16,9 @@ namespace RTSPathingLib {
     virtual glm::dvec2 getInterfaceNormal(size_t number) const override;
     virtual double getInterfaceWidth(size_t number, const glm::dvec2& scale) const;
 
+    virtual void fromJson(const nlohmann::json&) override;
+    virtual nlohmann::json toJson() override;
+
     double getArcAngle() const;
     void setArcAngle(double valueRadian);
 
