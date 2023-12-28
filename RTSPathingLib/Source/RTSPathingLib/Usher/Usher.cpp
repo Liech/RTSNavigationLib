@@ -13,7 +13,10 @@ namespace RTSPathingLib {
   }
 
   std::vector<size_t> Usher::assignPlaces(const std::vector<Body>& units, const std::vector<Body>& places) {
-    auto costFunction = [](const glm::dvec2& a, const glm::dvec2& b) { return glm::distance(a, b); };
+    auto costFunction = [](const glm::dvec2& a, const glm::dvec2& b) { 
+      return std::pow(glm::distance(a, b)+1.0,4); // higher emphasis on distance reducing by exponentialize the impact
+      //return glm::distance(a, b);
+      };
 
     std::vector<glm::dvec2> worker;
     worker.reserve(units.size());
@@ -51,6 +54,18 @@ namespace RTSPathingLib {
       svgDebug.push_back(debug);
       counter++;
     }
+    for (size_t i = 0; i < usherResult.size();i++) {
+      svg debug;
+      size_t ticket = usherResult[i];
+      debug.streak = {
+            units[i].position, 
+            places[ticket].position
+      };
+      debug.color = "yellow";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
+
     counter = 0;
     for (auto& body : units) {
       svg debug;
@@ -66,17 +81,6 @@ namespace RTSPathingLib {
       debug.text = std::to_string(counter);
       svgDebug.push_back(debug);
       counter++;
-    }
-    for (size_t i = 0; i < usherResult.size();i++) {
-      svg debug;
-      size_t ticket = usherResult[i];
-      debug.streak = {
-            units[i].position, 
-            places[ticket].position
-      };
-      debug.color = "yellow";
-      debug.thickness = 0.1;
-      svgDebug.push_back(debug);
     }
     svg::write("Usher.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
