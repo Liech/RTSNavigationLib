@@ -65,7 +65,6 @@ namespace UsherTests {
     REQUIRE(tickets[1] == 3);
     REQUIRE(tickets[2] == 0);
     REQUIRE(tickets[3] == 1);
-
   }
 
   TEST_CASE("Usher/BoostMinCostFlowExample", "[UsherFour]") {

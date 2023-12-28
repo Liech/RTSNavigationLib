@@ -35,7 +35,6 @@ namespace RTSPathingLib {
   void Usher::visualize(const std::vector<size_t>& usherResult, const std::vector<Body>& units, const std::vector<Body>& places) {
     std::vector<svg> svgDebug = {};
 
-
     size_t counter = 0;
     for (auto& body : places) {
       svg debug;
