@@ -81,6 +81,7 @@ namespace UsherTests {
         "UnitCategory"                     : 0, 
         "UnitDistributionWeight"           : 1,
         "Children"                         : {},
+        "PlacementBehavior"                : "CenterFirst",
 
         "Shape" : {
           "Type" : "Rectangle",

@@ -74,7 +74,9 @@ set(Formation_Files
     "Source/RTSPathingLib/Formation/FormationCalculator.h"	
     "Source/RTSPathingLib/Formation/FormationCalculator.cpp"	
     "Source/RTSPathingLib/Formation/UnitPlacement.h"	
-    "Source/RTSPathingLib/Formation/UnitPlacement.cpp"		
+    "Source/RTSPathingLib/Formation/UnitPlacement.cpp"			
+    "Source/RTSPathingLib/Formation/UnitPlacementBehavior.h"	
+    "Source/RTSPathingLib/Formation/UnitPlacementBehavior.cpp"		
 )
 source_group("Source/Formation" FILES ${Formation_Files})
 

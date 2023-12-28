@@ -106,6 +106,14 @@ namespace RTSPathingLib {
     rotation = rotation_;
   }
 
+  UnitPlacementBehavior Formation::getPlacementBehavior() const {
+    return placementBehavior;
+  }
+  
+  void Formation::setPlacementBehavior(UnitPlacementBehavior value) {
+    placementBehavior = value;
+  }
+
   void Formation::fromJson(const nlohmann::json& input) {
     shape = FormationShapeFactory::make(input["Shape"]);
 
@@ -116,6 +124,7 @@ namespace RTSPathingLib {
     rotation                         = input["Rotation"]                        ;
     unitCategory                     = input["UnitCategory"]                    ;
     unitDistributionWeight           = input["UnitDistributionWeight"]          ;
+    placementBehavior                = String2UnitPlacementBehavior(input["PlacementBehavior"]);
 
     children.clear();
     for (auto& child : input["Children"]) {
@@ -136,6 +145,7 @@ namespace RTSPathingLib {
     result["Rotation"]                         = rotation;
     result["UnitCategory"]                     = unitCategory;
     result["UnitDistributionWeight"]           = unitDistributionWeight;
+    result["PlacementBehavior"]                = UnitPlacementBehavior2String(placementBehavior);
 
     result["Children"] = nlohmann::json::array();
     for (auto& child : children) {

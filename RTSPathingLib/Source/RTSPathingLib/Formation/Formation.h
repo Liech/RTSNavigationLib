@@ -4,6 +4,8 @@
 #include <vector>
 #include <nlohmann/json.hpp>
 
+#include "UnitPlacementBehavior.h"
+
 namespace RTSPathingLib {
   class FormationShape;
 
@@ -32,6 +34,8 @@ namespace RTSPathingLib {
     void   setUnitCategory(size_t);
     double getUnitDistributionWeight() const; // if multiple formation nodes have the same category, this can adjust the distribution weighting (higher numbers->more Units)
     void   setUnitDistributionWeight(double v);
+    UnitPlacementBehavior getPlacementBehavior() const;
+    void   setPlacementBehavior(UnitPlacementBehavior);
 
     void setShape(std::unique_ptr<FormationShape> shape);
     FormationShape& getShape();
@@ -51,6 +55,7 @@ namespace RTSPathingLib {
     double rotation                         = 0.0;
     size_t unitCategory                     = 0;
     double unitDistributionWeight           = 1;
+    UnitPlacementBehavior placementBehavior = UnitPlacementBehavior::CenterFirst;
 
     std::vector<std::unique_ptr<Formation>> children;
     const Formation* parent = nullptr;

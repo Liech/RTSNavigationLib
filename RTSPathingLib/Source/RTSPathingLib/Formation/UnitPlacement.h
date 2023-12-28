@@ -4,13 +4,14 @@
 #include <map>
 
 #include "RTSPathingLib/Util/RectangleGrid/RectangleGrid.h"
+#include "RTSPathingLib/Formation/UnitPlacementBehavior.h"
 
 namespace RTSPathingLib {
   struct Body;
 
   class UnitPlacement {
   public:
-    UnitPlacement(const RectangleGrid<bool>&, const std::map<size_t, size_t>&, size_t);
+    UnitPlacement(const RectangleGrid<bool>&, const std::map<size_t, size_t>&, size_t, UnitPlacementBehavior = UnitPlacementBehavior::CenterFirst);
 
     std::vector<Body> place(bool& success);
 
@@ -33,5 +34,6 @@ namespace RTSPathingLib {
     RectangleGrid<bool>             usedPositions;
     size_t                          category;
     size_t                          smallestSize = 1;
+    UnitPlacementBehavior           placementBehavior;
   };
 }

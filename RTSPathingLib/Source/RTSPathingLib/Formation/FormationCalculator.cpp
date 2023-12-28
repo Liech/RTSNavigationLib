@@ -62,7 +62,7 @@ namespace RTSPathingLib {
 
       std::vector<glm::dvec2> polygon;
       grid = getGrid(formation, toFormationCenter, polygon);
-      auto placer = UnitPlacement(grid, unitsPlacedHere, formation.getUnitCategory());
+      auto placer = UnitPlacement(grid, unitsPlacedHere, formation.getUnitCategory(), formation.getPlacementBehavior());
       result = placer.place(allPlaced);
       grid = placer.getUsedPositions();
       lastpolygon = polygon;

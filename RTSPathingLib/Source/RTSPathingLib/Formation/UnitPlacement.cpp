@@ -6,10 +6,11 @@
 #include "Util/svg.h"
 
 namespace RTSPathingLib {
-  UnitPlacement::UnitPlacement(const RectangleGrid<bool>& unitGrid, const std::map<size_t, size_t>& unitList, size_t category_) : 
+  UnitPlacement::UnitPlacement(const RectangleGrid<bool>& unitGrid, const std::map<size_t, size_t>& unitList, size_t category_, UnitPlacementBehavior placementStrategy) : 
   grid(unitGrid),
   unitsToPlace(unitList){
     category = category_;
+    placementBehavior = placementStrategy;
 
     usedPositions.dimension = grid.dimension;
     usedPositions.offset = grid.offset;
@@ -81,8 +82,11 @@ namespace RTSPathingLib {
       return {};
     }
 
-    if (smallestSize == size)
+    if (smallestSize == size && placementBehavior != UnitPlacementBehavior::DistributeEvenly) {
       possible = centerSort(possible);
+      if (placementBehavior == UnitPlacementBehavior::OuterFirst)
+        std::reverse(possible.begin(), possible.end());
+    }
     else
       possible = distributeSort(possible, amount);
 
@@ -120,7 +124,14 @@ namespace RTSPathingLib {
 
     auto unused = grid - usedPositions;
     auto possible = getAllPlaces(unused);
-    possible = centerSort(possible);
+
+    if (placementBehavior != UnitPlacementBehavior::DistributeEvenly)
+      possible = centerSort(possible);
+    else
+      possible = distributeSort(possible, amountUnits);
+    if (placementBehavior == UnitPlacementBehavior::OuterFirst)
+      std::reverse(possible.begin(), possible.end());
+
     if (amountUnits > possible.size()) {
       success = false;
       return {};
