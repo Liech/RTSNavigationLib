@@ -78,6 +78,7 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
 * Get more confidence with testing
   * Try TDD
   * Use SVG for Visual Testing and Documentation
+  * try out Github CI features
 * Get more versatile with cmake and vcpkg 
 * Build Mechanic before Graphic
 * Build a giant RTS, in small deliverable pieces
@@ -92,8 +93,6 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
   * Hollow Property (e.g. for Hollow Circles)
   * Convex Polygon Shape
   * Extrusion Based Shape (like line formations in BAR)
-* Project
-  * Release / Setting Public
 * Flow Field Pathfinding
 * Flocking & Unit Movement
 
