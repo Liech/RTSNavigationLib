@@ -55,10 +55,12 @@ In a real scenario the places are transformed after generation to the real locat
 
     std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
 ```
-Units are Green Dots.
-Places are Gray.
-The Tickets are Yellow.
-![image](https://github.com/Liech/RTSPathingLib/assets/16963076/9f426be9-84a7-4326-a5d6-c471aa4996e8)
+
+* Units are Green Dots.
+* Places are Gray.
+* The Tickets are Yellow.
+
+![image](https://github.com/Liech/RTSPathingLib/blob/main/Documentation/Usher.png)
 
 # Complex Formation Generation
 
@@ -69,7 +71,7 @@ Here is an example that may justify this Formation:
  * Green Units are the Protectors. Heavy armored Paladins.
  * Blue Units are Horsemen / Zerglings. Melee units that are fast. They swarm out protected by the heavy fire of the archers.
 
-![image](https://github.com/Liech/RTSPathingLib/assets/16963076/95d2e214-1b93-44c1-b1ed-4106aa1c310f)
+![image](https://github.com/Liech/RTSPathingLib/blob/main/Documentation/PraiseTheSunFormation.png)
 
 See "Formation/PraiseTheSun" Test if you are interested how its done.
 
