@@ -88,6 +88,7 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
 # Todo
 
 * Formation
+  * Center the result
   * Hollow Property (e.g. for Hollow Circles)
   * Convex Polygon Shape
   * Extrusion Based Shape (like line formations in BAR)
