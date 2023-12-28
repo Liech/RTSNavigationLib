@@ -71,7 +71,7 @@ namespace RTSPathingLib {
   BoostMinCostFlowExample::BoostMinCostFlowExample() {
 
 
-    vertex_descriptor s, t;
+    vertex_descriptor sourceNode, sinkNode;
     Graph g;
 
     Capacity capacity = get(boost::edge_capacity, g);
@@ -86,26 +86,40 @@ namespace RTSPathingLib {
       add_vertex(g);
     }
 
-    s = 0;
-    t = 5;
+    sourceNode = 0;
+    sinkNode = 5;
 
     EdgeAdder< Graph, Weight, Capacity, Reversed, ResidualCapacity > ea(g, weight, capacity, rev, residual_capacity);
 
-    ea.addEdge(0, 1, 4, 2);
-    ea.addEdge(0, 2, 2, 2);
+    ea.addEdge(sourceNode, 1, 4, 2);
+    ea.addEdge(sourceNode, 2, 2, 2);
 
     ea.addEdge(1, 3, 2, 2);
     ea.addEdge(1, 4, 1, 1);
     ea.addEdge(2, 3, 1, 1);
     ea.addEdge(2, 4, 1, 1);
 
-    ea.addEdge(3, 5, 4, 20);
-    ea.addEdge(4, 5, 2, 20);
+    ea.addEdge(3, sinkNode, 4, 20);
+    ea.addEdge(4, sinkNode, 2, 20);
 
-    boost::edmonds_karp_max_flow(g, s, t);
+    boost::edmonds_karp_max_flow(g, sourceNode, sinkNode);
     boost::cycle_canceling(g);
 
-    int cost = boost::find_flow_cost(g);
-    assert(cost == 29);
+    int costx = boost::find_flow_cost(g);
+    assert(costx == 29);
+
+    typedef typename boost::property_traits< Weight >::value_type Cost;
+
+    Cost cost = 0;
+    BGL_FORALL_EDGES_T(e, g, Graph)
+    {
+      if (get(capacity, e) > Cost(0))
+      {
+        auto cap      = get(capacity, e);
+        auto residual = get(residual_capacity, e);
+        auto w        = get(weight, e);
+        cost += (cap - residual) * w;
+      }
+    }
   }
 }

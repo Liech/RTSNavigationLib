@@ -45,6 +45,8 @@ set(Util_Files
     "Source/RTSPathingLib/Util/String2File.cpp"	
     "Source/RTSPathingLib/Util/Geometry2D.h"
     "Source/RTSPathingLib/Util/Geometry2D.cpp"	
+    "Source/RTSPathingLib/Util/AssignmentProblemSolver.h"
+    "Source/RTSPathingLib/Util/AssignmentProblemSolver.cpp"	
 )
 source_group("Source/Util" FILES ${Util_Files})
 
