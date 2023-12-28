@@ -93,6 +93,8 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
   * Hollow Property (e.g. for Hollow Circles)
   * Convex Polygon Shape
   * Extrusion Based Shape (like line formations in BAR)
+* Usher
+  * The Usher should be able to handle different sizes and categories at the same time 
 * Flow Field Pathfinding
 * Flocking & Unit Movement
 
