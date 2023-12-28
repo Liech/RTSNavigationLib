@@ -2,8 +2,9 @@
 
 #include <set>
 
-#include <RTSPathingLib/Usher.h>
 #include <RTSPathingLib/Body.h>
+#include <RTSPathingLib/Usher/Usher.h>
+#include <RTSPathingLib/Usher/BoostMinCostFlowExample.h>
 
 namespace UsherTests {
   bool svgSave = true;
@@ -65,5 +66,9 @@ namespace UsherTests {
     REQUIRE(tickets[2] == 1);
     REQUIRE(tickets[3] == 0);
 
+  }
+
+  TEST_CASE("Usher/BoostMinCostFlowExample", "[UsherFour]") {
+    RTSPathingLib::BoostMinCostFlowExample playground;
   }
 }

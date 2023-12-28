@@ -9,8 +9,6 @@ set(Source_Files
     "Source/RTSPathingLib/Body.cpp"
     "Source/RTSPathingLib/BodyUtil.h"
     "Source/RTSPathingLib/BodyUtil.cpp"
-    "Source/RTSPathingLib/Usher.h"
-    "Source/RTSPathingLib/Usher.cpp"
 )
 source_group("Source" FILES ${Source_Files})
 
@@ -74,9 +72,17 @@ set(Formation_Files
     "Source/RTSPathingLib/Formation/FormationCalculator.h"	
     "Source/RTSPathingLib/Formation/FormationCalculator.cpp"	
     "Source/RTSPathingLib/Formation/UnitPlacement.h"	
-    "Source/RTSPathingLib/Formation/UnitPlacement.cpp"	
+    "Source/RTSPathingLib/Formation/UnitPlacement.cpp"		
 )
 source_group("Source/Formation" FILES ${Formation_Files})
+
+set(Usher_Files
+    "Source/RTSPathingLib/Usher/Usher.h"	
+    "Source/RTSPathingLib/Usher/Usher.cpp"	
+    "Source/RTSPathingLib/Usher/BoostMinCostFlowExample.h"	
+    "Source/RTSPathingLib/Usher/BoostMinCostFlowExample.cpp"	
+)
+source_group("Source/Usher" FILES ${Usher_Files})
 
 set(ALL_FILES
     ${Source_Files}
@@ -85,6 +91,7 @@ set(ALL_FILES
     ${RectangleGrid_Files}
     ${FormationShape_Files}
     ${Formation_Files}
+    ${Usher_Files}
 )
 
 ############################################################################
