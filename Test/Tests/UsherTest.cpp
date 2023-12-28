@@ -61,10 +61,10 @@ namespace UsherTests {
     REQUIRE(x.size() == tickets.size());
 
     REQUIRE(tickets.size() == units.size());
-    REQUIRE(tickets[0] == 3);
-    REQUIRE(tickets[1] == 2);
-    REQUIRE(tickets[2] == 1);
-    REQUIRE(tickets[3] == 0);
+    REQUIRE(tickets[0] == 2);
+    REQUIRE(tickets[1] == 3);
+    REQUIRE(tickets[2] == 0);
+    REQUIRE(tickets[3] == 1);
 
   }
 

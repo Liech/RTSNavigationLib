@@ -65,6 +65,10 @@ namespace RTSPathingLib {
     //jobAmount == workerAmount
     std::vector<size_t> result;
 
+    //double maxCost = -std::numeric_limits<double>::infinity();
+    //for (auto& c : allCosts)
+    //  maxCost = std::max(maxCost, c.second);
+
     vertex_descriptor sourceNode, sinkNode;
     Graph g;
 
@@ -72,6 +76,7 @@ namespace RTSPathingLib {
     Reversed rev = get(boost::edge_reverse, g);
     ResidualCapacity residual_capacity = get(boost::edge_residual_capacity, g);
     Weight weight = get(boost::edge_weight, g);
+
 
     size_type N(workerAmount*2+2);
     for (size_type i = 0; i < N; ++i){
@@ -102,10 +107,10 @@ namespace RTSPathingLib {
     result.resize(workerAmount);
     BGL_FORALL_EDGES_T(e, g, Graph)
     {
-      //auto cap = get(capacity, e);
+      auto cap = get(capacity, e);
       auto residual = get(residual_capacity, e);
-      //auto w = get(weight, e);
-      if (residual > 0 && e.m_source != sourceNode && e.m_target != sinkNode)
+      auto w = get(weight, e);
+      if (residual == 0 && e.m_source < workerAmount && e.m_target != sourceNode) //edge is used and source is worker node
         result[e.m_source] = e.m_target - workerAmount;
     }
 
