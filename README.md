@@ -86,7 +86,7 @@ The Tickets are Yellow.
 
 # Complex Formation Generation
 
-An Complex Example for a Formation with different Unit Sizes.
+A Complex Example for a Formation with different Unit Sizes.
 
 Here is an example that may justify this Formation:
  * Red Units are in the center to be protected from aggressive Forces. Archers and a few Big Catapults.
@@ -94,6 +94,7 @@ Here is an example that may justify this Formation:
  * Blue Units are Horsemen / Zerglings. Melee units that are fast. They swarm out protected by the heavy fire of the archers.
 
 ![image](https://github.com/Liech/RTSPathingLib/assets/16963076/95d2e214-1b93-44c1-b1ed-4106aa1c310f)
+
 See "Formation/PraiseTheSun" Test if you are interested how its done.
 
 # Build
