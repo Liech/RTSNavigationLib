@@ -26,15 +26,11 @@ namespace RTSPathingLib {
     void   setOverwriteWidthWithInterfaceWidth(bool doIt);
     bool   getRotateWithInterface() const;
     void   setRotateWithInterface(bool v);
-    //bool   getLinkSizeWithParent() const;
-    //void   setLinkSizeWithParent(bool v);
 
     size_t getUnitCategory() const;
     void   setUnitCategory(size_t);
     double getUnitDistributionWeight() const; // if multiple formation nodes have the same category, this can adjust the distribution weighting (higher numbers->more Units)
     void   setUnitDistributionWeight(double v);
-    //double getUnitPadding() const;//how much the units are appart from eachother
-    //void   setUnitPadding(double padding);
 
     void setShape(std::unique_ptr<FormationShape> shape);
     FormationShape& getShape();
@@ -42,18 +38,18 @@ namespace RTSPathingLib {
     double getRotation() const;
     void setRotation(double rotation);
 
+    void fromJson(const nlohmann::json&);
+    nlohmann::json toJson();
+
   private:
     std::unique_ptr<FormationShape> shape   = nullptr;
     size_t ownInterfacePoint                = 0;
     size_t parentInterfacePoint             = 0;
     bool   overwriteWidthWithInterfaceWidth = false;
     bool   rotateWithInterface              = false;
-    //bool   linkSizeWithParent               = false;
-    //double unitPadding                      = 1.1;
     double rotation                         = 0.0;
-
-    size_t unitCategory = 0;
-    double  unitDistributionWeight = 1;
+    size_t unitCategory                     = 0;
+    double unitDistributionWeight           = 1;
 
     std::vector<std::unique_ptr<Formation>> children;
     const Formation* parent = nullptr;

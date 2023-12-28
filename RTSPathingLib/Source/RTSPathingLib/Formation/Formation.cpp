@@ -2,6 +2,7 @@
 
 #include "FormationShape/FormationShape.h"
 #include "FormationShape/RectangleFormationShape.h"
+#include "FormationShape/FormationShapeFactory.h"
 
 namespace RTSPathingLib {
   Formation::Formation() {
@@ -69,14 +70,6 @@ namespace RTSPathingLib {
     rotateWithInterface = v;
   }
 
-  //bool Formation::getLinkSizeWithParent() const {
-  //  return linkSizeWithParent;
-  //}
-
-  //void Formation::setLinkSizeWithParent(bool v) {
-  //  linkSizeWithParent = v;
-  //}
-
   size_t Formation::getUnitCategory() const {
     return unitCategory;
   }
@@ -105,19 +98,49 @@ namespace RTSPathingLib {
     return *shape;
   }
 
-  //double Formation::getUnitPadding() const {
-  //  return unitPadding;
-  //}
-
-  //void Formation::setUnitPadding(double padding) {
-  //  unitPadding = padding;
-  //}
-
   double Formation::getRotation() const {
     return rotation;
   }
 
   void Formation::setRotation(double rotation_) {
     rotation = rotation_;
+  }
+
+  void Formation::fromJson(const nlohmann::json& input) {
+    shape = FormationShapeFactory::make(input["Shape"]);
+
+    ownInterfacePoint                = input["OwnInterfacePoint"]               ;
+    parentInterfacePoint             = input["ParentInterfacePoint"]            ;
+    overwriteWidthWithInterfaceWidth = input["OverwriteWidthWithInterfaceWidth"];
+    rotateWithInterface              = input["RotateWithInterface"]             ;
+    rotation                         = input["Rotation"]                        ;
+    unitCategory                     = input["UnitCategory"]                    ;
+    unitDistributionWeight           = input["UnitDistributionWeight"]          ;
+
+    children.clear();
+    for (auto& child : input["Children"]) {
+      std::unique_ptr<Formation> formation = std::make_unique<Formation>();
+      formation->fromJson(child);
+      children.push_back(std::move(formation));
+    }
+  }
+
+  nlohmann::json Formation::toJson() {
+    nlohmann::json result;
+    result["Shape"]                            = shape->toJson();
+
+    result["OwnInterfacePoint"]                = ownInterfacePoint;
+    result["ParentInterfacePoint"]             = parentInterfacePoint;
+    result["OverwriteWidthWithInterfaceWidth"] = overwriteWidthWithInterfaceWidth;
+    result["RotateWithInterface"]              = rotateWithInterface;
+    result["Rotation"]                         = rotation;
+    result["UnitCategory"]                     = unitCategory;
+    result["UnitDistributionWeight"]           = unitDistributionWeight;
+
+    result["Children"] = nlohmann::json::array();
+    for (auto& child : children) {
+      result["Children"].push_back(child->toJson());
+    }
+    return result;
   }
 }
