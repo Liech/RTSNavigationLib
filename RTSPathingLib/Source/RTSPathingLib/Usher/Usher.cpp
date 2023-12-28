@@ -18,19 +18,47 @@ namespace RTSPathingLib {
       //return glm::distance(a, b);
       };
 
-    std::vector<glm::dvec2> worker;
-    worker.reserve(units.size());
-    for (auto& unit : units)
-      worker.push_back(unit.position);
+    struct entry {
+      std::vector<glm::dvec2> problemInput;
+      std::vector<size_t>     indices;
+    };
+    std::map<std::pair<size_t, size_t>, entry> AllWorker;
+    std::map<std::pair<size_t, size_t>, entry> AllTasks;
+    std::vector<std::pair<size_t, size_t>> keys;
 
-    std::vector<glm::dvec2> tasks;
-    tasks.reserve(places.size());
-    for (auto& place : places)
-      tasks.push_back(place.position);
+    for (size_t i = 0; i < units.size(); i++) {
+      auto& unit = units[i];
+      auto key = std::make_pair(unit.category, unit.size);
+      if (AllWorker.count(key) == 0) {
+        AllWorker[key] = entry();
+        keys.push_back(key);
+      }
+      auto& worker = AllWorker[key];
+      worker.indices.push_back(i);
+      worker.problemInput.push_back(unit.position);
+    }
+    for (size_t i = 0; i < places.size(); i++) {
+      auto& place = places[i];
+      auto key = std::make_pair(place.category, place.size);
+      if (AllTasks.count(key) == 0)
+        AllTasks[key] = {};
+      auto& tasks = AllTasks[key];
+      tasks.indices.push_back(i);
+      tasks.problemInput.push_back(place.position);
+    }
 
-    AssignmentProblemSolver<glm::dvec2, glm::dvec2> solver(worker, tasks,costFunction);
-
-    auto result = solver.getTickets();
+    std::vector<size_t> result;
+    result.resize(units.size());
+    for (auto& key : keys) {
+      auto& worker = AllWorker[key];
+      auto& tasks  = AllTasks[key];
+      AssignmentProblemSolver<glm::dvec2, glm::dvec2> solver(worker.problemInput,tasks.problemInput, costFunction);
+      std::vector<size_t> subSolution = solver.getTickets();
+      for (size_t i = 0; i < subSolution.size(); i++) {
+        size_t ticket = subSolution[i];
+        result[worker.indices[i]] = tasks.indices[ticket];
+      }
+    }
     return result;
   }
 
