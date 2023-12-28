@@ -88,10 +88,6 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
 # Todo
 
 * Formation
-  * Unit Placement Behavior Property
-    * Center First
-    * Distribute Evenly
-    * Outer First
   * Hollow Property (e.g. for Hollow Circles)
   * Convex Polygon Shape
   * Extrusion Based Shape (like line formations in BAR)
