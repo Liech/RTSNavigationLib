@@ -1,4 +1,4 @@
-# RTSPathingLib
+![PraiseTheSunFormation](https://github.com/Liech/RTSPathingLib/assets/16963076/5b1392a0-4c31-4a86-92d2-4cba4fa75c40)# RTSPathingLib
 
 Library that tries to provide tools tackling the fundamental problem of the RTS genre:
 
@@ -85,6 +85,17 @@ Places are Gray.
 The Tickets are Yellow.
 ![image](https://github.com/Liech/RTSPathingLib/assets/16963076/9f426be9-84a7-4326-a5d6-c471aa4996e8)
 
+# Complex Formation Generation
+
+An Complex Example for a Formation with different Unit Sizes.
+
+Here is an example that may justify this Formation:
+ * Red Units are in the center to be protected from aggressive Forces. Archers and a few Big Catapults.
+ * Green Units are the Protectors. Heavy armored Paladins.
+ * Blue Units are Horsemen / Zerglings. Melee units that are fast. They swarm out protected by the heavy fire of the archers.
+
+![image](https://github.com/Liech/RTSPathingLib/assets/16963076/95d2e214-1b93-44c1-b1ed-4106aa1c310f)
+See "Formation/PraiseTheSun" Test if you are interested how its done.
 
 # Build
 
