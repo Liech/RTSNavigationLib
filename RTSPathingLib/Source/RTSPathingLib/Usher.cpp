@@ -4,6 +4,7 @@
 #include "Body.h"
 #include "BodyUtil.h"
 #include "Util/RTree2D.h"
+#include "Util/svg.h"
 
 //https://stackoverflow.com/questions/35746487/min-cost-max-flow-with-boostsuccessive-shortest-path-nonnegative-weights
 //https://www.boost.org/doc/libs/1_83_0/libs/graph/doc/successive_shortest_path_nonnegative_weights.html
@@ -70,4 +71,7 @@ namespace RTSPathingLib {
     return std::make_unique<RTree2D>(placesTreeInput);
   }
 
+  void Usher::visualize(const std::vector<size_t>& usherResult, const std::vector<Body>& units, const std::vector<Body>& places) {
+
+  }
 }
