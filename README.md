@@ -1,4 +1,4 @@
-![PraiseTheSunFormation](https://github.com/Liech/RTSPathingLib/assets/16963076/5b1392a0-4c31-4a86-92d2-4cba4fa75c40)# RTSPathingLib
+# RTSPathingLib
 
 Library that tries to provide tools tackling the fundamental problem of the RTS genre:
 
@@ -26,7 +26,6 @@ Tackling Formation, guide units to formation places, navigation and moving in a 
   * Convex Polygon Shape
   * Extrusion Based Shape (like line formations in BAR)
 * Project
-  * Github Documentation
   * Release / Setting Public
 * Flow Field Pathfinding
 * Flocking & Unit Movement
