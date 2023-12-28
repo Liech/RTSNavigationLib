@@ -11,7 +11,7 @@ namespace RTSPathingLib {
   class Usher {
   public:
     Usher();
-
+    static void assignPlaces2();
     static std::vector<size_t> assignPlaces(const std::vector<Body>& units, const std::vector<Body>& places);
 
     static void visualize(const std::vector<size_t>& usherResult, const std::vector<Body>& units, const std::vector<Body>& places);

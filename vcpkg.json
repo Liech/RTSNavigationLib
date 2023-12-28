@@ -5,6 +5,7 @@
     "nlohmann-json",
     "glm",
 	"catch2",
-	"boost-geometry"
+	"boost-geometry",
+	"boost-graph"
   ]
 }

@@ -40,6 +40,11 @@ namespace RTSPathingLib {
       end.y   = startRegion.y + size.y - (end.y   - startRegion.y);
       result += "  <line x1=\"" + std::to_string(start.x) + "\" y1=\"" + std::to_string(start.y) + "\" x2=\"" + std::to_string(end.x) + "\" y2=\"" + std::to_string(end.y) + "\" stroke=\"" + color + "\" stroke-width=\"" + std::to_string(thickness) + "\"/>";
       };
+    auto writeText = [&result, startRegion, size](glm::dvec2 pos, const std::string text) {
+      pos.y = startRegion.y + size.y - (pos.y - startRegion.y);
+      result += "<text x=\"" + std::to_string(pos.x) + "\" y=\"" + std::to_string(pos.y) + "\"  font-size=\"0.05em\">" + text + "</text>";
+      };
+
 
     if (!filled) {
       for (size_t i = 1; i < streak.size(); i++) {
@@ -59,6 +64,15 @@ namespace RTSPathingLib {
       }
       result += "\" fill=\"" + color + "\" />\n";
     }
+
+    if (text != "") {
+      glm::dvec2 center = glm::dvec2(0, 0);
+      for (auto& x : streak)
+        center += x;
+      center /= streak.size();
+      writeText(center, text);
+    }
+
 
     return result;
   }

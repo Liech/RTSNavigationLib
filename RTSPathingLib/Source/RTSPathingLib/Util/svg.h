@@ -16,5 +16,6 @@ namespace RTSPathingLib {
     double                  thickness = 0.01;
     bool                   filled = false;
     bool                   wrapAround = false;
+    std::string            text = "";
   };
 }

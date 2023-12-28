@@ -72,6 +72,56 @@ namespace RTSPathingLib {
   }
 
   void Usher::visualize(const std::vector<size_t>& usherResult, const std::vector<Body>& units, const std::vector<Body>& places) {
+    std::vector<svg> svgDebug = {};
+
+
+    size_t counter = 0;
+    for (auto& body : places) {
+      svg debug;
+      debug.streak = {
+            body.position + glm::dvec2(-0.5 ,-0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2( 0.5 ,-0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2( 0.5 , 0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2(-0.5 , 0.5) * (double)body.size * 0.5,
+      };
+      debug.filled = true;
+      debug.color = "gray";
+      debug.thickness = 0.1;
+      debug.text = std::to_string(counter);
+      svgDebug.push_back(debug);
+      counter++;
+    }
+    counter = 0;
+    for (auto& body : units) {
+      svg debug;
+      debug.streak = {
+            body.position + glm::dvec2(-0.5 ,-0.5) * (double)body.size * 0.1,
+            body.position + glm::dvec2(0.5 ,-0.5) * (double)body.size * 0.1,
+            body.position + glm::dvec2(0.5 , 0.5) * (double)body.size * 0.1,
+            body.position + glm::dvec2(-0.5 , 0.5) * (double)body.size * 0.1,
+      };
+      debug.filled = true;
+      debug.color = "green";
+      debug.thickness = 0.1;
+      debug.text = std::to_string(counter);
+      svgDebug.push_back(debug);
+      counter++;
+    }
+    for (size_t i = 0; i < usherResult.size();i++) {
+      svg debug;
+      size_t ticket = usherResult[i];
+      debug.streak = {
+            units[i].position, 
+            places[ticket].position
+      };
+      debug.color = "yellow";
+      debug.thickness = 0.1;
+      svgDebug.push_back(debug);
+    }
+    svg::write("Usher.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
+  }
+
+  void Usher::assignPlaces2() {
 
   }
 }

@@ -6,14 +6,20 @@
 #include <RTSPathingLib/Body.h>
 
 namespace UsherTests {
+  bool svgSave = true;
+
   TEST_CASE("Usher/single", "[UsherSingle]") {
     std::vector<RTSPathingLib::Body> units = { RTSPathingLib::Body(glm::dvec2(0,0),0) };
     std::vector<RTSPathingLib::Body> places = { RTSPathingLib::Body(glm::dvec2(0,0),0) };
 
     std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
 
+    if (svgSave)
+      RTSPathingLib::Usher::visualize(tickets, units, places);
+
     REQUIRE(tickets.size() == units.size());
     REQUIRE(tickets[0] == 0);
+
   }
 
 
@@ -23,6 +29,9 @@ namespace UsherTests {
 
     std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
 
+    if (svgSave)
+      RTSPathingLib::Usher::visualize(tickets, units, places);
+
     REQUIRE(tickets.size() == units.size());
     REQUIRE(tickets[0] == 1);
     REQUIRE(tickets[1] == 0);
@@ -30,19 +39,22 @@ namespace UsherTests {
 
   TEST_CASE("Usher/Four", "[UsherFour]") {
     std::vector<RTSPathingLib::Body> units = {
+      RTSPathingLib::Body(glm::dvec2(0, 7),0),
+      RTSPathingLib::Body(glm::dvec2(4, -5),0),
+      RTSPathingLib::Body(glm::dvec2(8, 8),0),
+      RTSPathingLib::Body(glm::dvec2(-4, -6),0),
+    };
+    std::vector<RTSPathingLib::Body> places = {
       RTSPathingLib::Body(glm::dvec2(1, 0),0),
       RTSPathingLib::Body(glm::dvec2(-1, 0),0),
       RTSPathingLib::Body(glm::dvec2(0, 1),0),
       RTSPathingLib::Body(glm::dvec2(0,-1),0)
     };
-    std::vector<RTSPathingLib::Body> places = {
-      RTSPathingLib::Body(glm::dvec2(0, 132),0),
-      RTSPathingLib::Body(glm::dvec2(4323, -12),0),
-      RTSPathingLib::Body(glm::dvec2(33, 33),0),
-      RTSPathingLib::Body(glm::dvec2(-222222222, -455),0),
-    };
 
     std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
+
+    if (svgSave)
+      RTSPathingLib::Usher::visualize(tickets, units, places);
 
     std::set<size_t> x(tickets.begin(), tickets.end());
     REQUIRE(x.size() == tickets.size());
@@ -52,5 +64,6 @@ namespace UsherTests {
     REQUIRE(tickets[1] == 2);
     REQUIRE(tickets[2] == 1);
     REQUIRE(tickets[3] == 0);
+
   }
 }
