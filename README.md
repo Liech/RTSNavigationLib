@@ -6,30 +6,6 @@ Library that tries to provide tools tackling the fundamental problem of the RTS 
 
 Tackling Formation, guide units to formation places, navigation and moving in a formation along the planned path.
 
-# Recreational Goals
-
-* Get more confidence with testing
-  * Try TDD
-  * Use SVG for Visual Testing and Documentation
-* Get more versatile with cmake and vcpkg 
-* Build Mechanic before Graphic
-* Build a giant RTS, in small deliverable pieces
-
-# Todo
-
-* Formation
-  * Unit Placement Behavior Property
-    * Center First
-    * Distribute Evenly
-    * Outer First
-  * Hollow Property (e.g. for Hollow Circles)
-  * Convex Polygon Shape
-  * Extrusion Based Shape (like line formations in BAR)
-* Project
-  * Release / Setting Public
-* Flow Field Pathfinding
-* Flocking & Unit Movement
-
 # Formation Generation and showing units to their place
 
 In this example a simple Rectangle Formation is created and used for some units. The places are the untransformed location where the units should be.
@@ -96,6 +72,31 @@ Here is an example that may justify this Formation:
 ![image](https://github.com/Liech/RTSPathingLib/assets/16963076/95d2e214-1b93-44c1-b1ed-4106aa1c310f)
 
 See "Formation/PraiseTheSun" Test if you are interested how its done.
+
+# Recreational Goals
+
+* Get more confidence with testing
+  * Try TDD
+  * Use SVG for Visual Testing and Documentation
+* Get more versatile with cmake and vcpkg 
+* Build Mechanic before Graphic
+* Build a giant RTS, in small deliverable pieces
+
+# Todo
+
+* Formation
+  * Unit Placement Behavior Property
+    * Center First
+    * Distribute Evenly
+    * Outer First
+  * Hollow Property (e.g. for Hollow Circles)
+  * Convex Polygon Shape
+  * Extrusion Based Shape (like line formations in BAR)
+* Project
+  * Release / Setting Public
+* Flow Field Pathfinding
+* Flocking & Unit Movement
+
 
 # Build
 
