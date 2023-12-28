@@ -6,7 +6,7 @@ Library that tries to provide tools tackling the fundamental problem of the RTS 
 
 Tackling Formation, guide units to formation places, navigation and moving in a formation along the planned path.
 
-# Formation Generation and showing units to their place
+# Formation Forming
 
 In this example a simple Rectangle Formation is created and used for some units. The places are the untransformed location where the units should be.
 
