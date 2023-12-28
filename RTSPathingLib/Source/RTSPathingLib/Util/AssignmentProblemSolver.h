@@ -10,7 +10,7 @@
 namespace RTSPathingLib {
   class AssignmentProblemSolverPlain {
   public:
-    static std::vector<size_t> getTickets(const std::map<std::pair<size_t, size_t>,double>& allCosts);
+    static std::vector<size_t> getTickets(size_t workerAmount,const std::map<std::pair<size_t, size_t>,double>& allCosts);
   };
 
   template<typename Worker, typename Task>
@@ -27,7 +27,7 @@ namespace RTSPathingLib {
     //the ticket vector has the same order as workers. for each worker the best task index is returned
     std::vector<size_t> getTickets() const {
       auto costs = getAllCosts();
-      return AssignmentProblemSolverPlain::getTickets(costs);
+      return AssignmentProblemSolverPlain::getTickets(workers.size(),costs);
     }
 
   private:
