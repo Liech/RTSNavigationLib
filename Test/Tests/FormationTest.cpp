@@ -229,6 +229,34 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
   }
 
+  TEST_CASE("Formation/HollowArc", "[FormationDouble]") {
+    RTSPathingLib::Body b;
+    b.category = 0;
+    b.size = 1;
+    b.position = glm::dvec2(99, 99);
+
+    std::vector<RTSPathingLib::Body> input = { };
+    for (int i = 0; i < 8; i++)
+      input.push_back(b);
+    RTSPathingLib::Formation formation;
+    formation.setShape(std::make_unique<RTSPathingLib::ArcFormationShape>());
+    formation.getShape().setHollow(0.4);
+    auto places = RTSPathingLib::FormationCalculator(formation, input).calculate();
+
+    REQUIRE(places.size() == input.size());
+    
+    auto result = setisfy(places);
+    REQUIRE(result.contains(glm::dvec2(0, 0)));
+    REQUIRE(result.contains(glm::dvec2(0, 1)));
+    REQUIRE(result.contains(glm::dvec2(1,-1)));
+    REQUIRE(result.contains(glm::dvec2(1, 2)));
+    REQUIRE(result.contains(glm::dvec2(2,-1)));
+    REQUIRE(result.contains(glm::dvec2(2, 2)));
+    REQUIRE(result.contains(glm::dvec2(3, 0)));
+    REQUIRE(result.contains(glm::dvec2(3, 1)));
+
+  }
+
   TEST_CASE("Formation/InterfacePoint", "[FormationSingle]") {
     RTSPathingLib::Body b;
     b.category = 0;

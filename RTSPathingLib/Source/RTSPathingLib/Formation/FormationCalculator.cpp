@@ -144,6 +144,7 @@ namespace RTSPathingLib {
       debug.thickness = 0.1;
       svgDebug.push_back(debug);
     }
+    size_t counter = 0;
     for (auto& body : bodies) {
       svg debug;
       debug.streak = {
@@ -155,7 +156,9 @@ namespace RTSPathingLib {
       debug.filled = true;
       debug.color = colors[body.category%colors.size()];
       debug.thickness = 0.1;
+      debug.text = std::to_string(counter);
       svgDebug.push_back(debug);
+      counter++;
     }
     svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
