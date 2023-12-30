@@ -1,9 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <RTSPathingLib/Util/HexagonGrid/TopFlatHexGrid.h>
-#include <RTSPathingLib/Util/HexagonGrid/HexGridSvg.h>
-#include <RTSPathingLib/Util/HexagonGrid/Hex2DVoxelizer.h>
-#include <RTSPathingLib/Util/svg.h>
+#include <RTSNavigationLib/Util/HexagonGrid/TopFlatHexGrid.h>
+#include <RTSNavigationLib/Util/HexagonGrid/HexGridSvg.h>
+#include <RTSNavigationLib/Util/HexagonGrid/Hex2DVoxelizer.h>
+#include <RTSNavigationLib/Util/svg.h>
 
 namespace HexagonGridTests {
   TEST_CASE("HexagonGrid/voxelizer", "[HexagonVoxelizer]") {

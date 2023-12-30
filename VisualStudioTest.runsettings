@@ -2,7 +2,7 @@
 <RunSettings>
 
   <Catch2Adapter>
-    <FilenameFilter>^RTSPathingLibTests</FilenameFilter>
+    <FilenameFilter>^RTSNavigationLibTests</FilenameFilter>
   </Catch2Adapter>
 
 </RunSettings>

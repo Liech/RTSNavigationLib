@@ -4,8 +4,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "RTSPathingLib/Util/RectangleGrid/RectangleGrid.h"
-#include "RTSPathingLib/Body.h"
+#include "RTSNavigationLib/Util/RectangleGrid/RectangleGrid.h"
+#include "RTSNavigationLib/Body.h"
 
 namespace RTSPathingLib {
   class Formation;

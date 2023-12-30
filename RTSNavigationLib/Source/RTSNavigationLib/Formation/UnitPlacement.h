@@ -3,8 +3,8 @@
 #include <vector>
 #include <map>
 
-#include "RTSPathingLib/Util/RectangleGrid/RectangleGrid.h"
-#include "RTSPathingLib/Formation/UnitPlacementBehavior.h"
+#include "RTSNavigationLib/Util/RectangleGrid/RectangleGrid.h"
+#include "RTSNavigationLib/Formation/UnitPlacementBehavior.h"
 
 namespace RTSPathingLib {
   struct Body;

@@ -1,9 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <RTSPathingLib/Util/RectangleGrid/RectangleGrid.h>
-#include <RTSPathingLib/Util/RectangleGrid/RectangleGridSvg.h>
-#include <RTSPathingLib/Util/RectangleGrid/RectangleGridVoxelizer.h>
-#include <RTSPathingLib/Util/svg.h>
+#include <RTSNavigationLib/Util/RectangleGrid/RectangleGrid.h>
+#include <RTSNavigationLib/Util/RectangleGrid/RectangleGridSvg.h>
+#include <RTSNavigationLib/Util/RectangleGrid/RectangleGridVoxelizer.h>
+#include <RTSNavigationLib/Util/svg.h>
 
 namespace RectangleGridTests {
   TEST_CASE("RectangleGrid/voxelizer", "[RectangleGridVoxelizer]") {

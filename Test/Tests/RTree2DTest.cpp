@@ -1,6 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <RTSPathingLib/Util/RTree2D.h>
+#include <RTSNavigationLib/Util/RTree2D.h>
 
 namespace RTree2DTests {
   TEST_CASE("Util/rtree2d", "[rtree2d]") {

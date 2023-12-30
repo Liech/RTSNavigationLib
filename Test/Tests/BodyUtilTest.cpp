@@ -2,8 +2,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
-#include <RTSPathingLib/BodyUtil.h>
-#include <RTSPathingLib/Body.h>
+#include <RTSNavigationLib/BodyUtil.h>
+#include <RTSNavigationLib/Body.h>
 
 namespace BodyUtilTests {
   TEST_CASE("BodyUtil/identitySingle", "[BodyUtilidentitySingle]") {

@@ -1,4 +1,4 @@
-# RTSPathingLib
+# RTSNavigationLib
 
 Library that tries to provide tools tackling the fundamental problem of the RTS genre:
 

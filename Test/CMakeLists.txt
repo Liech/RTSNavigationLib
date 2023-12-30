@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8...3.20)
-project(RTSPathingLibTests)
+project(RTSNavigationLibTests)
 
 find_package(Catch2 REQUIRED)
 
@@ -25,22 +25,22 @@ set(ALL_FILES
 )
 
 
-add_executable(RTSPathingLibTests ${ALL_FILES})
-set_property(TARGET RTSPathingLibTests PROPERTY CXX_STANDARD 20)
+add_executable(RTSNavigationLibTests ${ALL_FILES})
+set_property(TARGET RTSNavigationLibTests PROPERTY CXX_STANDARD 20)
 
-target_link_libraries(RTSPathingLibTests PRIVATE 
+target_link_libraries(RTSNavigationLibTests PRIVATE 
 Catch2::Catch2
-RTSPathingLib
+RTSNavigationLib
 )
-target_include_directories(RTSPathingLibTests SYSTEM PUBLIC 
+target_include_directories(RTSNavigationLibTests SYSTEM PUBLIC 
 "${CMAKE_CURRENT_LIST_DIR}/../RTSPathingLib/Source"
 )
 
-#add_custom_command(TARGET RTSPathingLibTests POST_BUILD 
+#add_custom_command(TARGET RTSNavigationLibTests POST_BUILD 
 #               COMMAND ${CMAKE_COMMAND} -E copy_directory 
-#               "${RTSPathingLibTests_SOURCE_DIR}/TestData"              
-#                $<TARGET_FILE_DIR:RTSPathingLibTests>/TestData)
+#               "${RTSNavigationLibTests_SOURCE_DIR}/TestData"              
+#                $<TARGET_FILE_DIR:RTSNavigationLibTests>/TestData)
 
 include(CTest)
 include(Catch)
-catch_discover_tests(RTSPathingLibTests)
+catch_discover_tests(RTSNavigationLibTests)

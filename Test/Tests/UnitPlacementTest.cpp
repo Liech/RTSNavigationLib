@@ -1,8 +1,8 @@
 #include <catch2/catch_test_macros.hpp>
 
-#include <RTSPathingLib/Body.h>
+#include <RTSNavigationLib/Body.h>
 
-#include <RTSPathingLib/Formation/UnitPlacement.h>
+#include <RTSNavigationLib/Formation/UnitPlacement.h>
 
 namespace BodyUtilTests {
   TEST_CASE("UnitPlacement/OneSize1", "[UnitPlacement]") {

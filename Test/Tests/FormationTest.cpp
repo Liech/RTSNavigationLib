@@ -4,14 +4,14 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <set>
 
-#include <RTSPathingLib/Body.h>
-#include "RTSPathingLib/Formation/FormationCalculator.h"
-#include "RTSPathingLib/Formation/Formation.h"
-#include "RTSPathingLib/Formation/FormationShape/RectangleFormationShape.h"
-#include "RTSPathingLib/Formation/FormationShape/ArcFormationShape.h"
-#include "RTSPathingLib/Formation/FormationShape/TriangleFormationShape.h"
-#include "RTSPathingLib/Formation/FormationShape/RectangleInterfacePoint.h"
-#include "RTSPathingLib/Formation/FormationShape/TriangleInterfacePoint.h"
+#include <RTSNavigationLib/Body.h>
+#include "RTSNavigationLib/Formation/FormationCalculator.h"
+#include "RTSNavigationLib/Formation/Formation.h"
+#include "RTSNavigationLib/Formation/FormationShape/RectangleFormationShape.h"
+#include "RTSNavigationLib/Formation/FormationShape/ArcFormationShape.h"
+#include "RTSNavigationLib/Formation/FormationShape/TriangleFormationShape.h"
+#include "RTSNavigationLib/Formation/FormationShape/RectangleInterfacePoint.h"
+#include "RTSNavigationLib/Formation/FormationShape/TriangleInterfacePoint.h"
 
 namespace FormationTests {
   struct lex_compare {

@@ -2,11 +2,11 @@
 
 #include <set>
 
-#include <RTSPathingLib/Body.h>
-#include <RTSPathingLib/Usher/Usher.h>
-#include <RTSPathingLib/Usher/BoostMinCostFlowExample.h>
-#include <RTSPathingLib/Formation/Formation.h>
-#include <RTSPathingLib/Formation/FormationCalculator.h>
+#include <RTSNavigationLib/Body.h>
+#include <RTSNavigationLib/Usher/Usher.h>
+#include <RTSNavigationLib/Usher/BoostMinCostFlowExample.h>
+#include <RTSNavigationLib/Formation/Formation.h>
+#include <RTSNavigationLib/Formation/FormationCalculator.h>
 
 namespace UsherTests {
   bool svgSave = false;
