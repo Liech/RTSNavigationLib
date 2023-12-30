@@ -5,10 +5,11 @@
 namespace RTSPathingLib {
   class Boid final {
   public:
-    Boid(glm::vec2& position, size_t& size, glm::vec2& flockingForce, size_t id);
+    Boid(glm::vec2& position, glm::vec2& orientation, size_t& size, glm::vec2& flockingForce, size_t id);
     ~Boid();
 
     glm::vec2& position;
+    glm::vec2& orientation;
     size_t&    size;
 
     glm::vec2 getFlockForce() const;

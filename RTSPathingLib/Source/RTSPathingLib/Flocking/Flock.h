@@ -5,6 +5,9 @@
 #include <unordered_set>
 #include <glm/glm.hpp>
 
+//https://www.oreilly.com/library/view/ai-for-game/0596005555/ch04.html
+//https://code.tutsplus.com/3-simple-rules-of-flocking-behaviors-alignment-cohesion-and-separation--gamedev-3444t
+
 namespace RTSPathingLib {
   class Boid;
 
@@ -17,7 +20,7 @@ namespace RTSPathingLib {
 
     void calculateForces();
 
-    std::unique_ptr<Boid> createBoid(const glm::vec2& position, size_t size);
+    std::unique_ptr<Boid> createBoid(const glm::vec2& position, const glm::vec2& orientation, size_t size);
     void                  destroyBoid(const Boid&);
 
   private:
@@ -25,6 +28,9 @@ namespace RTSPathingLib {
     void gatherNeighbors(const std::vector<size_t>& boids, const std::vector<size_t>& outBoidAddressesInGrid,std::vector<std::vector<size_t>>& neighbors);
     void getActiveBoids(std::vector<size_t>& outActive);
     void applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& neighbors);
+
+    glm::vec2 cohesion(const std::vector<size_t>& neighbors);
+    glm::vec2 alignment(const std::vector<size_t>& neighbors);
 
     size_t maxNumberOfBoids = 50000;
 
@@ -34,6 +40,7 @@ namespace RTSPathingLib {
     std::vector<bool     > isUsed        ;
     std::vector<size_t   > sizes         ;
     std::vector<glm::vec2> positions     ;
+    std::vector<glm::vec2> orientations ;
     std::vector<glm::vec2> resultingForce;
 
     std::vector<std::vector<size_t>> hashgrid;

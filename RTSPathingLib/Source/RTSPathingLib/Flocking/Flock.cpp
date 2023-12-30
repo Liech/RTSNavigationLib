@@ -28,7 +28,7 @@ namespace RTSPathingLib {
 
   }
 
-  std::unique_ptr<Boid> Flock::createBoid(const glm::vec2& inputPosition, size_t inputSize) {
+  std::unique_ptr<Boid> Flock::createBoid(const glm::vec2& inputPosition, const glm::vec2& inputOrientation, size_t inputSize) {
     size_t id = maxID;
     if (unusedIDs.size() > 0) {
       id = unusedIDs.back();
@@ -42,8 +42,10 @@ namespace RTSPathingLib {
     position = inputPosition;
     size_t& size = sizes[id];
     size = inputSize;
+    glm::vec2& orientation = orientations[id];
+    orientation = inputOrientation;
 
-    return std::make_unique<Boid>(position, size, resultingForce[id], id);
+    return std::make_unique<Boid>(position, orientation, size, resultingForce[id], id);
   }
   
   void Flock::destroyBoid(const Boid& boid) {
@@ -62,15 +64,29 @@ namespace RTSPathingLib {
     applyForces(activeBoids, neighbors);
   }
 
-  void Flock::applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& neighbors) {
+  void Flock::applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& allNeighbors) {
 #pragma omp parallel for
     for (int64_t i = 0; i < boids.size(); i++) {
       size_t boid = boids[i];
       glm::vec2& force = resultingForce[boid];
-      force = glm::vec2(0, 0);
+      std::vector<size_t> neighbors = allNeighbors[i];
+      force = cohesion(neighbors);
 
 
     }
+  }
+
+  glm::vec2 Flock::alignment(const std::vector<size_t>& neighbors) {
+
+  }
+
+  glm::vec2 Flock::cohesion(const std::vector<size_t>& neighbors) {
+    //Have each unit steer toward the average position of its neighbors.
+    glm::vec2 result = glm::vec2(0, 0);
+    for (const auto& neighbor : neighbors)
+      result += positions[neighbor];
+    result /= neighbors.size();
+    return result;
   }
 
   void Flock::getActiveBoids(std::vector<size_t>& boids) {
