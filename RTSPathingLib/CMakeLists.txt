@@ -88,6 +88,14 @@ set(Usher_Files
 )
 source_group("Source/Usher" FILES ${Usher_Files})
 
+set(Flocking_Files
+    "Source/RTSPathingLib/Flocking/Flock.h"	
+    "Source/RTSPathingLib/Flocking/Flock.cpp"	
+    "Source/RTSPathingLib/Flocking/Boid.h"	
+    "Source/RTSPathingLib/Flocking/Boid.cpp"	
+)
+source_group("Source/Flocking" FILES ${Flocking_Files})
+
 set(ALL_FILES
     ${Source_Files}
     ${Util_Files}
@@ -96,6 +104,7 @@ set(ALL_FILES
     ${FormationShape_Files}
     ${Formation_Files}
     ${Usher_Files}
+    ${Flocking_Files}
 )
 
 ############################################################################
