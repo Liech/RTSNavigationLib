@@ -6,7 +6,7 @@ Library that tries to provide tools tackling the fundamental problem of the RTS 
 
 Tackling Formation, guide units to formation places, navigation and moving in a formation along the planned path.
 
-# Formation Generation and showing units to their place
+# Formation Forming
 
 In this example a simple Rectangle Formation is created and used for some units. The places are the untransformed location where the units should be.
 
@@ -88,10 +88,7 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
 # Todo
 
 * Formation
-  * Unit Placement Behavior Property
-    * Center First
-    * Distribute Evenly
-    * Outer First
+  * Center the result
   * Hollow Property (e.g. for Hollow Circles)
   * Convex Polygon Shape
   * Extrusion Based Shape (like line formations in BAR)
