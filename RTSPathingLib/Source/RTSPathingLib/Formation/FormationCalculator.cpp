@@ -29,8 +29,8 @@ namespace RTSPathingLib {
     double     parentRotation = 0;
     double     parentInterfaceWidth = 0;
     std::vector<Body> result = recurse(parentCenter, parentSize, parentRotation, parentInterfaceWidth, rootFormation);
-
-    return result;
+    std::vector<Body> centeredResult = centerBodies(result);
+    return centeredResult;
   }
 
   std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation& formation) {
@@ -294,6 +294,17 @@ namespace RTSPathingLib {
         result[x.category][x.size] = 0;
       result[x.category][x.size]++;
     }
+    return result;
+  }
+
+  std::vector<Body> FormationCalculator::centerBodies(const std::vector<Body>& bodies) {
+    glm::dvec2 center = glm::dvec2(0, 0);
+    for (auto& x : bodies)
+      center += x.position;
+    center /= bodies.size();
+    std::vector<Body> result = bodies;
+    for (auto& x : result)
+      x.position -= center;
     return result;
   }
 }

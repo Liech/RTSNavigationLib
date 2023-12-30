@@ -40,5 +40,6 @@ namespace RTSPathingLib {
     std::map<size_t, size_t>                   gatherUnits(const Formation&);
     std::map<size_t, std::map<size_t, size_t>> getSizesPerCategory(const std::vector<Body>& units);
     std::map<size_t, double>                   getCategoryWeightSum(const Formation&);
+    std::vector<Body>                          centerBodies(const std::vector<Body>& bodies);
   };
 }

@@ -30,8 +30,12 @@ namespace FormationTests {
   std::set<glm::dvec2, lex_compare> setisfy(const std::vector<RTSPathingLib::Body>& places) {
     auto first = getFirstPlace(places);
     std::set<glm::dvec2, lex_compare> result;
-    for (auto& x : places)
-      result.insert(x.position - first);
+    for (auto& x : places) {
+      glm::dvec2 v = x.position - first;
+      v[0] = std::round(v.x);
+      v[1] = std::round(v.y);
+      result.insert(v);
+    }
     return result;
   }
 
