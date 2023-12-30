@@ -77,7 +77,10 @@ namespace RTSPathingLib {
   }
 
   glm::vec2 Flock::alignment(const std::vector<size_t>& neighbors) {
-
+    //Have each unit steer so as to align itself to the average heading of its neighbors.
+    //error
+      //rename orientation to velocity
+    return glm::vec2();
   }
 
   glm::vec2 Flock::cohesion(const std::vector<size_t>& neighbors) {
@@ -86,11 +89,12 @@ namespace RTSPathingLib {
     for (const auto& neighbor : neighbors)
       result += positions[neighbor];
     result /= neighbors.size();
+    //error
+      //this is the position not the direction the boid should steer
     return result;
   }
 
   void Flock::getActiveBoids(std::vector<size_t>& boids) {
-    std::vector<size_t> boids;
     boids.clear();
     boids.reserve(maxID);
     for (size_t i = 0; i < maxID; i++)
