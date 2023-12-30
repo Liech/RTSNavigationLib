@@ -33,7 +33,7 @@ namespace RTSPathingLib {
     std::vector<Body>                          recurse( const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation&);
     void                                       saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon);
     glm::dvec3                                 getScalingVector(const Formation&, double parentInterfaceWidth , size_t scale);
-    RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon);
+    RectangleGrid<bool>                        getGrid(const Formation&, const glm::dmat4& transformation);
     std::pair<glm::dvec2, glm::dvec2>          getMinMax(const std::vector<glm::dvec2>&);
     glm::dmat4                                 getLocalTransformation(const Formation&, const glm::dvec2& parentCenter, size_t parentScale, double& parentRotation, double parentInterfaceWidth, size_t scale);
     size_t                                     getSizeSum(const std::map<size_t, size_t>&);

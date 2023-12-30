@@ -28,9 +28,12 @@ namespace RTSPathingLib {
     void setScalingBehavior(const ScalingBehavior& behavior);
     glm::dvec2 getBaseSize() const;
     void setBaseSize(const glm::dvec2&);
+    double getHollow() const;
+    void setHollow(double);
 
   private:
     ScalingBehavior scaling   = ScalingBehavior::Isotropic;
-    glm::dvec2       baseSize = glm::dvec2(1, 1);
+    glm::dvec2      baseSize  = glm::dvec2(1, 1);
+    double          hollow    = 0.0; 
   };
 }

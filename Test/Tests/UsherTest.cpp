@@ -84,9 +84,10 @@ namespace UsherTests {
         "PlacementBehavior"                : "CenterFirst",
 
         "Shape" : {
-          "Type" : "Rectangle",
-          "Size" : [1,1],
-          "Scaling" : "Isotropic"
+          "Type"    : "Rectangle",
+          "Size"    : [1,1],
+          "Scaling" : "Isotropic",
+          "Hollow"  : 0
         }
       }
     )""";

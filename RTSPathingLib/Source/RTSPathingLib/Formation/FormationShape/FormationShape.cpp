@@ -49,15 +49,25 @@ namespace RTSPathingLib {
     baseSize = size;
   }
 
+  double FormationShape::getHollow() const {
+    return hollow;
+  }
+  
+  void FormationShape::setHollow(double value) {
+    hollow = value;
+  }
+
   void FormationShape::fromJson(const nlohmann::json& input) {
     baseSize = glm::dvec2(input["Size"][0], input["Size"][1]);
     scaling  = String2ScalingBehavior(input["Scaling"]);
+    hollow   = input["Hollow"];
   }
   
   nlohmann::json FormationShape::toJson() {
     nlohmann::json result;
     result["Size"]    = std::array<double,2>{ baseSize[0],baseSize[0]};
     result["Scaling"] = ScalingBehavior2String(scaling);
+    result["Hollow"]  = hollow;
     return result;
   }
 }

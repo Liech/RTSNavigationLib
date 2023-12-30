@@ -60,17 +60,15 @@ namespace RTSPathingLib {
       glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, parentRotation, parentInterfaceWidth ,scale);
       formationCenter = toFormationCenter * glm::dvec4(0, 0, 0, 1);
 
-      std::vector<glm::dvec2> polygon;
-      grid = getGrid(formation, toFormationCenter, polygon);
+      grid = getGrid(formation, toFormationCenter);
       auto placer = UnitPlacement(grid, unitsPlacedHere, formation.getUnitCategory(), formation.getPlacementBehavior());
       result = placer.place(allPlaced);
       grid = placer.getUsedPositions();
-      lastpolygon = polygon;
 
-      saveAsSvg(result, grid, polygon);
+      saveAsSvg(result, grid, lastpolygon);
       if (allPlaced) {
         allGrids.push_back(grid);
-        allPolygons.push_back(polygon);
+        allPolygons.push_back(lastpolygon);
         break;
       }
       scale ++;      
@@ -162,10 +160,20 @@ namespace RTSPathingLib {
     svg::write("FormationCalculator.svg", svgDebug, glm::dvec2(-10, -10), glm::dvec2(20, 20));
   }
 
-  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation, std::vector<glm::dvec2>& polygon) {
-    polygon = formation.getShape().getPolygon();
+  RectangleGrid<bool> FormationCalculator::getGrid(const Formation& formation, const glm::dmat4& transformation) {
+    std::vector<glm::dvec2> polygon = formation.getShape().getPolygon();
+    
+    double hollownes = 1.0-std::min(formation.getShape().getHollow(),1.0);
+    if (hollownes != 1) {
+      std::vector<glm::dvec2> hollowPolygon = polygon;
+      for (auto& x : hollowPolygon)
+        x *= hollownes;
+      polygon.insert(polygon.end(), hollowPolygon.begin(), hollowPolygon.end());
+    }
+
     for (auto& x : polygon)
       x = transformation*glm::vec4(x, 0, 1);
+    lastpolygon = polygon;
 
     auto        minMax    = getMinMax(polygon);
     glm::dvec2  centroid  = Geometry2D::findCentroid(polygon);
