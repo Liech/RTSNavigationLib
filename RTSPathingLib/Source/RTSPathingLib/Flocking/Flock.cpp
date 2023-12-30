@@ -1,5 +1,8 @@
 #include "Flock.h"
 
+#include <unordered_map>
+#include <map>
+
 #include "Boid.h"
 
 namespace RTSPathingLib {
@@ -50,16 +53,62 @@ namespace RTSPathingLib {
   }
 
   void Flock::calculateForces() {
-    updateHashgrid();
+    std::vector<size_t> activeBoids;
+    std::vector<size_t> gridAddressesForBoids;
+    std::vector<std::vector<size_t>> neighbors;
+    getActiveBoids(/*out*/activeBoids);
+    updateHashgrid(activeBoids, /*out*/gridAddressesForBoids);
+    gatherNeighbors(activeBoids, gridAddressesForBoids, /*out*/neighbors);
+    applyForces(activeBoids, neighbors);
   }
 
-  void Flock::updateHashgrid(){
+  void Flock::applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& neighbors) {
+#pragma omp parallel for
+    for (int64_t i = 0; i < boids.size(); i++) {
+      size_t boid = boids[i];
+      glm::vec2& force = resultingForce[boid];
+      force = glm::vec2(0, 0);
+
+
+    }
+  }
+
+  void Flock::getActiveBoids(std::vector<size_t>& boids) {
     std::vector<size_t> boids;
+    boids.clear();
     boids.reserve(maxID);
     for (size_t i = 0; i < maxID; i++)
       if (isUsed[i])
         boids.push_back(i);
+  }
 
+  void Flock::gatherNeighbors(const std::vector<size_t>& boids, const std::vector<size_t>& gridAdresses, std::vector<std::vector<size_t>>& neighbors) {
+    neighbors.resize(boids.size());
+
+    size_t maxGridAddress = gridSize.x * gridSize.y;
+#pragma omp parallel for
+    for (int64_t i = 0; i < boids.size(); i++) {
+      size_t boid = boids[i];
+      size_t address = gridAdresses[i];
+      size_t up = address + gridSize.x;
+      size_t down = address - gridSize.x;
+      std::vector<size_t> cellsToSearch = { down-1,down,down+1,address-1,address,address+1,up-1,up,up+1 };
+      for (size_t cell = 0; cell < 9; cell++) {
+        size_t& cellAdress = cellsToSearch[cell];
+        if (cellAdress >= maxGridAddress)
+          continue;
+        for (const auto& neighbor : hashgrid[cellAdress]) {
+          if (boid == neighbor)
+            continue;
+          if (glm::distance(positions[boid], positions[neighbor]) < cellSize)
+            neighbors[i].push_back(neighbor);
+        }
+      }
+    }
+  }
+
+  void Flock::updateHashgrid(const std::vector<size_t>& boids, std::vector<size_t>& outBoidAddressesInGrid){
+    outBoidAddressesInGrid.resize(boids.size());
 #pragma omp parallel for
     for (int64_t i = 0; i < hashgrid.size(); i++)
       hashgrid[i].clear();
@@ -70,6 +119,7 @@ namespace RTSPathingLib {
       const glm::vec2& pos = positions[id];
 
       size_t address = (size_t)(pos.x / cellSize) + (size_t)(pos.y / cellSize) * gridSize.x;
+      outBoidAddressesInGrid[id] = address;
       std::vector<size_t>& cell = hashgrid[address];
 #pragma omp atomic
       cell.push_back(i);

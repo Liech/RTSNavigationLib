@@ -21,7 +21,10 @@ namespace RTSPathingLib {
     void                  destroyBoid(const Boid&);
 
   private:
-    void updateHashgrid();
+    void updateHashgrid(const std::vector<size_t>& boids, std::vector<size_t>& outBoidAddressesInGrid);
+    void gatherNeighbors(const std::vector<size_t>& boids, const std::vector<size_t>& outBoidAddressesInGrid,std::vector<std::vector<size_t>>& neighbors);
+    void getActiveBoids(std::vector<size_t>& outActive);
+    void applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& neighbors);
 
     size_t maxNumberOfBoids = 50000;
 
