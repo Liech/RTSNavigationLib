@@ -14,6 +14,7 @@ namespace RTSPathingLib {
     isUsed        .resize(maxNumberOfBoids,false);
     sizes         .resize(maxNumberOfBoids);
     positions     .resize(maxNumberOfBoids);
+    velocities    .resize(maxNumberOfBoids);
     resultingForce.resize(maxNumberOfBoids);
     unusedIDs.reserve(1024);
     gridSize = glm::ivec2(std::ceil(area.x / (double)cellSize), std::ceil(area.y / (double)cellSize));
@@ -42,7 +43,7 @@ namespace RTSPathingLib {
     position = inputPosition;
     size_t& size = sizes[id];
     size = inputSize;
-    glm::vec2& orientation = orientations[id];
+    glm::vec2& orientation = velocities[id];
     orientation = inputOrientation;
 
     return std::make_unique<Boid>(position, orientation, size, resultingForce[id], id);
@@ -70,7 +71,7 @@ namespace RTSPathingLib {
       size_t boid = boids[i];
       glm::vec2& force = resultingForce[boid];
       std::vector<size_t> neighbors = allNeighbors[i];
-      force = cohesion(neighbors);
+      force = cohesion(boid,neighbors);
 
 
     }
@@ -83,15 +84,14 @@ namespace RTSPathingLib {
     return glm::vec2();
   }
 
-  glm::vec2 Flock::cohesion(const std::vector<size_t>& neighbors) {
+  glm::vec2 Flock::cohesion(size_t self, const std::vector<size_t>& neighbors) {
     //Have each unit steer toward the average position of its neighbors.
     glm::vec2 result = glm::vec2(0, 0);
     for (const auto& neighbor : neighbors)
       result += positions[neighbor];
     result /= neighbors.size();
-    //error
-      //this is the position not the direction the boid should steer
-    return result;
+    const glm::vec2& ownPosition = positions[self];
+    return result - ownPosition;
   }
 
   void Flock::getActiveBoids(std::vector<size_t>& boids) {

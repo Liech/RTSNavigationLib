@@ -29,7 +29,7 @@ namespace RTSPathingLib {
     void getActiveBoids(std::vector<size_t>& outActive);
     void applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& neighbors);
 
-    glm::vec2 cohesion(const std::vector<size_t>& neighbors);
+    glm::vec2 cohesion(size_t self, const std::vector<size_t>& neighbors);
     glm::vec2 alignment(const std::vector<size_t>& neighbors);
 
     size_t maxNumberOfBoids = 50000;
@@ -37,10 +37,10 @@ namespace RTSPathingLib {
     std::vector<size_t   > unusedIDs;
     size_t maxID = 0;
 
-    std::vector<bool     > isUsed        ;
-    std::vector<size_t   > sizes         ;
-    std::vector<glm::vec2> positions     ;
-    std::vector<glm::vec2> orientations ;
+    std::vector<bool     > isUsed    ;
+    std::vector<size_t   > sizes     ;
+    std::vector<glm::vec2> positions ;
+    std::vector<glm::vec2> velocities;
     std::vector<glm::vec2> resultingForce;
 
     std::vector<std::vector<size_t>> hashgrid;
