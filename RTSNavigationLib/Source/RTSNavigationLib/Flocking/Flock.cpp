@@ -77,14 +77,28 @@ namespace RTSPathingLib {
     }
   }
 
-  glm::vec2 Flock::alignment(const std::vector<size_t>& neighbors) {
-    //Have each unit steer so as to align itself to the average heading of its neighbors.
-    //error
-      //rename orientation to velocity
-    return glm::vec2();
+  glm::vec2 Flock::alignment(size_t self, const std::vector<size_t>& neighbors) {
+    glm::vec2 velocityAverage = glm::vec2();
+    for (const auto& id : neighbors) {
+      velocityAverage += glm::normalize(velocities[id]);
+    }
+    velocityAverage /= neighbors.size();
+    const glm::vec2& ownVelocity = glm::normalize(velocities[self]);
+    
+    return velocityAverage - ownVelocity;
   }
 
   glm::vec2 Flock::cohesion(size_t self, const std::vector<size_t>& neighbors) {
+    //Have each unit steer toward the average position of its neighbors.
+    glm::vec2 result = glm::vec2(0, 0);
+    for (const auto& neighbor : neighbors)
+      result += positions[neighbor];
+    result /= neighbors.size();
+    const glm::vec2& ownPosition = positions[self];
+    return result - ownPosition;
+  }
+
+  glm::vec2 Flock::seperation(size_t self, const std::vector<size_t>& neighbors) {
     //Have each unit steer toward the average position of its neighbors.
     glm::vec2 result = glm::vec2(0, 0);
     for (const auto& neighbor : neighbors)

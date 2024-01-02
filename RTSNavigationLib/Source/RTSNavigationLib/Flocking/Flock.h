@@ -30,7 +30,8 @@ namespace RTSPathingLib {
     void applyForces(const std::vector<size_t>& boids, const std::vector<std::vector<size_t>>& neighbors);
 
     glm::vec2 cohesion(size_t self, const std::vector<size_t>& neighbors);
-    glm::vec2 alignment(const std::vector<size_t>& neighbors);
+    glm::vec2 alignment(size_t self, const std::vector<size_t>& neighbors);
+    glm::vec2 seperation(size_t self, const std::vector<size_t>& neighbors);
 
     size_t maxNumberOfBoids = 50000;
 
