@@ -15,7 +15,7 @@ namespace RTSPathingLib {
   //in this class performance is more important than standards, readablity or safety. I hope it is worth it :x
   class Flock final {
   public:
-    Flock(const glm::ivec2& area, size_t maxInfluenceRadius, size_t maxNumberOfBoids = 50000);
+    Flock(const glm::ivec2& area, double maxInfluenceRadius, size_t maxNumberOfBoids = 50000);
     ~Flock();
 
     void calculateForces();
@@ -46,7 +46,7 @@ namespace RTSPathingLib {
 
     std::vector<std::vector<size_t>> hashgrid;
     glm::ivec2                       area;
-    size_t                           cellSize;
+    double                           cellSize;
     glm::ivec2                       gridSize;
   };
 }
