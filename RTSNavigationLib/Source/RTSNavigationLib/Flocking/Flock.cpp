@@ -100,11 +100,13 @@ namespace RTSPathingLib {
 
   glm::vec2 Flock::seperation(size_t self, const std::vector<size_t>& neighbors) {
     //Have each unit steer toward the average position of its neighbors.
-    glm::vec2 result = glm::vec2(0, 0);
-    for (const auto& neighbor : neighbors)
-      result += positions[neighbor];
-    result /= neighbors.size();
     const glm::vec2& ownPosition = positions[self];
+    glm::vec2 result = glm::vec2(0, 0);
+    for (const auto& neighbor : neighbors) {
+      auto dir = ownPosition - positions[neighbor];
+      result += glm::normalize(dir) / glm::length(dir);
+    }
+    result = glm::normalize(result);
     return result - ownPosition;
   }
 
