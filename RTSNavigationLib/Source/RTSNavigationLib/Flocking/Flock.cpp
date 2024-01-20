@@ -11,11 +11,13 @@ namespace RTSPathingLib {
     area             = area_;
     cellSize         = maxInfluenceRadius;
 
-    isUsed        .resize(maxNumberOfBoids,false);
-    sizes         .resize(maxNumberOfBoids);
-    positions     .resize(maxNumberOfBoids);
-    velocities    .resize(maxNumberOfBoids);
-    resultingForce.resize(maxNumberOfBoids);
+    isUsed         .resize(maxNumberOfBoids,false);
+    sizes          .resize(maxNumberOfBoids);
+    positions      .resize(maxNumberOfBoids);
+    velocities     .resize(maxNumberOfBoids);
+    cohesionForce  .resize(maxNumberOfBoids);
+    seperationForce.resize(maxNumberOfBoids);
+    alignmentForce .resize(maxNumberOfBoids);
     unusedIDs.reserve(1024);
     gridSize = glm::ivec2(std::ceil(area.x / (double)cellSize), std::ceil(area.y / (double)cellSize));
     hashgrid.resize(gridSize.x * gridSize.y);
@@ -46,7 +48,7 @@ namespace RTSPathingLib {
     glm::vec2& orientation = velocities[id];
     orientation = inputOrientation;
 
-    return std::make_unique<Boid>(position, orientation, size, resultingForce[id], id);
+    return std::make_unique<Boid>(position, orientation, size, cohesionForce[id], alignmentForce[id], seperationForce[id], id);
   }
   
   void Flock::destroyBoid(const Boid& boid) {
@@ -69,15 +71,16 @@ namespace RTSPathingLib {
 #pragma omp parallel for
     for (int64_t i = 0; i < boids.size(); i++) {
       size_t boid = boids[i];
-      glm::vec2& force = resultingForce[boid];
       std::vector<size_t> neighbors = allNeighbors[i];
-      force = cohesion(boid,neighbors);
-
-
+      cohesionForce  [boid] = cohesion  (boid, neighbors);
+      seperationForce[boid] = seperation(boid, neighbors);
+      alignmentForce [boid] = alignment (boid, neighbors);
     }
   }
 
   glm::vec2 Flock::alignment(size_t self, const std::vector<size_t>& neighbors) {
+    if (neighbors.size() == 0)
+      return glm::dvec2(0, 0);
     glm::vec2 velocityAverage = glm::vec2();
     for (const auto& id : neighbors) {
       velocityAverage += glm::normalize(velocities[id]);
@@ -90,6 +93,8 @@ namespace RTSPathingLib {
 
   glm::vec2 Flock::cohesion(size_t self, const std::vector<size_t>& neighbors) {
     //Have each unit steer toward the average position of its neighbors.
+    if (neighbors.size() == 0)
+      return glm::dvec2(0, 0);
     glm::vec2 result = glm::vec2(0, 0);
     for (const auto& neighbor : neighbors)
       result += positions[neighbor];
@@ -100,6 +105,8 @@ namespace RTSPathingLib {
 
   glm::vec2 Flock::seperation(size_t self, const std::vector<size_t>& neighbors) {
     //Have each unit steer toward the average position of its neighbors.
+    if (neighbors.size() == 0)
+      return glm::dvec2(0, 0);
     const glm::vec2& ownPosition = positions[self];
     glm::vec2 result = glm::vec2(0, 0);
     for (const auto& neighbor : neighbors) {
@@ -107,7 +114,7 @@ namespace RTSPathingLib {
       result += glm::normalize(dir) / glm::length(dir);
     }
     result = glm::normalize(result);
-    return result - ownPosition;
+    return result;
   }
 
   void Flock::getActiveBoids(std::vector<size_t>& boids) {

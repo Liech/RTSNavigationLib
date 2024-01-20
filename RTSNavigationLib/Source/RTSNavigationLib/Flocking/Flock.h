@@ -42,7 +42,9 @@ namespace RTSPathingLib {
     std::vector<size_t   > sizes     ;
     std::vector<glm::vec2> positions ;
     std::vector<glm::vec2> velocities;
-    std::vector<glm::vec2> resultingForce;
+    std::vector<glm::vec2> cohesionForce;
+    std::vector<glm::vec2> seperationForce;
+    std::vector<glm::vec2> alignmentForce;
 
     std::vector<std::vector<size_t>> hashgrid;
     glm::ivec2                       area;

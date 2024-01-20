@@ -1,11 +1,13 @@
 #include "Boid.h"
 
 namespace RTSPathingLib {
-  Boid::Boid(glm::vec2& position_, glm::vec2& velocity_, size_t& size_, glm::vec2& flockingForce, size_t id_) :
+  Boid::Boid(glm::vec2& position_, glm::vec2& velocity_, size_t& size_, glm::vec2& cohesion, glm::vec2& alignment, glm::vec2& seperation, size_t id_) :
     position(position_),
     velocity(velocity_),
     size(size_), 
-    resultingFlockForce(flockingForce),
+    cohesionForce(cohesion),
+    alignmentForce(alignment),
+    seperationForce(seperation),
     id(id_){
   }
 
@@ -13,8 +15,16 @@ namespace RTSPathingLib {
 
   }
 
-  glm::vec2 Boid::getFlockForce() const {
-    return resultingFlockForce;
+  glm::vec2 Boid::getCohesionForce() const {
+    return cohesionForce;
+  }
+
+  glm::vec2 Boid::getAlignmentForce() const {
+    return alignmentForce;
+  }
+
+  glm::vec2 Boid::getSeperationForce() const {
+    return seperationForce;
   }
 
   size_t Boid::getID() const {
