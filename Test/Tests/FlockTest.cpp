@@ -40,6 +40,39 @@ namespace FlockTest {
     REQUIRE(alignment[1] == 0);
   }
 
+  TEST_CASE("Flocking/OutOfReach", "[FlockingOutOfReach]") {
+    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    auto pos1 = glm::dvec2(3, 3);
+    auto dir1 = glm::dvec2(1, 0);
+    auto pos2 = glm::dvec2(7, 2.2);
+    auto dir2 = glm::normalize(glm::dvec2(0.4, -0.3));
+
+    auto boid1 = flock.createBoid(pos1, dir1, 1);
+    auto boid2 = flock.createBoid(pos2, dir2, 1);
+    flock.calculateForces();
+
+    auto cohesion1 = boid1->getCohesionForce();
+    auto cohesion2 = boid2->getCohesionForce();
+    REQUIRE(cohesion1[0] == 0);
+    REQUIRE(cohesion1[1] == 0);
+    REQUIRE(cohesion2[0] == 0);
+    REQUIRE(cohesion2[1] == 0);
+
+    auto seperation1 = boid1->getSeperationForce();
+    auto seperation2 = boid2->getSeperationForce();
+    REQUIRE(seperation1[0] == 0);
+    REQUIRE(seperation1[1] == 0);
+    REQUIRE(seperation2[0] == 0);
+    REQUIRE(seperation2[1] == 0);
+
+    auto alignment1 = boid1->getAlignmentForce();
+    auto alignment2 = boid2->getAlignmentForce();
+    REQUIRE(alignment1[0] == 0);
+    REQUIRE(alignment1[1] == 0);
+    REQUIRE(alignment2[0] == 0);
+    REQUIRE(alignment2[1] == 0);
+  }
+
   TEST_CASE("Flocking/SeperationTwo", "[FlockingSeperationTwo]") {
     RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(3, 3);
