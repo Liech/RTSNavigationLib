@@ -96,6 +96,12 @@ set(Flocking_Files
 )
 source_group("Source/Flocking" FILES ${Flocking_Files})
 
+set(Pathfinding_Files
+    "Source/RTSNavigationLib/Pathfinding/FlowField.h"	
+    "Source/RTSNavigationLib/Pathfinding/FlowField.cpp"	
+)
+source_group("Source/Pathfinding" FILES ${Pathfinding_Files})
+
 set(ALL_FILES
     ${Source_Files}
     ${Util_Files}
@@ -105,6 +111,7 @@ set(ALL_FILES
     ${Formation_Files}
     ${Usher_Files}
     ${Flocking_Files}
+    ${Pathfinding_Files}
 )
 
 ############################################################################
