@@ -7,7 +7,7 @@
 #include "Util/AssignmentProblemSolver.h"
 
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   Usher::Usher() {
 
   }

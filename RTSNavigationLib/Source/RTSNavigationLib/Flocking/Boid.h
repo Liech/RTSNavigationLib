@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class Boid final {
   public:
     Boid(glm::vec2& position, glm::vec2& velocity, size_t& size, glm::vec2& cohesion, glm::vec2& alignment, glm::vec2& seperation, size_t id);

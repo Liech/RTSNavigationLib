@@ -6,7 +6,7 @@
 
 #include "UnitPlacementBehavior.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class FormationShape;
 
   class Formation {

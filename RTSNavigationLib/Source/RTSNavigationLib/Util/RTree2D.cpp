@@ -8,9 +8,9 @@
 
 #include "glmBoostGeometry.h"
 BOOST_GEOMETRY_REGISTER_POINT_2D(glm::dvec2, double, cs::cartesian, x, y)
-BOOST_GEOMETRY_REGISTER_BOX(RTSPathingLib::glm2dBox, glm::dvec2, lowLeft, upRight)
+BOOST_GEOMETRY_REGISTER_BOX(RTSNavigationLib::glm2dBox, glm::dvec2, lowLeft, upRight)
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   //https://stackoverflow.com/questions/34951426/cannot-remove-element-from-boostgeometryindexrtree-by-its-index
   template <typename Rtree, typename Id>
   size_t remove_ids_bulk(Rtree& rtree, Id const& id) {

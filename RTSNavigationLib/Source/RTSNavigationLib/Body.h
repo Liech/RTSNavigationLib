@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   struct Body {
     Body(const glm::dvec2& pos, size_t category_, size_t size_ = 1) {
       position = pos;

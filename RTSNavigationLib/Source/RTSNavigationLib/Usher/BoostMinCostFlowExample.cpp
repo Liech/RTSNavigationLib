@@ -8,7 +8,7 @@
 #include <boost/graph/cycle_canceling.hpp>
 #include <boost/graph/edmonds_karp_max_flow.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   typedef boost::adjacency_list_traits<boost::vecS, boost::vecS, boost::directedS> Traits;
   typedef Traits::vertex_descriptor vertex_descriptor;
 

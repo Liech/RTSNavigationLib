@@ -8,7 +8,7 @@
 //https://www.oreilly.com/library/view/ai-for-game/0596005555/ch04.html
 //https://code.tutsplus.com/3-simple-rules-of-flocking-behaviors-alignment-cohesion-and-separation--gamedev-3444t
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class Boid;
 
   //find registered entities surrounding eachother via spatial hashing

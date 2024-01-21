@@ -1,6 +1,6 @@
 #include "ScalingBehavior.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
 
   ScalingBehavior String2ScalingBehavior(const std::string& input) {
     if (input == "Isotropic")

@@ -9,7 +9,7 @@ namespace RTree2DTests {
     input.push_back(std::make_pair(glm::dvec2(1, 0), 1));
     input.push_back(std::make_pair(glm::dvec2(0, 1), 2));
 
-    RTSPathingLib::RTree2D tree(input);
+    RTSNavigationLib::RTree2D tree(input);
     auto result = tree.nearestNeighbour(glm::dvec2(1.1, 0));
     REQUIRE(result.size() == 1);
     REQUIRE(result[0] == 1);
@@ -21,7 +21,7 @@ namespace RTree2DTests {
     input.push_back(std::make_pair(glm::dvec2(1, 0), 1));
     input.push_back(std::make_pair(glm::dvec2(2, 0), 2));
 
-    RTSPathingLib::RTree2D tree(input);
+    RTSNavigationLib::RTree2D tree(input);
     tree.remove(1);
     auto result = tree.nearestNeighbour(glm::dvec2(1.1, 0));
     REQUIRE(result.size() == 1);

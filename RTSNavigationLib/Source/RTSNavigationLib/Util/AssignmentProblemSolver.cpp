@@ -59,7 +59,7 @@ private:
   Reversed& m_rev;
 };
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
 
   std::vector<size_t> AssignmentProblemSolverPlain::getTickets(size_t workerAmount, const std::map<std::pair<size_t, size_t>, double>& allCosts) {
     //jobAmount == workerAmount

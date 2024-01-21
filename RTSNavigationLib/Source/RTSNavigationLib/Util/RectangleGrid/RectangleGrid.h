@@ -4,7 +4,7 @@
 #include <vector>
 #include <functional>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   template<typename T>
   class RectangleGrid {
   public:

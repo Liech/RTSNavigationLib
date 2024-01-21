@@ -1,7 +1,7 @@
 #pragma once
 
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   enum class RectangleInterfacePoint : int {
     Center       = 0,
     LeftBottom   = 1,

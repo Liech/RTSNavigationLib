@@ -4,7 +4,7 @@
 #include <memory>
 
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   struct Body;
   class RTree2D;
 

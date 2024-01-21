@@ -7,7 +7,7 @@
 #include "RTSNavigationLib/Util/RectangleGrid/RectangleGrid.h"
 #include "RTSNavigationLib/Body.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class Formation;
 
   class FormationCalculator {

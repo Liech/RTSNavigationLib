@@ -2,7 +2,7 @@
 
 #include "String2File.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   void svg::write(const std::string& filename, const glm::dvec2& startRegion, const glm::dvec2& size) const {
     write(filename, { *this }, startRegion,size);
   }
@@ -29,7 +29,7 @@ namespace RTSPathingLib {
 
 
     data += "\n</svg>";
-    RTSPathingLib::String2File(filename, data);
+    RTSNavigationLib::String2File(filename, data);
   }
 
   std::string svg::getXML(const glm::dvec2& startRegion, const glm::dvec2& size) const {

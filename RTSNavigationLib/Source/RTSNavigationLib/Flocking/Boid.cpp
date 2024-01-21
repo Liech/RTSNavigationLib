@@ -1,6 +1,6 @@
 #include "Boid.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   Boid::Boid(glm::vec2& position_, glm::vec2& velocity_, size_t& size_, glm::vec2& cohesion, glm::vec2& alignment, glm::vec2& seperation, size_t id_) :
     position(position_),
     velocity(velocity_),

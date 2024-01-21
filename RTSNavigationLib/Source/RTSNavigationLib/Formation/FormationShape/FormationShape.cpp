@@ -1,6 +1,6 @@
 #include "FormationShape.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   FormationShape::FormationShape() {
 
   }

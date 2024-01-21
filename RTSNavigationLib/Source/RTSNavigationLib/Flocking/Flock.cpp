@@ -5,7 +5,7 @@
 
 #include "Boid.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   Flock::Flock(const glm::ivec2& area_, double maxInfluenceRadius, size_t maxNumberOfBoids_) {
     maxNumberOfBoids = maxNumberOfBoids_;
     area             = area_;

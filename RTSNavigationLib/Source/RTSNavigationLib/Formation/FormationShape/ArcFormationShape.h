@@ -2,7 +2,7 @@
 
 #include "FormationShape.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class ArcFormationShape : public FormationShape {
   public:
     ArcFormationShape();

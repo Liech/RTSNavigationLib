@@ -18,14 +18,14 @@ namespace HexagonGridTests {
     polygon.push_back(offset + glm::dvec2(0, 4) * scale);
     polygon.push_back(offset + glm::dvec2(1, 0) * scale);
 
-    auto t = RTSPathingLib::Hex2DVoxelizer::voxelize(polygon, dimension, glm::dvec2(0, 0), 1);
+    auto t = RTSNavigationLib::Hex2DVoxelizer::voxelize(polygon, dimension, glm::dvec2(0, 0), 1);
     if (false) {
-      RTSPathingLib::svg v;
+      RTSNavigationLib::svg v;
       v.streak = polygon;
       v.color = "blue";
-      std::vector<RTSPathingLib::svg> x = RTSPathingLib::HexGridSvg::write(t, 1);
+      std::vector<RTSNavigationLib::svg> x = RTSNavigationLib::HexGridSvg::write(t, 1);
       x.push_back(v);
-      RTSPathingLib::svg::write("VoxelizerTest.svg", x, glm::dvec2(-5, -5), glm::dvec2(30, 30));
+      RTSNavigationLib::svg::write("VoxelizerTest.svg", x, glm::dvec2(-5, -5), glm::dvec2(30, 30));
     }
 
     std::vector<bool> r = {

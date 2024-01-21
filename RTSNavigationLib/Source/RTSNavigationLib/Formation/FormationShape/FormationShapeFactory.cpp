@@ -4,7 +4,7 @@
 #include "TriangleFormationShape.h"
 #include "ArcFormationShape.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   std::unique_ptr<FormationShape> FormationShapeFactory::make(const nlohmann::json& input) {
     std::unique_ptr<FormationShape> result = nullptr;
     if (input["Type"] == "Rectangle") {

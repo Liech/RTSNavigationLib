@@ -2,7 +2,7 @@
 
 #include <glm/ext/scalar_constants.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   ArcFormationShape::ArcFormationShape() {
 
   }

@@ -6,7 +6,7 @@
 
 namespace FlockTest {
   TEST_CASE("Flocking/base", "[FlockingBase]") {
-    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos = glm::dvec2(3, 3);
     auto dir = glm::dvec2(1, 0);
     auto boid = flock.createBoid(pos, dir, 1);
@@ -20,7 +20,7 @@ namespace FlockTest {
   }
 
   TEST_CASE("Flocking/OnlyOne", "[FlockingSingle]") {
-    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos = glm::dvec2(3, 3);
     auto dir = glm::dvec2(1, 0);
     auto boid = flock.createBoid(pos, dir, 1);
@@ -41,7 +41,7 @@ namespace FlockTest {
   }
 
   TEST_CASE("Flocking/OutOfReach", "[FlockingOutOfReach]") {
-    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(3, 3);
     auto dir1 = glm::dvec2(1, 0);
     auto pos2 = glm::dvec2(7, 2.2);
@@ -74,7 +74,7 @@ namespace FlockTest {
   }
 
   TEST_CASE("Flocking/SeperationTwo", "[FlockingSeperationTwo]") {
-    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(3, 3);
     auto dir1 = glm::dvec2(1, 0);
     auto pos2 = glm::dvec2(0.5, 2.2);
@@ -94,7 +94,7 @@ namespace FlockTest {
   }
 
   TEST_CASE("Flocking/CohesionTwo", "[FlockingCohesionTwo]") {
-    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(6, 2);
     auto dir1 = glm::normalize(glm::dvec2(0.7, 0.3));
     auto pos2 = glm::dvec2(6.7, 5);
@@ -114,7 +114,7 @@ namespace FlockTest {
   }
 
   TEST_CASE("Flocking/AlignmentTwo", "[FlockingAlginmentTwo]") {
-    RTSPathingLib::Flock flock(glm::dvec2(20, 20), 3);
+    RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(6, 3);
     auto dir1 = glm::normalize(glm::dvec2(0.7, 0.3));
     auto pos2 = glm::dvec2(6.7, 5);

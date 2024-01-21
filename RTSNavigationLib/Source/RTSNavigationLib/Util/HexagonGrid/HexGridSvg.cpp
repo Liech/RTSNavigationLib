@@ -6,7 +6,7 @@
 #include "HexGridUtils.h"
 #include "Util/svg.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   std::vector<svg> HexGridSvg::write(const TopFlatHexGrid<bool>& grid, double scale) {
     std::vector<svg> toWrite;
     std::vector<svg> overlay;

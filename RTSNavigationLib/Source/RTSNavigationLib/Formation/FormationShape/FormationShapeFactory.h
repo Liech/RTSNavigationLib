@@ -5,7 +5,7 @@
 
 #include "FormationShape.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class FormationShapeFactory {
   public:
     static std::unique_ptr<FormationShape> make(const nlohmann::json&);

@@ -7,7 +7,7 @@
 //https://stackoverflow.com/questions/76444431/faster-alternatives-to-the-hungarian-algorithm
 //https://developers.google.com/optimization/flow/assignment_min_cost_flow
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class AssignmentProblemSolverPlain {
   public:
     static std::vector<size_t> getTickets(size_t workerAmount,const std::map<std::pair<size_t, size_t>,double>& allCosts);

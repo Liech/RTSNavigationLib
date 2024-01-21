@@ -4,7 +4,7 @@
 #include <string>
 #include <glm/glm.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class svg {
   public:
     void write(const std::string& filename, const glm::dvec2& startRegion = glm::dvec2(0, 0), const glm::dvec2& size = glm::dvec2(5, 5)) const;

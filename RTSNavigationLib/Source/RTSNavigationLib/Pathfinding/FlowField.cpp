@@ -2,7 +2,7 @@
 
 #include <set>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   FlowField::FlowField(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const glm::ivec2& target_) {
     resolution = resolution_;
     target     = target_;

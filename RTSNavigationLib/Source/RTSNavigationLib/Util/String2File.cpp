@@ -5,7 +5,7 @@
 #include <iostream>
 
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   void String2File(const std::string& filename, const std::string& data)
   {
     std::ofstream out(filename);

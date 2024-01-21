@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <memory>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class RTree2D {
   public:
     RTree2D(const std::vector<std::pair<glm::dvec2, size_t>>& bulkInput);

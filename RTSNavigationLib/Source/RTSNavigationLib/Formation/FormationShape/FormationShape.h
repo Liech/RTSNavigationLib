@@ -7,7 +7,7 @@
 
 #include "ScalingBehavior.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class FormationShape {
   public:
     FormationShape();

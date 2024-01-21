@@ -7,13 +7,13 @@
 
 namespace BodyUtilTests {
   TEST_CASE("BodyUtil/identitySingle", "[BodyUtilidentitySingle]") {
-    RTSPathingLib::Body b;
+    RTSNavigationLib::Body b;
     b.position = glm::dvec2(2, 3);
     b.category = 3;
     b.size = 5;
     glm::dmat4 identity = glm::dmat4(1);
 
-    RTSPathingLib::Body result = RTSPathingLib::BodyUtil::transform(b, identity);
+    RTSNavigationLib::Body result = RTSNavigationLib::BodyUtil::transform(b, identity);
 
     REQUIRE(result.category == b.category);
     REQUIRE(result.size == b.size);
@@ -22,14 +22,14 @@ namespace BodyUtilTests {
   }
 
   TEST_CASE("BodyUtil/single", "[BodyUtilSingle]") {
-    RTSPathingLib::Body b;
+    RTSNavigationLib::Body b;
     b.position = glm::dvec2(2, 3);
     b.category = 5;
     b.size = 2;
     glm::dvec3 move = glm::dvec3(3, 4, 0);
     glm::dmat4 transform = glm::translate(glm::dmat4(1), move);
 
-    RTSPathingLib::Body result = RTSPathingLib::BodyUtil::transform(b, transform);
+    RTSNavigationLib::Body result = RTSNavigationLib::BodyUtil::transform(b, transform);
 
     REQUIRE(result.category == b.category);
     REQUIRE(result.size == b.size);
@@ -38,14 +38,14 @@ namespace BodyUtilTests {
   }
 
   TEST_CASE("BodyUtil/multi", "[BodyUtilMulti]") {
-    std::vector< RTSPathingLib::Body> input;
+    std::vector< RTSNavigationLib::Body> input;
 
-    RTSPathingLib::Body a;
+    RTSNavigationLib::Body a;
     a.position = glm::dvec2(2, 3);
     a.category = 5;
     input.push_back(a);
 
-    RTSPathingLib::Body b;
+    RTSNavigationLib::Body b;
     b.position = glm::dvec2(4, 5);
     b.category = 7;
     input.push_back(b);
@@ -53,7 +53,7 @@ namespace BodyUtilTests {
     glm::dvec3 move = glm::dvec3(1, 2, 0);
     glm::dmat4 transform = glm::translate(glm::dmat4(1), move);
 
-    std::vector<RTSPathingLib::Body> result = RTSPathingLib::BodyUtil::transform(input, transform);
+    std::vector<RTSNavigationLib::Body> result = RTSNavigationLib::BodyUtil::transform(input, transform);
 
     REQUIRE(result.size() == 2);
     REQUIRE(result[0].category == a.category);
@@ -65,14 +65,14 @@ namespace BodyUtilTests {
   }
 
   TEST_CASE("BodyUtil/center", "[BodyUtilCenter]") {
-    std::vector<RTSPathingLib::Body> input = {
-      RTSPathingLib::Body(glm::dvec2(5 + -1,7 + 0),0),
-      RTSPathingLib::Body(glm::dvec2(5 + 1 ,7 + 0) ,0),
-      RTSPathingLib::Body(glm::dvec2(5 + 0 ,7 + 1) ,0),
-      RTSPathingLib::Body(glm::dvec2(5 + 0 ,7 + -1),0)
+    std::vector<RTSNavigationLib::Body> input = {
+      RTSNavigationLib::Body(glm::dvec2(5 + -1,7 + 0),0),
+      RTSNavigationLib::Body(glm::dvec2(5 + 1 ,7 + 0) ,0),
+      RTSNavigationLib::Body(glm::dvec2(5 + 0 ,7 + 1) ,0),
+      RTSNavigationLib::Body(glm::dvec2(5 + 0 ,7 + -1),0)
     };
 
-    glm::dvec2 result = RTSPathingLib::BodyUtil::getCenter(input);
+    glm::dvec2 result = RTSNavigationLib::BodyUtil::getCenter(input);
 
     REQUIRE(result[0] == 5);
     REQUIRE(result[1] == 7);

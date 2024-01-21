@@ -23,7 +23,7 @@ namespace FlockTest {
       0,d,0 
     };
       
-    RTSPathingLib::FlowField field(obstacles, resolution, target);
+    RTSNavigationLib::FlowField field(obstacles, resolution, target);
     glm::dvec2 directionA = field.getDirection(fromA);
     glm::dvec2 directionB = field.getDirection(fromB);
     glm::dvec2 directionC = field.getDirection(fromC);

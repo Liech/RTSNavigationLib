@@ -5,7 +5,7 @@
 #include "Body.h"
 #include "Util/svg.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   UnitPlacement::UnitPlacement(const RectangleGrid<bool>& unitGrid, const std::map<size_t, size_t>& unitList, size_t category_, UnitPlacementBehavior placementStrategy) : 
   grid(unitGrid),
   unitsToPlace(unitList){

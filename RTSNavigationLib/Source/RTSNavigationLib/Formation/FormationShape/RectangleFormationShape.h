@@ -2,7 +2,7 @@
 
 #include "FormationShape.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class RectangleFormationShape : public FormationShape {
   public:
     RectangleFormationShape();

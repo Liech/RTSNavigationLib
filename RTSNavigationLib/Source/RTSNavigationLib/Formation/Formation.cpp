@@ -4,7 +4,7 @@
 #include "FormationShape/RectangleFormationShape.h"
 #include "FormationShape/FormationShapeFactory.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   Formation::Formation() {
     shape = std::make_unique<RectangleFormationShape>();
   }

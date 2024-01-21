@@ -5,10 +5,10 @@
 
 //https://stackoverflow.com/questions/43303596/finding-resulting-points-using-boost-rtree-in-a-geometry
 BOOST_GEOMETRY_REGISTER_POINT_2D(glm::dvec2, double, cs::cartesian, x, y)
-BOOST_GEOMETRY_REGISTER_BOX(RTSPathingLib::glm2dBox, glm::dvec2, lowLeft, upRight)
+BOOST_GEOMETRY_REGISTER_BOX(RTSNavigationLib::glm2dBox, glm::dvec2, lowLeft, upRight)
 
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   glm2dBox::glm2dBox(double x1, double y1, double x2, double y2) :
     lowLeft(x1, y1),
     upRight(x2, y2) {

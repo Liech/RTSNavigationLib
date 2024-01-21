@@ -5,7 +5,7 @@
 #include "HexGridUtils.h"
 #include "Util/Geometry2D.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   TopFlatHexGrid<bool> Hex2DVoxelizer::voxelize(const std::vector<glm::dvec2>& polygon, const glm::ivec2& dimension, const glm::dvec2& offset, double scale) {
     TopFlatHexGrid<bool> result;
     result.data.resize(dimension.x * dimension.y);

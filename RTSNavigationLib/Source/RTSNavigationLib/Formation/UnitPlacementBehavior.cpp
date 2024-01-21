@@ -1,6 +1,6 @@
 #include "UnitPlacementBehavior.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   std::string UnitPlacementBehavior2String(const UnitPlacementBehavior& behavior) {
     switch (behavior) {
     case UnitPlacementBehavior::DistributeEvenly:

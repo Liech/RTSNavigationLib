@@ -1,6 +1,6 @@
 #pragma once
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
 
   //min_cost_max_flow_utils.hpp unwrapped
   //needed for understanding how to work with it

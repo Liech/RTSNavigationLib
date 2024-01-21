@@ -2,7 +2,7 @@
 
 #include <glm/gtx/vector_angle.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   //https://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/
   bool Geometry2D::LineLineIntersect(glm::dvec2 p0, glm::dvec2 p1, glm::dvec2 p2, glm::dvec2 p3, glm::dvec2& i) //Output 
   {

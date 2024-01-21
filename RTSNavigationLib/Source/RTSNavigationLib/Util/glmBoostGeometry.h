@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   struct glm2dBox
   {
     glm::dvec2 lowLeft;

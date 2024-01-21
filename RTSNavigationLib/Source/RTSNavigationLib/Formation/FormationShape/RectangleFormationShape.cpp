@@ -1,6 +1,6 @@
 #include "RectangleFormationShape.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   RectangleFormationShape::RectangleFormationShape() {
 
   }

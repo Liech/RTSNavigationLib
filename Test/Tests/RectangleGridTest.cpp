@@ -17,16 +17,16 @@ namespace RectangleGridTests {
     polygon.push_back(offset + glm::dvec2(4.5, 6) * scale);
     polygon.push_back(offset + glm::dvec2(4, 3) * scale);
 
-    auto t = RTSPathingLib::RectangleGridVoxelizer::voxelize(polygon, dimension, glm::dvec2(0, 0), 1);
+    auto t = RTSNavigationLib::RectangleGridVoxelizer::voxelize(polygon, dimension, glm::dvec2(0, 0), 1);
     if (true) {
-      RTSPathingLib::svg v;
+      RTSNavigationLib::svg v;
       v.streak = polygon;
       v.color = "blue";
       v.thickness = 0.2;
       v.wrapAround = true;
-      std::vector<RTSPathingLib::svg> x = RTSPathingLib::RectangleGridSvg::write(t, 1);
+      std::vector<RTSNavigationLib::svg> x = RTSNavigationLib::RectangleGridSvg::write(t, 1);
       x.push_back(v);
-      RTSPathingLib::svg::write("VoxelizerTest.svg", x, glm::dvec2(-5, -5), glm::dvec2(30, 30));
+      RTSNavigationLib::svg::write("VoxelizerTest.svg", x, glm::dvec2(-5, -5), glm::dvec2(30, 30));
     }
 
     std::vector<bool> r = {
@@ -44,10 +44,10 @@ namespace RectangleGridTests {
 
   TEST_CASE("RectangleGrid/or", "[RectangleGridVoxelizer]") {
     glm::ivec2 dimension = glm::ivec2(2, 2);
-    RTSPathingLib::RectangleGrid<bool> a;
+    RTSNavigationLib::RectangleGrid<bool> a;
     a.dimension = dimension;
     a.data.resize(dimension.x * dimension.y);
-    RTSPathingLib::RectangleGrid<bool> b;
+    RTSNavigationLib::RectangleGrid<bool> b;
     b.dimension = dimension;
     b.data.resize(dimension.x * dimension.y);
 
@@ -66,10 +66,10 @@ namespace RectangleGridTests {
 
   TEST_CASE("RectangleGrid/and", "[RectangleGridVoxelizer]") {
     glm::ivec2 dimension = glm::ivec2(2, 2);
-    RTSPathingLib::RectangleGrid<bool> a;
+    RTSNavigationLib::RectangleGrid<bool> a;
     a.dimension = dimension;
     a.data.resize(dimension.x * dimension.y);
-    RTSPathingLib::RectangleGrid<bool> b;
+    RTSNavigationLib::RectangleGrid<bool> b;
     b.dimension = dimension;
     b.data.resize(dimension.x * dimension.y);
 
@@ -88,10 +88,10 @@ namespace RectangleGridTests {
 
   TEST_CASE("RectangleGrid/subtract", "[RectangleGridVoxelizer]") {
     glm::ivec2 dimension = glm::ivec2(2, 2);
-    RTSPathingLib::RectangleGrid<bool> a;
+    RTSNavigationLib::RectangleGrid<bool> a;
     a.dimension = dimension;
     a.data.resize(dimension.x * dimension.y);
-    RTSPathingLib::RectangleGrid<bool> b;
+    RTSNavigationLib::RectangleGrid<bool> b;
     b.dimension = dimension;
     b.data.resize(dimension.x * dimension.y);
 

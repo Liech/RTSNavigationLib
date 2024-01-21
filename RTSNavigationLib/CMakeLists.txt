@@ -99,6 +99,8 @@ source_group("Source/Flocking" FILES ${Flocking_Files})
 set(Pathfinding_Files
     "Source/RTSNavigationLib/Pathfinding/FlowField.h"	
     "Source/RTSNavigationLib/Pathfinding/FlowField.cpp"	
+    "Source/RTSNavigationLib/Pathfinding/DijkstraGrid.h"	
+    "Source/RTSNavigationLib/Pathfinding/DijkstraGrid.cpp"	
 )
 source_group("Source/Pathfinding" FILES ${Pathfinding_Files})
 

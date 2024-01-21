@@ -3,7 +3,7 @@
 #include <string>
 #include "RectangleGrid.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class svg;
 
   class RectangleGridSvg {

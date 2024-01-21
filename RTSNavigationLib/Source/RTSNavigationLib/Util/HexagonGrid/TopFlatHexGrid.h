@@ -3,7 +3,7 @@
 #include <glm/vec2.hpp>
 #include <vector>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   template<typename T>
   class TopFlatHexGrid {
   public:

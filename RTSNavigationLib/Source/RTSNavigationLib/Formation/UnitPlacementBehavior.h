@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   enum class UnitPlacementBehavior {
     CenterFirst, OuterFirst, DistributeEvenly
   };

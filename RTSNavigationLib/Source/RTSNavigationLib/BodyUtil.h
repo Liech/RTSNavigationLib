@@ -3,7 +3,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   struct Body;
 
   class BodyUtil {

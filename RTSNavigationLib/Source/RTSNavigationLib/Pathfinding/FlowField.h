@@ -10,7 +10,7 @@
 //https://howtorts.github.io/
 //https://howtorts.github.io/2014/01/05/flow-field-improvements.html
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class FlowField {
   public:
     FlowField(const std::vector<float>& obstacles, const glm::ivec2& resolution, const glm::ivec2& target);
@@ -19,8 +19,8 @@ namespace RTSPathingLib {
   private:
     void initField(const std::vector<float>& obstacles);
 
-    glm::ivec2             resolution;
-    glm::ivec2             target;
-    std::vector<glm::vec2> field;
+    glm::ivec2                    resolution;
+    glm::ivec2                    target;
+    std::vector<glm::lowp_i8vec2> field;
   };
 }

@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class HexGridUtils {
   public:
     static glm::dvec2 getTopFlatOffset(const glm::ivec2& position, const glm::dvec2& offset, double scale);

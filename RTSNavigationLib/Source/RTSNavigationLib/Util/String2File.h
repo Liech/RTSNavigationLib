@@ -2,6 +2,6 @@
 
 #include <string>
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   void String2File(const std::string& filename, const std::string& data);
 }

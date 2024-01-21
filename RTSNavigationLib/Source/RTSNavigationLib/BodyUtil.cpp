@@ -2,7 +2,7 @@
 
 #include "Body.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
 
   Body BodyUtil::transform(const Body& b, const glm::dmat4& transformation) {
     Body result = b;

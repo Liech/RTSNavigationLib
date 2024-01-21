@@ -12,7 +12,7 @@
 #include "Util/RectangleGrid/RectangleGridVoxelizer.h"
 #include "Util/RectangleGrid/RectangleGridSvg.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   FormationCalculator::FormationCalculator(const Formation& formation, const std::vector<Body>& units) :
   rootFormation(formation), inputUnits(units)
   {

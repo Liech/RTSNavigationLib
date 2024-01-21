@@ -12,13 +12,13 @@ namespace UsherTests {
   bool svgSave = false;
 
   TEST_CASE("Usher/single", "[UsherSingle]") {
-    std::vector<RTSPathingLib::Body> units = { RTSPathingLib::Body(glm::dvec2(0,0),0) };
-    std::vector<RTSPathingLib::Body> places = { RTSPathingLib::Body(glm::dvec2(0,0),0) };
+    std::vector<RTSNavigationLib::Body> units = { RTSNavigationLib::Body(glm::dvec2(0,0),0) };
+    std::vector<RTSNavigationLib::Body> places = { RTSNavigationLib::Body(glm::dvec2(0,0),0) };
 
-    std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
+    std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
     if (svgSave)
-      RTSPathingLib::Usher::visualize(tickets, units, places);
+      RTSNavigationLib::Usher::visualize(tickets, units, places);
 
     REQUIRE(tickets.size() == units.size());
     REQUIRE(tickets[0] == 0);
@@ -27,13 +27,13 @@ namespace UsherTests {
 
 
   TEST_CASE("Usher/swapped", "[UsherSwapped]") {
-    std::vector<RTSPathingLib::Body> units = { RTSPathingLib::Body(glm::dvec2(0,0),0),RTSPathingLib::Body(glm::dvec2(1,0),0) };
-    std::vector<RTSPathingLib::Body> places = { RTSPathingLib::Body(glm::dvec2(1,0),0),RTSPathingLib::Body(glm::dvec2(0,0),0) };
+    std::vector<RTSNavigationLib::Body> units = { RTSNavigationLib::Body(glm::dvec2(0,0),0),RTSNavigationLib::Body(glm::dvec2(1,0),0) };
+    std::vector<RTSNavigationLib::Body> places = { RTSNavigationLib::Body(glm::dvec2(1,0),0),RTSNavigationLib::Body(glm::dvec2(0,0),0) };
 
-    std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
+    std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
     if (svgSave)
-      RTSPathingLib::Usher::visualize(tickets, units, places);
+      RTSNavigationLib::Usher::visualize(tickets, units, places);
 
     REQUIRE(tickets.size() == units.size());
     REQUIRE(tickets[0] == 1);
@@ -41,23 +41,23 @@ namespace UsherTests {
   }
 
   TEST_CASE("Usher/Four", "[UsherFour]") {
-    std::vector<RTSPathingLib::Body> units = {
-      RTSPathingLib::Body(glm::dvec2(0, 7),0),
-      RTSPathingLib::Body(glm::dvec2(4, -5),0),
-      RTSPathingLib::Body(glm::dvec2(8, 8),0),
-      RTSPathingLib::Body(glm::dvec2(-4, -6),0),
+    std::vector<RTSNavigationLib::Body> units = {
+      RTSNavigationLib::Body(glm::dvec2(0, 7),0),
+      RTSNavigationLib::Body(glm::dvec2(4, -5),0),
+      RTSNavigationLib::Body(glm::dvec2(8, 8),0),
+      RTSNavigationLib::Body(glm::dvec2(-4, -6),0),
     };
-    std::vector<RTSPathingLib::Body> places = {
-      RTSPathingLib::Body(glm::dvec2(1, 0),0),
-      RTSPathingLib::Body(glm::dvec2(-1, 0),0),
-      RTSPathingLib::Body(glm::dvec2(0, 1),0),
-      RTSPathingLib::Body(glm::dvec2(0,-1),0)
+    std::vector<RTSNavigationLib::Body> places = {
+      RTSNavigationLib::Body(glm::dvec2(1, 0),0),
+      RTSNavigationLib::Body(glm::dvec2(-1, 0),0),
+      RTSNavigationLib::Body(glm::dvec2(0, 1),0),
+      RTSNavigationLib::Body(glm::dvec2(0,-1),0)
     };
 
-    std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
+    std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
     if (svgSave)
-      RTSPathingLib::Usher::visualize(tickets, units, places);
+      RTSNavigationLib::Usher::visualize(tickets, units, places);
 
     std::set<size_t> x(tickets.begin(), tickets.end());
     REQUIRE(x.size() == tickets.size());
@@ -91,30 +91,30 @@ namespace UsherTests {
         }
       }
     )""";
-    auto formation = RTSPathingLib::Formation();
+    auto formation = RTSNavigationLib::Formation();
     formation.fromJson(nlohmann::json::parse(formationDescription));
 
-    std::vector<RTSPathingLib::Body> units;
+    std::vector<RTSNavigationLib::Body> units;
 
-    units.push_back(RTSPathingLib::Body(glm::dvec2(4, 6), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(-3, 5), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(3, 2), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(5, 3), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(3, 5), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(2, 3), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(0, 1), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(4, 6), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(-3, 5), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(3, 2), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(5, 3), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(3, 5), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(2, 3), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(0, 1), 0, 1));
 
-    units.push_back(RTSPathingLib::Body(glm::dvec2(-3, -2), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(-2, 4), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(2, -5), 0, 1));
-    units.push_back(RTSPathingLib::Body(glm::dvec2(-3, -5), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(-3, -2), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(-2, 4), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(2, -5), 0, 1));
+    units.push_back(RTSNavigationLib::Body(glm::dvec2(-3, -5), 0, 1));
 
-    auto places = RTSPathingLib::FormationCalculator(formation, units).calculate();
+    auto places = RTSNavigationLib::FormationCalculator(formation, units).calculate();
 
-    std::vector<size_t> tickets = RTSPathingLib::Usher::assignPlaces(units, places);
+    std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
     if (svgSave)
-      RTSPathingLib::Usher::visualize(tickets, units, places);
+      RTSNavigationLib::Usher::visualize(tickets, units, places);
 
     std::set<size_t> x(tickets.begin(), tickets.end());
     REQUIRE(x.size() == tickets.size());
@@ -133,6 +133,6 @@ namespace UsherTests {
   }
 
   TEST_CASE("Usher/BoostMinCostFlowExample", "[UsherFour]") {
-    RTSPathingLib::BoostMinCostFlowExample playground;
+    RTSNavigationLib::BoostMinCostFlowExample playground;
   }
 }

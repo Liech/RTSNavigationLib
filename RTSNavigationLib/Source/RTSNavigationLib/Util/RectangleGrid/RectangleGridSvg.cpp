@@ -4,7 +4,7 @@
 
 #include "Util/svg.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   std::vector<svg> RectangleGridSvg::write(const RectangleGrid<bool>& grid, double scale) {
     std::vector<svg> toWrite;
     std::vector<svg> overlay;

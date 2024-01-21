@@ -6,7 +6,7 @@
 #include "RTSNavigationLib/Util/RectangleGrid/RectangleGrid.h"
 #include "RTSNavigationLib/Formation/UnitPlacementBehavior.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   struct Body;
 
   class UnitPlacement {

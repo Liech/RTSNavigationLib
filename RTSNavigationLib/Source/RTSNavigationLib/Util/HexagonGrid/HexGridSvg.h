@@ -3,7 +3,7 @@
 #include <string>
 #include "TopFlatHexGrid.h"
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   class svg;
 
   class HexGridSvg {

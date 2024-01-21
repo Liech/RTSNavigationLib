@@ -2,7 +2,7 @@
 
 //https://www.redblobgames.com/grids/hexagons/
 
-namespace RTSPathingLib {
+namespace RTSNavigationLib {
   glm::dvec2 HexGridUtils::getTopFlatOffset(const glm::ivec2& position, const glm::dvec2& offset, double scale) {
     double scaley = scale * (double)std::sqrt(3) * 0.5;
     double scalex = scale * 0.75;
