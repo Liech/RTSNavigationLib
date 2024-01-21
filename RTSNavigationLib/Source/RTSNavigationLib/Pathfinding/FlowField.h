@@ -3,6 +3,13 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+//https://howtorts.github.io/2014/01/04/basic-flow-fields.html
+//https://www.jdxdev.com/blog/2020/05/03/flowfields/
+//https://www.gameaipro.com/GameAIPro/GameAIPro_Chapter23_Crowd_Pathfinding_and_Steering_Using_Flow_Field_Tiles.pdf
+//https://www.sanctuaryshatteredsun.com/post/pathfinding-1
+//https://howtorts.github.io/
+//https://howtorts.github.io/2014/01/05/flow-field-improvements.html
+
 namespace RTSPathingLib {
   class FlowField {
   public:
