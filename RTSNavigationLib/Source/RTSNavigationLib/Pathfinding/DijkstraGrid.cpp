@@ -3,25 +3,30 @@
 #include <queue>
 
 namespace RTSNavigationLib {
-  template<typename NumberType>
-  DijkstraGrid<NumberType>::DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const glm::ivec2& target_) {
-    assert(resolution.x * resolution.y < std::numeric_limits<NumberType>::max());
+  DijkstraGrid::DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const glm::ivec2& target_) {
     target     = target_;
     resolution = resolution_;
     
     initGrid(obstacles);
   }
 
-  template<typename NumberType>
-  void DijkstraGrid<NumberType>::initGrid(const std::vector<float>& obstacles) {
-    NumberType maxVal = std::numeric_limits<NumberType>::max();
-    grid.resize(resolution.x * resolution.y, maxVal);
+  float DijkstraGrid::getDistance(const glm::ivec2& position) const {
+    size_t address = position.x % resolution.x + position.y * resolution.x;
+    return grid[address];
+  }
 
-    std::queue<std::pair<glm::ivec2, NumberType>> todo;
+  void DijkstraGrid::initGrid(const std::vector<float>& obstacles) {
+    constexpr float maxVal = std::numeric_limits<float>::infinity();
+    grid.resize(resolution.x * resolution.y, maxVal);
+    
+    auto compare = [](const std::pair<glm::ivec2, float>& a, const std::pair<glm::ivec2, float>& b) {
+      return a.second < b.second; 
+    };
+    std::priority_queue<std::pair<glm::ivec2, float>, std::vector<std::pair<glm::ivec2, float>>, decltype(compare)> todo(compare);
     todo.push(std::make_pair(target,0));
 
     while (!todo.empty()) {
-      const std::pair<glm::ivec2, NumberType> current = todo.front();
+      const std::pair<glm::ivec2, float> current = todo.top();
       const glm::ivec2& pos = current.first;
       todo.pop();
       grid[pos.x + pos.y * resolution.x] = current.second;
@@ -31,25 +36,24 @@ namespace RTSNavigationLib {
         size_t neighbhourIndex = i + i / 4;
         glm::ivec2 neighbourPos = pos + glm::ivec2(neighbhourIndex % 3 - 1, neighbhourIndex / 3 - 1);        
 
-        if (neighbourPos.x < 0 &&
-          neighbourPos.x >= resolution.x &&
-          neighbourPos.y < 0 &&
+        //Boundary check
+        if (neighbourPos.x < 0 ||
+          neighbourPos.x >= resolution.x ||
+          neighbourPos.y < 0 ||
           neighbourPos.y >= resolution.y) {
             continue;
         }
 
+        //Process Neighbours
         size_t address = neighbourPos.x % resolution.x + neighbourPos.y * resolution.x;
         auto& neighbour = grid[address];
-        bool alreadyVisited = maxVal == neighbour;
-        if (!alreadyVisited) {
-          NumberType distance = current.second + 1;
+        const float& weight = obstacles[address];
+        bool alreadyVisited = maxVal != neighbour;
+        if (!alreadyVisited && std::isfinite(weight)) {
+          float distance = current.second + weight;
           todo.push(std::make_pair(neighbourPos, distance));
-          neighbour = distance;
         }
       }
     }
   }
-
-  template struct DijkstraGrid<unsigned char>;
-  template struct DijkstraGrid<unsigned int >;
 }

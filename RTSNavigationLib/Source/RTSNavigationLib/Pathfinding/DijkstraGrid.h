@@ -3,17 +3,19 @@
 #include <glm/glm.hpp>
 #include <vector>
 
+//https://howtorts.github.io/2013/12/31/generating-a-path-dijkstra.html
+
 namespace RTSNavigationLib {
-  template<typename NumberType = unsigned char>
   class DijkstraGrid {
   public:
     DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution, const glm::ivec2& target);
 
+    float getDistance(const glm::ivec2& position) const;
   private:
     void initGrid(const std::vector<float>& obstacles);
 
     glm::ivec2 target;
     glm::ivec2 resolution;
-    std::vector<NumberType> grid;
+    std::vector<float> grid;
   };
 }
