@@ -10,7 +10,7 @@ Tackling Formation, guide units to formation places, navigation and moving in a 
 
 - [x] Formation Shape Creation
 - [x] Usher
-- [ ] Flocking & Movement
+- [x] Flocking
 - [ ] Pathfinding
 
 # Formation Forming
