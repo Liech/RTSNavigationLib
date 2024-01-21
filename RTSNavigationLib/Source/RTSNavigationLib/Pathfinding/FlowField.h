@@ -9,6 +9,7 @@
 //https://www.sanctuaryshatteredsun.com/post/pathfinding-1
 //https://howtorts.github.io/
 //https://howtorts.github.io/2014/01/05/flow-field-improvements.html
+//https://github.com/bjkarasek/flowfield-unity  //Eikonal 
 
 namespace RTSNavigationLib {
   class FlowField {
