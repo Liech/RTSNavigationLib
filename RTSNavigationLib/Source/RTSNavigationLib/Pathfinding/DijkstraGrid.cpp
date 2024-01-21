@@ -20,16 +20,17 @@ namespace RTSNavigationLib {
     grid.resize(resolution.x * resolution.y, maxVal);
     
     auto compare = [](const std::pair<glm::ivec2, float>& a, const std::pair<glm::ivec2, float>& b) {
-      return a.second < b.second; 
+      return a.second > b.second; 
     };
     std::priority_queue<std::pair<glm::ivec2, float>, std::vector<std::pair<glm::ivec2, float>>, decltype(compare)> todo(compare);
     todo.push(std::make_pair(target,0));
+    auto& start = grid[target.x + target.y * resolution.x];
+    start = 0;
 
     while (!todo.empty()) {
       const std::pair<glm::ivec2, float> current = todo.top();
       const glm::ivec2& pos = current.first;
       todo.pop();
-      grid[pos.x + pos.y * resolution.x] = current.second;
 
       //add neighbours
       for (size_t i = 0; i < 8; i++) {
@@ -52,6 +53,7 @@ namespace RTSNavigationLib {
         if (!alreadyVisited && std::isfinite(weight)) {
           float distance = current.second + weight;
           todo.push(std::make_pair(neighbourPos, distance));
+          neighbour = distance;
         }
       }
     }
