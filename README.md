@@ -103,6 +103,7 @@ Here some links which maybe helpful to understand the tech behind it:
   * https://www.jdxdev.com/blog/2020/05/03/flowfields/
   * https://www.gameaipro.com/GameAIPro/GameAIPro_Chapter23_Crowd_Pathfinding_and_Steering_Using_Flow_Field_Tiles.pdf
   * https://www.sanctuaryshatteredsun.com/post/pathfinding-1
+  * https://github.com/bjkarasek/flowfield-unity
 * Flocking
   * https://ap011y0n.github.io/Group-Movement/ 
 * Multiple Topics
