@@ -92,13 +92,22 @@ See "Formation/PraiseTheSun" Test if you are interested how its done.
 * Build Mechanic before Graphic
 * Build a giant RTS, in small deliverable pieces
 
-# Todo
+# Links
 
-* Formation
-  * Convex Polygon Shape (maybe)
-  * Extrusion Based Shape (like line formations in BAR) (maybe)
-* Flocking & Unit Movement
-* (Flow Field) Pathfinding
+Here some links which maybe helpful to understand the tech behind it:
+
+* Usher
+  * https://en.wikipedia.org/wiki/Hungarian_algorithm
+  * https://stackoverflow.com/questions/76444431/faster-alternatives-to-the-hungarian-algorithm
+* Pathfinding
+  * https://www.jdxdev.com/blog/2020/05/03/flowfields/
+  * https://www.gameaipro.com/GameAIPro/GameAIPro_Chapter23_Crowd_Pathfinding_and_Steering_Using_Flow_Field_Tiles.pdf
+  * https://www.sanctuaryshatteredsun.com/post/pathfinding-1
+* Flocking
+  * https://ap011y0n.github.io/Group-Movement/ 
+* Multiple Topics
+  * https://howtorts.github.io/
+  * https://www.youtube.com/watch?v=a4yXJ-9H4pY
 
 # Build
 
