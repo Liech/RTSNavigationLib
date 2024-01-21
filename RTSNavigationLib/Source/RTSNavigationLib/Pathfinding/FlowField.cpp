@@ -1,15 +1,21 @@
 #include "FlowField.h"
 
 namespace RTSPathingLib {
-  FlowField::FlowField(const std::vector<bool>& obstacles, const glm::ivec2& resolution) {
+  FlowField::FlowField(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const glm::ivec2& target_) {
+    resolution = resolution_;
+    target     = target_;
 
-  }
-
-  void FlowField::setTarget(const glm::ivec2& target) {
-
+    initField(obstacles);
   }
 
   glm::dvec2 FlowField::getDirection(const glm::ivec2& location) const {
-    return glm::dvec2(0, 0);
+    size_t address = location.x + location.y * resolution.x;
+    return field[address];
+  }
+
+  void FlowField::initField(const std::vector<float>& obstacles) {
+    field.resize(resolution.x * resolution.y, glm::vec2(0, 0));
+
+
   }
 }
