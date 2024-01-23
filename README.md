@@ -104,11 +104,13 @@ Here some links which maybe helpful to understand the tech behind it:
   * https://www.gameaipro.com/GameAIPro/GameAIPro_Chapter23_Crowd_Pathfinding_and_Steering_Using_Flow_Field_Tiles.pdf
   * https://www.sanctuaryshatteredsun.com/post/pathfinding-1
   * https://github.com/bjkarasek/flowfield-unity
+  * https://gamedev.stackexchange.com/questions/387/how-does-flow-field-pathfinding-work
 * Flocking
   * https://ap011y0n.github.io/Group-Movement/ 
 * Multiple Topics
   * https://howtorts.github.io/
   * https://www.youtube.com/watch?v=a4yXJ-9H4pY
+  * http://youtu.be/5Qyl7h7D1Q8?t=24m24s
 
 # Build
 
