@@ -28,7 +28,7 @@ namespace FlockTest {
       1,1,1,1,1
     };
       
-    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, { target });
     RTSNavigationLib::FlowField field(grid);
     glm::dvec2 directionA = field.getDirection(fromA);
     glm::dvec2 directionB = field.getDirection(fromB);
@@ -79,7 +79,7 @@ namespace FlockTest {
       1,1,1,1,1
     };
 
-    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, { target });
     RTSNavigationLib::FlowField field(grid);
     glm::dvec2 directionA = field.getDirection(fromA);
     glm::dvec2 directionB = field.getDirection(fromB);

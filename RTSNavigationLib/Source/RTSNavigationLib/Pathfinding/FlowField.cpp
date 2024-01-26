@@ -8,13 +8,13 @@
 namespace RTSNavigationLib {
   FlowField::FlowField(const DijkstraGrid& grid) {
     resolution = grid.getResolution();
-    target = grid.getTarget();
+    targets = grid.getTargets();
     initField(grid);
   }
 
   FlowField::FlowField(const EikonalGrid& grid) {
     resolution = grid.getResolution();
-    target = grid.getTarget();
+    targets = grid.getTargets();
     initField(grid);
   }
 
@@ -22,8 +22,8 @@ namespace RTSNavigationLib {
     return resolution;
   }
 
-  glm::ivec2 FlowField::getTarget() const {
-    return target;
+  std::vector<glm::ivec2> FlowField::getTargets() const {
+    return targets;
   }
 
   glm::dvec2 FlowField::getDirection(const glm::ivec2& location) const {

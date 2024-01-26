@@ -21,7 +21,7 @@ namespace RTSNavigationLib {
     FlowField(const EikonalGrid&  grid);
 
     glm::ivec2 getResolution() const;
-    glm::ivec2 getTarget()     const;
+    std::vector<glm::ivec2> getTargets()     const;
     glm::dvec2 getDirection(const glm::ivec2& location) const;
   private:
 
@@ -31,7 +31,7 @@ namespace RTSNavigationLib {
     static constexpr glm::dvec2 lookup(unsigned char);
 
     glm::ivec2                    resolution;
-    glm::ivec2                    target;
+    std::vector<glm::ivec2>       targets;
 
     //lookuptable id for vector. basicly a unit vector of 360/255°
     std::vector<unsigned char>    field;

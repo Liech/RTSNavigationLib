@@ -14,7 +14,7 @@ namespace FlockTest {
       1,t,1,
       1,1,1,
     };
-    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, { target });
     
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(0, 0)) - 1.70710683) < 1e-3);
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(1, 0)) - 1         ) < 1e-3);
@@ -35,7 +35,7 @@ namespace FlockTest {
     std::vector<float> obstacles = {
       t,1,1,1,1,3,1,1,1,1
     };
-    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, { target });
 
     
     for (size_t i = 1; i < obstacles.size(); i++)
@@ -53,7 +53,7 @@ namespace FlockTest {
       t,B,1,
       1,1,1,
     };
-    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, { target });
 
     std::vector<glm::ivec2> bestPath = { glm::ivec2(0,1),glm::ivec2(0,2),glm::ivec2(1,2),glm::ivec2(2,2),glm::ivec2(2,1),glm::ivec2(2,0) };
 

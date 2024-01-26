@@ -14,7 +14,7 @@ namespace FlockTest {
       1,t,2,
       1,1,1,
     };
-    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, { target });
     
     REQUIRE(grid.getDistance(glm::ivec2(0, 0)) == 1);
     REQUIRE(grid.getDistance(glm::ivec2(1, 0)) == 1);
@@ -35,7 +35,7 @@ namespace FlockTest {
     std::vector<float> obstacles = {
       t,1,1,1,1,3,1,1,1,1
     };
-    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, { target });
 
     REQUIRE(grid.getDistance(glm::ivec2(0, 0)) == 0 );
     REQUIRE(grid.getDistance(glm::ivec2(1, 0)) == 1 );
@@ -60,7 +60,7 @@ namespace FlockTest {
       t,B,1,//->//0,B,2
       1,1,1,    //1,1,2 // remember: diagonal movement is possible
     };
-    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, { target });
 
     
     REQUIRE(grid.getDistance(glm::ivec2(0, 0)) == 1);
@@ -86,7 +86,7 @@ namespace FlockTest {
       1,B,1,//     3,B,1
       1,1,1,//     3,2,2
     };
-    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, target);
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, { target });
 
     REQUIRE(grid.getDistance(glm::ivec2(0, 0)) == 5);
     REQUIRE(grid.getDistance(glm::ivec2(1, 0)) == 5);

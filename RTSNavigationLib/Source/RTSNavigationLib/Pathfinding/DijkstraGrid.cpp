@@ -3,8 +3,8 @@
 #include <queue>
 
 namespace RTSNavigationLib {
-  DijkstraGrid::DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const glm::ivec2& target_) {
-    target     = target_;
+  DijkstraGrid::DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const std::vector<glm::ivec2>& targets_) {
+    targets     = targets_;
     resolution = resolution_;
     
     initGrid(obstacles);
@@ -27,9 +27,10 @@ namespace RTSNavigationLib {
       return a.second > b.second; 
     };
     std::priority_queue<std::pair<glm::ivec2, float>, std::vector<std::pair<glm::ivec2, float>>, decltype(compare)> todo(compare);
-    todo.push(std::make_pair(target,0));
-    auto& start = grid[target.x + target.y * resolution.x];
-    start = 0;
+    for (const auto& target : targets) {
+      todo.push(std::make_pair(target, 0.0f));
+      grid[target.x + target.y * resolution.x] = 0.0f;
+    }
 
     while (!todo.empty()) {
       const std::pair<glm::ivec2, float> current = todo.top();
@@ -67,7 +68,7 @@ namespace RTSNavigationLib {
     return resolution;
   }
 
-  glm::ivec2 DijkstraGrid::getTarget() const {
-    return target;
+  std::vector<glm::ivec2> DijkstraGrid::getTargets() const {
+    return targets;
   }
 }
