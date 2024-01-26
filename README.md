@@ -12,6 +12,12 @@ Tackling Formation, guide units to formation places, navigation and moving in a 
 - [x] Usher
 - [x] Flocking
 - [ ] Pathfinding
+  - [x] Distance Grid (Dijkstra & Eikonal)
+  - [ ] Flow Field
+  - [ ] Portals
+  - [ ] Inter Portal Navigation
+  - [ ] Line Of Sight
+  - [ ] Continous Crowd
 
 # Formation Forming
 
