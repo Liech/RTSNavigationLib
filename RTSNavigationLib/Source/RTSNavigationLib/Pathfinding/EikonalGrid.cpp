@@ -16,6 +16,10 @@ namespace RTSNavigationLib {
     return grid[address];
   }
 
+  float EikonalGrid::getDistance(const size_t& address) const {
+    return grid[address];
+  }
+
   float EikonalGrid::getWeight(const glm::ivec2& pos, const std::vector<float>& obstacles) const {
     constexpr float maxVal = std::numeric_limits<float>::infinity();
     constexpr float boundary = 0;
@@ -89,5 +93,13 @@ namespace RTSNavigationLib {
         }
       }
     }
+  }
+
+  glm::ivec2 EikonalGrid::getResolution() const {
+    return resolution;
+  }
+
+  glm::ivec2 EikonalGrid::getTarget() const {
+    return target;
   }
 }

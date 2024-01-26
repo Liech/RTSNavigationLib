@@ -15,6 +15,10 @@ namespace RTSNavigationLib {
     return grid[address];
   }
 
+  float DijkstraGrid::getDistance(const size_t& address) const {
+    return grid[address];
+  }
+
   void DijkstraGrid::initGrid(const std::vector<float>& obstacles) {
     constexpr float maxVal = std::numeric_limits<float>::infinity();
     grid.resize(resolution.x * resolution.y, maxVal);
@@ -57,5 +61,13 @@ namespace RTSNavigationLib {
         }
       }
     }
+  }
+
+  glm::ivec2 DijkstraGrid::getResolution() const {
+    return resolution;
+  }
+
+  glm::ivec2 DijkstraGrid::getTarget() const {
+    return target;
   }
 }
