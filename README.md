@@ -13,7 +13,7 @@ Tackling Formation, guide units to formation places, navigation and moving in a 
 - [x] Flocking
 - [ ] Pathfinding
   - [x] Distance Grid (Dijkstra & Eikonal)
-  - [ ] Flow Field
+  - [x] Flow Field
   - [ ] Portals
   - [ ] Inter Portal Navigation
   - [ ] Line Of Sight
