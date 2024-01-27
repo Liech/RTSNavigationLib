@@ -6,7 +6,50 @@
 #include "RTSNavigationLib/Pathfinding/DijkstraGrid.h"
 
 namespace FlockTest {
-  TEST_CASE("FlowField/DijkstraEdge", "[DijkstralEdge]") {
+
+  TEST_CASE("FlowField/Dijkstra/Horizon", "[DijkstralEdge]") {
+    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 start = glm::ivec2(1, 1);
+    std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
+    float t = 1; //target
+    float s = 1; //start
+    std::vector<float> obstacles = {
+      t,t,t,t,t,
+      1,1,1,1,1,
+      1,1,1,1,1,
+      1,1,s,1,1,
+      1,1,1,1,1
+    };
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, targets);
+    RTSNavigationLib::FlowField field(grid);
+
+    glm::ivec2 dir = field.getDirection(start);
+    REQUIRE(dir[0] == 0);
+    REQUIRE(dir[1] == -1);
+  }
+
+  TEST_CASE("FlowField/Eikonal/Horizon", "[DijkstralEdge]") {
+    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 start = glm::ivec2(1, 1);
+    std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
+    float t = 1; //target
+    float s = 1; //start
+    std::vector<float> obstacles = {
+      t,t,t,t,t,
+      1,1,1,1,1,
+      1,1,1,1,1,
+      1,1,s,1,1,
+      1,1,1,1,1
+    };
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, targets);
+    RTSNavigationLib::FlowField field(grid);
+
+    glm::ivec2 dir = field.getDirection(start);
+    REQUIRE(dir[0] == 0);
+    REQUIRE(dir[1] == -1);
+  }
+
+  TEST_CASE("FlowField/Dijkstra/Edge", "[DijkstralEdge]") {
     glm::ivec2 resolution = glm::ivec2(4, 4);
     glm::ivec2 start = glm::ivec2(1, 1);
     glm::ivec2 target = glm::ivec2(2, 2);
@@ -35,7 +78,7 @@ namespace FlockTest {
     REQUIRE(wallDir[1] == 0);
 
   }
-  TEST_CASE("FlowField/EikonalEdge", "[EikonalEdge]") {
+  TEST_CASE("FlowField/Eikonal/Edge", "[EikonalEdge]") {
     glm::ivec2 resolution = glm::ivec2(4, 4);
     glm::ivec2 start = glm::ivec2(1, 1);
     glm::ivec2 target = glm::ivec2(2, 2);
@@ -64,7 +107,7 @@ namespace FlockTest {
     REQUIRE(wallDir[1] == 0);
   }
 
-  TEST_CASE("FlowField/EikonalSimple", "[EikonalSimpleSingleStep]") {
+  TEST_CASE("FlowField/Eikonal/Simple", "[EikonalSimpleSingleStep]") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 fromA = glm::ivec2(1+0, 1+1);
     glm::ivec2 fromB = glm::ivec2(1+1, 1+0);
@@ -115,7 +158,7 @@ namespace FlockTest {
     REQUIRE(std::abs(directionH[0] - glm::normalize(glm::dvec2(-1, -1))[0]) < 1e-6);
     REQUIRE(std::abs(directionH[1] - glm::normalize(glm::dvec2(-1, -1))[1]) < 1e-6);
   }
-  TEST_CASE("FlowField/DijkstraSimple", "[DijkstraSimpleSingleStep]") {
+  TEST_CASE("FlowField/Dijkstra/Simple", "[DijkstraSimpleSingleStep]") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 fromA = glm::ivec2(1 + 0, 1 + 1);
     glm::ivec2 fromB = glm::ivec2(1 + 1, 1 + 0);
