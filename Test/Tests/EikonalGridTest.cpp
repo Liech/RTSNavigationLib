@@ -60,4 +60,32 @@ namespace FlockTest {
     for (size_t i = 1; i < bestPath.size(); i++)
       REQUIRE(grid.getDistance(bestPath[i-1]) < grid.getDistance(bestPath[i]));
   }
+
+
+  TEST_CASE("EikonalGrid/Horizon", "[DijkstralEdge]") {
+    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 start = glm::ivec2(1, 1);
+    std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
+    float t = 1; //target
+    float s = 1; //start
+    std::vector<float> obstacles = {
+      t,t,t,t,t,
+      1,1,1,1,1,
+      1,1,1,1,1,
+      1,1,s,1,1,
+      1,1,1,1,1
+    };
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, targets);
+
+    for (size_t i = 0; i < 5; i++)
+      REQUIRE(grid.getDistance(i) == 0);
+    for (size_t i = 5; i < 10; i++)
+      REQUIRE(grid.getDistance(i) == 1);
+    for (size_t i = 10; i < 15; i++)
+      REQUIRE(grid.getDistance(i) == 2);
+    for (size_t i = 15; i < 20; i++)
+      REQUIRE(grid.getDistance(i) == 3);
+    for (size_t i = 20; i < 25; i++)
+      REQUIRE(grid.getDistance(i) == 4);
+  }
 }
