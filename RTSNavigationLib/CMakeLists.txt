@@ -103,8 +103,8 @@ set(Pathfinding_Files
     "Source/RTSNavigationLib/Pathfinding/DijkstraGrid.cpp"	
     "Source/RTSNavigationLib/Pathfinding/EikonalGrid.h"	
     "Source/RTSNavigationLib/Pathfinding/EikonalGrid.cpp"	
-    "Source/RTSNavigationLib/Pathfinding/Portal.h"	
-    "Source/RTSNavigationLib/Pathfinding/Portal.cpp"	
+    "Source/RTSNavigationLib/Pathfinding/GridOfGrids.h"	
+    "Source/RTSNavigationLib/Pathfinding/GridOfGrids.cpp"	
 )
 source_group("Source/Pathfinding" FILES ${Pathfinding_Files})
 
