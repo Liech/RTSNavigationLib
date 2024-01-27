@@ -16,15 +16,15 @@ namespace FlockTest {
     };
     RTSNavigationLib::EikonalGrid grid(obstacles, resolution, { target });
     
-    REQUIRE(std::abs(grid.getDistance(glm::ivec2(0, 0)) - 1.70710683) < 1e-3);
+    REQUIRE(std::abs(grid.getDistance(glm::ivec2(0, 0)) - 2.70710683) < 1e-3);
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(1, 0)) - 1         ) < 1e-3);
-    REQUIRE(std::abs(grid.getDistance(glm::ivec2(2, 0)) - 1.70710683) < 1e-3);
+    REQUIRE(std::abs(grid.getDistance(glm::ivec2(2, 0)) - 2.70710683) < 1e-3);
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(0, 1)) - 1         ) < 1e-3);
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(1, 1)) - 0         ) < 1e-3);
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(2, 1)) - 1         ) < 1e-3);
-    REQUIRE(std::abs(grid.getDistance(glm::ivec2(0, 2)) - 1.70710683) < 1e-3);
+    REQUIRE(std::abs(grid.getDistance(glm::ivec2(0, 2)) - 2.70710683) < 1e-3);
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(1, 2)) - 1         ) < 1e-3);
-    REQUIRE(std::abs(grid.getDistance(glm::ivec2(2, 2)) - 1.70710683) < 1e-3);
+    REQUIRE(std::abs(grid.getDistance(glm::ivec2(2, 2)) - 2.70710683) < 1e-3);
   }
 
   TEST_CASE("EikonalGrid/tunnel", "[EikonalGridTunnel]") {
@@ -67,25 +67,38 @@ namespace FlockTest {
     glm::ivec2 start = glm::ivec2(1, 1);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
     float t = 1; //target
-    float s = 1; //start
     std::vector<float> obstacles = {
       t,t,t,t,t,
       1,1,1,1,1,
       1,1,1,1,1,
-      1,1,s,1,1,
+      1,1,1,1,1,
       1,1,1,1,1
     };
     RTSNavigationLib::EikonalGrid grid(obstacles, resolution, targets);
 
+    float row0 = grid.getDistance(0);
     for (size_t i = 0; i < 5; i++)
-      REQUIRE(grid.getDistance(i) == 0);
+      REQUIRE(grid.getDistance(i) == row0);
+
+    float row1 = grid.getDistance(5);
     for (size_t i = 5; i < 10; i++)
-      REQUIRE(grid.getDistance(i) == 1);
+      REQUIRE(grid.getDistance(i) == row1);
+
+    float row2 = grid.getDistance(10);
     for (size_t i = 10; i < 15; i++)
-      REQUIRE(grid.getDistance(i) == 2);
+      REQUIRE(grid.getDistance(i) == row2);
+
+    float row3 = grid.getDistance(15);
     for (size_t i = 15; i < 20; i++)
-      REQUIRE(grid.getDistance(i) == 3);
+      REQUIRE(grid.getDistance(i) == row3);
+
+    float row4 = grid.getDistance(20);
     for (size_t i = 20; i < 25; i++)
-      REQUIRE(grid.getDistance(i) == 4);
+      REQUIRE(grid.getDistance(i) == row4);
+
+    REQUIRE(row1 > row0);
+    REQUIRE(row2 > row1);
+    REQUIRE(row3 > row2);
+    REQUIRE(row4 > row3);
   }
 }

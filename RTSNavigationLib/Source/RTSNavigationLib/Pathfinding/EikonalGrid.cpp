@@ -22,7 +22,7 @@ namespace RTSNavigationLib {
 
   float EikonalGrid::getWeight(const glm::ivec2& pos, const std::vector<float>& obstacles) const {
     constexpr float maxVal = std::numeric_limits<float>::infinity();
-    constexpr float boundary = 0;
+    constexpr float boundary = std::numeric_limits<float>::infinity();
 
     bool validXM = pos.x > 0;
     bool validYM = pos.y > 0;
