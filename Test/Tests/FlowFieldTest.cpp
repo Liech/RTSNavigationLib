@@ -49,9 +49,13 @@ namespace FlockTest {
     RTSNavigationLib::EikonalGrid grid(obstacles, resolution, targets);
     RTSNavigationLib::FlowField field(grid);
 
-    glm::dvec2 dir = field.getDirection(start);
-    REQUIRE(dir[0] == 0);
-    REQUIRE(dir[1] == -1);
+    for (size_t x = 0; x < 5; x++) {
+      for (size_t y = 1; y < 5; y++) {
+        glm::dvec2 dir = field.getDirection(glm::ivec2(x, y));
+        REQUIRE(dir[0] == 0);
+        REQUIRE(dir[1] == -1);
+      }
+    }
   }
 
   TEST_CASE("FlowField/Dijkstra/Edge", "[DijkstralEdge]") {
