@@ -74,7 +74,9 @@ namespace RTSNavigationLib {
     case 14:
       return glm::normalize(glm::dvec2(-1,+2));
     case 15:
-      return glm::normalize(glm::dvec2(+1,+2));
+      return glm::normalize(glm::dvec2(+1, +2));
+    case 255:
+      return glm::dvec2(0, 0);
     }
     return glm::dvec2(0, 0);
   }
@@ -97,6 +99,12 @@ namespace RTSNavigationLib {
 
 #pragma omp parallel for
     for (long long cell = 0; cell < field.size(); cell++) {
+      float self = grid.getDistance(cell);
+      if (self == 0.0f || self == maxVal) {
+        field[cell] = 255;
+        continue;
+      }
+       
       std::array<float, 8> neighbors;
       long long x = cell % resolution.x;
       long long y = cell / resolution.x;
@@ -154,6 +162,12 @@ namespace RTSNavigationLib {
 
 #pragma omp parallel for
     for (long long cell = 0; cell < field.size(); cell++) {
+      float self = grid.getDistance(cell);
+      if (self == 0.0f || self == maxVal) {
+        field[cell] = 255;
+        continue;
+      }
+
       std::array<float, 16> neighbors;  
       long long x = cell % resolution.x;
       long long y = cell / resolution.x;

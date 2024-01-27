@@ -6,6 +6,64 @@
 #include "RTSNavigationLib/Pathfinding/DijkstraGrid.h"
 
 namespace FlockTest {
+  TEST_CASE("FlowField/DijkstraEdge", "[DijkstralEdge]") {
+    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 start = glm::ivec2(1, 1);
+    glm::ivec2 target = glm::ivec2(2, 2);
+    glm::ivec2 wall = glm::ivec2(2, 1);
+    float t = 1; //target
+    float s = 1; //start
+    float B = std::numeric_limits<float>::infinity();
+    std::vector<float> obstacles = {
+      1,1,1,1,
+      1,s,B,1,
+      1,1,t,1,
+      1,1,1,1,
+    };
+    RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, { target });
+    RTSNavigationLib::FlowField field(grid);
+
+    auto dir       = field.getDirection(start);
+    auto targetDir = field.getDirection(target);
+    auto wallDir   = field.getDirection(wall);
+
+    REQUIRE(dir[0] == 0);
+    REQUIRE(dir[1] == 1);
+    REQUIRE(targetDir[0] == 0);
+    REQUIRE(targetDir[1] == 0);
+    REQUIRE(wallDir[0] == 0);
+    REQUIRE(wallDir[1] == 0);
+
+  }
+  TEST_CASE("FlowField/EikonalEdge", "[EikonalEdge]") {
+    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 start = glm::ivec2(1, 1);
+    glm::ivec2 target = glm::ivec2(2, 2);
+    glm::ivec2 wall = glm::ivec2(2, 1);
+    float t = 1; //target
+    float s = 1; //start
+    float B = std::numeric_limits<float>::infinity();
+    std::vector<float> obstacles = {
+      1,1,1,1,
+      1,s,B,1,
+      1,1,t,1,
+      1,1,1,1,
+    };
+    RTSNavigationLib::EikonalGrid grid(obstacles, resolution, { target });
+    RTSNavigationLib::FlowField field(grid);
+
+    auto dir       = field.getDirection(start);
+    auto targetDir = field.getDirection(target);
+    auto wallDir   = field.getDirection(wall);
+
+    REQUIRE(dir[0] == 0);
+    REQUIRE(dir[1] == 1);
+    REQUIRE(targetDir[0] == 0);
+    REQUIRE(targetDir[1] == 0);
+    REQUIRE(wallDir[0] == 0);
+    REQUIRE(wallDir[1] == 0);
+  }
+
   TEST_CASE("FlowField/EikonalSimple", "[EikonalSimpleSingleStep]") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 fromA = glm::ivec2(1+0, 1+1);

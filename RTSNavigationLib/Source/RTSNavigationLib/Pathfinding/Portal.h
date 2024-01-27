@@ -13,5 +13,6 @@ namespace RTSNavigationLib {
     std::vector<float> obstacles;
     glm::ivec2         resolution;
 
+
   };
 }
