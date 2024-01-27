@@ -61,7 +61,7 @@ namespace FlockTest {
     glm::ivec2 wall = glm::ivec2(2, 1);
     float t = 1; //target
     float s = 1; //start
-    float B = std::numeric_limits<float>::infinity();
+    constexpr float B = std::numeric_limits<float>::infinity();
     std::vector<float> obstacles = {
       1,1,1,1,
       1,s,B,1,
@@ -90,7 +90,7 @@ namespace FlockTest {
     glm::ivec2 wall = glm::ivec2(2, 1);
     float t = 1; //target
     float s = 1; //start
-    float B = std::numeric_limits<float>::infinity();
+    constexpr float B = std::numeric_limits<float>::infinity();
     std::vector<float> obstacles = {
       1,1,1,1,
       1,s,B,1,

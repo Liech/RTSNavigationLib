@@ -147,18 +147,34 @@ namespace RTSNavigationLib {
     constexpr float maxVal = std::numeric_limits<float>::infinity();
     field.resize(resolution.x * resolution.y, 0);
 
-    constexpr const std::array<glm::ivec2,16> neighbourOffset = {
-      glm::ivec2(-1,-2),glm::ivec2(1,-2),                                                    //0N0N0
-      glm::ivec2(-2,-1),glm::ivec2(-1,-1),glm::ivec2(0,-1),glm::ivec2(1,-1),glm::ivec2(2,-1),//NNNNN
-      glm::ivec2(-1,0),glm::ivec2(1,0),                                                      //0NXN0
-      glm::ivec2(-2,1),glm::ivec2(-1,1),glm::ivec2(0,1),glm::ivec2(1,1),glm::ivec2(2,1),     //NNNNN
-      glm::ivec2(-1,2),glm::ivec2(-1,2),                                                     //0N0N0
+    constexpr const std::array<glm::ivec2,24> neighbourOffset = {
+      //Step0
+      glm::ivec2(-1,0),glm::ivec2(1,0),glm::ivec2(0,1),glm::ivec2(0,-1),
+      //Step1
+      glm::ivec2(-1,-1),glm::ivec2(1,-1),glm::ivec2(-1,1),glm::ivec2(1,1),
+      //Step2
+      glm::ivec2(-2,0),glm::ivec2(2,0),glm::ivec2(0,2),glm::ivec2(0,-2),
+      glm::ivec2(-2,-2),glm::ivec2(2,-2),glm::ivec2(-2,2),glm::ivec2(2,2),
+      glm::ivec2(-1,-2),glm::ivec2(1,-2),glm::ivec2(-2,-1),glm::ivec2(2,-1),
+      glm::ivec2(-2,1),glm::ivec2(2,1),glm::ivec2(-1,2),glm::ivec2(1,2),
+      
     };
-    constexpr const std::array<size_t,8> mustFreeAreas{
-      3,4,5,7,8,10,11,12
-    };
-    constexpr const std::array<size_t,12> elementsWithPreconditions = {
-      0,1,2,3, 5,6,9,10 ,12,13,14,15
+    constexpr const std::array<unsigned char, 24> convert2symbol {
+      //Step0
+      7,8,11,4,
+      //Step1
+      3,5,10,12,
+      //Step2
+      7,8,11,4,
+      3,5,10,12,
+      0,1,2,6,
+      9,13,14,15
+
+      //0N0N0
+      //N3N5N
+      //07X80
+      //9NNNN
+      //0N0N0
     };
 
 #pragma omp parallel for
@@ -169,42 +185,38 @@ namespace RTSNavigationLib {
         continue;
       }
 
-      std::array<float, 16> neighbors;  
+      size_t step = 0;
+      size_t bestID = 255;
+      float bestVal = self;
       long long x = cell % resolution.x;
       long long y = cell / resolution.x;
-      for (size_t i = 0; i < 16; i++) {
+      bool anyWall = false;
+
+      for (size_t i = 0; i < neighbourOffset.size(); i++) {
+        if (i == 4 || i == 8) {
+          step++;
+          if (anyWall)
+            break;
+        }
+
         const auto& offset = neighbourOffset[i];
         auto pos = glm::ivec2(x, y) + offset;
         bool isInXBound = pos.x >= 0 && pos.x < resolution.x;
         bool isInYBound = pos.y >= 0 && pos.y < resolution.y;
         size_t address = cell + offset.x + offset.y * resolution.x;
-        if (isInXBound && isInYBound)
-          neighbors[i] = grid.getDistance(address);
-        else
-          neighbors[i] = maxVal;
-      }
-
-      //preconditions
-      bool freeCenter = true;
-      for (const size_t& element : mustFreeAreas) {
-          freeCenter &= neighbors[element] != maxVal;
-      }
-      if (!freeCenter) {
-        for (const size_t& element : elementsWithPreconditions)
-          neighbors[element] = maxVal;
-      }
-
-      //select result
-      size_t bestID = 0;
-      float bestVal = neighbors[0];
-      for (size_t i = 0; i < 16; i++) {
-        const float& current = neighbors[i];
-        if (bestVal > current) {
-          bestID = i;
-          bestVal = current;
+        if (isInXBound && isInYBound) {
+          const float& current = grid.getDistance(address);
+          anyWall |= current == maxVal;
+          if (bestVal > current) {
+            bestID = i;
+            bestVal = current;
+          }
         }
+        else
+          anyWall = true;
       }
-      field[cell] = bestID; //id can be converted via lookup table to vector
+
+      field[cell] = convert2symbol[bestID]; //id can be converted via lookup table to vector
     }
   }
 }
