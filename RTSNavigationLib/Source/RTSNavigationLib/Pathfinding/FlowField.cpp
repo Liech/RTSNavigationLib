@@ -29,7 +29,8 @@ namespace RTSNavigationLib {
   glm::dvec2 FlowField::getDirection(const glm::ivec2& location) const {
     size_t address = location.x + location.y * resolution.x;
     unsigned char symbol = field[address];
-    return lookup(symbol);
+    const auto result = lookup(symbol);
+    return result;
   }
 
   constexpr glm::dvec2 FlowField::lookup(unsigned char symbol) {
@@ -77,8 +78,9 @@ namespace RTSNavigationLib {
       return glm::normalize(glm::dvec2(+1, +2));
     case 255:
       return glm::dvec2(0, 0);
+    default:
+      return glm::dvec2(0, 0);
     }
-    return glm::dvec2(0, 0);
   }
 
   void FlowField::initField(const DijkstraGrid& grid) {
@@ -86,15 +88,14 @@ namespace RTSNavigationLib {
     field.resize(resolution.x * resolution.y, 0);
 
     constexpr const std::array<glm::ivec2,8> neighbourOffset = {
-      glm::ivec2(-1,-1),glm::ivec2(0,-1),glm::ivec2(1,-1),//NNN
-      glm::ivec2(-1,0),glm::ivec2(1,0),                   //NXN
-      glm::ivec2(-1,1),glm::ivec2(0,1),glm::ivec2(1,1),   //NNN
+      glm::ivec2(0,-1),glm::ivec2(-1,0),glm::ivec2(1,0),glm::ivec2(0,1),
+      glm::ivec2(-1,-1),glm::ivec2(1,-1),glm::ivec2(-1,1),glm::ivec2(1,1),
     };
     constexpr const std::array<size_t,4> elementsWithPreconditions = {
-      0,2,5,7
+      4,5,6,7
     };
     constexpr const std::array<size_t,8> converter8to16 = {
-      3,4,5,7,8,10,11,12
+      4,7,8,11,3,5,10,12
     };
 
 #pragma omp parallel for

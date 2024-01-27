@@ -8,8 +8,8 @@
 namespace FlockTest {
 
   TEST_CASE("FlowField/Dijkstra/Horizon", "[DijkstralEdge]") {
-    glm::ivec2 resolution = glm::ivec2(4, 4);
-    glm::ivec2 start = glm::ivec2(1, 1);
+    glm::ivec2 resolution = glm::ivec2(5, 5);
+    glm::ivec2 start = glm::ivec2(2, 3);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
     float t = 1; //target
     float s = 1; //start
@@ -23,13 +23,18 @@ namespace FlockTest {
     RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, targets);
     RTSNavigationLib::FlowField field(grid);
 
-    glm::ivec2 dir = field.getDirection(start);
-    REQUIRE(dir[0] == 0);
-    REQUIRE(dir[1] == -1);
+
+    for (size_t x = 0; x < 5; x++) {
+      for (size_t y = 1; y < 5; y++) {
+        glm::dvec2 dir = field.getDirection(glm::ivec2(x,y));
+        REQUIRE(dir[0] == 0);
+        REQUIRE(dir[1] == -1);
+      }
+    }
   }
 
   TEST_CASE("FlowField/Eikonal/Horizon", "[DijkstralEdge]") {
-    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 start = glm::ivec2(1, 1);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
     float t = 1; //target
@@ -44,7 +49,7 @@ namespace FlockTest {
     RTSNavigationLib::EikonalGrid grid(obstacles, resolution, targets);
     RTSNavigationLib::FlowField field(grid);
 
-    glm::ivec2 dir = field.getDirection(start);
+    glm::dvec2 dir = field.getDirection(start);
     REQUIRE(dir[0] == 0);
     REQUIRE(dir[1] == -1);
   }

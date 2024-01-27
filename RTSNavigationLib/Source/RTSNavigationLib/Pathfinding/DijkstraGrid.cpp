@@ -1,6 +1,7 @@
 #include "DijkstraGrid.h"
 
 #include <queue>
+#include <array>
 
 namespace RTSNavigationLib {
   DijkstraGrid::DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const std::vector<glm::ivec2>& targets_) {
@@ -31,33 +32,32 @@ namespace RTSNavigationLib {
       todo.push(std::make_pair(target, 0.0f));
       grid[target.x + target.y * resolution.x] = 0.0f;
     }
+    constexpr std::array<glm::ivec2, 4> neighbors = { glm::ivec2(-1,0),glm::ivec2(1,0),glm::ivec2(0,-1), glm::ivec2(0,1) };//, glm::ivec2(-1,-1), glm::ivec2(-1,1), glm::ivec2(1,-1), glm::ivec2(1,1)};
 
     while (!todo.empty()) {
       const std::pair<glm::ivec2, float> current = todo.top();
       const glm::ivec2& pos = current.first;
       todo.pop();
 
-      //add neighbours
-      for (size_t i = 0; i < 8; i++) {
-        size_t neighbhourIndex = i + i / 4;
-        glm::ivec2 neighbourPos = pos + glm::ivec2(neighbhourIndex % 3 - 1, neighbhourIndex / 3 - 1);        
+      for (const auto& neighbor : neighbors) {
+        glm::ivec2 neighborPos = neighbor + pos;
 
         //Boundary check
-        if (neighbourPos.x < 0 ||
-          neighbourPos.x >= resolution.x ||
-          neighbourPos.y < 0 ||
-          neighbourPos.y >= resolution.y) {
-            continue;
+        if (neighborPos.x < 0 ||
+          neighborPos.x >= resolution.x ||
+          neighborPos.y < 0 ||
+          neighborPos.y >= resolution.y) {
+          continue;
         }
 
         //Process Neighbours
-        size_t address = neighbourPos.x % resolution.x + neighbourPos.y * resolution.x;
+        size_t address = neighborPos.x % resolution.x + neighborPos.y * resolution.x;
         auto& neighbour = grid[address];
         const float& weight = obstacles[address];
         bool alreadyVisited = maxVal != neighbour;
         if (!alreadyVisited && std::isfinite(weight)) {
           float distance = current.second + weight;
-          todo.push(std::make_pair(neighbourPos, distance));
+          todo.push(std::make_pair(neighborPos, distance));
           neighbour = distance;
         }
       }

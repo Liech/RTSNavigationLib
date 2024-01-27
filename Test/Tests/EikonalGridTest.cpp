@@ -63,7 +63,7 @@ namespace FlockTest {
 
 
   TEST_CASE("EikonalGrid/Horizon", "[DijkstralEdge]") {
-    glm::ivec2 resolution = glm::ivec2(4, 4);
+    glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 start = glm::ivec2(1, 1);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
     float t = 1; //target
