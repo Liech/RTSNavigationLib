@@ -9,13 +9,12 @@ Tackling Formation, guide units to formation places, navigation and moving in a 
 # Implementation State
 
 - [x] Formation Shape Creation
-- [x] Usher
-- [x] Flocking
+- [x] [Usher](https://en.wikipedia.org/wiki/Usher_(occupation))
+- [x] [Flocking](https://howtorts.github.io/2014/01/03/steering-flocking.html)
 - [ ] Pathfinding
-  - [x] Distance Grid (Dijkstra & Eikonal)
+  - [x] Distance Grid
   - [x] Flow Field
-  - [ ] Portals
-  - [ ] Inter Portal Navigation
+  - [ ] Grid of Flow Fields
   - [ ] Line Of Sight
   - [ ] Continous Crowd
 
