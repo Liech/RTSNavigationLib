@@ -23,12 +23,13 @@ namespace RTSNavigationLib {
 
   private:
     void initializePortals(MajorDirection2D dir, const glm::ivec2& from, const glm::ivec2& to);
+    void calculateMap(MajorDirection2D, unsigned char);
 
     glm::ivec2 resolution;
     bool eikonal;
     std::vector<float> obstacles;
 
     std::vector<std::vector<std::pair<glm::ivec2, glm::ivec2>>> portals;
-    std::map<std::tuple<MajorDirection2D, unsigned char, MajorDirection2D, unsigned char>, std::pair<FlowField,float>> navigationMaps;
+    std::map<std::pair<MajorDirection2D, unsigned char>, FlowField> navigationMaps;
   };
 }

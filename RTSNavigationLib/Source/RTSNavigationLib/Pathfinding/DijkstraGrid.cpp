@@ -7,6 +7,7 @@ namespace RTSNavigationLib {
   DijkstraGrid::DijkstraGrid(const std::vector<float>& obstacles, const glm::ivec2& resolution_, const std::vector<glm::ivec2>& targets_) {
     targets     = targets_;
     resolution = resolution_;
+    assert(obstacles.size() == resolution.x * resolution.y);
     
     initGrid(obstacles);
   }
