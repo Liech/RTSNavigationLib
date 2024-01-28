@@ -121,4 +121,26 @@ namespace RTSNavigationLib {
     }
   }
 
+  void MapChunk::precalculateEverything() {
+    for (int dir = 0; dir < 4; dir++) {
+      auto d = (MajorDirection2D)dir;
+      size_t amountPortals = numberPortals(d);
+      for (size_t portalID = 0; portalID < amountPortals; portalID++) {
+        auto id = std::make_pair(d, portalID);
+        if (navigationMaps.count(id) == 0)
+          calculateMap(d, portalID);
+
+        for (int targetDir = 0; targetDir < 4; targetDir++) {
+          auto d2 = (MajorDirection2D)targetDir;
+          size_t amountPortals = numberPortals(d2);
+          for (size_t portalID2 = 0; portalID2 < amountPortals; portalID2++) {
+            auto id2 = std::make_pair(d2, portalID2);
+            auto costID = std::make_pair(id, id2);
+            if (traverseCost.count(costID) == 0 && id != id2)
+              calculateCost(costID);
+          }
+        }
+      }
+    }
+  }
 }

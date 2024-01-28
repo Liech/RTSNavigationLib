@@ -16,6 +16,7 @@ namespace RTSNavigationLib {
     unsigned char numberPortals(MajorDirection2D)  const;
     float getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId);
     const FlowField& getMap(MajorDirection2D dir, unsigned char portalId);
+    void precalculateEverything();
 
     glm::ivec2 getResolution() const;
     const std::vector<float>& getObstacles() const;
