@@ -3,6 +3,8 @@
 #include <vector>
 #include <glm/glm.hpp>
 
+#include "PortalNode.h"
+
 namespace RTSNavigationLib {
   class GridOfGrids {
   public:
@@ -19,6 +21,6 @@ namespace RTSNavigationLib {
 
     glm::ivec2 gridSize;
 
-    std::vector<std::vector<std::pair<glm::ivec2,glm::ivec2>>> portals;
+    std::vector<PortalNode> portals;
   };
 }

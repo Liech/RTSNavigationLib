@@ -18,7 +18,14 @@ namespace RTSNavigationLib {
       bool odd = i % 2 == 1;
       glm::ivec2 start   = glm::ivec2(subResolution.x * (grid.x - odd?0:1), subResolution.y * (grid.y - odd ? 1 : 0));
       glm::ivec2 end = glm::ivec2(subResolution.x * (grid.x+1), subResolution.y * (grid.y+1));
-      portals[i].push_back(std::make_pair(start, end));
+
+      PortalNode node;
+      node.start = start;
+      node.end   = end;
+      node.gridA = grid.x + grid.y * subResolution.x;
+      node.gridB = grid.x + odd?0:1 + (grid.y + odd?1:0) * subResolution.x;
+
+      portals.push_back(node);
     }
   }
 }
