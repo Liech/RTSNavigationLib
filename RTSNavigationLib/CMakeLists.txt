@@ -106,6 +106,8 @@ set(Pathfinding_Files
     "Source/RTSNavigationLib/Pathfinding/EikonalGrid.cpp"	
     "Source/RTSNavigationLib/Pathfinding/MapChunk.h"	
     "Source/RTSNavigationLib/Pathfinding/MapChunk.cpp"	
+    "Source/RTSNavigationLib/Pathfinding/Map.h"	
+    "Source/RTSNavigationLib/Pathfinding/Map.cpp"	
 
 )
 source_group("Source/Pathfinding" FILES ${Pathfinding_Files})
