@@ -16,13 +16,16 @@ namespace RTSNavigationLib {
     size_t numberPortals(MajorDirection2D)  const;
     float getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId) const;
     const FlowField& getMap(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId);
+
     glm::ivec2 getResolution() const;
+    const std::vector<float>& getObstacles() const;
+    bool getEikonal() const;
 
   private:
     glm::ivec2 resolution;
     bool eikonal;
     std::vector<float> obstacles;
 
-    std::map<std::tuple<MajorDirection2D, unsigned char, MajorDirection2D, unsigned char>, FlowField> navigationMaps;
+    std::map<std::tuple<MajorDirection2D, unsigned char, MajorDirection2D, unsigned char>, std::pair<FlowField,float>> navigationMaps;
   };
 }

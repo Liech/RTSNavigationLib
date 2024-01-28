@@ -11,7 +11,7 @@ namespace RTSNavigationLib {
     throw std::runtime_error("Not implemented Yet");
   }
 
-  size_t MapChunk::numberPortals(MajorDirection2D)  const {
+  unsigned char MapChunk::numberPortals(MajorDirection2D)  const {
     throw std::runtime_error("Not implemented Yet");
   }
   
@@ -25,5 +25,13 @@ namespace RTSNavigationLib {
 
   glm::ivec2 MapChunk::getResolution() const {
     return resolution;
+  }
+
+  const std::vector<float>& MapChunk::getObstacles() const {
+    return obstacles;
+  }
+
+  bool MapChunk::getEikonal() const {
+    return eikonal;
   }
 }
