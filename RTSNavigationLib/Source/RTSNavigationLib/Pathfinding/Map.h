@@ -1,14 +1,18 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <glm/glm.hpp>
+
 
 namespace RTSNavigationLib {
   class FlowField;
+  class MapChunk;
 
   class Map {
   public:
     Map(const std::vector<float>& obstacles,const glm::ivec2 resolution, const glm::ivec2& subResolution, size_t overlap, bool eikonal = true);
+    virtual ~Map();
 
           size_t     getMap(const glm::ivec2& from, const glm::ivec2& to);    
           float      getDistance(const glm::ivec2& from, const glm::ivec2& to);
@@ -25,11 +29,16 @@ namespace RTSNavigationLib {
     size_t     getOverlap()       const;
 
   private:
+    void initChunks();
+
     glm::ivec2         resolution;
     glm::ivec2         subResolution;
     std::vector<float> obstacles;
     bool               eikonal;
     size_t             overlap;
     
+    glm::ivec2 amountChunks;
+    std::vector<std::unique_ptr<MapChunk>> chunks;
+    std::vector<glm::ivec2>                offsets;
   };
 }
