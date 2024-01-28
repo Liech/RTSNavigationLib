@@ -9,6 +9,7 @@ set(Source_Files
     "Source/RTSNavigationLib/Body.cpp"
     "Source/RTSNavigationLib/BodyUtil.h"
     "Source/RTSNavigationLib/BodyUtil.cpp"
+    "Source/RTSNavigationLib/MajorDirection2D.h"
 )
 source_group("Source" FILES ${Source_Files})
 
@@ -103,17 +104,11 @@ set(Pathfinding_Files
     "Source/RTSNavigationLib/Pathfinding/DijkstraGrid.cpp"	
     "Source/RTSNavigationLib/Pathfinding/EikonalGrid.h"	
     "Source/RTSNavigationLib/Pathfinding/EikonalGrid.cpp"	
+    "Source/RTSNavigationLib/Pathfinding/MapChunk.h"	
+    "Source/RTSNavigationLib/Pathfinding/MapChunk.cpp"	
 
 )
 source_group("Source/Pathfinding" FILES ${Pathfinding_Files})
-
-set(GridOfGrids_Files
-    "Source/RTSNavigationLib/Pathfinding/GridOfGrids/GridOfGrids.h"	
-    "Source/RTSNavigationLib/Pathfinding/GridOfGrids/GridOfGrids.cpp"
-    "Source/RTSNavigationLib/Pathfinding/GridOfGrids/PortalNode.h"	
-    "Source/RTSNavigationLib/Pathfinding/GridOfGrids/PortalNode.cpp"	
-)
-source_group("Source/Pathfinding/GridOfGrids" FILES ${GridOfGrids_Files})
 
 set(ALL_FILES
     ${Source_Files}
@@ -125,7 +120,6 @@ set(ALL_FILES
     ${Usher_Files}
     ${Flocking_Files}
     ${Pathfinding_Files}
-    ${GridOfGrids_Files}
 )
 
 ############################################################################
