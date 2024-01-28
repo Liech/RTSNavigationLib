@@ -6,7 +6,7 @@
 #include <RTSNavigationLib/Util/svg.h>
 
 namespace HexagonGridTests {
-  TEST_CASE("HexagonGrid/voxelizer", "[HexagonVoxelizer]") {
+  TEST_CASE("HexagonGrid/voxelizer") {
     glm::ivec2 dimension = glm::ivec2(6, 6);
 
     std::vector<glm::dvec2> polygon;

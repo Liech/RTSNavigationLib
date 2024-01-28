@@ -7,8 +7,6 @@ namespace RTSNavigationLib {
     resolution = resolution_;
     eikonal = eikonal_;
     obstacles = obstacles_;
-
-    throw std::runtime_error("Not implemented Yet");
   }
 
   unsigned char MapChunk::numberPortals(MajorDirection2D)  const {

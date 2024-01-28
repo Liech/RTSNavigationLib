@@ -13,7 +13,7 @@ namespace RTSNavigationLib {
   public:
     MapChunk(const std::vector<float>& obstacles, const glm::ivec2& resolution, bool eikonal = true);
 
-    size_t numberPortals(MajorDirection2D)  const;
+    unsigned char numberPortals(MajorDirection2D)  const;
     float getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId) const;
     const FlowField& getMap(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId);
 

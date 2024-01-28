@@ -4,7 +4,7 @@
 #include "RTSNavigationLib/Pathfinding/DijkstraGrid.h"
 
 namespace FlockTest {
-  TEST_CASE("DijkstraGrid/singleStep", "[DijkstraGridSingleStep]") {
+  TEST_CASE("DijkstraGrid/singleStep") {
     glm::ivec2 resolution = glm::ivec2(3, 3);
     float t = 1; //target
     glm::ivec2 target = glm::ivec2(1, 1);
@@ -27,7 +27,7 @@ namespace FlockTest {
     REQUIRE(grid.getDistance(glm::ivec2(2, 2)) == 2);
   }
 
-  TEST_CASE("DijkstraGrid/tunnel", "[DijkstraGridTunnel]") {
+  TEST_CASE("DijkstraGrid/tunnel") {
     glm::ivec2 resolution = glm::ivec2(10, 1);
     float t = 1; //target
     glm::ivec2 target = glm::ivec2(0, 0);
@@ -49,7 +49,7 @@ namespace FlockTest {
     REQUIRE(grid.getDistance(glm::ivec2(9, 0)) == 11);
   }
 
-  TEST_CASE("DijkstraGrid/obstacle", "[DijkstraGridObstacle]") {
+  TEST_CASE("DijkstraGrid/obstacle") {
     glm::ivec2 resolution = glm::ivec2(3, 3);
     glm::ivec2 target = glm::ivec2(0, 1);
 
@@ -74,7 +74,7 @@ namespace FlockTest {
     REQUIRE(grid.getDistance(glm::ivec2(2, 2)) == 3);
   }
 
-  TEST_CASE("DijkstraGrid/TwoPath", "[DijkstraGridObstacle]") {
+  TEST_CASE("DijkstraGrid/TwoPath") {
     glm::ivec2 resolution = glm::ivec2(3, 4);
     glm::ivec2 target = glm::ivec2(2, 1);
 
@@ -102,7 +102,7 @@ namespace FlockTest {
     REQUIRE(grid.getDistance(glm::ivec2(2, 3)) == 2);
   }
 
-  TEST_CASE("DijkstraGrid/Horizon", "[DijkstralEdge]") {
+  TEST_CASE("DijkstraGrid/Horizon") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 start = glm::ivec2(1, 1);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };

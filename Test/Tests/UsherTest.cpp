@@ -11,7 +11,7 @@
 namespace UsherTests {
   bool svgSave = false;
 
-  TEST_CASE("Usher/single", "[UsherSingle]") {
+  TEST_CASE("Usher/single") {
     std::vector<RTSNavigationLib::Body> units = { RTSNavigationLib::Body(glm::dvec2(0,0),0) };
     std::vector<RTSNavigationLib::Body> places = { RTSNavigationLib::Body(glm::dvec2(0,0),0) };
 
@@ -26,7 +26,7 @@ namespace UsherTests {
   }
 
 
-  TEST_CASE("Usher/swapped", "[UsherSwapped]") {
+  TEST_CASE("Usher/swapped") {
     std::vector<RTSNavigationLib::Body> units = { RTSNavigationLib::Body(glm::dvec2(0,0),0),RTSNavigationLib::Body(glm::dvec2(1,0),0) };
     std::vector<RTSNavigationLib::Body> places = { RTSNavigationLib::Body(glm::dvec2(1,0),0),RTSNavigationLib::Body(glm::dvec2(0,0),0) };
 
@@ -40,7 +40,7 @@ namespace UsherTests {
     REQUIRE(tickets[1] == 0);
   }
 
-  TEST_CASE("Usher/Four", "[UsherFour]") {
+  TEST_CASE("Usher/Four") {
     std::vector<RTSNavigationLib::Body> units = {
       RTSNavigationLib::Body(glm::dvec2(0, 7),0),
       RTSNavigationLib::Body(glm::dvec2(4, -5),0),
@@ -69,7 +69,7 @@ namespace UsherTests {
     REQUIRE(tickets[3] == 1);
   }
 
-  TEST_CASE("Usher/RectangleFormation", "[UsherFour]") {
+  TEST_CASE("Usher/RectangleFormation") {
 
     std::string formationDescription = R"""(
       {
@@ -132,7 +132,7 @@ namespace UsherTests {
     REQUIRE(tickets[10] == 8);
   }
 
-  TEST_CASE("Usher/BoostMinCostFlowExample", "[UsherFour]") {
+  TEST_CASE("Usher/BoostMinCostFlowExample") {
     RTSNavigationLib::BoostMinCostFlowExample playground;
   }
 }

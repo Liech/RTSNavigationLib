@@ -6,7 +6,7 @@
 #include <RTSNavigationLib/Util/svg.h>
 
 namespace RectangleGridTests {
-  TEST_CASE("RectangleGrid/voxelizer", "[RectangleGridVoxelizer]") {
+  TEST_CASE("RectangleGrid/voxelizer") {
     glm::ivec2 dimension = glm::ivec2(6, 6);
 
     std::vector<glm::dvec2> polygon;
@@ -42,7 +42,7 @@ namespace RectangleGridTests {
     REQUIRE(t.data == r);
   }
 
-  TEST_CASE("RectangleGrid/or", "[RectangleGridVoxelizer]") {
+  TEST_CASE("RectangleGrid/or") {
     glm::ivec2 dimension = glm::ivec2(2, 2);
     RTSNavigationLib::RectangleGrid<bool> a;
     a.dimension = dimension;
@@ -64,7 +64,7 @@ namespace RectangleGridTests {
     REQUIRE(c.data[3]);
   }
 
-  TEST_CASE("RectangleGrid/and", "[RectangleGridVoxelizer]") {
+  TEST_CASE("RectangleGrid/and") {
     glm::ivec2 dimension = glm::ivec2(2, 2);
     RTSNavigationLib::RectangleGrid<bool> a;
     a.dimension = dimension;
@@ -86,7 +86,7 @@ namespace RectangleGridTests {
     REQUIRE(c.data[3]);
   }
 
-  TEST_CASE("RectangleGrid/subtract", "[RectangleGridVoxelizer]") {
+  TEST_CASE("RectangleGrid/subtract") {
     glm::ivec2 dimension = glm::ivec2(2, 2);
     RTSNavigationLib::RectangleGrid<bool> a;
     a.dimension = dimension;

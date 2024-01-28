@@ -4,7 +4,7 @@
 #include "RTSNavigationLib/Pathfinding/EikonalGrid.h"
 
 namespace FlockTest {
-  TEST_CASE("EikonalGrid/singleStep", "[EikonalGridSingleStep]") {
+  TEST_CASE("EikonalGrid/singleStep") {
     glm::ivec2 resolution = glm::ivec2(3, 3);
     float t = 1; //target
     glm::ivec2 target = glm::ivec2(1, 1);
@@ -27,7 +27,7 @@ namespace FlockTest {
     REQUIRE(std::abs(grid.getDistance(glm::ivec2(2, 2)) - 2.70710683) < 1e-3);
   }
 
-  TEST_CASE("EikonalGrid/tunnel", "[EikonalGridTunnel]") {
+  TEST_CASE("EikonalGrid/tunnel") {
     glm::ivec2 resolution = glm::ivec2(10, 1);
     float t = 1; //target
     glm::ivec2 target = glm::ivec2(0, 0);
@@ -42,7 +42,7 @@ namespace FlockTest {
       REQUIRE(grid.getDistance(glm::ivec2(i - 1, 0)) < grid.getDistance(glm::ivec2(i, 0)));
   }
 
-  TEST_CASE("EikonalGrid/obstacle", "[EikonalGridObstacle]") {
+  TEST_CASE("EikonalGrid/obstacle") {
     glm::ivec2 resolution = glm::ivec2(3, 3);
     glm::ivec2 target = glm::ivec2(0, 1);
 
@@ -62,7 +62,7 @@ namespace FlockTest {
   }
 
 
-  TEST_CASE("EikonalGrid/Horizon", "[DijkstralEdge]") {
+  TEST_CASE("EikonalGrid/Horizon") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 start = glm::ivec2(1, 1);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };

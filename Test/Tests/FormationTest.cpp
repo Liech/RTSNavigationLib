@@ -50,7 +50,7 @@ namespace FormationTests {
   }
 
 
-  TEST_CASE("Formation/RectangleSingle", "[FormationSingle]") {
+  TEST_CASE("Formation/RectangleSingle") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -68,7 +68,7 @@ namespace FormationTests {
     REQUIRE(places[0].position.y != 99);
   }
 
-  TEST_CASE("Formation/RectangleDouble", "[FormationDouble]") {
+  TEST_CASE("Formation/RectangleDouble") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -89,7 +89,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(1, 0)));
   }
 
-  TEST_CASE("Formation/RectangleMany", "[FormationDouble]") {
+  TEST_CASE("Formation/RectangleMany") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -105,7 +105,7 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
   }
 
-  TEST_CASE("Formation/ArcSingle", "[FormationSingle]") {
+  TEST_CASE("Formation/ArcSingle") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -123,7 +123,7 @@ namespace FormationTests {
     REQUIRE(places[0].position.y != 99);
   }
 
-  TEST_CASE("Formation/ArcDouble", "[FormationDouble]") {
+  TEST_CASE("Formation/ArcDouble") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -144,7 +144,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(1, 0)));
   }
 
-  TEST_CASE("Formation/ArcMany", "[FormationDouble]") {
+  TEST_CASE("Formation/ArcMany") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -160,7 +160,7 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
   }
 
-  TEST_CASE("Formation/PartialArc", "[FormationDouble]") {
+  TEST_CASE("Formation/PartialArc") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -178,7 +178,7 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
   }
 
-  TEST_CASE("Formation/TriangleSingle", "[FormationSingle]") {
+  TEST_CASE("Formation/TriangleSingle") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -196,7 +196,7 @@ namespace FormationTests {
     REQUIRE(places[0].position.y != 99);
   }
 
-  TEST_CASE("Formation/TriangleDouble", "[FormationDouble]") {
+  TEST_CASE("Formation/TriangleDouble") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -217,7 +217,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(1, 0)));
   }
 
-  TEST_CASE("Formation/TriangleMany", "[FormationDouble]") {
+  TEST_CASE("Formation/TriangleMany") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -233,7 +233,7 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
   }
 
-  TEST_CASE("Formation/HollowArc", "[FormationDouble]") {
+  TEST_CASE("Formation/HollowArc") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -261,7 +261,7 @@ namespace FormationTests {
 
   }
 
-  TEST_CASE("Formation/InterfacePoint", "[FormationSingle]") {
+  TEST_CASE("Formation/InterfacePoint") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -280,7 +280,7 @@ namespace FormationTests {
     REQUIRE(places[0].position.y != 99);
   }
 
-  TEST_CASE("Formation/Rotation", "[FormationSingle]") {
+  TEST_CASE("Formation/Rotation") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
@@ -301,7 +301,7 @@ namespace FormationTests {
   }
 
 
-  TEST_CASE("Formation/RotationWithInterface", "[FormationSingle]") {
+  TEST_CASE("Formation/RotationWithInterface") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -345,7 +345,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(2, 3)));
   }
 
-  TEST_CASE("Formation/InterfaceWidth", "[FormationSingle]") {
+  TEST_CASE("Formation/InterfaceWidth") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -396,7 +396,7 @@ namespace FormationTests {
 
   }
 
-  TEST_CASE("Formation/OneChild", "[FormationSingle]") {
+  TEST_CASE("Formation/OneChild") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -437,7 +437,7 @@ namespace FormationTests {
 
   }
 
-  TEST_CASE("Formation/OneChild2", "[FormationSingle]") {
+  TEST_CASE("Formation/OneChild2") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -479,7 +479,7 @@ namespace FormationTests {
   }
 
 
-  TEST_CASE("Formation/OverlappingChild", "[FormationSingle]") {
+  TEST_CASE("Formation/OverlappingChild") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -525,7 +525,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(3, 2)));
   }
 
-  TEST_CASE("Formation/RotateChild", "[FormationSingle]") {
+  TEST_CASE("Formation/RotateChild") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -566,7 +566,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(2, -1)));
   }
 
-  TEST_CASE("Formation/ChildDepth2", "[FormationSingle]") {
+  TEST_CASE("Formation/ChildDepth2") {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
@@ -620,7 +620,7 @@ namespace FormationTests {
     REQUIRE(result.contains(glm::dvec2(1, 4)));
   }
 
-  TEST_CASE("Formation/PraiseTheSun", "[FormationSingle]") {
+  TEST_CASE("Formation/PraiseTheSun") {
 
     RTSNavigationLib::Body a;
     a.category = 0;

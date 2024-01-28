@@ -5,7 +5,7 @@
 #include <RTSNavigationLib/Formation/UnitPlacement.h>
 
 namespace BodyUtilTests {
-  TEST_CASE("UnitPlacement/OneSize1", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/OneSize1") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(1, 1);
     grid.data = { true };
@@ -23,7 +23,7 @@ namespace BodyUtilTests {
     REQUIRE(result[0].category == category);
   }
 
-  TEST_CASE("UnitPlacement/FailedPlacement", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/FailedPlacement") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(1, 1);
     grid.data = { false };
@@ -40,7 +40,7 @@ namespace BodyUtilTests {
     REQUIRE(result.size() == 0);
   }
 
-  TEST_CASE("UnitPlacement/OneSize2", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/OneSize2") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(2, 2);
     grid.data = { true , true ,
@@ -59,7 +59,7 @@ namespace BodyUtilTests {
     REQUIRE(result[0].category == category);
   }
 
-  TEST_CASE("UnitPlacement/OneSize3", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/OneSize3") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(3, 3);
     grid.data = { true, true, true,
@@ -79,7 +79,7 @@ namespace BodyUtilTests {
     REQUIRE(result[0].category == category);
   }
 
-  TEST_CASE("UnitPlacement/FailedPlacementSize3", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/FailedPlacementSize3") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(2, 2);
     grid.data = { true, true,
@@ -97,7 +97,7 @@ namespace BodyUtilTests {
     REQUIRE(result.size() == 0);
   }
 
-  TEST_CASE("UnitPlacement/TwoSizeTwo", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/TwoSizeTwo") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(4, 2);
     grid.data = { true , true , true , true ,
@@ -120,7 +120,7 @@ namespace BodyUtilTests {
     );
   }
 
-  TEST_CASE("UnitPlacement/Mixed", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/Mixed") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(4, 2);
     grid.data = { true , true , true , true ,
@@ -148,7 +148,7 @@ namespace BodyUtilTests {
   }
 
 
-  TEST_CASE("UnitPlacement/ThreeSizes", "[UnitPlacement]") {
+  TEST_CASE("UnitPlacement/ThreeSizes") {
     RTSNavigationLib::RectangleGrid<bool> grid;
     grid.dimension = glm::ivec2(6, 3);
     grid.data = { true , true , true , true , true , true ,

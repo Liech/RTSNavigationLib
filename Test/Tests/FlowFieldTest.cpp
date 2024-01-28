@@ -7,7 +7,7 @@
 
 namespace FlockTest {
 
-  TEST_CASE("FlowField/Dijkstra/Horizon", "[DijkstralEdge]") {
+  TEST_CASE("FlowField/Dijkstra/Horizon") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 start = glm::ivec2(2, 3);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
@@ -33,7 +33,7 @@ namespace FlockTest {
     }
   }
 
-  TEST_CASE("FlowField/Eikonal/Horizon", "[DijkstralEdge]") {
+  TEST_CASE("FlowField/Eikonal/Horizon") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 start = glm::ivec2(1, 1);
     std::vector<glm::ivec2> targets = { glm::ivec2(0,0), glm::ivec2(1,0), glm::ivec2(2,0), glm::ivec2(3,0), glm::ivec2(4,0) };
@@ -58,7 +58,7 @@ namespace FlockTest {
     }
   }
 
-  TEST_CASE("FlowField/Dijkstra/Edge", "[DijkstralEdge]") {
+  TEST_CASE("FlowField/Dijkstra/Edge") {
     glm::ivec2 resolution = glm::ivec2(4, 4);
     glm::ivec2 start = glm::ivec2(1, 1);
     glm::ivec2 target = glm::ivec2(2, 2);
@@ -87,7 +87,7 @@ namespace FlockTest {
     REQUIRE(wallDir[1] == 0);
 
   }
-  TEST_CASE("FlowField/Eikonal/Edge", "[EikonalEdge]") {
+  TEST_CASE("FlowField/Eikonal/Edge") {
     glm::ivec2 resolution = glm::ivec2(4, 4);
     glm::ivec2 start = glm::ivec2(1, 1);
     glm::ivec2 target = glm::ivec2(2, 2);
@@ -116,7 +116,7 @@ namespace FlockTest {
     REQUIRE(wallDir[1] == 0);
   }
 
-  TEST_CASE("FlowField/Eikonal/Simple", "[EikonalSimpleSingleStep]") {
+  TEST_CASE("FlowField/Eikonal/Simple") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 fromA = glm::ivec2(1+0, 1+1);
     glm::ivec2 fromB = glm::ivec2(1+1, 1+0);
@@ -167,7 +167,7 @@ namespace FlockTest {
     REQUIRE(std::abs(directionH[0] - glm::normalize(glm::dvec2(-1, -1))[0]) < 1e-6);
     REQUIRE(std::abs(directionH[1] - glm::normalize(glm::dvec2(-1, -1))[1]) < 1e-6);
   }
-  TEST_CASE("FlowField/Dijkstra/Simple", "[DijkstraSimpleSingleStep]") {
+  TEST_CASE("FlowField/Dijkstra/Simple") {
     glm::ivec2 resolution = glm::ivec2(5, 5);
     glm::ivec2 fromA = glm::ivec2(1 + 0, 1 + 1);
     glm::ivec2 fromB = glm::ivec2(1 + 1, 1 + 0);

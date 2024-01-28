@@ -5,7 +5,7 @@
 #include "RTSNavigationLib/Flocking/Boid.h"
 
 namespace FlockTest {
-  TEST_CASE("Flocking/base", "[FlockingBase]") {
+  TEST_CASE("Flocking/base") {
     RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos = glm::dvec2(3, 3);
     auto dir = glm::dvec2(1, 0);
@@ -19,7 +19,7 @@ namespace FlockTest {
     REQUIRE(boid->velocity[1] == dir[1]);
   }
 
-  TEST_CASE("Flocking/OnlyOne", "[FlockingSingle]") {
+  TEST_CASE("Flocking/OnlyOne") {
     RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos = glm::dvec2(3, 3);
     auto dir = glm::dvec2(1, 0);
@@ -40,7 +40,7 @@ namespace FlockTest {
     REQUIRE(alignment[1] == 0);
   }
 
-  TEST_CASE("Flocking/OutOfReach", "[FlockingOutOfReach]") {
+  TEST_CASE("Flocking/OutOfReach") {
     RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(3, 3);
     auto dir1 = glm::dvec2(1, 0);
@@ -73,7 +73,7 @@ namespace FlockTest {
     REQUIRE(alignment2[1] == 0);
   }
 
-  TEST_CASE("Flocking/SeperationTwo", "[FlockingSeperationTwo]") {
+  TEST_CASE("Flocking/SeperationTwo") {
     RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(3, 3);
     auto dir1 = glm::dvec2(1, 0);
@@ -93,7 +93,7 @@ namespace FlockTest {
     REQUIRE_THAT(seperation2[1] - -boid2boid[1] == 0, Catch::Matchers::WithinAbs(0, 0.000001));
   }
 
-  TEST_CASE("Flocking/CohesionTwo", "[FlockingCohesionTwo]") {
+  TEST_CASE("Flocking/CohesionTwo") {
     RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(6, 2);
     auto dir1 = glm::normalize(glm::dvec2(0.7, 0.3));
@@ -113,7 +113,7 @@ namespace FlockTest {
     REQUIRE_THAT(cohesion2[1] -  boid2boid[1] == 0, Catch::Matchers::WithinAbs(0, 0.000001));
   }
 
-  TEST_CASE("Flocking/AlignmentTwo", "[FlockingAlginmentTwo]") {
+  TEST_CASE("Flocking/AlignmentTwo") {
     RTSNavigationLib::Flock flock(glm::dvec2(20, 20), 3);
     auto pos1 = glm::dvec2(6, 3);
     auto dir1 = glm::normalize(glm::dvec2(0.7, 0.3));

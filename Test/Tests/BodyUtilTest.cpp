@@ -6,7 +6,7 @@
 #include <RTSNavigationLib/Body.h>
 
 namespace BodyUtilTests {
-  TEST_CASE("BodyUtil/identitySingle", "[BodyUtilidentitySingle]") {
+  TEST_CASE("BodyUtil/identitySingle") {
     RTSNavigationLib::Body b;
     b.position = glm::dvec2(2, 3);
     b.category = 3;
@@ -21,7 +21,7 @@ namespace BodyUtilTests {
     REQUIRE(result.position[1] == 3);
   }
 
-  TEST_CASE("BodyUtil/single", "[BodyUtilSingle]") {
+  TEST_CASE("BodyUtil/single") {
     RTSNavigationLib::Body b;
     b.position = glm::dvec2(2, 3);
     b.category = 5;
@@ -37,7 +37,7 @@ namespace BodyUtilTests {
     REQUIRE(result.position[1] == 7);
   }
 
-  TEST_CASE("BodyUtil/multi", "[BodyUtilMulti]") {
+  TEST_CASE("BodyUtil/multi") {
     std::vector< RTSNavigationLib::Body> input;
 
     RTSNavigationLib::Body a;
@@ -64,7 +64,7 @@ namespace BodyUtilTests {
     REQUIRE(result[1].position[1] == 7);
   }
 
-  TEST_CASE("BodyUtil/center", "[BodyUtilCenter]") {
+  TEST_CASE("BodyUtil/center") {
     std::vector<RTSNavigationLib::Body> input = {
       RTSNavigationLib::Body(glm::dvec2(5 + -1,7 + 0),0),
       RTSNavigationLib::Body(glm::dvec2(5 + 1 ,7 + 0) ,0),
