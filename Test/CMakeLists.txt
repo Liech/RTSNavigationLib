@@ -17,6 +17,7 @@ set(Test_Files
 	"Tests/DijkstraGridTest.cpp"	
 	"Tests/EikonalGridTest.cpp"
 	"Tests/MapChunkTest.cpp"
+	"Tests/MapTest.cpp"
 )
 source_group("Tests" FILES ${Test_Files})
 set(Main_Files
