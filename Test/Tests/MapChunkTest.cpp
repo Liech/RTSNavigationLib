@@ -80,8 +80,6 @@ namespace FlockTest {
   TEST_CASE("MapChunk/GetTraverseCost/BaseTunnel") {
     glm::ivec2 resolution = glm::ivec2(3, 3);
     constexpr float B = std::numeric_limits<float>::infinity();
-    float t = 1; //target
-    float s = 1; //start
     std::vector<float> obstacles = {
       B,1,B,
       B,1,B,
@@ -103,5 +101,32 @@ namespace FlockTest {
     REQUIRE(costDown == 2);
     REQUIRE(costUpD  == 2);
     REQUIRE(costDownD== 2);
+  }
+
+  TEST_CASE("MapChunk/GetTraverseCost/Edge") {
+    glm::ivec2 resolution = glm::ivec2(3, 3);
+    constexpr float B = std::numeric_limits<float>::infinity();
+    float t = 1; //target
+    std::vector<float> obstacles = {
+      B,t,B,
+      1,1,B,
+      1,1,t,
+    };
+    RTSNavigationLib::MapChunk chunk(obstacles, resolution, true);
+    RTSNavigationLib::MapChunk chunkD(obstacles, resolution, false);
+    float costUp = chunk.getTraverseCost(RTSNavigationLib::MajorDirection2D::Top, 0, RTSNavigationLib::MajorDirection2D::Right, 0);
+    float costDown = chunk.getTraverseCost(RTSNavigationLib::MajorDirection2D::Right, 0, RTSNavigationLib::MajorDirection2D::Top, 0);
+    float costUpD = chunkD.getTraverseCost(RTSNavigationLib::MajorDirection2D::Top, 0, RTSNavigationLib::MajorDirection2D::Right, 0);
+    float costDownD = chunkD.getTraverseCost(RTSNavigationLib::MajorDirection2D::Right, 0, RTSNavigationLib::MajorDirection2D::Top, 0);
+
+    REQUIRE(chunk.numberPortals(RTSNavigationLib::MajorDirection2D::Left) == 1);
+    REQUIRE(chunk.numberPortals(RTSNavigationLib::MajorDirection2D::Right) == 1);
+    REQUIRE(chunk.numberPortals(RTSNavigationLib::MajorDirection2D::Bot) == 1);
+    REQUIRE(chunk.numberPortals(RTSNavigationLib::MajorDirection2D::Top) == 1);
+
+    REQUIRE(costUp    == 3);
+    REQUIRE(costDown  == 3);
+    REQUIRE(costUpD   == 3);
+    REQUIRE(costDownD == 3);
   }
 }

@@ -23,8 +23,11 @@ namespace RTSNavigationLib {
     return portals[(int)dir].size();
   }
   
-  float MapChunk::getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId) const {
-    throw std::runtime_error("Not implemented Yet");
+  float MapChunk::getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId) {
+    auto id = std::make_pair(std::make_pair(startDir, startPortalId), std::make_pair(endDir, endPortalId));
+    if (traverseCost.count(id) == 0)
+      calculateCost(id);
+    return traverseCost.at(id);
   }
 
   const FlowField& MapChunk::getMap(MajorDirection2D dir, unsigned char portalId) {
@@ -44,6 +47,27 @@ namespace RTSNavigationLib {
 
   bool MapChunk::getEikonal() const {
     return eikonal;
+  }
+
+  void MapChunk::calculateCost(const std::pair<std::pair<MajorDirection2D, unsigned char>, std::pair<MajorDirection2D, unsigned char>>& id) {
+    const auto& targetID = id.second;
+    const auto& startID = id.first;
+    if (navigationMaps.count(targetID) == 0)
+      calculateMap(targetID.first, targetID.second);
+    const auto& map = navigationMaps.at(targetID);
+    const auto& portal = portals[(int)startID.first][startID.second];
+    glm::ivec2 start = (portal.first + portal.second) / 2;
+
+    glm::dvec2 current = (glm::dvec2)start + glm::dvec2(0.5,0.5);
+    double distance = 0;
+    while (true) {
+      auto dir = map.getDirection(current);
+      if (dir.x+dir.y == 0)
+        break;
+      current += dir;
+      distance += 1;
+    }
+    traverseCost[id] = distance;
   }
 
   void MapChunk::calculateMap(MajorDirection2D dir, unsigned char portalID) {

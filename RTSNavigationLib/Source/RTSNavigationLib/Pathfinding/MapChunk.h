@@ -14,7 +14,7 @@ namespace RTSNavigationLib {
     MapChunk(const std::vector<float>& obstacles, const glm::ivec2& resolution, bool eikonal = true);
 
     unsigned char numberPortals(MajorDirection2D)  const;
-    float getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId) const;
+    float getTraverseCost(MajorDirection2D startDir, unsigned char startPortalId, MajorDirection2D endDir, unsigned char endPortalId);
     const FlowField& getMap(MajorDirection2D dir, unsigned char portalId);
 
     glm::ivec2 getResolution() const;
@@ -24,6 +24,7 @@ namespace RTSNavigationLib {
   private:
     void initializePortals(MajorDirection2D dir, const glm::ivec2& from, const glm::ivec2& to);
     void calculateMap(MajorDirection2D, unsigned char);
+    void calculateCost(const std::pair<std::pair<MajorDirection2D, unsigned char>, std::pair<MajorDirection2D, unsigned char>>& id);
 
     glm::ivec2 resolution;
     bool eikonal;
@@ -31,5 +32,6 @@ namespace RTSNavigationLib {
 
     std::vector<std::vector<std::pair<glm::ivec2, glm::ivec2>>> portals;
     std::map<std::pair<MajorDirection2D, unsigned char>, FlowField> navigationMaps;
+    std::map<std::pair<std::pair<MajorDirection2D, unsigned char>, std::pair<MajorDirection2D, unsigned char>>, float> traverseCost;
   };
 }
