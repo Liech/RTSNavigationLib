@@ -30,7 +30,7 @@ namespace RTSNavigationLib {
     return traverseCost.at(id);
   }
 
-  const FlowField& MapChunk::getMap(MajorDirection2D dir, unsigned char portalId) {
+  std::weak_ptr<const FlowField> MapChunk::getMap(MajorDirection2D dir, unsigned char portalId) {
     auto id = std::make_pair(dir, portalId);
     if (navigationMaps.count(id) == 0)
       calculateMap(dir, portalId);
@@ -61,7 +61,7 @@ namespace RTSNavigationLib {
     glm::dvec2 current = (glm::dvec2)start + glm::dvec2(0.5,0.5);
     double distance = 0;
     while (true) {
-      auto dir = map.getDirection(current);
+      auto dir = map->getDirection(current);
       if (dir.x+dir.y == 0)
         break;
       current += dir;
@@ -86,11 +86,11 @@ namespace RTSNavigationLib {
     auto id = std::make_pair(dir, portalID);
     if (eikonal) {
       RTSNavigationLib::EikonalGrid grid(obstacles, resolution, targets);
-      navigationMaps.emplace(std::make_pair(id,RTSNavigationLib::FlowField(grid)));
+      navigationMaps.emplace(std::make_pair(id, std::make_shared<RTSNavigationLib::FlowField>(grid)));
     }
     else {
       RTSNavigationLib::DijkstraGrid grid(obstacles, resolution, targets);
-      navigationMaps.emplace(std::make_pair(id, RTSNavigationLib::FlowField(grid)));
+      navigationMaps.emplace(std::make_pair(id, std::make_shared<RTSNavigationLib::FlowField>(grid)));
     }
   }
 
