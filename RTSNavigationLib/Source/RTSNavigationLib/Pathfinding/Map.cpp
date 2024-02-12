@@ -66,6 +66,7 @@ namespace RTSNavigationLib {
   void Map::initChunks() {
     amountChunks = glm::ivec2(std::ceil(resolution.x / subResolution.x), std::ceil(resolution.x / subResolution.x));
     chunks.resize(amountChunks.x * amountChunks.y);
+    offsets.resize(amountChunks.x * amountChunks.y);
 
     glm::ivec2 chunkResolution = subResolution + glm::ivec2(overlap,overlap) * 2;
 #pragma omp parallel for
