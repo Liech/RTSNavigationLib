@@ -9,7 +9,7 @@ cd ..
 cd ..
 
 cd ..
-cd engine
+cd godot
 call ..\\scons\\scons platform=windows target=template_debug arch=x86_64
 call ..\\scons\\scons platform=windows target=template_release arch=x86_64
 call ..\\scons\\scons platform=web dlink_enabled=yes target=template_debug production=yes
@@ -17,4 +17,4 @@ call ..\\scons\\scons platform=web dlink_enabled=yes target=template_release pro
 cd ..
 cd Scripts
 
-xcopy /s ..\\engine\\bin ..\\out\\engine\\* /Y
+xcopy /s ..\\godot\\bin ..\\out\\godot\\* /Y

@@ -1,9 +1,9 @@
 mkdir ..\\out
-mkdir ..\\out\\engine
+mkdir ..\\out\\godot
 cd ..
-cd engine
+cd godot
 call ..\\scons\\scons
 cd ..
 cd Scripts
 
-xcopy /s ..\\engine\\bin ..\\out\\engine\\* /Y
+xcopy /s ..\\godot\\bin ..\\out\\godot\\* /Y
