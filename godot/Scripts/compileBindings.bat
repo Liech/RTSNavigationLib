@@ -9,7 +9,7 @@ call .\\godot\\godot.windows.editor.x86_64.exe --dump-extension-api
 cd ..
 cd godot-cpp
 call ..\\scons\\scons platform=windows bits=64 custom_api_file=..\\out\\extension_api.json
-rem call ..\\scons\\scons platform=web dlink_enabled=yes custom_api_file=..\\out\\extension_apiweb.json
+call ..\\scons\\scons platform=web dlink_enabled=yes custom_api_file=..\\out\\extension_api.json
 
 xcopy /s ..\\godot-cpp\\bin ..\\out\\godot-cpp\\* /Y
 

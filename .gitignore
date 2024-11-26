@@ -14,3 +14,9 @@ godot/extension/.sconsign.dblite
 *.pyc
 godot/extension/.sconsign.dblite
 *.dblite
+*.obj
+*.o
+*.dll
+*.lib
+*.exp
+*.wasm
