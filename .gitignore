@@ -10,3 +10,7 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 out
+godot/extension/.sconsign.dblite
+*.pyc
+godot/extension/.sconsign.dblite
+*.dblite
