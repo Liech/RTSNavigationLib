@@ -4,3 +4,7 @@
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_sh56a")
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="Places" type="Node2D" parent="."]
