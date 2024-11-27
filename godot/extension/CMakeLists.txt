@@ -20,9 +20,12 @@ set_property(TARGET RTSNavigationGodotExtension PROPERTY CXX_STANDARD 20)
 
 target_include_directories(RTSNavigationGodotExtension PRIVATE 
 ./../godot-cpp/include
+./../../RTSNavigationLib/Source
 )
 
-target_link_libraries(RTSNavigationGodotExtension PUBLIC godot::cpp)
+target_link_libraries(RTSNavigationGodotExtension PUBLIC 
+godot::cpp 
+RTSNavigationLib)
 
 add_custom_command(TARGET RTSNavigationGodotExtension POST_BUILD 
                COMMAND ${CMAKE_COMMAND} -E copy_directory 

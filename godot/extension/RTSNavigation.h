@@ -16,7 +16,7 @@ public:
 
 	// Static method.
 	static int test_static(int p_a, int p_b);
-	static void test_static2();
+	static TypedArray<int> usher(const TypedArray<Vector2>& units, const TypedArray<Vector2>& places);
 };
 
 }
