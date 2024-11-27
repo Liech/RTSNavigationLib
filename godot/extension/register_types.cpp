@@ -1,6 +1,6 @@
 #include "register_types.h"
 
-#include "gdexample.h"
+#include "RTSNavigation.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -13,7 +13,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
-	ClassDB::register_class<GDExample>();
+	ClassDB::register_class<RTSNavigation>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {
