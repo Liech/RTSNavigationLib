@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8...3.20)
 project(RTSNavigationLib)
 
+add_compile_definitions(GLM_ENABLE_EXPERIMENTAL)
 find_package(glm REQUIRED)
 find_package(Boost)
 
