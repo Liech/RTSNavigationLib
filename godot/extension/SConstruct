@@ -17,7 +17,7 @@ env.Append(CPPPATH=["."])
 sources = Glob("*.cpp")
 
 library = env.SharedLibrary(
-    "../out/extension/GDExtension{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
+    "../out/extension/RTSNavigationLib{}{}".format(env["suffix"], env["SHLIBSUFFIX"]),
     source=sources,
 )
 

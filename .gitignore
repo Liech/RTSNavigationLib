@@ -20,3 +20,6 @@ godot/extension/.sconsign.dblite
 *.lib
 *.exp
 *.wasm
+.vs
+*.pdb
+*.ilk
