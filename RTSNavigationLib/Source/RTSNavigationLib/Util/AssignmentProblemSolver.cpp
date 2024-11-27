@@ -5,6 +5,8 @@
 #include <boost/graph/dijkstra_shortest_paths.hpp>
 #include <boost/graph/cycle_canceling.hpp>
 #include <boost/graph/edmonds_karp_max_flow.hpp>
+#include <boost/graph/push_relabel_max_flow.hpp>
+#include <boost/graph/boykov_kolmogorov_max_flow.hpp>
 
 typedef boost::adjacency_list_traits<boost::vecS, boost::vecS, boost::directedS> Traits;
 typedef Traits::vertex_descriptor vertex_descriptor;
@@ -101,7 +103,10 @@ namespace RTSNavigationLib {
       }
     }
 
-    boost::edmonds_karp_max_flow(g, sourceNode, sinkNode);
+
+    //boost::edmonds_karp_max_flow(g, sourceNode, sinkNode); // slow
+    //boost::boykov_kolmogorov_max_flow(g, sourceNode, sinkNode);
+    boost::push_relabel_max_flow(g, sourceNode, sinkNode);
     boost::cycle_canceling(g);
 
     result.resize(workerAmount);
