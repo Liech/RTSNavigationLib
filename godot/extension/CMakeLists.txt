@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.19)
-project(gdextension)
+project(RTSNavigationGodotExtension)
 
 set(Source_Files
     "register_types.h"
@@ -13,12 +13,18 @@ set(ALL_FILES
     ${Source_Files}
 )
 
-add_library(gdextension SHARED ${ALL_FILES})
-set_property(TARGET gdextension PROPERTY CXX_STANDARD 20)
+add_library(RTSNavigationGodotExtension SHARED ${ALL_FILES})
+set_property(TARGET RTSNavigationGodotExtension PROPERTY DBG_POSTFIX d)
+set_property(TARGET RTSNavigationGodotExtension PROPERTY CXX_STANDARD 20)
 
 
-target_include_directories(gdextension PRIVATE 
+target_include_directories(RTSNavigationGodotExtension PRIVATE 
 ./../godot-cpp/include
 )
 
-target_link_libraries(gdextension PUBLIC godot::cpp)
+target_link_libraries(RTSNavigationGodotExtension PUBLIC godot::cpp)
+
+add_custom_command(TARGET RTSNavigationGodotExtension POST_BUILD 
+               COMMAND ${CMAKE_COMMAND} -E copy_directory 
+               $<TARGET_FILE_DIR:RTSNavigationGodotExtension>              
+                ${CMAKE_SOURCE_DIR}/godot/GodotProject/bin)

@@ -11,7 +11,6 @@ void RTSNavigation::_bind_methods() {
 
 RTSNavigation::RTSNavigation() {
 	// Initialize any variables here.
-	time_passed = 0.0;
 }
 
 RTSNavigation::~RTSNavigation() {
@@ -19,7 +18,7 @@ RTSNavigation::~RTSNavigation() {
 }
 
 int RTSNavigation::test_static(int p_a, int p_b) {
-	return p_a + p_b;
+	return p_a + p_b+1;
 }
 
 void RTSNavigation::test_static2() {
