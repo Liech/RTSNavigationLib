@@ -18,6 +18,10 @@ public:
 	GDExample();
 	~GDExample();
 
+	// Static method.
+	static int test_static(int p_a, int p_b);
+	static void test_static2();
+
 	void _process(double delta) override;
 };
 
