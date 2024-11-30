@@ -14,9 +14,9 @@ namespace RTSNavigationLib {
   };
 
   template<typename Worker, typename Task>
-  class AssignmentProblemSolver {
+  class AssignmentProblemMinCostFlow {
   public:
-    AssignmentProblemSolver(const std::vector<Worker>& workers_, const std::vector<Task>& tasks_,std::function<double(const Worker&, const Task&)> costFunction) 
+    AssignmentProblemMinCostFlow(const std::vector<Worker>& workers_, const std::vector<Task>& tasks_,std::function<double(const Worker&, const Task&)> costFunction)
       : workers(workers_),
       tasks(tasks_)
     {

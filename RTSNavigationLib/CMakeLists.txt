@@ -47,8 +47,6 @@ set(Util_Files
     "Source/RTSNavigationLib/Util/String2File.cpp"	
     "Source/RTSNavigationLib/Util/Geometry2D.h"
     "Source/RTSNavigationLib/Util/Geometry2D.cpp"	
-    "Source/RTSNavigationLib/Util/AssignmentProblemSolver.h"
-    "Source/RTSNavigationLib/Util/AssignmentProblemSolver.cpp"	
 )
 source_group("Source/Util" FILES ${Util_Files})
 
@@ -87,6 +85,10 @@ set(Usher_Files
     "Source/RTSNavigationLib/Usher/Usher.cpp"	
     "Source/RTSNavigationLib/Usher/BoostMinCostFlowExample.h"	
     "Source/RTSNavigationLib/Usher/BoostMinCostFlowExample.cpp"	
+    "Source/RTSNavigationLib/Usher/AssignmentProblemMinCostFlow.h"
+    "Source/RTSNavigationLib/Usher/AssignmentProblemMinCostFlow.cpp"	
+    "Source/RTSNavigationLib/Usher/AssignmentProblemDualKDTree.h"
+    "Source/RTSNavigationLib/Usher/AssignmentProblemDualKDTree.cpp"	
 )
 source_group("Source/Usher" FILES ${Usher_Files})
 

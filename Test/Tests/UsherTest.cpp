@@ -135,4 +135,26 @@ namespace UsherTests {
   TEST_CASE("Usher/BoostMinCostFlowExample") {
     RTSNavigationLib::BoostMinCostFlowExample playground;
   }
+
+  TEST_CASE("Usher/performance") {
+    return;
+    std::vector<RTSNavigationLib::Body> units;
+    std::vector<RTSNavigationLib::Body> places;
+
+    size_t amount = 200;
+    for (size_t i = 0; i < amount; i++) {
+      units.push_back(RTSNavigationLib::Body(glm::dvec2(rand() % 1000, rand() % 1000), 0));
+      places.push_back(RTSNavigationLib::Body(glm::dvec2(rand() % 1000, rand() % 1000), 0));
+    }
+
+    std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
+
+    if (svgSave)
+      RTSNavigationLib::Usher::visualize(tickets, units, places);
+
+    REQUIRE(tickets.size() == units.size());
+    REQUIRE(tickets[0] == 0);
+
+  }
+
 }

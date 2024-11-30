@@ -7,7 +7,7 @@ var unitscene := preload("res://Unit.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	for i in range(50):
+	for i in range(100):
 		var place := placescene.instantiate() as Node2D
 		place.position = Vector2(randf_range(0,700),randf_range(0,700))
 		$Places.add_child(place)
