@@ -19,7 +19,7 @@ namespace RTSNavigationLib {
   }
 
   MapGuide Map::getMap(const glm::ivec2& from, const glm::ivec2& to) const {
-
+    throw std::runtime_error("Not yet implemented");
   }
 
   //float Map::getDistance(const glm::ivec2& from, const glm::ivec2& to) {
