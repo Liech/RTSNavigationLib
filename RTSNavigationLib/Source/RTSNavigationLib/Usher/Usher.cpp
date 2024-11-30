@@ -14,7 +14,7 @@ namespace RTSNavigationLib {
   }
 
   std::vector<size_t> Usher::assignPlaces(const std::vector<Body>& units, const std::vector<Body>& places) {
-    return assignPlacesMCF(units, places);
+    return assignPlaces2KD(units, places);
   }
   std::vector<size_t> Usher::assignPlaces2KD(const std::vector<Body>& units, const std::vector<Body>& places) {
     assert(units.size() == places.size());
