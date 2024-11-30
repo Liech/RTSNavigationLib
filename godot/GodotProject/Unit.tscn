@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://c16c84rcp48r8"]
+
+[ext_resource type="Texture2D" uid="uid://ckwnksgifthnh" path="res://icon.svg" id="1_uasg3"]
+[ext_resource type="Script" path="res://mouse_drag_drop.gd" id="3_53wn0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_smtpx"]
+size = Vector2(20, 20)
+
+[node name="Unit" type="Area2D"]
+self_modulate = Color(1, 0.176471, 1, 1)
+script = ExtResource("3_53wn0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1.90735e-06, 1.90735e-06)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_smtpx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15, 0.15)
+texture = ExtResource("1_uasg3")
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

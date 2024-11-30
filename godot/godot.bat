@@ -1,0 +1,1 @@
+call "./out/godot/godot.windows.editor.x86_64.exe"

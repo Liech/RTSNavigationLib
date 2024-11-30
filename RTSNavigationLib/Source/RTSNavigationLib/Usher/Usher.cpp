@@ -4,7 +4,8 @@
 #include "Body.h"
 #include "BodyUtil.h"
 #include "Util/svg.h"
-#include "Util/AssignmentProblemSolver.h"
+#include "Usher/AssignmentProblemMinCostFlow.h"
+#include "Usher/AssignmentProblemDualKDTree.h"
 
 
 namespace RTSNavigationLib {
@@ -13,8 +14,22 @@ namespace RTSNavigationLib {
   }
 
   std::vector<size_t> Usher::assignPlaces(const std::vector<Body>& units, const std::vector<Body>& places) {
-    auto costFunction = [](const glm::dvec2& a, const glm::dvec2& b) { 
-      return std::pow(glm::distance(a, b)+1.0,4); // higher emphasis on distance reducing by exponentialize the impact
+    return assignPlaces2KD(units, places);
+  }
+  std::vector<size_t> Usher::assignPlaces2KD(const std::vector<Body>& units, const std::vector<Body>& places) {
+    assert(units.size() == places.size());
+    std::vector<glm::dvec2> unitsV;
+    std::vector<glm::dvec2> placesV;
+    unitsV.reserve(units.size());
+    placesV.reserve(places.size());
+    for (const auto& x : units)unitsV.push_back(x.position);
+    for (const auto& x : places)placesV.push_back(x.position);
+    return AssignmentProblemDualKDTree::getTickets(unitsV, placesV);
+  }
+
+  std::vector<size_t> Usher::assignPlacesMCF(const std::vector<Body>& units, const std::vector<Body>& places) {
+    auto costFunction = [](const glm::dvec2& a, const glm::dvec2& b) {
+      return std::pow(glm::distance(a, b) + 1.0, 4); // higher emphasis on distance reducing by exponentialize the impact
       //return glm::distance(a, b);
       };
 
@@ -51,8 +66,8 @@ namespace RTSNavigationLib {
     result.resize(units.size());
     for (auto& key : keys) {
       auto& worker = AllWorker[key];
-      auto& tasks  = AllTasks[key];
-      AssignmentProblemSolver<glm::dvec2, glm::dvec2> solver(worker.problemInput,tasks.problemInput, costFunction);
+      auto& tasks = AllTasks[key];
+      AssignmentProblemMinCostFlow<glm::dvec2, glm::dvec2> solver(worker.problemInput, tasks.problemInput, costFunction);
       std::vector<size_t> subSolution = solver.getTickets();
       for (size_t i = 0; i < subSolution.size(); i++) {
         size_t ticket = subSolution[i];
@@ -71,8 +86,8 @@ namespace RTSNavigationLib {
       svg debug;
       debug.streak = {
             body.position + glm::dvec2(-0.5 ,-0.5) * (double)body.size * 0.5,
-            body.position + glm::dvec2( 0.5 ,-0.5) * (double)body.size * 0.5,
-            body.position + glm::dvec2( 0.5 , 0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2(0.5 ,-0.5) * (double)body.size * 0.5,
+            body.position + glm::dvec2(0.5 , 0.5) * (double)body.size * 0.5,
             body.position + glm::dvec2(-0.5 , 0.5) * (double)body.size * 0.5,
       };
       debug.filled = true;
@@ -82,11 +97,11 @@ namespace RTSNavigationLib {
       svgDebug.push_back(debug);
       counter++;
     }
-    for (size_t i = 0; i < usherResult.size();i++) {
+    for (size_t i = 0; i < usherResult.size(); i++) {
       svg debug;
       size_t ticket = usherResult[i];
       debug.streak = {
-            units[i].position, 
+            units[i].position,
             places[ticket].position
       };
       debug.color = "yellow";

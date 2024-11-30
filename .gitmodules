@@ -1,0 +1,11 @@
+[submodule "godot-cpp"]
+	path = godot/godot-cpp
+	url = https://github.com/godotengine/godot-cpp
+	branch = 4.3
+[submodule "emsdk"]
+	path = godot/emsdk
+	url = https://github.com/emscripten-core/emsdk.git
+[submodule "godot"]
+	path = godot/godot
+	url = https://github.com/godotengine/godot.git
+	branch = 4.3

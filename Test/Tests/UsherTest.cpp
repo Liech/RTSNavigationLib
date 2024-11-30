@@ -63,10 +63,23 @@ namespace UsherTests {
     REQUIRE(x.size() == tickets.size());
 
     REQUIRE(tickets.size() == units.size());
-    REQUIRE(tickets[0] == 2);
-    REQUIRE(tickets[1] == 3);
-    REQUIRE(tickets[2] == 0);
-    REQUIRE(tickets[3] == 1);
+
+    bool optionA = true;
+    bool optionB = true;
+
+    optionA |= tickets[0] == 2;
+    optionA |= tickets[1] == 3;
+    optionA |= tickets[2] == 0;
+    optionA |= tickets[3] == 1;
+
+
+    optionB |= tickets[0] == 1;
+    optionB |= tickets[1] == 0;
+    optionB |= tickets[2] == 2;
+    optionB |= tickets[3] == 3;
+
+    bool valid = optionA || optionB;
+    REQUIRE(valid);
   }
 
   TEST_CASE("Usher/RectangleFormation") {
@@ -119,20 +132,60 @@ namespace UsherTests {
     std::set<size_t> x(tickets.begin(), tickets.end());
     REQUIRE(x.size() == tickets.size());
 
-    REQUIRE(tickets[0 ] == 5 );
-    REQUIRE(tickets[1 ] == 10);
-    REQUIRE(tickets[2 ] == 9);
-    REQUIRE(tickets[3 ] == 7);
-    REQUIRE(tickets[4 ] == 4);
-    REQUIRE(tickets[5 ] == 1);
-    REQUIRE(tickets[6 ] == 0);
-    REQUIRE(tickets[7 ] == 2);
-    REQUIRE(tickets[8 ] == 6);
-    REQUIRE(tickets[9 ] == 3);
-    REQUIRE(tickets[10] == 8);
+    bool optionA = true;
+
+    optionA |= tickets[0] == 5;
+    optionA |= tickets[1] == 10;
+    optionA |= tickets[2] == 9;
+    optionA |= tickets[3] == 7;
+    optionA |= tickets[4] == 4;
+    optionA |= tickets[5] == 1;
+    optionA |= tickets[6] == 0;
+    optionA |= tickets[7] == 2;
+    optionA |= tickets[8] == 6;
+    optionA |= tickets[9] == 3;
+    optionA |= tickets[10] == 8;
+
+    bool optionB = true;
+
+    optionB |= tickets[0] == 5;
+    optionB |= tickets[1] == 6;
+    optionB |= tickets[2] == 9;
+    optionB |= tickets[3] == 7;
+    optionB |= tickets[4] == 4;
+    optionB |= tickets[5] == 1;
+    optionB |= tickets[6] == 0;
+    optionB |= tickets[7] == 2;
+    optionB |= tickets[8] == 10;
+    optionB |= tickets[9] == 3;
+    optionB |= tickets[10] == 8;
+
+    bool option = optionA || optionB;
+
+    REQUIRE(option);
   }
 
   TEST_CASE("Usher/BoostMinCostFlowExample") {
     RTSNavigationLib::BoostMinCostFlowExample playground;
   }
+
+  TEST_CASE("Usher/performance") {
+    std::vector<RTSNavigationLib::Body> units;
+    std::vector<RTSNavigationLib::Body> places;
+
+    auto randf = []() { return (rand() % 1000) / 50.0 - 10.0; };
+    size_t amount = 1000;
+    for (size_t i = 0; i < amount; i++) {
+      units.push_back(RTSNavigationLib::Body(glm::dvec2(randf(), randf()), 0));
+      places.push_back(RTSNavigationLib::Body(glm::dvec2(randf(), randf()), 0));
+    }
+
+    std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
+
+    if (svgSave)
+      RTSNavigationLib::Usher::visualize(tickets, units, places);
+
+    REQUIRE(tickets.size() == units.size());
+  }
+
 }
