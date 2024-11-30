@@ -23,3 +23,4 @@ godot/extension/.sconsign.dblite
 .vs
 *.pdb
 *.ilk
+*.tmp
