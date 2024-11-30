@@ -12,7 +12,15 @@ func _process(delta : float) -> void:
 		zoom_on(get_global_mouse_position(),1+zoom_speed)
 	if (Input.is_action_just_released("zoom_out")):
 		zoom_on(get_global_mouse_position(),1-zoom_speed)
+
+	
 	print(get_global_view_rect())
+
+func _input(event: InputEvent) -> void:
+	var ev := event as InputEventMouseMotion
+	if ev and Input.is_action_pressed("pan_active"):
+		offset -= ev.relative * (1.0/zoom.length())
+		
 
 func get_global_view_rect() -> Rect2:
 	var t := get_canvas_transform()
