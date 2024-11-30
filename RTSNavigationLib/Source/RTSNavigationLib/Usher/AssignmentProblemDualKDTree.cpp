@@ -15,12 +15,25 @@ namespace RTSNavigationLib
     }
     else if (workerI.size() > 1) {
       if (yaxis) {
-        std::ranges::sort(workerI, [&workers](const size_t& a, const size_t& b)->bool {return workers.at(a).y < workers.at(b).y; });
-        std::ranges::sort(placesI, [&places](const size_t& a, const size_t& b)->bool {return places.at(a).y < places.at(b).y; });
+        std::ranges::sort(workerI, [&workers](const size_t& a, const size_t& b)->bool {
+          if (workers.at(a).y == workers.at(b).y) 
+            return workers.at(a).x < workers.at(b).x;
+          return workers.at(a).y < workers.at(b).y; 
+          });
+        std::ranges::sort(placesI, [&places](const size_t& a, const size_t& b)->bool {
+          if (places.at(a).y == places.at(b).y) 
+            return places.at(a).x < places.at(b).x;
+          return places.at(a).y < places.at(b).y; });
       }
       else {
-        std::ranges::sort(workerI, [&workers](const size_t& a, const size_t& b)->bool {return workers.at(a).x < workers.at(b).x; });
-        std::ranges::sort(placesI, [&places](const size_t& a, const size_t& b)->bool {return places.at(a).x < places.at(b).x; });
+        std::ranges::sort(workerI, [&workers](const size_t& a, const size_t& b)->bool {
+          if (workers.at(a).x == workers.at(b).x) 
+            return workers.at(a).y < workers.at(b).y;
+          return workers.at(a).x < workers.at(b).x; });
+        std::ranges::sort(placesI, [&places](const size_t& a, const size_t& b)->bool {
+          if (places.at(a).x == places.at(b).x) 
+            return places.at(a).y < places.at(b).y;
+          return places.at(a).x < places.at(b).x; });
       }
       size_t leftAmount = workerI.size() / 2;
       auto workerL = std::vector<size_t>(workerI.begin(), workerI.begin() + leftAmount);

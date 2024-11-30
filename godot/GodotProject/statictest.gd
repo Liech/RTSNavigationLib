@@ -16,9 +16,12 @@ func spread()->void:
 	for n in $Units.get_children():
 		$Units.remove_child(n)
 		n.queue_free()
-	for i in range(60):
+		
+	var amount : int = 16
+	var row :int = 4
+	for i in range(amount):
 		var place := placescene.instantiate() as Node2D
-		place.position = Vector2((i%20) * 50,int(i/20) * 50) + Vector2(0,350)
+		place.position = Vector2((i%row) * 50,int(i/row) * 50) + Vector2(0,350)
 		$Places.add_child(place)
 		var unit := unitscene.instantiate() as Node2D
 		unit.position = Vector2(randf_range(0,700),randf_range(0,700))

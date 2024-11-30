@@ -1,14 +1,28 @@
-[gd_scene load_steps=3 format=3 uid="uid://cqskrvlfidpa7"]
+[gd_scene load_steps=2 format=3 uid="uid://dwf7sevbb6cqq"]
 
-[ext_resource type="Script" path="res://statictest.gd" id="1_sh56a"]
-[ext_resource type="Script" path="res://RTS2DCam.gd" id="2_rgp4o"]
+[ext_resource type="PackedScene" uid="uid://cqskrvlfidpa7" path="res://usherTest.tscn" id="1_afi61"]
 
-[node name="Node2D" type="Node2D"]
-script = ExtResource("1_sh56a")
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="Units" type="Node2D" parent="."]
+[node name="Node2D" parent="." instance=ExtResource("1_afi61")]
+position = Vector2(118, 0)
 
-[node name="Places" type="Node2D" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
 
-[node name="Camera2D" type="Camera2D" parent="."]
-script = ExtResource("2_rgp4o")
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+size_flags_horizontal = 3
+
+[node name="Button" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "asdasdasdasd"
