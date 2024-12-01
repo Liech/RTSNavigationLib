@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://dwf7sevbb6cqq"]
+[gd_scene load_steps=3 format=3 uid="uid://dwf7sevbb6cqq"]
 
 [ext_resource type="PackedScene" uid="uid://cqskrvlfidpa7" path="res://usherTest.tscn" id="1_afi61"]
+
+[sub_resource type="RTSFormation" id="RTSFormation_4co6f"]
+category = 4
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -11,8 +14,9 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Node2D" parent="." instance=ExtResource("1_afi61")]
+[node name="statictest" parent="." instance=ExtResource("1_afi61")]
 position = Vector2(118, 0)
+formation = SubResource("RTSFormation_4co6f")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 visible = false

@@ -1,6 +1,10 @@
 #include "register_types.h"
 
 #include "RTSNavigation.h"
+#include "RTSFormation.h"
+#include "RTSFormationShape.h"
+#include "RTSShapeCircle.h"
+#include "RTSShapeRect.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -14,6 +18,10 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
 	}
 
 	ClassDB::register_class<RTSNavigation>();
+	ClassDB::register_class<RTSFormation>();
+	ClassDB::register_class<RTSFormationShape>();
+	ClassDB::register_class<RTSShapeCircle>();
+	ClassDB::register_class<RTSShapeRect>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level) {

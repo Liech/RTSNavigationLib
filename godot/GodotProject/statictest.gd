@@ -1,9 +1,11 @@
-extends Node2D
+class_name statictest extends Node2D
 
 var tickets : Array[int]
 
 var placescene := preload("res://Place.tscn")
 var unitscene := preload("res://Unit.tscn")
+
+@export var formation : RTSFormation;
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

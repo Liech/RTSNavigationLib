@@ -6,6 +6,14 @@ set(Source_Files
     "register_types.cpp"
     "RTSNavigation.h"
     "RTSNavigation.cpp"
+    "RTSFormation.h"
+    "RTSFormation.cpp"
+    "RTSFormationShape.h"
+    "RTSFormationShape.cpp"
+    "RTSShapeRect.h"
+    "RTSShapeRect.cpp"
+    "RTSShapeCircle.h"
+    "RTSShapeCircle.cpp"
 )
 source_group("Source" FILES ${Source_Files})
 
