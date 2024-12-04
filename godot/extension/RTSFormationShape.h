@@ -12,7 +12,7 @@ namespace godot {
 
   public:
     RTSFormationShape();
-    ~RTSFormationShape();
+    virtual ~RTSFormationShape();
 
   };
 }

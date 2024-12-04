@@ -12,7 +12,7 @@ protected:
 
 public:
 	RTSNavigation();
-	~RTSNavigation();
+  virtual ~RTSNavigation();
 
 	// Static method.
 	static int test_static(int p_a, int p_b);

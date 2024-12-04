@@ -11,7 +11,7 @@ namespace godot {
 
   public:
     RTSShapeCircle();
-    ~RTSShapeCircle();
+    virtual ~RTSShapeCircle();
 
   };
 }

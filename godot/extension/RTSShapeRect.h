@@ -11,7 +11,7 @@ namespace godot {
 
   public:
     RTSShapeRect();
-    ~RTSShapeRect();
+    virtual ~RTSShapeRect();
 
   };
 }
