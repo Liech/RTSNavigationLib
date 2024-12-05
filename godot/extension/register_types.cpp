@@ -1,9 +1,9 @@
 #include "register_types.h"
 
-#include "RTSNavigation.h"
 #include "RTSFormation.h"
 #include "RTSFormationShape.h"
-#include "RTSShapeCircle.h"
+#include "RTSNavigation.h"
+#include "RTSShapeArc.h"
 #include "RTSShapeRect.h"
 
 #include <gdextension_interface.h>
@@ -12,33 +12,39 @@
 
 using namespace godot;
 
-void initialize_example_module(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
-	}
+void initialize_example_module(ModuleInitializationLevel p_level)
+{
+    if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)
+    {
+        return;
+    }
 
-	ClassDB::register_class<RTSNavigation>();
-	ClassDB::register_class<RTSFormation>();
-	ClassDB::register_class<RTSFormationShape>();
-	ClassDB::register_class<RTSShapeCircle>();
-	ClassDB::register_class<RTSShapeRect>();
+    ClassDB::register_class<RTSNavigation>();
+    ClassDB::register_class<RTSFormation>();
+    ClassDB::register_class<RTSFormationShape>();
+    ClassDB::register_class<RTSShapeArc>();
+    ClassDB::register_class<RTSShapeRect>();
 }
 
-void uninitialize_example_module(ModuleInitializationLevel p_level) {
-	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-		return;
-	}
+void uninitialize_example_module(ModuleInitializationLevel p_level)
+{
+    if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE)
+    {
+        return;
+    }
 }
 
-extern "C" {
-// Initialization.
-GDExtensionBool GDE_EXPORT example_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, const GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization) {
-	godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
+extern "C"
+{
+    // Initialization.
+    GDExtensionBool GDE_EXPORT example_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, const GDExtensionClassLibraryPtr p_library, GDExtensionInitialization* r_initialization)
+    {
+        godot::GDExtensionBinding::InitObject init_obj(p_get_proc_address, p_library, r_initialization);
 
-	init_obj.register_initializer(initialize_example_module);
-	init_obj.register_terminator(uninitialize_example_module);
-	init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
+        init_obj.register_initializer(initialize_example_module);
+        init_obj.register_terminator(uninitialize_example_module);
+        init_obj.set_minimum_library_initialization_level(MODULE_INITIALIZATION_LEVEL_SCENE);
 
-	return init_obj.init();
-}
+        return init_obj.init();
+    }
 }

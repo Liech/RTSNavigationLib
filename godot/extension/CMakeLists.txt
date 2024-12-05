@@ -12,8 +12,8 @@ set(Source_Files
     "RTSFormationShape.cpp"
     "RTSShapeRect.h"
     "RTSShapeRect.cpp"
-    "RTSShapeCircle.h"
-    "RTSShapeCircle.cpp"
+    "RTSShapeArc.h"
+    "RTSShapeArc.cpp"
 )
 source_group("Source" FILES ${Source_Files})
 
