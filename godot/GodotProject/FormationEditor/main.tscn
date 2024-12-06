@@ -1,0 +1,43 @@
+[gd_scene load_steps=4 format=3 uid="uid://bcf50atqa4ytt"]
+
+[ext_resource type="PackedScene" uid="uid://cuyqjnydxmlf0" path="res://FormationEditor/unit_type_ui.tscn" id="1_86nhx"]
+[ext_resource type="PackedScene" uid="uid://b5vjs7ygpg6pd" path="res://FormationEditor/category_ui.tscn" id="2_w4qae"]
+[ext_resource type="PackedScene" uid="uid://bo8rre245u62i" path="res://FormationEditor/scene_selection.tscn" id="3_ao408"]
+
+[node name="Main" type="HBoxContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scenes" type="Control" parent="."]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UnitScene" type="HBoxContainer" parent="Scenes"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+
+[node name="UnitTypeScene" parent="Scenes/UnitScene" instance=ExtResource("1_86nhx")]
+layout_mode = 2
+
+[node name="CategoryScene" parent="Scenes/UnitScene" instance=ExtResource("2_w4qae")]
+layout_mode = 2
+
+[node name="Formations" type="Control" parent="Scenes"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SceneSelection" parent="." instance=ExtResource("3_ao408")]
+layout_mode = 2

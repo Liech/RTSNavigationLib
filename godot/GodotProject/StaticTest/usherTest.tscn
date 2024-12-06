@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cqskrvlfidpa7"]
 
-[ext_resource type="Script" path="res://statictest.gd" id="1_sh56a"]
-[ext_resource type="Script" path="res://RTS2DCam.gd" id="2_rgp4o"]
+[ext_resource type="Script" path="res://StaticTest/statictest.gd" id="1_sh56a"]
+[ext_resource type="Script" path="res://Util/RTS2DCam.gd" id="2_rgp4o"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_sh56a")

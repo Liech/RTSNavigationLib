@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwf7sevbb6cqq"]
 
-[ext_resource type="PackedScene" uid="uid://cqskrvlfidpa7" path="res://usherTest.tscn" id="1_afi61"]
+[ext_resource type="PackedScene" uid="uid://cqskrvlfidpa7" path="res://StaticTest/usherTest.tscn" id="1_1gfeq"]
 
 [sub_resource type="RTSFormation" id="RTSFormation_spdqq"]
 
@@ -18,7 +18,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="statictest" parent="." instance=ExtResource("1_afi61")]
+[node name="statictest" parent="." instance=ExtResource("1_1gfeq")]
 position = Vector2(118, 0)
 formation = SubResource("RTSFormation_4co6f")
 

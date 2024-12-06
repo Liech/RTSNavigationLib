@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://bo8rre245u62i"]
+
+[node name="SceneSelection" type="MarginContainer"]
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.409603, 0.409603, 0.409603, 1)
+
+[node name="SceneButtons" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Scenes" type="VBoxContainer" parent="SceneButtons"]
+layout_mode = 2
+
+[node name="Characters" type="Button" parent="SceneButtons/Scenes"]
+layout_mode = 2
+text = "Characters"

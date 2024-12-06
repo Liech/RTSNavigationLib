@@ -2,8 +2,8 @@ class_name statictest extends Node2D
 
 var tickets : Array[int]
 
-var placescene := preload("res://Place.tscn")
-var unitscene := preload("res://Unit.tscn")
+var placescene := preload("res://StaticTest/Place.tscn")
+var unitscene := preload("res://StaticTest/Unit.tscn")
 
 @export var formation : RTSFormation;
 

@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3 uid="uid://b5vjs7ygpg6pd"]
+
+[ext_resource type="Script" path="res://FormationEditor/category_ui.gd" id="1_rvnjv"]
+
+[node name="CategoryScene" type="MarginContainer"]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 200.0
+offset_bottom = 389.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+script = ExtResource("1_rvnjv")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.17881, 0.17881, 0.17881, 1)
+
+[node name="Menu" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Menu"]
+layout_mode = 2
+text = "Categories"
+
+[node name="List" type="MarginContainer" parent="Menu"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Menu/List"]
+layout_mode = 2
+color = Color(0.381703, 0.381703, 0.381703, 1)
+
+[node name="CategoryList" type="ItemList" parent="Menu/List"]
+layout_mode = 2
+theme_override_colors/font_selected_color = Color(1, 0, 0, 1)
+theme_override_colors/font_hovered_color = Color(0.555161, 0.537225, 9.62615e-07, 1)
+item_count = 2
+item_0/text = "🗡️Melee"
+item_1/text = "🏹Ranged"
+
+[node name="NewCategory" type="LineEdit" parent="Menu"]
+layout_mode = 2
+placeholder_text = "New Category Name"
+
+[node name="ActionBar" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+alignment = 2
+
+[node name="Delete" type="Button" parent="Menu/ActionBar"]
+layout_mode = 2
+text = "🗑️"
+
+[node name="Add" type="Button" parent="Menu/ActionBar"]
+layout_mode = 2
+text = "➕"
+
+[connection signal="pressed" from="Menu/ActionBar/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="Menu/ActionBar/Add" to="." method="_on_add_pressed"]
