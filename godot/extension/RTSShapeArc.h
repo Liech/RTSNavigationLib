@@ -15,6 +15,8 @@ namespace godot
         RTSShapeArc();
         virtual ~RTSShapeArc();
 
+        virtual std::unique_ptr<RTSNavigationLib::FormationShape> toShape() const override;
+
         double get_arc_angle_radian() const;
         void   set_arc_angle_radian(double);
 

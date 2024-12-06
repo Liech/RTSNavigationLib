@@ -1,4 +1,5 @@
 #include "RTSFormation.h"
+#include <RTSNavigationLib/Formation/FormationCalculator.h>
 #include <godot_cpp/core/class_db.hpp>
 
 namespace godot
@@ -48,6 +49,7 @@ namespace godot
                               PropertyInfo(Variant::ARRAY, "children", PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":RTSFormation"),
                               "set_children",
                               "get_children");
+        ClassDB::bind_method(D_METHOD("calculate", "bodies"), &RTSFormation::calculate);
     }
 
     RTSFormation::RTSFormation()
@@ -58,6 +60,49 @@ namespace godot
     RTSFormation::~RTSFormation()
     {
         // Add your cleanup here.
+    }
+
+    TypedArray<RTSBody> RTSFormation::calculate(const TypedArray<RTSBody>& pre_bodies) const
+    {
+        std::vector<RTSNavigationLib::Body> bodies;
+        for (size_t i = 0; i < pre_bodies.size(); i++)
+            bodies.push_back(godot::Object::cast_to<RTSBody>(pre_bodies[i])->toBody());
+        auto form = toFormation();
+
+        auto places = RTSNavigationLib::FormationCalculator(*form, bodies).calculate();
+        TypedArray<RTSBody> result;
+
+        for (const auto& x : places)
+        {
+            Ref<RTSBody> place;
+            place->category = x.category;
+            place->size     = x.size;
+            place->position = x.position;
+            result.push_back(place);
+        }
+
+        return result;
+    }
+
+    std::unique_ptr<RTSNavigationLib::Formation> RTSFormation::toFormation() const
+    {
+        auto result = std::make_unique<RTSNavigationLib::Formation>();
+        result->setOwnInterfacePoint(ownInterfacePoint);
+        result->setParentInterfacePoint(parentInterfacePoint);
+        result->setOverwriteWidthWithInterfaceWidth(overwriteWidthWithInterfaceWidth);
+        result->setRotateWithInterface(rotateWithInterface);
+        result->setRotation(rotation);
+        result->setUnitCategory(unitCategory);
+        result->setUnitDistributionWeight(unitDistributionWeight);
+        result->setPlacementBehavior((RTSNavigationLib::UnitPlacementBehavior)placementBehavior);
+        result->setShape(shape->toShape());
+
+        for (size_t i = 0; i < children.size(); i++)
+        {
+            result->addChild(std::move(godot::Object::cast_to<RTSFormation>(children[i]))->toFormation());
+        }
+
+        return std::move(result);
     }
 
     void RTSFormation::set_unit_category(const int cat)

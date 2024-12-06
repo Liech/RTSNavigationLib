@@ -32,12 +32,16 @@ func spread()->void:
 	set_tickets()
 	
 func set_tickets()->void:
-	var places : Array[Vector2];
+	var units : Array[RTSBody];
+	var places : Array[RTSBody];
 	for b : Node2D in $Places.get_children():
-		places.push_back(b.position);
-	var units : Array[Vector2];
+		var rts : RTSBody = RTSBody.new();
+		rts.position = b.position;
+		places.push_back(rts);
 	for b : Node2D in $Units.get_children():
-		units.push_back(b.position);
+		var rts : RTSBody = RTSBody.new();
+		rts.position = b.position;
+		units.push_back(rts);
 	tickets = RTSNavigation.usher(units,places)
 	
 func _process(_delta: float) -> void:

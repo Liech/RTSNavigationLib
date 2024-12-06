@@ -1,6 +1,7 @@
 #pragma once
 
 #include <godot_cpp/classes/ref_counted.hpp>
+#include "RTSBody.h"
 
 namespace godot {
 
@@ -14,9 +15,7 @@ public:
 	RTSNavigation();
   virtual ~RTSNavigation();
 
-	// Static method.
-	static int test_static(int p_a, int p_b);
-	static TypedArray<int> usher(const TypedArray<Vector2>& units, const TypedArray<Vector2>& places);
+	static TypedArray<int> usher(const TypedArray<RTSBody>& units, const TypedArray<RTSBody>& places);
 };
 
 }

@@ -6,6 +6,8 @@
 
 #include "RTSNavigationLib/Formation/FormationShape/ScalingBehavior.h"
 
+#include <RTSNavigationLib/Formation/FormationShape/FormationShape.h>
+
 namespace godot
 {
     class RTSFormationShape : public Resource
@@ -28,6 +30,8 @@ namespace godot
             X25Y75    = 4 
         };
 
+        virtual std::unique_ptr<RTSNavigationLib::FormationShape> toShape() const;
+
         Vector2         get_base_size() const;
         void            set_base_size(const Vector2&);
         double          get_hollow() const;
@@ -35,7 +39,8 @@ namespace godot
         ScalingBehavior get_scaling_behavior() const;
         void            set_scaling_behavior(ScalingBehavior);
 
-      private:
+
+
         RTSNavigationLib::ScalingBehavior scaling  = RTSNavigationLib::ScalingBehavior::Isotropic;
         glm::dvec2                        baseSize = glm::dvec2(1, 1);
         double                            hollow   = 0.0;

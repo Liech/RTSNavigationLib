@@ -5,11 +5,11 @@ namespace godot
 {
     void RTSFormationShape::_bind_methods()
     {
-        BIND_ENUM_CONSTANT(PureX      );
-        BIND_ENUM_CONSTANT(PureY      );
-        BIND_ENUM_CONSTANT(Isotropic  );
-        BIND_ENUM_CONSTANT(X75Y25     );
-        BIND_ENUM_CONSTANT(X25Y75     );
+        BIND_ENUM_CONSTANT(PureX);
+        BIND_ENUM_CONSTANT(PureY);
+        BIND_ENUM_CONSTANT(Isotropic);
+        BIND_ENUM_CONSTANT(X75Y25);
+        BIND_ENUM_CONSTANT(X25Y75);
 
         ClassDB::bind_method(D_METHOD("get_hollow"), &RTSFormationShape::get_hollow);
         ClassDB::bind_method(D_METHOD("set_hollow", "hollow"), &RTSFormationShape::set_hollow);
@@ -25,7 +25,7 @@ namespace godot
                               "set_scaling_behavior",
                               "get_scaling_behavior");
     }
-    
+
     RTSFormationShape::RTSFormationShape()
     {
         // Initialize any variables here.
@@ -61,4 +61,12 @@ namespace godot
         scaling = (RTSNavigationLib::ScalingBehavior)s;
     }
 
+    std::unique_ptr<RTSNavigationLib::FormationShape> RTSFormationShape::toShape() const
+    {
+        auto result = std::make_unique<RTSNavigationLib::FormationShape>();
+        result->setHollow(hollow);
+        result->setBaseSize(baseSize);
+        result->setScalingBehavior((RTSNavigationLib::ScalingBehavior)scaling);
+        return result;
+    }
 }

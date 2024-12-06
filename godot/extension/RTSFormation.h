@@ -1,9 +1,12 @@
 #pragma once
 
 #include "RTSFormationShape.h"
+#include "RTSBody.h"
+#include <RTSNavigationLib/Formation/Formation.h>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <memory>
+
 
 namespace godot
 {
@@ -16,9 +19,9 @@ namespace godot
 
         enum PlacementBehavior
         {
-            center_first_rts,
-            outer_first_rts,
-            distribute_evenly_rts
+            center_first_rts       = 0,
+            outer_first_rts        = 1, 
+            distribute_evenly_rts  = 2 
         };
 
       protected:
@@ -45,6 +48,9 @@ namespace godot
         void                     set_parent_interface_point(int ptr);
         Ref<RTSFormationShape>   get_shape() const;
         void                     set_shape(Ref<RTSFormationShape>);
+        TypedArray<RTSBody>      calculate(const TypedArray<RTSBody>&) const;
+
+        std::unique_ptr<RTSNavigationLib::Formation> toFormation() const;
 
         Ref<RTSFormationShape> shape                            = nullptr;
         int                    ownInterfacePoint                = 0;

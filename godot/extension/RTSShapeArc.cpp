@@ -1,5 +1,6 @@
 #include "RTSShapeArc.h"
 #include <godot_cpp/core/class_db.hpp>
+#include <RTSNavigationLib/Formation/FormationShape/ArcFormationShape.h>
 
 namespace godot
 {
@@ -29,5 +30,15 @@ namespace godot
     void RTSShapeArc::set_arc_angle_radian(double val)
     {
         arcAngleRadian = val;
+    }
+
+    std::unique_ptr<RTSNavigationLib::FormationShape> RTSShapeArc::toShape() const
+    {
+        auto result = std::make_unique<RTSNavigationLib::ArcFormationShape>();
+        result->setHollow(hollow);
+        result->setBaseSize(baseSize);
+        result->setScalingBehavior((RTSNavigationLib::ScalingBehavior)scaling);
+        result->setArcAngle(arcAngleRadian);
+        return result;
     }
 }

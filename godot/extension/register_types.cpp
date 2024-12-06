@@ -5,6 +5,7 @@
 #include "RTSNavigation.h"
 #include "RTSShapeArc.h"
 #include "RTSShapeRect.h"
+#include "RTSBody.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -24,6 +25,7 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<RTSFormationShape>();
     ClassDB::register_class<RTSShapeArc>();
     ClassDB::register_class<RTSShapeRect>();
+    ClassDB::register_class<RTSBody>();
 }
 
 void uninitialize_example_module(ModuleInitializationLevel p_level)
