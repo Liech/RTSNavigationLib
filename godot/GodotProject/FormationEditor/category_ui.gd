@@ -8,7 +8,6 @@ func _ready() -> void:
 	categories_changed()
 
 func categories_changed() -> void:
-	print(FormationEditor.categories)
 	list.clear();
 	list.deselect_all()		
 	for x in FormationEditor.categories:

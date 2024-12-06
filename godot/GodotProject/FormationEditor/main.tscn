@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bcf50atqa4ytt"]
+[gd_scene load_steps=7 format=3 uid="uid://bcf50atqa4ytt"]
 
+[ext_resource type="Script" path="res://FormationEditor/main.gd" id="1_84o8j"]
 [ext_resource type="PackedScene" uid="uid://cuyqjnydxmlf0" path="res://FormationEditor/unit_type_ui.tscn" id="1_86nhx"]
+[ext_resource type="Script" path="res://FormationEditor/unit_type.gd" id="2_1nw7d"]
 [ext_resource type="PackedScene" uid="uid://b5vjs7ygpg6pd" path="res://FormationEditor/category_ui.tscn" id="2_w4qae"]
 [ext_resource type="PackedScene" uid="uid://bo8rre245u62i" path="res://FormationEditor/scene_selection.tscn" id="3_ao408"]
+[ext_resource type="Resource" uid="uid://cr5eb1kfgt1o3" path="res://FormationEditor/Swordsman.tres" id="3_ov0ip"]
 
 [node name="Main" type="HBoxContainer"]
 anchors_preset = 15
@@ -10,6 +13,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_84o8j")
+start_unit_types = Array[ExtResource("2_1nw7d")]([ExtResource("3_ov0ip")])
+start_categories = Array[String](["🗡️Melee", "🏹Ranged", "🧙Support"])
 
 [node name="Scenes" type="Control" parent="."]
 layout_mode = 2

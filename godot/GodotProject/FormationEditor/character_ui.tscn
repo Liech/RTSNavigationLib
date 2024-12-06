@@ -1,10 +1,13 @@
-[gd_scene format=3 uid="uid://d1t1qhykipkoc"]
+[gd_scene load_steps=2 format=3 uid="uid://d1t1qhykipkoc"]
+
+[ext_resource type="Script" path="res://FormationEditor/character_ui.gd" id="1_fuu1b"]
 
 [node name="Character" type="MarginContainer"]
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
+script = ExtResource("1_fuu1b")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 2
@@ -68,3 +71,6 @@ text = "🗑️"
 [node name="Duplicate" type="Button" parent="MarginContainer/Content/Interaction"]
 layout_mode = 2
 text = "➕"
+
+[connection signal="pressed" from="MarginContainer/Content/Interaction/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="MarginContainer/Content/Interaction/Duplicate" to="." method="_on_duplicate_pressed"]

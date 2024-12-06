@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cuyqjnydxmlf0"]
 
-[ext_resource type="PackedScene" uid="uid://d1t1qhykipkoc" path="res://FormationEditor/character_ui.tscn" id="1_8t3y6"]
+[ext_resource type="Script" path="res://FormationEditor/unit_type_ui.gd" id="1_nj3gl"]
 
 [node name="UnitTypeScene" type="MarginContainer"]
 size_flags_horizontal = 3
@@ -8,6 +8,7 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
+script = ExtResource("1_nj3gl")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 2
@@ -44,48 +45,3 @@ horizontal_scroll_mode = 0
 [node name="CharacterList" type="FlowContainer" parent="M/UnitTypes/UnitList/Scroll"]
 layout_mode = 2
 size_flags_horizontal = 3
-
-[node name="Character" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character2" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character3" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character4" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character5" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character6" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character7" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character8" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character9" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character10" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character11" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character12" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character13" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character14" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
-
-[node name="Character15" parent="M/UnitTypes/UnitList/Scroll/CharacterList" instance=ExtResource("1_8t3y6")]
-layout_mode = 2
