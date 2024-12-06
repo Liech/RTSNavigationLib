@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://cuyqjnydxmlf0"]
 
-[ext_resource type="Script" path="res://FormationEditor/unit_type_ui.gd" id="1_nj3gl"]
+[ext_resource type="Script" path="res://FormationEditor/Units/unit_type_ui.gd" id="1_nj3gl"]
 
 [node name="UnitTypeScene" type="MarginContainer"]
 size_flags_horizontal = 3

@@ -1,0 +1,91 @@
+[gd_scene load_steps=2 format=3 uid="uid://wwq8fqo8flxf"]
+
+[ext_resource type="Script" path="res://FormationEditor/Formation/formation_inspector.gd" id="1_r85kf"]
+
+[node name="FormationInspector" type="MarginContainer"]
+offset_right = 230.0
+offset_bottom = 115.0
+script = ExtResource("1_r85kf")
+
+[node name="Toolbox" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="Hierarchy" type="MarginContainer" parent="Toolbox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Toolbox/Hierarchy"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="M" type="MarginContainer" parent="Toolbox/Hierarchy"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Sections" type="VBoxContainer" parent="Toolbox/Hierarchy/M"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Toolbox/Hierarchy/M/Sections"]
+layout_mode = 2
+text = "Hierarchy
+"
+
+[node name="SectionTree" type="Tree" parent="Toolbox/Hierarchy/M/Sections"]
+custom_minimum_size = Vector2(200, 200)
+layout_mode = 2
+
+[node name="Tools" type="HBoxContainer" parent="Toolbox/Hierarchy/M/Sections"]
+layout_mode = 2
+alignment = 2
+
+[node name="Delete" type="Button" parent="Toolbox/Hierarchy/M/Sections/Tools"]
+layout_mode = 2
+text = "🗑️"
+
+[node name="Add" type="Button" parent="Toolbox/Hierarchy/M/Sections/Tools"]
+layout_mode = 2
+text = "➕"
+
+[node name="Inspector" type="MarginContainer" parent="Toolbox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Toolbox/Inspector"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="M" type="MarginContainer" parent="Toolbox/Inspector"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Stats" type="VBoxContainer" parent="Toolbox/Inspector/M"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Toolbox/Inspector/M/Stats"]
+layout_mode = 2
+text = "Formation"
+
+[node name="Stats2" type="GridContainer" parent="Toolbox/Inspector/M/Stats"]
+layout_mode = 2
+columns = 2
+
+[node name="NameLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+layout_mode = 2
+text = "Name: "
+
+[node name="Name" type="LineEdit" parent="Toolbox/Inspector/M/Stats/Stats2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "e.g. Inner Wall"

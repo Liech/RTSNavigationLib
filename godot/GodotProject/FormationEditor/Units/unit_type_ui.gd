@@ -1,6 +1,6 @@
 extends Node
 
-var character_element := preload("res://FormationEditor/character_ui.tscn")
+var character_element := preload("res://FormationEditor/Units/character_ui.tscn")
 
 @onready var list : FlowContainer = $M/UnitTypes/UnitList/Scroll/CharacterList
 

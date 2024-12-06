@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b5vjs7ygpg6pd"]
 
-[ext_resource type="Script" path="res://FormationEditor/category_ui.gd" id="1_rvnjv"]
+[ext_resource type="Script" path="res://FormationEditor/Units/category_ui.gd" id="1_rvnjv"]
 
 [node name="CategoryScene" type="MarginContainer"]
 custom_minimum_size = Vector2(200, 0)

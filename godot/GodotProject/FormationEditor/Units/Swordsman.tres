@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="UnitType" load_steps=2 format=3 uid="uid://cr5eb1kfgt1o3"]
 
-[ext_resource type="Script" path="res://FormationEditor/unit_type.gd" id="1_rpiya"]
+[ext_resource type="Script" path="res://FormationEditor/Units/unit_type.gd" id="1_rpiya"]
 
 [resource]
 script = ExtResource("1_rpiya")

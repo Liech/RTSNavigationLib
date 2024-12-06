@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://d1t1qhykipkoc"]
 
-[ext_resource type="Script" path="res://FormationEditor/character_ui.gd" id="1_fuu1b"]
+[ext_resource type="Script" path="res://FormationEditor/Units/character_ui.gd" id="1_fuu1b"]
 
 [node name="Character" type="MarginContainer"]
 theme_override_constants/margin_left = 5
