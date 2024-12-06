@@ -1,11 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://bcf50atqa4ytt"]
+[gd_scene load_steps=9 format=3 uid="uid://bcf50atqa4ytt"]
 
 [ext_resource type="Script" path="res://FormationEditor/main.gd" id="1_84o8j"]
 [ext_resource type="PackedScene" uid="uid://cuyqjnydxmlf0" path="res://FormationEditor/unit_type_ui.tscn" id="1_86nhx"]
 [ext_resource type="Script" path="res://FormationEditor/unit_type.gd" id="2_1nw7d"]
 [ext_resource type="PackedScene" uid="uid://b5vjs7ygpg6pd" path="res://FormationEditor/category_ui.tscn" id="2_w4qae"]
-[ext_resource type="PackedScene" uid="uid://bo8rre245u62i" path="res://FormationEditor/scene_selection.tscn" id="3_ao408"]
 [ext_resource type="Resource" uid="uid://cr5eb1kfgt1o3" path="res://FormationEditor/Swordsman.tres" id="3_ov0ip"]
+[ext_resource type="Texture2D" uid="uid://dkpet67u11m02" path="res://FormationEditor/Rect.png" id="6_imrns"]
+[ext_resource type="Texture2D" uid="uid://kgyqfov1t7c1" path="res://FormationEditor/Circle.png" id="7_bwp0s"]
+[ext_resource type="Texture2D" uid="uid://bi2y6youwq4md" path="res://FormationEditor/Triangle.png" id="8_kdug8"]
 
 [node name="Main" type="HBoxContainer"]
 anchors_preset = 15
@@ -22,6 +24,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 
 [node name="UnitScene" type="HBoxContainer" parent="Scenes"]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -36,8 +39,7 @@ layout_mode = 2
 [node name="CategoryScene" parent="Scenes/UnitScene" instance=ExtResource("2_w4qae")]
 layout_mode = 2
 
-[node name="Formations" type="Control" parent="Scenes"]
-visible = false
+[node name="Formations" type="HBoxContainer" parent="Scenes"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -45,5 +47,106 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SceneSelection" parent="." instance=ExtResource("3_ao408")]
+[node name="M" type="MarginContainer" parent="Scenes/Formations"]
 layout_mode = 2
+
+[node name="Toolbox" type="VBoxContainer" parent="Scenes/Formations/M"]
+layout_mode = 2
+
+[node name="Shapes" type="MarginContainer" parent="Scenes/Formations/M/Toolbox"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Scenes/Formations/M/Toolbox/Shapes"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="FormList" type="VBoxContainer" parent="Scenes/Formations/M/Toolbox/Shapes"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="Scenes/Formations/M/Toolbox/Shapes/FormList"]
+layout_mode = 2
+text = "Shapes:"
+
+[node name="Rectangle" type="MarginContainer" parent="Scenes/Formations/M/Toolbox/Shapes/FormList"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Scenes/Formations/M/Toolbox/Shapes/FormList/Rectangle"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Scenes/Formations/M/Toolbox/Shapes/FormList/Rectangle"]
+layout_mode = 2
+texture = ExtResource("6_imrns")
+
+[node name="Circle" type="MarginContainer" parent="Scenes/Formations/M/Toolbox/Shapes/FormList"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Scenes/Formations/M/Toolbox/Shapes/FormList/Circle"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Scenes/Formations/M/Toolbox/Shapes/FormList/Circle"]
+layout_mode = 2
+texture = ExtResource("7_bwp0s")
+
+[node name="Triangle" type="MarginContainer" parent="Scenes/Formations/M/Toolbox/Shapes/FormList"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="Scenes/Formations/M/Toolbox/Shapes/FormList/Triangle"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Scenes/Formations/M/Toolbox/Shapes/FormList/Triangle"]
+layout_mode = 2
+texture = ExtResource("8_kdug8")
+
+[node name="MarginContainer2" type="MarginContainer" parent="Scenes/Formations/M/Toolbox"]
+layout_mode = 2
+
+[node name="SceneSelection" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="Background" type="ColorRect" parent="SceneSelection"]
+layout_mode = 2
+color = Color(0.409603, 0.409603, 0.409603, 1)
+
+[node name="SceneButtons" type="MarginContainer" parent="SceneSelection"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Scenes" type="VBoxContainer" parent="SceneSelection/SceneButtons"]
+layout_mode = 2
+
+[node name="Characters" type="Button" parent="SceneSelection/SceneButtons/Scenes"]
+layout_mode = 2
+text = "Characters"
+
+[node name="Formations" type="Button" parent="SceneSelection/SceneButtons/Scenes"]
+layout_mode = 2
+text = "Formations"
+
+[connection signal="pressed" from="SceneSelection/SceneButtons/Scenes/Characters" to="." method="_on_characters_pressed"]
+[connection signal="pressed" from="SceneSelection/SceneButtons/Scenes/Formations" to="." method="_on_characters_pressed"]
