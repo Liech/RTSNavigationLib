@@ -94,7 +94,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_84o8j")
 start_unit_types = Array[ExtResource("2_1nw7d")]([ExtResource("3_ov0ip")])
-start_categories = Array[String](["🗡️Melee", "🏹Ranged", "🧙Support"])
+start_categories = Array[String](["Melee", "Ranged", "Support"])
 start_formations = Array[ExtResource("4_piqbr")]([SubResource("Resource_avk3v")])
 
 [node name="Scenes" type="Control" parent="."]

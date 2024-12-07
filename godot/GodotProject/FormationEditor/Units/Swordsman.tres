@@ -6,5 +6,6 @@
 script = ExtResource("1_rpiya")
 color = Color(1, 0, 0, 1)
 name = "Swordsman"
-category = "🗡️Melee"
+emoji = "🗡️"
+category = "Melee"
 size = 1

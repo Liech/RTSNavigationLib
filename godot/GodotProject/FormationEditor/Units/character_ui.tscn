@@ -36,6 +36,15 @@ layout_mode = 2
 text = "Guard"
 placeholder_text = "Name"
 
+[node name="EmojiLabel" type="Label" parent="MarginContainer/Content/Stats"]
+layout_mode = 2
+text = "Emoji:"
+
+[node name="Emoji" type="LineEdit" parent="MarginContainer/Content/Stats"]
+layout_mode = 2
+text = "🏹"
+placeholder_text = "Name"
+
 [node name="SizeLabel" type="Label" parent="MarginContainer/Content/Stats"]
 layout_mode = 2
 text = "Size:"

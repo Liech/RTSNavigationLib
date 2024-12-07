@@ -9,7 +9,7 @@ func _ready() -> void:
 	unit_types_changed()
 
 func unit_types_changed() -> void:
-	while (list.get_child_count() < FormationEditor.unitTypes.size()):
+	while (list.get_child_count() < FormationEditor.unit_types.size()):
 		var element := character_element.instantiate() as character_ui
 		element.index = list.get_child_count()
 		list.add_child(element)

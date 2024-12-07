@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://wwq8fqo8flxf"]
 
 [ext_resource type="Script" path="res://FormationEditor/Formation/formation_inspector.gd" id="1_r85kf"]
-[ext_resource type="PackedScene" uid="uid://dn5led5tsies3" path="res://FormationEditor/Formation/unit_type_amount.tscn" id="2_227va"]
+[ext_resource type="PackedScene" uid="uid://djommvce35c34" path="res://FormationEditor/Formation/unit_amount_ui.tscn" id="2_l4um8"]
 
 [node name="FormationInspector" type="MarginContainer"]
 anchors_preset = 9
@@ -79,55 +79,7 @@ text = "🗑️"
 layout_mode = 2
 text = "➕"
 
-[node name="UnitAmount" type="MarginContainer" parent="C/Toolbox2"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Background" type="ColorRect" parent="C/Toolbox2/UnitAmount"]
-layout_mode = 2
-color = Color(0.197937, 0.197937, 0.197937, 1)
-
-[node name="M" type="MarginContainer" parent="C/Toolbox2/UnitAmount"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="VBoxContainer" type="VBoxContainer" parent="C/Toolbox2/UnitAmount/M"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="C/Toolbox2/UnitAmount/M/VBoxContainer"]
-layout_mode = 2
-text = "Units in Preview"
-
-[node name="Scroll" type="ScrollContainer" parent="C/Toolbox2/UnitAmount/M/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-horizontal_scroll_mode = 0
-
-[node name="UnitTypeAmounts" type="VBoxContainer" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="UnitTypeAmount" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
-layout_mode = 2
-
-[node name="UnitTypeAmount3" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
-layout_mode = 2
-
-[node name="UnitTypeAmount4" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
-layout_mode = 2
-
-[node name="UnitTypeAmount5" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
-layout_mode = 2
-
-[node name="UnitTypeAmount6" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
+[node name="UnitAmount" parent="C/Toolbox2" instance=ExtResource("2_l4um8")]
 layout_mode = 2
 
 [node name="Toolbox" type="VBoxContainer" parent="C"]

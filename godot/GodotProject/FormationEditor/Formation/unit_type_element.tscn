@@ -1,6 +1,8 @@
-[gd_scene format=3 uid="uid://dn5led5tsies3"]
+[gd_scene load_steps=2 format=3 uid="uid://dn5led5tsies3"]
 
-[node name="UnitTypeAmount" type="MarginContainer"]
+[ext_resource type="Script" path="res://FormationEditor/Formation/unit_type_element.gd" id="1_m2vlj"]
+
+[node name="UnitTypeElement" type="MarginContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -11,6 +13,7 @@ theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
+script = ExtResource("1_m2vlj")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 2
@@ -26,7 +29,7 @@ theme_override_constants/margin_bottom = 5
 [node name="V" type="VBoxContainer" parent="M"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="M/V"]
+[node name="Title" type="Label" parent="M/V"]
 layout_mode = 2
 text = "Swordsman:"
 
@@ -40,7 +43,7 @@ text = "0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="HSlider" type="HSlider" parent="M/V/HBoxContainer"]
+[node name="AmountSlider" type="HSlider" parent="M/V/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
