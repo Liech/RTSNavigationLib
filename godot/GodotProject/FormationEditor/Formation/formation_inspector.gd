@@ -1,6 +1,6 @@
 extends MarginContainer
 
-@onready var tree : Tree = $Toolbox/Hierarchy/M/Sections/SectionTree
+@onready var tree : Tree = $C/Toolbox/Hierarchy/M/Sections/SectionTree
 
 func _ready() -> void:
 	FormationEditor.formations_changed.connect(formations_changed)

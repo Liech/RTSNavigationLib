@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://dn5led5tsies3"]
+
+[node name="UnitTypeAmount" type="MarginContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.255659, 0.255659, 0.255659, 1)
+
+[node name="M" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="V" type="VBoxContainer" parent="M"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="M/V"]
+layout_mode = 2
+text = "Swordsman:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="M/V"]
+layout_mode = 2
+
+[node name="Numbers" type="Label" parent="M/V/HBoxContainer"]
+custom_minimum_size = Vector2(25, 0)
+layout_mode = 2
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HSlider" type="HSlider" parent="M/V/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1

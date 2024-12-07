@@ -1,100 +1,228 @@
-[gd_scene load_steps=2 format=3 uid="uid://wwq8fqo8flxf"]
+[gd_scene load_steps=3 format=3 uid="uid://wwq8fqo8flxf"]
 
 [ext_resource type="Script" path="res://FormationEditor/Formation/formation_inspector.gd" id="1_r85kf"]
+[ext_resource type="PackedScene" uid="uid://dn5led5tsies3" path="res://FormationEditor/Formation/unit_type_amount.tscn" id="2_227va"]
 
 [node name="FormationInspector" type="MarginContainer"]
-offset_right = 230.0
-offset_bottom = 115.0
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 424.0
+grow_vertical = 2
 script = ExtResource("1_r85kf")
 
-[node name="Toolbox" type="VBoxContainer" parent="."]
+[node name="C" type="HBoxContainer" parent="."]
 layout_mode = 2
 
-[node name="Hierarchy" type="MarginContainer" parent="Toolbox"]
+[node name="Toolbox2" type="VBoxContainer" parent="C"]
+layout_mode = 2
+
+[node name="FormationSelection" type="MarginContainer" parent="C/Toolbox2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="C/Toolbox2/FormationSelection"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="M" type="MarginContainer" parent="C/Toolbox2/FormationSelection"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="V" type="VBoxContainer" parent="C/Toolbox2/FormationSelection/M"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="C/Toolbox2/FormationSelection/M/V"]
+layout_mode = 2
+text = "Formations"
+
+[node name="M" type="MarginContainer" parent="C/Toolbox2/FormationSelection/M/V"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="C/Toolbox2/FormationSelection/M/V/M"]
+layout_mode = 2
+color = Color(0.26779, 0.26779, 0.26779, 1)
+
+[node name="FormationList" type="ItemList" parent="C/Toolbox2/FormationSelection/M/V/M"]
+custom_minimum_size = Vector2(150, 0)
+layout_mode = 2
+item_count = 3
+item_0/text = "Rectangle"
+item_1/text = "Defensive"
+item_2/text = "Spearhead"
+
+[node name="Tools" type="HBoxContainer" parent="C/Toolbox2/FormationSelection/M/V"]
+layout_mode = 2
+alignment = 2
+
+[node name="Select" type="Button" parent="C/Toolbox2/FormationSelection/M/V/Tools"]
+layout_mode = 2
+text = "▶️"
+
+[node name="Delete" type="Button" parent="C/Toolbox2/FormationSelection/M/V/Tools"]
+layout_mode = 2
+text = "🗑️"
+
+[node name="Add" type="Button" parent="C/Toolbox2/FormationSelection/M/V/Tools"]
+layout_mode = 2
+text = "➕"
+
+[node name="UnitAmount" type="MarginContainer" parent="C/Toolbox2"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.5
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Background" type="ColorRect" parent="C/Toolbox2/UnitAmount"]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="M" type="MarginContainer" parent="C/Toolbox2/UnitAmount"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="C/Toolbox2/UnitAmount/M"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="C/Toolbox2/UnitAmount/M/VBoxContainer"]
+layout_mode = 2
+text = "Units in Preview"
+
+[node name="Scroll" type="ScrollContainer" parent="C/Toolbox2/UnitAmount/M/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="UnitTypeAmounts" type="VBoxContainer" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="UnitTypeAmount" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
+layout_mode = 2
+
+[node name="UnitTypeAmount3" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
+layout_mode = 2
+
+[node name="UnitTypeAmount4" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
+layout_mode = 2
+
+[node name="UnitTypeAmount5" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
+layout_mode = 2
+
+[node name="UnitTypeAmount6" parent="C/Toolbox2/UnitAmount/M/VBoxContainer/Scroll/UnitTypeAmounts" instance=ExtResource("2_227va")]
+layout_mode = 2
+
+[node name="Toolbox" type="VBoxContainer" parent="C"]
+layout_mode = 2
+
+[node name="Hierarchy" type="MarginContainer" parent="C/Toolbox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Background" type="ColorRect" parent="Toolbox/Hierarchy"]
+[node name="Background" type="ColorRect" parent="C/Toolbox/Hierarchy"]
 layout_mode = 2
 color = Color(0.197937, 0.197937, 0.197937, 1)
 
-[node name="M" type="MarginContainer" parent="Toolbox/Hierarchy"]
+[node name="M" type="MarginContainer" parent="C/Toolbox/Hierarchy"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Sections" type="VBoxContainer" parent="Toolbox/Hierarchy/M"]
+[node name="Sections" type="VBoxContainer" parent="C/Toolbox/Hierarchy/M"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Toolbox/Hierarchy/M/Sections"]
+[node name="Title" type="Label" parent="C/Toolbox/Hierarchy/M/Sections"]
 layout_mode = 2
 text = "Hierarchy
 "
 
-[node name="SectionTree" type="Tree" parent="Toolbox/Hierarchy/M/Sections"]
-custom_minimum_size = Vector2(200, 200)
+[node name="SectionTree" type="Tree" parent="C/Toolbox/Hierarchy/M/Sections"]
+custom_minimum_size = Vector2(200, 150)
 layout_mode = 2
 
-[node name="Tools" type="HBoxContainer" parent="Toolbox/Hierarchy/M/Sections"]
+[node name="Tools" type="HBoxContainer" parent="C/Toolbox/Hierarchy/M/Sections"]
 layout_mode = 2
 alignment = 2
 
-[node name="Delete" type="Button" parent="Toolbox/Hierarchy/M/Sections/Tools"]
+[node name="Delete" type="Button" parent="C/Toolbox/Hierarchy/M/Sections/Tools"]
 layout_mode = 2
 text = "🗑️"
 
-[node name="Add" type="Button" parent="Toolbox/Hierarchy/M/Sections/Tools"]
+[node name="Add" type="Button" parent="C/Toolbox/Hierarchy/M/Sections/Tools"]
 layout_mode = 2
 text = "➕"
 
-[node name="Inspector" type="MarginContainer" parent="Toolbox"]
+[node name="Inspector" type="MarginContainer" parent="C/Toolbox"]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Background" type="ColorRect" parent="Toolbox/Inspector"]
+[node name="Background" type="ColorRect" parent="C/Toolbox/Inspector"]
 layout_mode = 2
 color = Color(0.197937, 0.197937, 0.197937, 1)
 
-[node name="M" type="MarginContainer" parent="Toolbox/Inspector"]
+[node name="S" type="ScrollContainer" parent="C/Toolbox/Inspector"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="M" type="MarginContainer" parent="C/Toolbox/Inspector/S"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Stats" type="VBoxContainer" parent="Toolbox/Inspector/M"]
+[node name="Stats" type="VBoxContainer" parent="C/Toolbox/Inspector/S/M"]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="Toolbox/Inspector/M/Stats"]
+[node name="Title" type="Label" parent="C/Toolbox/Inspector/S/M/Stats"]
 layout_mode = 2
 text = "Formation"
 
-[node name="Stats2" type="GridContainer" parent="Toolbox/Inspector/M/Stats"]
+[node name="Stats2" type="GridContainer" parent="C/Toolbox/Inspector/S/M/Stats"]
 layout_mode = 2
 columns = 2
 
-[node name="NameLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="NameLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Name: "
 
-[node name="Name" type="LineEdit" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="Name" type="LineEdit" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "e.g. Inner Wall"
 
-[node name="PlacementBehaviorLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="PlacementBehaviorLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Placement Behavior:"
 
-[node name="PlacementBehavior" type="OptionButton" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="PlacementBehavior" type="OptionButton" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 selected = 0
 item_count = 3
@@ -104,73 +232,74 @@ popup/item_1/id = 1
 popup/item_2/text = "Distribute Evenly"
 popup/item_2/id = 2
 
-[node name="CategoryLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="CategoryLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Category:"
 
-[node name="Category" type="OptionButton" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="Category" type="OptionButton" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 item_count = 1
 
-[node name="RotateWILabel2" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="RotateWILabel2" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Rotate with Interface;"
 
-[node name="RotateWithInterface" type="CheckBox" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="RotateWithInterface" type="CheckBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 
-[node name="RotationLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="RotationLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Rotation:"
 
-[node name="Rotation" type="HSlider" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="Rotation" type="HSlider" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 
-[node name="InterfaceWidthLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="InterfaceWidthLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Interface Width:"
 
-[node name="InterfaceWidth" type="CheckBox" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="InterfaceWidth" type="CheckBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 
-[node name="WeightLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="WeightLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Weight:"
 
-[node name="HSlider" type="HSlider" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="HSlider" type="HSlider" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 
-[node name="OwnInterfaceLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="OwnInterfaceLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Own Point"
 
-[node name="OwnInterface" type="SpinBox" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="OwnInterface" type="SpinBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 
-[node name="ParentInterface" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="ParentInterface" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Parent Interface:"
 
-[node name="ParentInterface2" type="SpinBox" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="ParentInterface2" type="SpinBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 
-[node name="ShapeLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="ShapeLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Shape:"
 
-[node name="Shape" type="OptionButton" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="Shape" type="OptionButton" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 selected = 0
 item_count = 3
 popup/item_0/text = "☐Rectangle"
 popup/item_0/id = 1
 popup/item_1/text = "🔺Triangle"
+popup/item_1/id = 1
 popup/item_2/text = "⭕Circle"
 popup/item_2/id = 2
 
-[node name="ArcLabel" type="Label" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="ArcLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
 text = "Arc:"
 
-[node name="Arc" type="HSlider" parent="Toolbox/Inspector/M/Stats/Stats2"]
+[node name="Arc" type="HSlider" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
 layout_mode = 2
