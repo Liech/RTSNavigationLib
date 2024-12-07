@@ -7,7 +7,6 @@ func _ready() -> void:
 	FormationEditor.formations_changed.connect(formation_changed)
 	formation_changed()
 	
-
 func formation_changed() -> void:
 	list.clear()
 	for x in FormationEditor.formations:
@@ -18,6 +17,7 @@ func _on_select_pressed() -> void:
 		return
 	var index : int = list.get_selected_items()[0]
 	FormationEditor.current_formation = FormationEditor.formations[index]
+	FormationEditor.current_root_formation = FormationEditor.current_formation
 	FormationEditor.current_formation_changed.emit()
 
 func _on_delete_pressed() -> void:

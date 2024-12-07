@@ -1,5 +1,7 @@
 class_name Formation extends Resource
 
+enum Shape{Rectangle,Triangle,Circle}
+
 @export var children : Array[Formation]
 @export var name : String
 
@@ -10,9 +12,9 @@ class_name Formation extends Resource
 @export var rotation : float
 @export var category : String
 @export var weight : float
-@export var placement_behavior : RTSFormation.PlacementBehavior              
-
-
+@export var placement_behavior : RTSFormation.PlacementBehavior       
+@export var shape : Shape       
+@export var arc : float       
 
 func randomize()->void:
 	#randomize
@@ -25,4 +27,6 @@ func randomize()->void:
 	overwrite_width_with_interface_width = [false,true].pick_random()
 	weight = randf()
 	rotation = randf()*PI*2
+	arc = randf()*PI*2
+	shape = [Shape.Rectangle,Shape.Triangle,Shape.Circle].pick_random()
 	

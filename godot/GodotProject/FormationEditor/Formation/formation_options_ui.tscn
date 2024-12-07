@@ -98,21 +98,17 @@ text = "Weight:"
 layout_mode = 2
 
 [node name="OwnInterfaceLabel" type="Label" parent="S/M/Stats/Stats"]
-visible = false
 layout_mode = 2
 text = "Own Point"
 
 [node name="OwnInterface" type="SpinBox" parent="S/M/Stats/Stats"]
-visible = false
 layout_mode = 2
 
 [node name="ParentInterfaceLabel" type="Label" parent="S/M/Stats/Stats"]
-visible = false
 layout_mode = 2
 text = "Parent Interface:"
 
 [node name="ParentInterface" type="SpinBox" parent="S/M/Stats/Stats"]
-visible = false
 layout_mode = 2
 
 [node name="ShapeLabel" type="Label" parent="S/M/Stats/Stats"]
@@ -138,3 +134,15 @@ text = "Arc:"
 [node name="Arc" type="HSlider" parent="S/M/Stats/Stats"]
 visible = false
 layout_mode = 2
+
+[connection signal="text_submitted" from="S/M/Stats/Stats/Name" to="." method="_on_name_text_submitted"]
+[connection signal="item_selected" from="S/M/Stats/Stats/PlacementBehavior" to="." method="_on_placement_behavior_item_selected"]
+[connection signal="item_selected" from="S/M/Stats/Stats/Category" to="." method="_on_category_item_selected"]
+[connection signal="toggled" from="S/M/Stats/Stats/RotateWithInterface" to="." method="_on_rotate_with_interface_toggled"]
+[connection signal="drag_ended" from="S/M/Stats/Stats/Rotation" to="." method="_on_rotation_drag_ended"]
+[connection signal="toggled" from="S/M/Stats/Stats/InterfaceWidth" to="." method="_on_interface_width_toggled"]
+[connection signal="drag_ended" from="S/M/Stats/Stats/Weight" to="." method="_on_weight_drag_ended"]
+[connection signal="value_changed" from="S/M/Stats/Stats/OwnInterface" to="." method="_on_own_interface_value_changed"]
+[connection signal="value_changed" from="S/M/Stats/Stats/ParentInterface" to="." method="_on_parent_interface_value_changed"]
+[connection signal="item_selected" from="S/M/Stats/Stats/Shape" to="." method="_on_shape_item_selected"]
+[connection signal="drag_ended" from="S/M/Stats/Stats/Arc" to="." method="_on_arc_drag_ended"]

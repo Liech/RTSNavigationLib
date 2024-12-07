@@ -8,16 +8,14 @@ func _ready() -> void:
 	current_formation_changed()
 	
 func current_formation_changed()->void:
-	if (FormationEditor.current_formation == null):
+	if (FormationEditor.current_root_formation == null):
 		visible = false
 		return
 	visible = true
-	if (!FormationEditor.formations.has(FormationEditor.current_formation)):
-		return
 	tree.clear()
 	if (FormationEditor.formations.size() == 0):
 		return;
-	var selected := FormationEditor.current_formation
+	var selected := FormationEditor.current_root_formation
 	add_tree_child(selected,null)
 	
 func add_tree_child(formation : Formation, parent : TreeItem)->void:
@@ -50,7 +48,7 @@ func _on_add_pressed() -> void:
 	if (selection):
 		var new_formation : Formation = Formation.new()
 		var prefix : String = ["North ", "West ", "East ", " South", "Back ", "Front ", "Side ", "False ", "True ", "Main ", "Sub "].pick_random()
-		var suffix : String = ["Quarter", "Dangle", "Half", "Support", "Scout", "Defense", "Offense", "Lance", "Layer"].pick_random()
+		var suffix : String = ["Quarter", "Dangle", "Half", "Support", "Scouts", "Defense", "Offense", "Lance", "Layer"].pick_random()
 		new_formation.randomize()
 		new_formation.name = prefix+suffix
 		var selected := selection.get_metadata(0) as Formation
