@@ -18,10 +18,6 @@ func unit_types_changed() -> void:
 	Title.text =  FormationEditor.unit_types[index].emoji + " " + FormationEditor.unit_types[index].name
 	unit_amount_changed()
 
-func _on_amount_slider_value_changed(value: float) -> void:
-	FormationEditor.unit_amount[FormationEditor.unit_types[index].name] = int(value);
-	unit_amount_changed()
-
 func unit_amount_changed() -> void:
 	if FormationEditor.unit_amount.has(FormationEditor.unit_types[index].name):
 		Amount.text = str(FormationEditor.unit_amount[FormationEditor.unit_types[index].name])
@@ -29,3 +25,13 @@ func unit_amount_changed() -> void:
 	else:
 		Amount.text = "0"
 		slide.value = 0
+
+func _on_amount_slider_drag_ended(value_changed: bool) -> void:
+	if (!value_changed):
+		return
+	FormationEditor.unit_amount[FormationEditor.unit_types[index].name] = int(slide.value);
+	unit_amount_changed()
+	FormationEditor.unit_amount_changed.emit()
+
+func _on_amount_slider_changed() -> void:
+	Amount.text = str(slide.value)

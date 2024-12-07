@@ -5,6 +5,7 @@
 #include "RTSNavigation.h"
 #include "RTSShapeArc.h"
 #include "RTSShapeRect.h"
+#include "RTSShapeTri.h"
 #include "RTSBody.h"
 
 #include <gdextension_interface.h>
@@ -25,6 +26,7 @@ void initialize_example_module(ModuleInitializationLevel p_level)
     ClassDB::register_class<RTSFormationShape>();
     ClassDB::register_class<RTSShapeArc>();
     ClassDB::register_class<RTSShapeRect>();
+    ClassDB::register_class<RTSShapeTri>();
     ClassDB::register_class<RTSBody>();
 }
 

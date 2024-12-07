@@ -30,3 +30,25 @@ func randomize()->void:
 	arc = randf()*PI*2
 	shape = [Shape.Rectangle,Shape.Triangle,Shape.Circle].pick_random()
 	
+func toRTS() -> RTSFormation:
+	var result : RTSFormation = RTSFormation.new()
+	result.category = FormationEditor.categories.find(category)
+	result.own_interface_point = own_InterfacePoint
+	result.parent_interface_point = parent_interface_point
+	result.overwrite_width_with_interface_width = overwrite_width_with_interface_width
+	result.rotate_with_interface = rotate_with_interface
+	result.rotation = rotation
+	result.weight = weight
+	result.placement_behavior = placement_behavior
+	
+	if (shape == Shape.Rectangle):
+		result.shape =RTSShapeRect.new()
+	elif (shape == Shape.Triangle):
+		result.shape =RTSShapeTri.new()
+	elif (shape == Shape.Circle):
+		result.shape =RTSShapeArc.new()
+		result.shape.arc_angle_radian = arc
+		
+	for x in children:
+		result.children.push_back(x.toRTS())
+	return result

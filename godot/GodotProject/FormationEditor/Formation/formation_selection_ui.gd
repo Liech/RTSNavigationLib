@@ -34,3 +34,7 @@ func _on_add_pressed() -> void:
 	FormationEditor.formations.append(new_formation)
 	FormationEditor.formations_changed.emit()
 	
+func _on_unselect_pressed() -> void:
+	FormationEditor.current_formation = null
+	FormationEditor.current_root_formation = null
+	FormationEditor.current_formation_changed.emit()

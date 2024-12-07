@@ -50,6 +50,7 @@ namespace godot
                               "set_children",
                               "get_children");
         ClassDB::bind_method(D_METHOD("calculate", "bodies"), &RTSFormation::calculate);
+        ClassDB::bind_method(D_METHOD("toJson"), &RTSFormation::toJSON);
     }
 
     RTSFormation::RTSFormation()
@@ -60,6 +61,11 @@ namespace godot
     RTSFormation::~RTSFormation()
     {
         // Add your cleanup here.
+    }
+
+    godot::String RTSFormation::toJSON() const
+    {
+        return godot::String(toFormation()->toJson().dump(2).c_str());
     }
 
     TypedArray<RTSBody> RTSFormation::calculate(const TypedArray<RTSBody>& pre_bodies) const
@@ -74,7 +80,9 @@ namespace godot
 
         for (const auto& x : places)
         {
+          
             Ref<RTSBody> place;
+            place.instantiate();
             place->category = x.category;
             place->size     = x.size;
             place->position = x.position;

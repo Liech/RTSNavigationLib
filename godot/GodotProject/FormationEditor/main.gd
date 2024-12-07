@@ -4,8 +4,9 @@ extends Node
 @export var start_categories : Array[String]
 @export var start_formations : Array[Formation]
 
-@onready var unit_scene : Node = $Scenes/UnitScene
-@onready var formation_scene : Node = $Scenes/Formations
+@onready var unit_scene : Node = $CanvasLayer/HBoxContainer/Scenes/UnitScene
+@onready var formation_scene : Node = $CanvasLayer/HBoxContainer/Scenes/Formations
+@onready var formation_preview : Node = $FormationPreview
 
 func _ready() -> void:
 	FormationEditor.formations = start_formations
@@ -18,7 +19,9 @@ func _ready() -> void:
 func _on_characters_pressed() -> void:
 	unit_scene.visible = true
 	formation_scene.visible = false
+	formation_preview.visible = false
 
 func _on_formations_pressed() -> void:
 	unit_scene.visible = false
 	formation_scene.visible = true
+	formation_preview.visible = true

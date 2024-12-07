@@ -49,6 +49,7 @@ namespace godot
         Ref<RTSFormationShape>   get_shape() const;
         void                     set_shape(Ref<RTSFormationShape>);
         TypedArray<RTSBody>      calculate(const TypedArray<RTSBody>&) const;
+        godot::String            toJSON() const;
 
         std::unique_ptr<RTSNavigationLib::Formation> toFormation() const;
 

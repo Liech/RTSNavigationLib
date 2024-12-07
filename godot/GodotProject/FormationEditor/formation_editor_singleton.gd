@@ -14,3 +14,4 @@ var formations : Array[Formation]
 var unit_amount : Dictionary = {}
 var current_root_formation : Formation = null
 var current_formation : Formation = null
+var preview_scene : PreviewScene = null

@@ -134,6 +134,8 @@ text = "Arc:"
 [node name="Arc" type="HSlider" parent="S/M/Stats/Stats"]
 visible = false
 layout_mode = 2
+max_value = 6.283
+step = 0.1
 
 [connection signal="text_submitted" from="S/M/Stats/Stats/Name" to="." method="_on_name_text_submitted"]
 [connection signal="item_selected" from="S/M/Stats/Stats/PlacementBehavior" to="." method="_on_placement_behavior_item_selected"]

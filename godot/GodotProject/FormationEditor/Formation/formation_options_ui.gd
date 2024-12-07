@@ -82,9 +82,9 @@ func _on_parent_interface_value_changed(value: float) -> void:
 	FormationEditor.current_formation.parent_interface_point = value
 	FormationEditor.formation_value_changed.emit()
 func _on_shape_item_selected(index: int) -> void:
-	update_bounds()
 	FormationEditor.current_formation.shape = index
 	FormationEditor.formation_value_changed.emit()
+	update_bounds()
 func _on_arc_drag_ended(value_changed: bool) -> void:
 	if (!value_changed):
 		return

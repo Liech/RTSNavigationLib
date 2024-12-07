@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bcf50atqa4ytt"]
+[gd_scene load_steps=12 format=3 uid="uid://bcf50atqa4ytt"]
 
 [ext_resource type="Script" path="res://FormationEditor/main.gd" id="1_84o8j"]
 [ext_resource type="PackedScene" uid="uid://cuyqjnydxmlf0" path="res://FormationEditor/Units/unit_type_ui.tscn" id="1_86nhx"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://cr5eb1kfgt1o3" path="res://FormationEditor/Units/Swordsman.tres" id="3_ov0ip"]
 [ext_resource type="Script" path="res://FormationEditor/Formation/formation.gd" id="4_piqbr"]
 [ext_resource type="PackedScene" uid="uid://wwq8fqo8flxf" path="res://FormationEditor/Formation/formation_inspector.tscn" id="6_xdwt5"]
+[ext_resource type="PackedScene" uid="uid://bsxrdp5lppiij" path="res://FormationEditor/Formation/preview_formation.tscn" id="8_2fv3r"]
 
 [sub_resource type="Resource" id="Resource_wn2hc"]
 script = ExtResource("2_1nw7d")
@@ -50,11 +51,20 @@ start_unit_types = Array[ExtResource("2_1nw7d")]([ExtResource("3_ov0ip"), SubRes
 start_categories = Array[String](["Melee", "Ranged", "Support"])
 start_formations = Array[ExtResource("4_piqbr")]([SubResource("Resource_avk3v")])
 
-[node name="Scenes" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scenes" type="Control" parent="CanvasLayer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="UnitScene" type="HBoxContainer" parent="Scenes"]
+[node name="UnitScene" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Scenes"]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -64,13 +74,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 
-[node name="UnitTypeScene" parent="Scenes/UnitScene" instance=ExtResource("1_86nhx")]
+[node name="UnitTypeScene" parent="CanvasLayer/HBoxContainer/Scenes/UnitScene" instance=ExtResource("1_86nhx")]
 layout_mode = 2
 
-[node name="CategoryScene" parent="Scenes/UnitScene" instance=ExtResource("2_w4qae")]
+[node name="CategoryScene" parent="CanvasLayer/HBoxContainer/Scenes/UnitScene" instance=ExtResource("2_w4qae")]
 layout_mode = 2
 
-[node name="Formations" type="HBoxContainer" parent="Scenes"]
+[node name="Formations" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Scenes"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -78,37 +88,39 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="FormationInspector" parent="Scenes/Formations" instance=ExtResource("6_xdwt5")]
+[node name="FormationInspector" parent="CanvasLayer/HBoxContainer/Scenes/Formations" instance=ExtResource("6_xdwt5")]
 layout_mode = 2
 
-[node name="SceneSelection" type="MarginContainer" parent="."]
+[node name="SceneSelection" type="MarginContainer" parent="CanvasLayer/HBoxContainer"]
 layout_mode = 2
 theme_override_constants/margin_left = 0
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 0
 theme_override_constants/margin_bottom = 0
 
-[node name="Background" type="ColorRect" parent="SceneSelection"]
+[node name="Background" type="ColorRect" parent="CanvasLayer/HBoxContainer/SceneSelection"]
 layout_mode = 2
 color = Color(0.409603, 0.409603, 0.409603, 1)
 
-[node name="SceneButtons" type="MarginContainer" parent="SceneSelection"]
+[node name="SceneButtons" type="MarginContainer" parent="CanvasLayer/HBoxContainer/SceneSelection"]
 layout_mode = 2
 theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="Scenes" type="VBoxContainer" parent="SceneSelection/SceneButtons"]
+[node name="Scenes" type="VBoxContainer" parent="CanvasLayer/HBoxContainer/SceneSelection/SceneButtons"]
 layout_mode = 2
 
-[node name="Characters" type="Button" parent="SceneSelection/SceneButtons/Scenes"]
+[node name="Characters" type="Button" parent="CanvasLayer/HBoxContainer/SceneSelection/SceneButtons/Scenes"]
 layout_mode = 2
 text = "Characters"
 
-[node name="Formations" type="Button" parent="SceneSelection/SceneButtons/Scenes"]
+[node name="Formations" type="Button" parent="CanvasLayer/HBoxContainer/SceneSelection/SceneButtons/Scenes"]
 layout_mode = 2
 text = "Formations"
 
-[connection signal="pressed" from="SceneSelection/SceneButtons/Scenes/Characters" to="." method="_on_characters_pressed"]
-[connection signal="pressed" from="SceneSelection/SceneButtons/Scenes/Formations" to="." method="_on_formations_pressed"]
+[node name="FormationPreview" parent="." instance=ExtResource("8_2fv3r")]
+
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/SceneSelection/SceneButtons/Scenes/Characters" to="." method="_on_characters_pressed"]
+[connection signal="pressed" from="CanvasLayer/HBoxContainer/SceneSelection/SceneButtons/Scenes/Formations" to="." method="_on_formations_pressed"]

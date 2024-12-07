@@ -1,17 +1,18 @@
 [gd_scene load_steps=6 format=3 uid="uid://wwq8fqo8flxf"]
 
-[ext_resource type="Script" path="res://FormationEditor/Formation/formation_inspector.gd" id="1_r85kf"]
 [ext_resource type="PackedScene" uid="uid://bi0h5djpo6bvr" path="res://FormationEditor/Formation/formation_selection_ui.tscn" id="2_4f8qp"]
 [ext_resource type="PackedScene" uid="uid://djommvce35c34" path="res://FormationEditor/Formation/unit_amount_ui.tscn" id="2_l4um8"]
 [ext_resource type="PackedScene" uid="uid://d37xhp0t7mvna" path="res://FormationEditor/Formation/formation_hierarchy_ui.tscn" id="4_cfi2n"]
 [ext_resource type="PackedScene" uid="uid://durkuy7pxdeb5" path="res://FormationEditor/Formation/formation_options_ui.tscn" id="4_ya0pf"]
+[ext_resource type="Script" path="res://FormationEditor/Formation/home.gd" id="5_rkfug"]
 
 [node name="FormationInspector" type="MarginContainer"]
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 424.0
 grow_vertical = 2
-script = ExtResource("1_r85kf")
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="C" type="HBoxContainer" parent="."]
 layout_mode = 2
@@ -33,3 +34,30 @@ layout_mode = 2
 
 [node name="Inspector" parent="C/Toolbox" instance=ExtResource("4_ya0pf")]
 layout_mode = 2
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_bottom = 40.0
+grow_horizontal = 0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+
+[node name="Home" type="Button" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+text = "🏠"
+script = ExtResource("5_rkfug")
+
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/Home" to="Control/MarginContainer/HBoxContainer/Home" method="_on_pressed"]
