@@ -12,31 +12,79 @@
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([])
 name = "Wub"
+own_InterfacePoint = 0
+parent_interface_point = 0
+overwrite_width_with_interface_width = false
+rotate_with_interface = false
+rotation = 0.0
+category = ""
+weight = 0.0
+placement_behavior = 0
 
 [sub_resource type="Resource" id="Resource_hwsxu"]
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([])
 name = "A"
+own_InterfacePoint = 0
+parent_interface_point = 0
+overwrite_width_with_interface_width = false
+rotate_with_interface = false
+rotation = 0.0
+category = ""
+weight = 0.0
+placement_behavior = 0
 
 [sub_resource type="Resource" id="Resource_7403o"]
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([])
 name = "B"
+own_InterfacePoint = 0
+parent_interface_point = 0
+overwrite_width_with_interface_width = false
+rotate_with_interface = false
+rotation = 0.0
+category = ""
+weight = 0.0
+placement_behavior = 0
 
 [sub_resource type="Resource" id="Resource_2masi"]
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([])
 name = "C"
+own_InterfacePoint = 0
+parent_interface_point = 0
+overwrite_width_with_interface_width = false
+rotate_with_interface = false
+rotation = 0.0
+category = ""
+weight = 0.0
+placement_behavior = 0
 
 [sub_resource type="Resource" id="Resource_b87vp"]
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([SubResource("Resource_hwsxu"), SubResource("Resource_7403o"), SubResource("Resource_2masi")])
 name = "WubbWub"
+own_InterfacePoint = 0
+parent_interface_point = 0
+overwrite_width_with_interface_width = false
+rotate_with_interface = false
+rotation = 0.0
+category = ""
+weight = 0.0
+placement_behavior = 0
 
 [sub_resource type="Resource" id="Resource_avk3v"]
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([SubResource("Resource_kp3xd"), SubResource("Resource_b87vp")])
 name = "Main"
+own_InterfacePoint = 0
+parent_interface_point = 0
+overwrite_width_with_interface_width = false
+rotate_with_interface = false
+rotation = 0.0
+category = ""
+weight = 0.0
+placement_behavior = 0
 
 [node name="Main" type="HBoxContainer"]
 anchors_preset = 15
