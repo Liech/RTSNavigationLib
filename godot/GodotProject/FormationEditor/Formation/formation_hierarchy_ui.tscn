@@ -1,0 +1,53 @@
+[gd_scene load_steps=2 format=3 uid="uid://d37xhp0t7mvna"]
+
+[ext_resource type="Script" path="res://FormationEditor/Formation/formation_hierarchy_ui.gd" id="1_j6ug2"]
+
+[node name="Hierarchy" type="MarginContainer"]
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_j6ug2")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="M" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Sections" type="VBoxContainer" parent="M"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="M/Sections"]
+layout_mode = 2
+text = "Hierarchy
+"
+
+[node name="SectionTree" type="Tree" parent="M/Sections"]
+custom_minimum_size = Vector2(200, 150)
+layout_mode = 2
+
+[node name="Tools" type="HBoxContainer" parent="M/Sections"]
+layout_mode = 2
+alignment = 2
+
+[node name="Select" type="Button" parent="M/Sections/Tools"]
+layout_mode = 2
+text = "▶️"
+
+[node name="Delete" type="Button" parent="M/Sections/Tools"]
+layout_mode = 2
+text = "🗑️"
+
+[node name="Add" type="Button" parent="M/Sections/Tools"]
+layout_mode = 2
+text = "➕"
+
+[connection signal="pressed" from="M/Sections/Tools/Select" to="." method="_on_select_pressed"]
+[connection signal="pressed" from="M/Sections/Tools/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="M/Sections/Tools/Add" to="." method="_on_add_pressed"]

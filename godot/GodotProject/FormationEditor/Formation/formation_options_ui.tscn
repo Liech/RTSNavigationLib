@@ -1,0 +1,140 @@
+[gd_scene load_steps=2 format=3 uid="uid://durkuy7pxdeb5"]
+
+[ext_resource type="Script" path="res://FormationEditor/Formation/formation_options_ui.gd" id="1_a0ihc"]
+
+[node name="Inspector" type="MarginContainer"]
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+script = ExtResource("1_a0ihc")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 2
+color = Color(0.197937, 0.197937, 0.197937, 1)
+
+[node name="S" type="ScrollContainer" parent="."]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="M" type="MarginContainer" parent="S"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="Stats" type="VBoxContainer" parent="S/M"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="S/M/Stats"]
+layout_mode = 2
+text = "Formation"
+
+[node name="Stats" type="GridContainer" parent="S/M/Stats"]
+layout_mode = 2
+columns = 2
+
+[node name="NameLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Name: "
+
+[node name="Name" type="LineEdit" parent="S/M/Stats/Stats"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+placeholder_text = "e.g. Inner Wall"
+
+[node name="PlacementBehaviorLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Placement Behavior:"
+
+[node name="PlacementBehavior" type="OptionButton" parent="S/M/Stats/Stats"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "Center First"
+popup/item_1/text = "Outer First"
+popup/item_1/id = 1
+popup/item_2/text = "Distribute Evenly"
+popup/item_2/id = 2
+
+[node name="CategoryLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Category:"
+
+[node name="Category" type="OptionButton" parent="S/M/Stats/Stats"]
+layout_mode = 2
+item_count = 1
+
+[node name="RotateWILabel2" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Rotate with Interface;"
+
+[node name="RotateWithInterface" type="CheckBox" parent="S/M/Stats/Stats"]
+layout_mode = 2
+
+[node name="RotationLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Rotation:"
+
+[node name="Rotation" type="HSlider" parent="S/M/Stats/Stats"]
+layout_mode = 2
+max_value = 6.283
+step = 0.1
+
+[node name="InterfaceWidthLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Interface Width:"
+
+[node name="InterfaceWidth" type="CheckBox" parent="S/M/Stats/Stats"]
+layout_mode = 2
+
+[node name="WeightLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Weight:"
+
+[node name="Weight" type="HSlider" parent="S/M/Stats/Stats"]
+layout_mode = 2
+
+[node name="OwnInterfaceLabel" type="Label" parent="S/M/Stats/Stats"]
+visible = false
+layout_mode = 2
+text = "Own Point"
+
+[node name="OwnInterface" type="SpinBox" parent="S/M/Stats/Stats"]
+visible = false
+layout_mode = 2
+
+[node name="ParentInterfaceLabel" type="Label" parent="S/M/Stats/Stats"]
+visible = false
+layout_mode = 2
+text = "Parent Interface:"
+
+[node name="ParentInterface" type="SpinBox" parent="S/M/Stats/Stats"]
+visible = false
+layout_mode = 2
+
+[node name="ShapeLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Shape:"
+
+[node name="Shape" type="OptionButton" parent="S/M/Stats/Stats"]
+layout_mode = 2
+selected = 0
+item_count = 3
+popup/item_0/text = "☐Rectangle"
+popup/item_0/id = 1
+popup/item_1/text = "🔺Triangle"
+popup/item_1/id = 1
+popup/item_2/text = "⭕Circle"
+popup/item_2/id = 2
+
+[node name="ArcLabel" type="Label" parent="S/M/Stats/Stats"]
+visible = false
+layout_mode = 2
+text = "Arc:"
+
+[node name="Arc" type="HSlider" parent="S/M/Stats/Stats"]
+visible = false
+layout_mode = 2

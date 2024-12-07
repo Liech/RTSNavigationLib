@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://wwq8fqo8flxf"]
+[gd_scene load_steps=6 format=3 uid="uid://wwq8fqo8flxf"]
 
 [ext_resource type="Script" path="res://FormationEditor/Formation/formation_inspector.gd" id="1_r85kf"]
+[ext_resource type="PackedScene" uid="uid://bi0h5djpo6bvr" path="res://FormationEditor/Formation/formation_selection_ui.tscn" id="2_4f8qp"]
 [ext_resource type="PackedScene" uid="uid://djommvce35c34" path="res://FormationEditor/Formation/unit_amount_ui.tscn" id="2_l4um8"]
+[ext_resource type="PackedScene" uid="uid://d37xhp0t7mvna" path="res://FormationEditor/Formation/formation_hierarchy_ui.tscn" id="4_cfi2n"]
+[ext_resource type="PackedScene" uid="uid://durkuy7pxdeb5" path="res://FormationEditor/Formation/formation_options_ui.tscn" id="4_ya0pf"]
 
 [node name="FormationInspector" type="MarginContainer"]
 anchors_preset = 9
@@ -16,68 +19,8 @@ layout_mode = 2
 [node name="Toolbox2" type="VBoxContainer" parent="C"]
 layout_mode = 2
 
-[node name="FormationSelection" type="MarginContainer" parent="C/Toolbox2"]
+[node name="FormationSelection" parent="C/Toolbox2" instance=ExtResource("2_4f8qp")]
 layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.5
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Background" type="ColorRect" parent="C/Toolbox2/FormationSelection"]
-layout_mode = 2
-color = Color(0.197937, 0.197937, 0.197937, 1)
-
-[node name="M" type="MarginContainer" parent="C/Toolbox2/FormationSelection"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="V" type="VBoxContainer" parent="C/Toolbox2/FormationSelection/M"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="C/Toolbox2/FormationSelection/M/V"]
-layout_mode = 2
-text = "Formations"
-
-[node name="M" type="MarginContainer" parent="C/Toolbox2/FormationSelection/M/V"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Background" type="ColorRect" parent="C/Toolbox2/FormationSelection/M/V/M"]
-layout_mode = 2
-color = Color(0.26779, 0.26779, 0.26779, 1)
-
-[node name="FormationList" type="ItemList" parent="C/Toolbox2/FormationSelection/M/V/M"]
-custom_minimum_size = Vector2(150, 0)
-layout_mode = 2
-item_count = 3
-item_0/text = "Rectangle"
-item_1/text = "Defensive"
-item_2/text = "Spearhead"
-
-[node name="Tools" type="HBoxContainer" parent="C/Toolbox2/FormationSelection/M/V"]
-layout_mode = 2
-alignment = 2
-
-[node name="Select" type="Button" parent="C/Toolbox2/FormationSelection/M/V/Tools"]
-layout_mode = 2
-text = "▶️"
-
-[node name="Delete" type="Button" parent="C/Toolbox2/FormationSelection/M/V/Tools"]
-layout_mode = 2
-text = "🗑️"
-
-[node name="Add" type="Button" parent="C/Toolbox2/FormationSelection/M/V/Tools"]
-layout_mode = 2
-text = "➕"
 
 [node name="UnitAmount" parent="C/Toolbox2" instance=ExtResource("2_l4um8")]
 layout_mode = 2
@@ -85,173 +28,8 @@ layout_mode = 2
 [node name="Toolbox" type="VBoxContainer" parent="C"]
 layout_mode = 2
 
-[node name="Hierarchy" type="MarginContainer" parent="C/Toolbox"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Background" type="ColorRect" parent="C/Toolbox/Hierarchy"]
-layout_mode = 2
-color = Color(0.197937, 0.197937, 0.197937, 1)
-
-[node name="M" type="MarginContainer" parent="C/Toolbox/Hierarchy"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Sections" type="VBoxContainer" parent="C/Toolbox/Hierarchy/M"]
+[node name="Hierarchy" parent="C/Toolbox" instance=ExtResource("4_cfi2n")]
 layout_mode = 2
 
-[node name="Title" type="Label" parent="C/Toolbox/Hierarchy/M/Sections"]
-layout_mode = 2
-text = "Hierarchy
-"
-
-[node name="SectionTree" type="Tree" parent="C/Toolbox/Hierarchy/M/Sections"]
-custom_minimum_size = Vector2(200, 150)
-layout_mode = 2
-
-[node name="Tools" type="HBoxContainer" parent="C/Toolbox/Hierarchy/M/Sections"]
-layout_mode = 2
-alignment = 2
-
-[node name="Delete" type="Button" parent="C/Toolbox/Hierarchy/M/Sections/Tools"]
-layout_mode = 2
-text = "🗑️"
-
-[node name="Add" type="Button" parent="C/Toolbox/Hierarchy/M/Sections/Tools"]
-layout_mode = 2
-text = "➕"
-
-[node name="Inspector" type="MarginContainer" parent="C/Toolbox"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="Background" type="ColorRect" parent="C/Toolbox/Inspector"]
-layout_mode = 2
-color = Color(0.197937, 0.197937, 0.197937, 1)
-
-[node name="S" type="ScrollContainer" parent="C/Toolbox/Inspector"]
-custom_minimum_size = Vector2(0, 400)
-layout_mode = 2
-horizontal_scroll_mode = 0
-
-[node name="M" type="MarginContainer" parent="C/Toolbox/Inspector/S"]
-layout_mode = 2
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 10
-
-[node name="Stats" type="VBoxContainer" parent="C/Toolbox/Inspector/S/M"]
-layout_mode = 2
-
-[node name="Title" type="Label" parent="C/Toolbox/Inspector/S/M/Stats"]
-layout_mode = 2
-text = "Formation"
-
-[node name="Stats2" type="GridContainer" parent="C/Toolbox/Inspector/S/M/Stats"]
-layout_mode = 2
-columns = 2
-
-[node name="NameLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Name: "
-
-[node name="Name" type="LineEdit" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-placeholder_text = "e.g. Inner Wall"
-
-[node name="PlacementBehaviorLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Placement Behavior:"
-
-[node name="PlacementBehavior" type="OptionButton" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-selected = 0
-item_count = 3
-popup/item_0/text = "Center First"
-popup/item_1/text = "Outer First"
-popup/item_1/id = 1
-popup/item_2/text = "Distribute Evenly"
-popup/item_2/id = 2
-
-[node name="CategoryLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Category:"
-
-[node name="Category" type="OptionButton" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-item_count = 1
-
-[node name="RotateWILabel2" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Rotate with Interface;"
-
-[node name="RotateWithInterface" type="CheckBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-
-[node name="RotationLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Rotation:"
-
-[node name="Rotation" type="HSlider" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-
-[node name="InterfaceWidthLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Interface Width:"
-
-[node name="InterfaceWidth" type="CheckBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-
-[node name="WeightLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Weight:"
-
-[node name="HSlider" type="HSlider" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-
-[node name="OwnInterfaceLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Own Point"
-
-[node name="OwnInterface" type="SpinBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-
-[node name="ParentInterface" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Parent Interface:"
-
-[node name="ParentInterface2" type="SpinBox" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-
-[node name="ShapeLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Shape:"
-
-[node name="Shape" type="OptionButton" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-selected = 0
-item_count = 3
-popup/item_0/text = "☐Rectangle"
-popup/item_0/id = 1
-popup/item_1/text = "🔺Triangle"
-popup/item_1/id = 1
-popup/item_2/text = "⭕Circle"
-popup/item_2/id = 2
-
-[node name="ArcLabel" type="Label" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
-layout_mode = 2
-text = "Arc:"
-
-[node name="Arc" type="HSlider" parent="C/Toolbox/Inspector/S/M/Stats/Stats2"]
+[node name="Inspector" parent="C/Toolbox" instance=ExtResource("4_ya0pf")]
 layout_mode = 2

@@ -37,8 +37,6 @@ color = Color(0.381703, 0.381703, 0.381703, 1)
 
 [node name="CategoryList" type="ItemList" parent="Menu/List"]
 layout_mode = 2
-theme_override_colors/font_selected_color = Color(1, 0, 0, 1)
-theme_override_colors/font_hovered_color = Color(0.555161, 0.537225, 9.62615e-07, 1)
 item_count = 2
 item_0/text = "🗡️Melee"
 item_1/text = "🏹Ranged"
