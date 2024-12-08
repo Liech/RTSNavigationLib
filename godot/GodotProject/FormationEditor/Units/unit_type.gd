@@ -10,6 +10,6 @@ class_name UnitType extends Resource
 func toRTS()->RTSBody:
 	var result : RTSBody = RTSBody.new()
 	result.size = size
-	result.category = FormationEditor.unit_types.find(self)
+	result.category = FormationEditor.categories.find(category)
 	print(str(result.size) + " - " + str(result.category))
 	return result

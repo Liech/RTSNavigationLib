@@ -29,15 +29,18 @@ func formation_changed() -> void:
 	var formation := FormationEditor.current_root_formation.toRTS()
 	var bodies : Array[RTSBody]
 	
+	var counter : int = 0
 	for x in FormationEditor.unit_types:
+		print(x.name)
 		if !FormationEditor.unit_amount.has(x.name):
+			counter += 1
 			continue
 		var amount : int = FormationEditor.unit_amount[x.name]
 		var body : RTSBody = x.toRTS() 
+		body.id = counter
+		counter += 1
 		for i in range(amount):
 			bodies.push_back(body.duplicate())
-	if (bodies.size() == 1):
-		return
 	print(formation.toJson())
 	var result := formation.calculate(bodies)
 	
@@ -48,6 +51,7 @@ func formation_changed() -> void:
 	for x in result:
 		var pos := x.position
 		var unit := unit_scene.instantiate() as FormationPreviewUnit
-		unit.type = FormationEditor.unit_types[0]
+		print(x.id)
+		unit.type = FormationEditor.unit_types[x.id]
 		unit.position = pos * scale_factor
 		units.add_child(unit)

@@ -285,6 +285,8 @@ namespace RTSNavigationLib
         size_t                   category = formation.getUnitCategory();
         double                   weight   = formation.getUnitDistributionWeight() / weightSumPerCategory[category];
         std::map<size_t, size_t> unitAmount;
+        if (!overall.contains(category))
+            return {};
         for (const auto& size : overall.at(category))
         {
             size_t amount    = (size_t)std::ceil(weight * (double)size.second);
