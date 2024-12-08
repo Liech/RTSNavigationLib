@@ -28,7 +28,7 @@ namespace RTSNavigationLib {
     std::vector<glm::dvec2> lastpolygon;
     std::vector<std::vector<glm::dvec2>> allPolygons;
 
-    bool saveSVG = true;
+    bool saveSVG = false;
 
     std::vector<Body>                          recurse( const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation&);
     void                                       saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon);
