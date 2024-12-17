@@ -2,7 +2,8 @@ extends Control
 
 @onready var name_ui : LineEdit = $S/M/Stats/Stats/Name
 @onready var placement_behavior_ui : OptionButton = $S/M/Stats/Stats/PlacementBehavior
-@onready var category_ui : OptionButton = $S/M/Stats/Stats/Category
+@onready var category_ui : Button = $S/M/Stats/Stats/Category
+@onready var category_menu_ui : PopupMenu = $CategoryMenu
 @onready var rotate_with_interface_ui : CheckBox = $S/M/Stats/Stats/RotateWithInterface
 @onready var rotation_ui : Slider = $S/M/Stats/Stats/Rotation
 @onready var interface_width_ui : CheckBox = $S/M/Stats/Stats/InterfaceWidth
@@ -21,9 +22,10 @@ func _ready() -> void:
 	current_formation_changed()	
 
 func categories_changed()->void:
-	category_ui.clear()
+	category_menu_ui.clear()
 	for x in FormationEditor.categories:
-		category_ui.add_item(x)
+		category_menu_ui.add_item(x)
+		category_menu_ui.set_item_as_checkable(category_menu_ui.item_count-1,true)
 
 func current_formation_changed()->void:
 	if (FormationEditor.current_formation == null):
@@ -33,7 +35,6 @@ func current_formation_changed()->void:
 	var current := FormationEditor.current_formation
 	name_ui.text = current.name
 	placement_behavior_ui.select(int(current.placement_behavior))
-	category_ui.text = current.category
 	rotate_with_interface_ui.button_pressed = current.rotate_with_interface
 	rotation_ui.value = current.rotation
 	interface_width_ui.button_pressed = current.overwrite_width_with_interface_width
@@ -42,6 +43,14 @@ func current_formation_changed()->void:
 	parent_interface_ui.value = current.parent_interface_point
 	shape_ui.selected = current.shape as int
 	arc_ui.value = current.arc
+	
+	for x in range(category_menu_ui.item_count):
+		category_menu_ui.set_item_checked(x,false)
+	category_ui.text = "";
+	for x in FormationEditor.current_formation.category:
+		category_ui.text+= x + "; "
+	for x in current.category:
+		category_menu_ui.set_item_checked(FormationEditor.categories.find(x),true)
 	update_bounds()
 	
 func update_bounds()->void:
@@ -49,15 +58,11 @@ func update_bounds()->void:
 	arc_ui.visible = current.shape == Formation.Shape.Circle
 	arc_label_ui.visible = current.shape == Formation.Shape.Circle
 	
-	
 func _on_name_text_submitted(new_text: String) -> void:
 	FormationEditor.current_formation.name = name_ui.text
 	FormationEditor.formations_changed.emit()
 func _on_placement_behavior_item_selected(index: int) -> void:
 	FormationEditor.current_formation.placement_behavior = index as RTSFormation.PlacementBehavior
-	FormationEditor.formation_value_changed.emit()
-func _on_category_item_selected(index: int) -> void:
-	FormationEditor.current_formation.category = FormationEditor.categories[index]
 	FormationEditor.formation_value_changed.emit()
 func _on_rotate_with_interface_toggled(toggled_on: bool) -> void:
 	FormationEditor.current_formation.rotate_with_interface = toggled_on
@@ -89,4 +94,20 @@ func _on_arc_drag_ended(value_changed: bool) -> void:
 	if (!value_changed):
 		return
 	FormationEditor.current_formation.arc = arc_ui.value
+	FormationEditor.formation_value_changed.emit()
+func _on_category_pressed() -> void:
+	category_menu_ui.popup(Rect2i(get_global_mouse_position().x, get_global_mouse_position().y, 100, 30))
+
+func _on_category_menu_index_pressed(index: int) -> void:
+	category_menu_ui.set_item_checked(index,!category_menu_ui.is_item_checked(index))
+	if (category_menu_ui.is_item_checked(index)):
+		FormationEditor.current_formation.category.push_back(FormationEditor.categories[index])
+	else:
+		FormationEditor.current_formation.category.erase(FormationEditor.categories[index])
+	
+	category_ui.text = "";
+	for x in FormationEditor.current_formation.category:
+		category_ui.text+= x + " "
+
+func _on_category_menu_popup_hide() -> void:
 	FormationEditor.formation_value_changed.emit()

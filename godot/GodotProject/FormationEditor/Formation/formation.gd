@@ -10,7 +10,7 @@ enum Shape{Rectangle,Triangle,Circle}
 @export var overwrite_width_with_interface_width : bool
 @export var rotate_with_interface  : bool
 @export var rotation : float
-@export var category : String
+@export var category : Array[String]
 @export var weight : float
 @export var placement_behavior : RTSFormation.PlacementBehavior       
 @export var shape : Shape       
@@ -22,7 +22,7 @@ func randomize()->void:
 	var suffix : String = ["Squirrel", "Hawk", "Cheeta","Stoat", "Turtle", "Mare", "Fox", "Hound", "Hare", "Cat", "Elefant", "Toddler"].pick_random()
 	name = prefix+suffix
 	placement_behavior = [RTSFormation.PlacementBehavior.center_first_rts,RTSFormation.PlacementBehavior.distribute_evenly_rts,RTSFormation.PlacementBehavior.outer_first_rts].pick_random() 
-	category = FormationEditor.categories.pick_random()
+	category = [FormationEditor.categories.pick_random()]
 	rotate_with_interface = [false,true].pick_random()
 	overwrite_width_with_interface_width = [false,true].pick_random()
 	weight = randf()
@@ -32,8 +32,11 @@ func randomize()->void:
 	
 func toRTS() -> RTSFormation:
 	var result : RTSFormation = RTSFormation.new()
-	var catindex : int = FormationEditor.categories.find(category)
-	result.categories = [catindex]
+	
+	result.categories.clear()
+	for x in category:
+		result.categories.push_back(FormationEditor.categories.find(x))
+		
 	result.own_interface_point = own_InterfacePoint
 	result.parent_interface_point = parent_interface_point
 	result.overwrite_width_with_interface_width = overwrite_width_with_interface_width

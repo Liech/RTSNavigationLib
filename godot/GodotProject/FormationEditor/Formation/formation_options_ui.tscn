@@ -61,11 +61,14 @@ popup/item_2/id = 2
 
 [node name="CategoryLabel" type="Label" parent="S/M/Stats/Stats"]
 layout_mode = 2
-text = "Category:"
+text = "Categories:"
 
-[node name="Category" type="OptionButton" parent="S/M/Stats/Stats"]
+[node name="Category" type="Button" parent="S/M/Stats/Stats"]
 layout_mode = 2
-item_count = 1
+text = ">>>asdsasdasdasdasdasdasd"
+alignment = 0
+text_overrun_behavior = 3
+clip_text = true
 
 [node name="RotateWILabel2" type="Label" parent="S/M/Stats/Stats"]
 layout_mode = 2
@@ -137,9 +140,20 @@ layout_mode = 2
 max_value = 6.283
 step = 0.1
 
+[node name="CategoryMenu" type="PopupMenu" parent="."]
+title = "Categories"
+hide_on_item_selection = false
+hide_on_checkable_item_selection = false
+item_count = 2
+item_0/text = "A"
+item_0/checkable = 1
+item_1/text = "B"
+item_1/checkable = 1
+item_1/id = 1
+
 [connection signal="text_submitted" from="S/M/Stats/Stats/Name" to="." method="_on_name_text_submitted"]
 [connection signal="item_selected" from="S/M/Stats/Stats/PlacementBehavior" to="." method="_on_placement_behavior_item_selected"]
-[connection signal="item_selected" from="S/M/Stats/Stats/Category" to="." method="_on_category_item_selected"]
+[connection signal="pressed" from="S/M/Stats/Stats/Category" to="." method="_on_category_pressed"]
 [connection signal="toggled" from="S/M/Stats/Stats/RotateWithInterface" to="." method="_on_rotate_with_interface_toggled"]
 [connection signal="drag_ended" from="S/M/Stats/Stats/Rotation" to="." method="_on_rotation_drag_ended"]
 [connection signal="toggled" from="S/M/Stats/Stats/InterfaceWidth" to="." method="_on_interface_width_toggled"]
@@ -148,3 +162,5 @@ step = 0.1
 [connection signal="value_changed" from="S/M/Stats/Stats/ParentInterface" to="." method="_on_parent_interface_value_changed"]
 [connection signal="item_selected" from="S/M/Stats/Stats/Shape" to="." method="_on_shape_item_selected"]
 [connection signal="drag_ended" from="S/M/Stats/Stats/Arc" to="." method="_on_arc_drag_ended"]
+[connection signal="index_pressed" from="CategoryMenu" to="." method="_on_category_menu_index_pressed"]
+[connection signal="popup_hide" from="CategoryMenu" to="." method="_on_category_menu_popup_hide"]
