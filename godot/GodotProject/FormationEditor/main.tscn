@@ -15,7 +15,7 @@ color = Color(0.164388, 0.231527, 0.60014, 1)
 name = "Archer"
 emoji = "🏹"
 category = "Ranged"
-size = 0
+size = 1
 
 [sub_resource type="Resource" id="Resource_hc2w6"]
 script = ExtResource("2_1nw7d")
@@ -23,7 +23,7 @@ color = Color(0.368241, 0.775376, 0.376347, 1)
 name = "Healer"
 emoji = "🧙"
 category = "Support"
-size = 0
+size = 1
 
 [sub_resource type="Resource" id="Resource_avk3v"]
 script = ExtResource("4_piqbr")
@@ -35,7 +35,7 @@ overwrite_width_with_interface_width = false
 rotate_with_interface = false
 rotation = 0.0
 category = "Melee"
-weight = 0.0
+weight = 1.0
 placement_behavior = 0
 shape = 0
 arc = 0.0

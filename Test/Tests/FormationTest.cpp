@@ -20,14 +20,15 @@ namespace FormationTests {
     }
   };
 
-  glm::dvec2 getFirstPlace(std::vector<RTSNavigationLib::Body> places) {
+  glm::dvec2 getFirstPlace(std::vector<RTSNavigationLib::WorldBody> places) {
     glm::dvec2 first = glm::dvec2(std::numeric_limits<double>().max(), std::numeric_limits<double>().max());
     for (auto& x : places)
       if (lex_compare()(x.position, first))
         first = x.position;
     return first;
   }
-  std::set<glm::dvec2, lex_compare> setisfy(const std::vector<RTSNavigationLib::Body>& places) {
+  std::set<glm::dvec2, lex_compare> setisfy(const std::vector<RTSNavigationLib::WorldBody>& places)
+  {
     auto first = getFirstPlace(places);
     std::set<glm::dvec2, lex_compare> result;
     for (auto& x : places) {
@@ -39,7 +40,7 @@ namespace FormationTests {
     return result;
   }
 
-  std::map<size_t, size_t> countCategories(const std::vector<RTSNavigationLib::Body>& places) {
+  std::map<size_t, size_t> countCategories(const std::vector<RTSNavigationLib::WorldBody>& places) {
     std::map<size_t, size_t> result;
     for (auto& x : places) {
       if (result.count(x.category) == 0)
@@ -51,10 +52,9 @@ namespace FormationTests {
 
 
   TEST_CASE("Formation/RectangleSingle") {
-    RTSNavigationLib::Body b;
+      RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b };
     RTSNavigationLib::Formation formation;
@@ -64,15 +64,12 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
     REQUIRE(places[0].category == b.category);
     REQUIRE(places[0].size == b.size);
-    REQUIRE(places[0].position.x != 99);
-    REQUIRE(places[0].position.y != 99);
   }
 
   TEST_CASE("Formation/RectangleDouble") {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b, b };
     RTSNavigationLib::Formation formation;
@@ -93,7 +90,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { };
     for (int i = 0; i < 16; i++)
@@ -109,7 +105,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b };
     RTSNavigationLib::Formation formation;
@@ -127,7 +122,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b, b };
     RTSNavigationLib::Formation formation;
@@ -148,7 +142,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { };
     for (int i = 0; i < 16; i++)
@@ -164,7 +157,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { };
     for (int i = 0; i < 16; i++)
@@ -182,7 +174,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b };
     RTSNavigationLib::Formation formation;
@@ -200,7 +191,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b, b };
     RTSNavigationLib::Formation formation;
@@ -221,7 +211,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { };
     for (int i = 0; i < 16; i++)
@@ -237,7 +226,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { };
     for (int i = 0; i < 8; i++)
@@ -265,7 +253,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b };
     RTSNavigationLib::Formation formation;
@@ -284,7 +271,6 @@ namespace FormationTests {
     RTSNavigationLib::Body b;
     b.category = 0;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { b };
     RTSNavigationLib::Formation formation;
@@ -305,11 +291,9 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a,a,a,a,b,b,b,b };
     RTSNavigationLib::Formation formation;
@@ -320,7 +304,7 @@ namespace FormationTests {
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::LeftMiddle);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation2->setRotateWithInterface(true);
@@ -348,12 +332,10 @@ namespace FormationTests {
   TEST_CASE("Formation/InterfaceWidth") {
     RTSNavigationLib::Body a;
     a.category = 0;
-    a.size = 1;
-    a.position = glm::dvec2(99, 99);
+    a.size     = 1;
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a,a,a,a,b,b,b,b,b,b,b,b };
     RTSNavigationLib::Formation formation;
@@ -364,7 +346,7 @@ namespace FormationTests {
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::RightMiddle);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation2->setRotateWithInterface(true);
@@ -400,20 +382,18 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a, a, b, b, b, b };
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation.setUnitCategory(0);
+    formation.setUnitCategories({ 0 });
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Bottom);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation.addChild(std::move(formation2));
@@ -441,20 +421,18 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a, a, a, a, b, b, b, b };
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation.setUnitCategory(0);
+    formation.setUnitCategories({0});
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Bottom);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation.addChild(std::move(formation2));
@@ -483,20 +461,18 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a,a, a, b, b, b, b, b, b, b, b, b };
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation.setUnitCategory(0);
+    formation.setUnitCategories({ 0 });
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation.addChild(std::move(formation2));
@@ -529,20 +505,18 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a,a, a, b, b, b, };
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation.setUnitCategory(0);
+    formation.setUnitCategories({ 0 });
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Bottom);
     formation2->setRotation(glm::pi<float>() * 0.5);
@@ -570,32 +544,29 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body c;
     c.category = 2;
     c.size = 1;
-    c.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input = { a, a, b,b,b,b,c, c,c, c };
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation.setUnitCategory(0);
+    formation.setUnitCategories({ 0 });
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
 
     std::unique_ptr<RTSNavigationLib::Formation> formation3 = std::make_unique<RTSNavigationLib::Formation>();
     formation3->setShape(std::make_unique<RTSNavigationLib::TriangleFormationShape>());
-    formation3->setUnitCategory(2);
+    formation3->setUnitCategories({ 2 });
     formation3->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation3->setOwnInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::BottomCenter);
     formation2->addChild(std::move(formation3));
 
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Bottom);
     formation.addChild(std::move(formation2));
@@ -625,19 +596,15 @@ namespace FormationTests {
     RTSNavigationLib::Body a;
     a.category = 0;
     a.size = 1;
-    a.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body a2;
     a2.category = 0;
     a2.size = 2;
-    a2.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body b;
     b.category = 1;
     b.size = 1;
-    b.position = glm::dvec2(99, 99);
     RTSNavigationLib::Body c;
     c.category = 2;
     c.size = 1;
-    c.position = glm::dvec2(99, 99);
 
     std::vector<RTSNavigationLib::Body> input;
     for (size_t i = 0; i < 30; i++)
@@ -650,31 +617,31 @@ namespace FormationTests {
       input.push_back(c);
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::ArcFormationShape>());
-    formation.setUnitCategory(0);
+    formation.setUnitCategories({ 0 });
 
     std::unique_ptr<RTSNavigationLib::Formation> spike = std::make_unique<RTSNavigationLib::Formation>();
     spike->setShape(std::make_unique<RTSNavigationLib::TriangleFormationShape>());
-    spike->setUnitCategory(2);
+    spike->setUnitCategories({ 2 });
     spike->setOwnInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::BottomCenter);
     spike->setParentInterfacePoint(1);
 
     std::unique_ptr<RTSNavigationLib::Formation> spike2 = std::make_unique<RTSNavigationLib::Formation>();
     spike2->setShape(std::make_unique<RTSNavigationLib::TriangleFormationShape>());
-    spike2->setUnitCategory(2);
+    spike2->setUnitCategories({ 2 });
     spike2->setOwnInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::BottomCenter);
     spike2->setParentInterfacePoint(10);
     spike2->setRotation(-glm::pi<double>() * 0.5);
 
     std::unique_ptr<RTSNavigationLib::Formation> spike3 = std::make_unique<RTSNavigationLib::Formation>();
     spike3->setShape(std::make_unique<RTSNavigationLib::TriangleFormationShape>());
-    spike3->setUnitCategory(2);
+    spike3->setUnitCategories({ 2 });
     spike3->setOwnInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::BottomCenter);
     spike3->setParentInterfacePoint(27);
     spike3->setRotation(glm::pi<double>() * 0.5);
 
     std::unique_ptr<RTSNavigationLib::Formation> spike4 = std::make_unique<RTSNavigationLib::Formation>();
     spike4->setShape(std::make_unique<RTSNavigationLib::TriangleFormationShape>());
-    spike4->setUnitCategory(2);
+    spike4->setUnitCategories({ 2 });
     spike4->setOwnInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::BottomCenter);
     spike4->setParentInterfacePoint(18);
     spike4->setRotation(glm::pi<double>());
@@ -685,7 +652,7 @@ namespace FormationTests {
     formation2->addChild(std::move(spike3));
     formation2->addChild(std::move(spike4));
     formation2->setShape(std::make_unique<RTSNavigationLib::ArcFormationShape>());
-    formation2->setUnitCategory(1);
+    formation2->setUnitCategories({ 1 });
     formation.addChild(std::move(formation2));
 
     auto places = RTSNavigationLib::FormationCalculator(formation, input).calculate();

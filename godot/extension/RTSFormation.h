@@ -1,12 +1,11 @@
 #pragma once
 
-#include "RTSFormationShape.h"
 #include "RTSBody.h"
+#include "RTSFormationShape.h"
 #include <RTSNavigationLib/Formation/Formation.h>
 #include <godot_cpp/classes/resource.hpp>
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <memory>
-
 
 namespace godot
 {
@@ -19,9 +18,9 @@ namespace godot
 
         enum PlacementBehavior
         {
-            center_first_rts       = 0,
-            outer_first_rts        = 1, 
-            distribute_evenly_rts  = 2 
+            center_first_rts      = 0,
+            outer_first_rts       = 1,
+            distribute_evenly_rts = 2
         };
 
       protected:
@@ -30,8 +29,8 @@ namespace godot
       private:
         void                     set_placement_behavior(const PlacementBehavior cat);
         PlacementBehavior        get_placement_behavior() const;
-        void                     set_unit_category(const int cat);
-        int                      get_unit_category() const;
+        void                     set_unit_categories(const TypedArray<int>& cat);
+        TypedArray<int>          get_unit_categories() const;
         void                     set_unit_distribution_weight(const float cat);
         float                    get_unit_distribution_weight() const;
         void                     set_rotation(const float cat);
@@ -59,9 +58,9 @@ namespace godot
         bool                   overwriteWidthWithInterfaceWidth = false;
         bool                   rotateWithInterface              = false;
         float                  rotation                         = 0.0;
-        int                    unitCategory                     = 0;
-        float                  unitDistributionWeight           = 1.0;
-        PlacementBehavior      placementBehavior                = PlacementBehavior::center_first_rts;
+        TypedArray<int>        unitCategories;
+        float                  unitDistributionWeight = 1.0;
+        PlacementBehavior      placementBehavior      = PlacementBehavior::center_first_rts;
 
         TypedArray<RTSFormation> children;
     };

@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 #include <godot_cpp/classes/resource.hpp>
-#include <RTSNavigationLib/Body.h>
+#include <RTSNavigationLib/WorldBody.h>
 
 namespace godot
 {
@@ -17,7 +17,7 @@ namespace godot
         RTSBody();
         virtual ~RTSBody();
 
-        RTSNavigationLib::Body toBody() const;
+        RTSNavigationLib::WorldBody toBody() const;
 
         Vector2 get_position() const;
         void    set_position(const Vector2&);
@@ -25,8 +25,6 @@ namespace godot
         void    set_category(int);
         int     get_size() const;
         void    set_size(int);
-        int     get_id() const;
-        void    set_id(int);
 
         glm::dvec2 position = glm::dvec2(0,0);
         int        category = 0;

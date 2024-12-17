@@ -6,6 +6,8 @@ find_package(glm REQUIRED)
 find_package(Boost)
 
 set(Source_Files
+    "Source/RTSNavigationLib/WorldBody.h"
+    "Source/RTSNavigationLib/WorldBody.cpp"
     "Source/RTSNavigationLib/Body.h"
     "Source/RTSNavigationLib/Body.cpp"
     "Source/RTSNavigationLib/BodyUtil.h"

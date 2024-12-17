@@ -25,9 +25,9 @@ namespace godot
 
     TypedArray<int> RTSNavigation::usher(const TypedArray<RTSBody>& units, const TypedArray<RTSBody>& places)
     {
-        TypedArray<int>                     result;
-        std::vector<RTSNavigationLib::Body> unitsB;
-        std::vector<RTSNavigationLib::Body> placesB;
+        TypedArray<int>                          result;
+        std::vector<RTSNavigationLib::WorldBody> unitsB;
+        std::vector<RTSNavigationLib::WorldBody> placesB;
         if (units.size() != places.size())
         {
             return result;

@@ -1,6 +1,7 @@
 #include "FormationCalculator.h"
 
 #include <glm/ext/matrix_transform.hpp>
+#include <set>
 
 #include "Body.h"
 #include "Formation.h"
@@ -16,34 +17,45 @@ namespace RTSNavigationLib
 {
     FormationCalculator::FormationCalculator(const Formation& formation, const std::vector<Body>& units)
       : rootFormation(formation)
-      , inputUnits(units)
     {
-        overall = getSizesPerCategory(units);
+        unitsLeftToPlace = summarizeUnits(units);
+        overall          = unitsLeftToPlace;
+    }
+    FormationCalculator::FormationCalculator(const Formation& formation, const std::vector<WorldBody>& units)
+      : rootFormation(formation)
+    {
+        unitsLeftToPlace = summarizeUnits(units);
+        overall          = unitsLeftToPlace;
+    }
+    FormationCalculator::FormationCalculator(const Formation& formation, const std::map<Body, size_t>& units)
+      : rootFormation(formation)
+    {
+        unitsLeftToPlace = units;
+        overall          = unitsLeftToPlace;
     }
 
-    std::vector<Body> FormationCalculator::calculate()
+    std::vector<WorldBody> FormationCalculator::calculate()
     {
-        if (overall.size() == 0)
-            return {};
         glm::dmat4 currentTransformation = glm::dmat4(1);
-        currentUnits                     = overall;
         weightSumPerCategory             = getCategoryWeightSum(rootFormation);
 
-        glm::dvec2        parentCenter         = glm::dvec2(0, 0);
-        size_t            parentSize           = 1;
-        double            parentRotation       = 0;
-        double            parentInterfaceWidth = 0;
-        std::vector<Body> result               = recurse(parentCenter, parentSize, parentRotation, parentInterfaceWidth, rootFormation);
-        std::vector<Body> centeredResult       = centerBodies(result);
+        glm::dvec2 parentCenter         = glm::dvec2(0, 0);
+        size_t     parentSize           = 1;
+        double     parentRotation       = 0;
+        double     parentInterfaceWidth = 0;
+
+        std::vector<WorldBody> result         = recurse(parentCenter, parentSize, parentRotation, parentInterfaceWidth, rootFormation);
+        std::vector<WorldBody> centeredResult = centerBodies(result);
         return centeredResult;
     }
 
-    std::vector<Body> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation& formation)
+    std::vector<WorldBody> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation& formation)
     {
-        size_t            scale           = 1;
-        auto              unitsPlacedHere = gatherUnits(formation);
-        auto              formationSize   = getSizeSum(unitsPlacedHere);
-        std::vector<Body> result;
+        size_t scale           = 1;
+        auto   unitsPlacedHere = gatherUnits(formation);
+        auto   formationSize   = getSizeSum(unitsPlacedHere);
+
+        std::vector<WorldBody> result;
 
         RectangleGrid<bool> grid;
 
@@ -69,7 +81,7 @@ namespace RTSNavigationLib
             formationCenter             = toFormationCenter * glm::dvec4(0, 0, 0, 1);
 
             grid        = getGrid(formation, toFormationCenter);
-            auto placer = UnitPlacement(grid, unitsPlacedHere, formation.getUnitCategory(), formation.getPlacementBehavior());
+            auto placer = UnitPlacement(grid, unitsPlacedHere, formation.getPlacementBehavior());
             result      = placer.place(allPlaced);
             grid        = placer.getUsedPositions();
 
@@ -139,7 +151,7 @@ namespace RTSNavigationLib
         return result;
     }
 
-    void FormationCalculator::saveAsSvg(const std::vector<Body>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon)
+    void FormationCalculator::saveAsSvg(const std::vector<WorldBody>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon)
     {
         if (!saveSVG)
             return;
@@ -270,31 +282,35 @@ namespace RTSNavigationLib
         return result;
     }
 
-    size_t FormationCalculator::getSizeSum(const std::map<size_t, size_t>& units)
+    size_t FormationCalculator::getSizeSum(const std::map<Body, size_t>& units)
     {
         size_t result = 0;
         for (const auto& x : units)
         {
-            result += x.first * x.second;
+            result += x.first.size * x.second;
         }
         return result;
     }
 
-    std::map<size_t, size_t> FormationCalculator::gatherUnits(const Formation& formation)
+    std::map<Body, size_t> FormationCalculator::gatherUnits(const Formation& formation)
     {
-        size_t                   category = formation.getUnitCategory();
-        double                   weight   = formation.getUnitDistributionWeight() / weightSumPerCategory[category];
-        std::map<size_t, size_t> unitAmount;
-        if (!overall.contains(category))
-            return {};
-        for (const auto& size : overall.at(category))
+        std::map<Body, size_t> unitAmount;
+
+        for (const auto& category : formation.getUnitCategories())
         {
-            size_t amount    = (size_t)std::ceil(weight * (double)size.second);
-            size_t available = currentUnits[category][size.first];
-            if (amount > available)
-                amount = available;
-            unitAmount[size.first] = amount;
-            currentUnits[category][size.first] -= amount;
+            double weight = formation.getUnitDistributionWeight() / weightSumPerCategory[category];
+
+            for (const auto& unit : overall)
+            {
+                if (unit.first.category != category)
+                    continue;
+                size_t amount    = (size_t)std::ceil(weight * (double)unit.second);
+                size_t available = unitsLeftToPlace[unit.first];
+                if (amount > available)
+                    amount = available;
+                unitAmount[unit.first] = amount;
+                unitsLeftToPlace[unit.first] -= amount;
+            }
         }
         return unitAmount;
     }
@@ -302,47 +318,61 @@ namespace RTSNavigationLib
     std::map<size_t, double> FormationCalculator::getCategoryWeightSum(const Formation& formation)
     {
         std::map<size_t, double> result;
-        size_t                   category = formation.getUnitCategory();
-        if (result.count(category) == 0)
-            result[category] = 0;
-        result[category] += formation.getUnitDistributionWeight();
-
-        for (size_t i = 0; i < formation.getChildrenCount(); i++)
+        for (const auto& category : formation.getUnitCategories())
         {
-            auto& child = formation.getChild(i);
-            auto  sub   = getCategoryWeightSum(child);
-            for (auto& keyvalue : sub)
+            result[category] += formation.getUnitDistributionWeight();
+
+            for (size_t i = 0; i < formation.getChildrenCount(); i++)
             {
-                if (result.count(keyvalue.first) == 0)
-                    result[keyvalue.first] = keyvalue.second;
-                else
-                    result[keyvalue.first] += keyvalue.second;
+                auto& child = formation.getChild(i);
+                auto  sub   = getCategoryWeightSum(child);
+                for (auto& keyvalue : sub)
+                {
+                    if (result.count(keyvalue.first) == 0)
+                        result[keyvalue.first] = keyvalue.second;
+                    else
+                        result[keyvalue.first] += keyvalue.second;
+                }
             }
         }
         return result;
     }
 
-    std::map<size_t, std::map<size_t, size_t>> FormationCalculator::getSizesPerCategory(const std::vector<Body>& units)
+    std::map<Body, size_t> FormationCalculator::summarizeUnits(const std::vector<Body>& units)
     {
-        std::map<size_t, std::map<size_t, size_t>> result;
+        std::map<Body, size_t> result;
         for (auto& x : units)
         {
-            if (result.count(x.category) == 0)
-                result[x.category] = std::map<size_t, size_t>();
-            if (result[x.category].count(x.size) == 0)
-                result[x.category][x.size] = 0;
-            result[x.category][x.size]++;
+            if (!result.contains(x))
+                result[x] = 1;
+            else
+                result[x]++;
+        }
+        return result;
+    }
+    std::map<Body, size_t> FormationCalculator::summarizeUnits(const std::vector<WorldBody>& units)
+    {
+        std::map<Body, size_t> result;
+        for (auto& x : units)
+        {
+            Body key;
+            key.size = x.size;
+            key.category = x.category;
+            if (!result.contains(key))
+                result[key] = 1;
+            else
+                result[key]++;
         }
         return result;
     }
 
-    std::vector<Body> FormationCalculator::centerBodies(const std::vector<Body>& bodies)
+    std::vector<WorldBody> FormationCalculator::centerBodies(const std::vector<WorldBody>& bodies)
     {
         glm::dvec2 center = glm::dvec2(0, 0);
         for (auto& x : bodies)
             center += x.position;
         center /= bodies.size();
-        std::vector<Body> result = bodies;
+        std::vector<WorldBody> result = bodies;
         for (auto& x : result)
             x.position -= center;
         return result;

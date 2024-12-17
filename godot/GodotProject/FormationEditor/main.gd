@@ -15,6 +15,12 @@ func _ready() -> void:
 	FormationEditor.unit_types_changed.emit()
 	FormationEditor.categories_changed.emit()
 	FormationEditor.formations_changed.emit()
+	
+	if (start_formations.size() > 0):
+		FormationEditor.formations = start_formations
+		FormationEditor.current_formation = start_formations[0]
+		FormationEditor.current_root_formation = start_formations[0]
+		FormationEditor.current_formation_changed.emit()
 
 func _on_characters_pressed() -> void:
 	unit_scene.visible = true

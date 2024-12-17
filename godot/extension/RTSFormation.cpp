@@ -10,8 +10,8 @@ namespace godot
         BIND_ENUM_CONSTANT(outer_first_rts);
         BIND_ENUM_CONSTANT(distribute_evenly_rts);
 
-        ClassDB::bind_method(D_METHOD("get_unit_category"), &RTSFormation::get_unit_category);
-        ClassDB::bind_method(D_METHOD("set_unit_category", "category"), &RTSFormation::set_unit_category);
+        ClassDB::bind_method(D_METHOD("get_unit_categories"), &RTSFormation::get_unit_categories);
+        ClassDB::bind_method(D_METHOD("set_unit_categories", "categories"), &RTSFormation::set_unit_categories);
         ClassDB::bind_method(D_METHOD("get_children"), &RTSFormation::get_children);
         ClassDB::bind_method(D_METHOD("set_children", "children"), &RTSFormation::set_children);
         ClassDB::bind_method(D_METHOD("get_placement_behavior"), &RTSFormation::get_placement_behavior);
@@ -32,7 +32,7 @@ namespace godot
         ClassDB::bind_method(D_METHOD("get_shape"), &RTSFormation::get_shape);
         ClassDB::bind_method(D_METHOD("set_shape", "val"), &RTSFormation::set_shape);
 
-        ADD_PROPERTY(PropertyInfo(Variant::INT, "category"), "set_unit_category", "get_unit_category");
+        ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "categories"), "set_unit_categories", "get_unit_categories");
         ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "weight"), "set_unit_distribution_weight", "get_unit_distribution_weight");
         ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rotation"), "set_rotation", "get_rotation");
         ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rotate_with_interface"), "set_rotate_with_interface", "get_rotate_with_interface");
@@ -70,7 +70,7 @@ namespace godot
 
     TypedArray<RTSBody> RTSFormation::calculate(const TypedArray<RTSBody>& pre_bodies) const
     {
-        std::vector<RTSNavigationLib::Body> bodies;
+        std::vector<RTSNavigationLib::WorldBody> bodies;
         for (size_t i = 0; i < pre_bodies.size(); i++)
             bodies.push_back(godot::Object::cast_to<RTSBody>(pre_bodies[i])->toBody());
         auto form = toFormation();
@@ -100,7 +100,6 @@ namespace godot
         result->setOverwriteWidthWithInterfaceWidth(overwriteWidthWithInterfaceWidth);
         result->setRotateWithInterface(rotateWithInterface);
         result->setRotation(rotation);
-        result->setUnitCategory(unitCategory);
         result->setUnitDistributionWeight(unitDistributionWeight);
         result->setPlacementBehavior((RTSNavigationLib::UnitPlacementBehavior)placementBehavior);
         result->setShape(shape->toShape());
@@ -109,17 +108,25 @@ namespace godot
         {
             result->addChild(std::move(godot::Object::cast_to<RTSFormation>(children[i]))->toFormation());
         }
+        
+        std::vector<size_t> cats;
+        cats.reserve(unitCategories.size());
+        for (size_t i = 0; i < unitCategories.size(); i++)
+        {
+            cats.push_back(unitCategories[i]);
+        }
+        result->setUnitCategories(cats);
 
         return std::move(result);
     }
 
-    void RTSFormation::set_unit_category(const int cat)
+    void RTSFormation::set_unit_categories(const TypedArray<int>& cat)
     {
-        unitCategory = cat;
+        unitCategories = cat;
     }
-    int RTSFormation::get_unit_category() const
+    TypedArray<int> RTSFormation::get_unit_categories() const
     {
-        return unitCategory;
+        return unitCategories;
     }
     void RTSFormation::set_children(const TypedArray<RTSFormation>& children_)
     {

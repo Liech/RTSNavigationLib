@@ -32,7 +32,8 @@ func randomize()->void:
 	
 func toRTS() -> RTSFormation:
 	var result : RTSFormation = RTSFormation.new()
-	result.category = FormationEditor.categories.find(category)
+	var catindex : int = FormationEditor.categories.find(category)
+	result.categories = [catindex]
 	result.own_interface_point = own_InterfacePoint
 	result.parent_interface_point = parent_interface_point
 	result.overwrite_width_with_interface_width = overwrite_width_with_interface_width
