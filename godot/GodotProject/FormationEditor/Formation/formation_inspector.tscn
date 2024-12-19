@@ -35,6 +35,7 @@ layout_mode = 2
 
 [node name="Inspector" parent="C/Toolbox" instance=ExtResource("4_ya0pf")]
 layout_mode = 2
+size_flags_stretch_ratio = 0.11
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 2
