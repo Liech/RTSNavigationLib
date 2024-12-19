@@ -58,7 +58,7 @@ func update_bounds()->void:
 	arc_ui.visible = current.shape == Formation.Shape.Circle
 	arc_label_ui.visible = current.shape == Formation.Shape.Circle
 	
-func _on_name_text_submitted(new_text: String) -> void:
+func _on_name_text_submitted(_new_text: String) -> void:
 	FormationEditor.current_formation.name = name_ui.text
 	FormationEditor.formations_changed.emit()
 func _on_placement_behavior_item_selected(index: int) -> void:
@@ -81,12 +81,15 @@ func _on_weight_drag_ended(value_changed: bool) -> void:
 	FormationEditor.current_formation.weight = weight_ui.value
 	FormationEditor.formation_value_changed.emit()
 func _on_own_interface_value_changed(value: float) -> void:
+	@warning_ignore("narrowing_conversion")
 	FormationEditor.current_formation.own_InterfacePoint = value
 	FormationEditor.formation_value_changed.emit()
 func _on_parent_interface_value_changed(value: float) -> void:
+	@warning_ignore("narrowing_conversion")
 	FormationEditor.current_formation.parent_interface_point = value
 	FormationEditor.formation_value_changed.emit()
 func _on_shape_item_selected(index: int) -> void:
+	@warning_ignore("int_as_enum_without_cast")
 	FormationEditor.current_formation.shape = index
 	FormationEditor.formation_value_changed.emit()
 	update_bounds()
@@ -96,6 +99,7 @@ func _on_arc_drag_ended(value_changed: bool) -> void:
 	FormationEditor.current_formation.arc = arc_ui.value
 	FormationEditor.formation_value_changed.emit()
 func _on_category_pressed() -> void:
+	@warning_ignore("narrowing_conversion")
 	category_menu_ui.popup(Rect2i(get_global_mouse_position().x, get_global_mouse_position().y, 100, 30))
 
 func _on_category_menu_index_pressed(index: int) -> void:
