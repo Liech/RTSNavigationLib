@@ -46,7 +46,7 @@ namespace RTSNavigationLib
         {
             size_t amountToPlace = 0;
             for (const auto& x : unitsToPlace)
-                if (x.first.size == i)
+                if (x.first.size == sizeVec[i])
                     amountToPlace += x.second;
             auto sub = placeSizeN(sizeVec[i], amountToPlace, success);
             if (!success)

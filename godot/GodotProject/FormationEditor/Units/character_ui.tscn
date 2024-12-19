@@ -83,7 +83,7 @@ text = "➕"
 
 [connection signal="text_submitted" from="MarginContainer/Content/Stats/NameEdit" to="." method="_on_name_edit_text_submitted"]
 [connection signal="text_submitted" from="MarginContainer/Content/Stats/Emoji" to="." method="_on_emoji_text_submitted"]
-[connection signal="changed" from="MarginContainer/Content/Stats/SizeEdit" to="." method="_on_size_edit_changed"]
+[connection signal="value_changed" from="MarginContainer/Content/Stats/SizeEdit" to="." method="_on_size_edit_value_changed"]
 [connection signal="item_selected" from="MarginContainer/Content/Stats/OptionButton" to="." method="_on_option_button_item_selected"]
 [connection signal="popup_closed" from="MarginContainer/Content/Stats/ColorPickerButton" to="." method="_on_color_picker_button_popup_closed"]
 [connection signal="pressed" from="MarginContainer/Content/Interaction/Delete" to="." method="_on_delete_pressed"]

@@ -36,7 +36,10 @@ func _on_amount_slider_drag_ended(value_changed: bool) -> void:
 func _on_amount_slider_changed() -> void:
 	Amount.text = str(slide.value)
 
-func _on_numbers_changed() -> void:
-	FormationEditor.unit_amount[FormationEditor.unit_types[index].name] = int(Amount.value);
-	unit_amount_changed()
-	FormationEditor.unit_amount_changed.emit()
+func _on_numbers_value_changed(value: float) -> void:
+	var change : bool = true
+	if (FormationEditor.unit_amount.has(FormationEditor.unit_types[index].name)):
+		change = FormationEditor.unit_amount[FormationEditor.unit_types[index].name] != int(Amount.value);
+	if (change):
+		FormationEditor.unit_amount[FormationEditor.unit_types[index].name] = int(Amount.value);
+		FormationEditor.unit_amount_changed.emit()

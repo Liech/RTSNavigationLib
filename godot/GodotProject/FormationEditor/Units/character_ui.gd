@@ -18,6 +18,8 @@ func categories_changed() -> void:
 	category_ui.clear()
 	for x in FormationEditor.categories:
 		category_ui.add_item(x)
+	var type := FormationEditor.unit_types[index]
+	category_ui.select(FormationEditor.categories.find(type.category))
 
 func unit_types_changed() -> void:
 	if (index >= FormationEditor.unit_types.size()):
@@ -28,7 +30,7 @@ func unit_types_changed() -> void:
 	size_ui.value = type.size
 	name_ui.text = type.name
 	emoji_ui.text = type.emoji
-	category_ui.text = type.category
+	category_ui.select(FormationEditor.categories.find(type.category))
 
 func _on_delete_pressed() -> void:
 	FormationEditor.unit_types.remove_at(index)
@@ -51,11 +53,6 @@ func _on_option_button_item_selected(i: int) -> void:
 	FormationEditor.unit_types[index].category = FormationEditor.categories[i]
 	FormationEditor.unit_types_changed.emit()
 
-func _on_size_edit_changed() -> void:
-	@warning_ignore("narrowing_conversion")
-	FormationEditor.unit_types[index].size = size_ui.value
-	FormationEditor.unit_types_changed.emit()
-
 func _on_emoji_text_submitted(_new_text: String) -> void:
 	FormationEditor.unit_types[index].emoji = emoji_ui.value
 	FormationEditor.unit_types_changed.emit()
@@ -66,4 +63,9 @@ func _on_name_edit_text_submitted(_new_text: String) -> void:
 
 func _on_color_picker_button_popup_closed() -> void:
 	FormationEditor.unit_types[index].color = color_ui.color
+	FormationEditor.unit_types_changed.emit()
+
+func _on_size_edit_value_changed(value: float) -> void:
+	@warning_ignore("narrowing_conversion")
+	FormationEditor.unit_types[index].size = size_ui.value
 	FormationEditor.unit_types_changed.emit()

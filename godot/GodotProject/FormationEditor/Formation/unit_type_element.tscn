@@ -40,9 +40,7 @@ layout_mode = 2
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 max_value = 1000.0
-step = 10.0
-update_on_text_changed = true
-select_all_on_focus = true
+custom_arrow_step = 10.0
 
 [node name="AmountSlider" type="HSlider" parent="M/V/HBoxContainer"]
 layout_mode = 2
@@ -50,6 +48,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 1
 max_value = 500.0
 
-[connection signal="changed" from="M/V/HBoxContainer/Numbers" to="." method="_on_numbers_changed"]
+[connection signal="value_changed" from="M/V/HBoxContainer/Numbers" to="." method="_on_numbers_value_changed"]
 [connection signal="changed" from="M/V/HBoxContainer/AmountSlider" to="." method="_on_amount_slider_changed"]
 [connection signal="drag_ended" from="M/V/HBoxContainer/AmountSlider" to="." method="_on_amount_slider_drag_ended"]
