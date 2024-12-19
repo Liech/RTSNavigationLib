@@ -24,6 +24,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="UnitAmount" parent="C/Toolbox2" instance=ExtResource("2_l4um8")]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
 
 [node name="Toolbox" type="VBoxContainer" parent="C"]

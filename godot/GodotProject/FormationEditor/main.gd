@@ -12,6 +12,7 @@ func _ready() -> void:
 	FormationEditor.formations = start_formations
 	FormationEditor.categories = start_categories
 	FormationEditor.unit_types = start_unit_types
+	FormationEditor.unit_amount[start_unit_types[0].name] = 20
 	FormationEditor.unit_types_changed.emit()
 	FormationEditor.categories_changed.emit()
 	FormationEditor.formations_changed.emit()

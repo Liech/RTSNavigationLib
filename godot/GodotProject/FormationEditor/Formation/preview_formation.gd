@@ -29,14 +29,18 @@ func formation_changed() -> void:
 	var formation := FormationEditor.current_root_formation.toRTS()
 	var bodies : Array[RTSBody]
 	
+	var counter : int = 0;
 	for x in FormationEditor.unit_types:
 		print(x.name)
 		if !FormationEditor.unit_amount.has(x.name):
+			counter += 1
 			continue
 		var amount : int = FormationEditor.unit_amount[x.name]
 		var body : RTSBody = x.toRTS() 
+		body.category = counter;
 		for i in range(amount):
 			bodies.push_back(body.duplicate())
+		counter += 1
 	print(formation.toJson())
 	var result := formation.calculate(bodies)
 	

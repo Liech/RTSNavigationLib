@@ -34,9 +34,14 @@ func toRTS() -> RTSFormation:
 	var result : RTSFormation = RTSFormation.new()
 	
 	result.categories.clear()
-	for x in category:
-		result.categories.push_back(FormationEditor.categories.find(x))
-		
+	var counter : int = 0
+	for x in FormationEditor.unit_types:
+		print(x.category)
+		if (category.has(x.category)):
+			result.categories.push_back(counter)
+		counter += 1
+	
+	print(result.categories)
 	result.own_interface_point = own_InterfacePoint
 	result.parent_interface_point = parent_interface_point
 	result.overwrite_width_with_interface_width = overwrite_width_with_interface_width
