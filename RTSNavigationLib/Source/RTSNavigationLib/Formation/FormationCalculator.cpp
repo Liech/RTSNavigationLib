@@ -61,7 +61,7 @@ namespace RTSNavigationLib
 
         glm::dvec2 formationCenter = glm::dvec2(0, 0);
 
-        int       maxTries   = 50;
+        int       maxTries   = 150;
         int       tries      = maxTries;
         long long lastPlaced = -1;
         bool      allPlaced  = false;

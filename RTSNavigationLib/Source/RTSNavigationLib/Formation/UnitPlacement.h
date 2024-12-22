@@ -21,13 +21,14 @@ namespace RTSNavigationLib
         RectangleGrid<bool> getUsedPositions() const;
 
       private:
-        std::vector<WorldBody>  placeSizeN(size_t size, size_t amount, bool& success);
-        std::vector<WorldBody>  placeSize1(bool& success);
-        void                    assignCategories(std::vector<WorldBody>&, size_t size);
-        std::vector<glm::ivec2> getAllPlaces(const RectangleGrid<bool>&);
+        std::vector<WorldBody> placeSizeN(size_t size, size_t amount, bool& success);
+        void                   assignCategories(std::vector<WorldBody>&, size_t size);
 
+        std::vector<glm::ivec2> rankSortPlaces(std::vector<glm::ivec2>&, size_t amountUsed);
         std::vector<glm::ivec2> centerSort(const std::vector<glm::ivec2>&) const;
-        std::vector<glm::ivec2> distributeSort(const std::vector<glm::ivec2>&) const;
+        std::vector<glm::ivec2> distributeSort(const std::vector<glm::ivec2>&, size_t amountUsed) const;
+
+        std::vector<glm::ivec2> getPossiblePositions(size_t size);
 
         bool saveSVG = false;
 

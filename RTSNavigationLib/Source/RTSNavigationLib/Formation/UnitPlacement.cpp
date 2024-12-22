@@ -36,8 +36,7 @@ namespace RTSNavigationLib
         std::set<size_t> sizes;
         for (const auto& x : unitsToPlace)
         {
-            if (x.first.size != 1)
-                sizes.insert(x.first.size);
+            sizes.insert(x.first.size);
         }
         std::vector<size_t> sizeVec = std::vector<size_t>(sizes.begin(), sizes.end());
         std::sort(sizeVec.begin(), sizeVec.end());
@@ -54,12 +53,6 @@ namespace RTSNavigationLib
             assignCategories(sub, sizeVec[i]);
             result.insert(result.end(), sub.begin(), sub.end());
         }
-
-        auto size1 = placeSize1(success);
-        if (!success)
-            return {};
-        assignCategories(size1, 1);
-        result.insert(result.end(), size1.begin(), size1.end());
 
         success = true;
         saveAsSvg(result);
@@ -85,8 +78,54 @@ namespace RTSNavigationLib
     std::vector<WorldBody> UnitPlacement::placeSizeN(size_t size, size_t amount, bool& success)
     {
         std::vector<WorldBody> result;
-        RectangleGrid<bool>    possiblePlaces = grid - usedPositions;
-        auto                   get            = [&possiblePlaces](const glm::ivec2& pos) { return possiblePlaces.data[pos.x + pos.y * possiblePlaces.dimension.x]; };
+        auto                   places = getPossiblePositions(size);
+        if (places.size() < amount)
+        {
+            success = false;
+            return {};
+        }
+        places = rankSortPlaces(places, amount);
+
+        for (size_t i = 0; i < amount; i++)
+        {
+            WorldBody sub;
+            sub.category = 0;
+            sub.size     = size;
+            sub.position = (glm::dvec2)places[i] + (glm::dvec2)grid.offset + glm::dvec2(size, size) / 2.0;
+            result.push_back(sub);
+
+            for (size_t x = 0; x < size && x + places[i].x < grid.dimension.x; x++)
+                for (size_t y = 0; y < size && y + places[i].y < grid.dimension.y; y++)
+                {
+                    usedPositions.data[(places[i].x + x) + (places[i].y + y) * grid.dimension.x] = true;
+                }
+        }
+
+        success = true;
+        return result;
+    }
+
+    std::vector<glm::ivec2> UnitPlacement::rankSortPlaces(std::vector<glm::ivec2>& places, size_t amountUsed)
+    {
+
+        if (placementBehavior != UnitPlacementBehavior::DistributeEvenly)
+        {
+            auto result= centerSort(places);
+            if (placementBehavior == UnitPlacementBehavior::OuterFirst)
+                std::reverse(places.begin(), places.end());
+            return result;
+        }
+        else
+            return distributeSort(places, amountUsed);
+    }
+
+    std::vector<glm::ivec2> UnitPlacement::getPossiblePositions(size_t size)
+    {
+        std::vector<glm::ivec2> result;
+        RectangleGrid<bool>     possiblePlaces = grid - usedPositions;
+
+        auto get = [&possiblePlaces](const glm::ivec2& pos) -> bool { return possiblePlaces.data[pos.x + pos.y * possiblePlaces.dimension.x]; };
+
         for (size_t i = 0; i < possiblePlaces.data.size(); i++)
         {
             if (!possiblePlaces.data[i])
@@ -107,102 +146,10 @@ namespace RTSNavigationLib
                     {
                         possiblePlaces.data[(pos.x + x) + (pos.y + y) * grid.dimension.x] = false;
                     }
+                result.push_back(pos);
             }
-            possiblePlaces.data[i] = ok;
-        }
-        auto possible = getAllPlaces(possiblePlaces);
-        if (possible.size() < amount)
-        {
-            success = false;
-            return {};
         }
 
-        if (smallestSize == size && placementBehavior != UnitPlacementBehavior::DistributeEvenly)
-        {
-            possible = centerSort(possible);
-            if (placementBehavior == UnitPlacementBehavior::OuterFirst)
-                std::reverse(possible.begin(), possible.end());
-        }
-        else
-            possible = distributeSort(possible);
-
-        for (size_t i = 0; i < amount; i++)
-        {
-            WorldBody sub;
-            sub.category = 0;
-            sub.size     = size;
-            sub.position = (glm::dvec2)possible[i] + (glm::dvec2)grid.offset + glm::dvec2(size, size) / 2.0;
-            result.push_back(sub);
-
-            for (size_t x = 0; x < size && x + possible[i].x < grid.dimension.x; x++)
-                for (size_t y = 0; y < size && y + possible[i].y < grid.dimension.y; y++)
-                {
-                    usedPositions.data[(possible[i].x + x) + (possible[i].y + y) * grid.dimension.x] = true;
-                }
-        }
-
-        success = true;
-        return result;
-    }
-
-    std::vector<glm::ivec2> UnitPlacement::getAllPlaces(const RectangleGrid<bool>& places)
-    {
-        std::vector<glm::ivec2> result;
-        for (size_t i = 0; i < places.data.size(); i++)
-        {
-            if (places.data[i])
-                result.push_back(glm::ivec2(i % places.dimension.x, i / places.dimension.x));
-        }
-        return result;
-    }
-
-    std::vector<WorldBody> UnitPlacement::placeSize1(bool& success)
-    {
-        std::vector<WorldBody> result;
-        size_t                 currentSize = 1;
-
-        size_t requiredAmount = 0;
-
-        for (const auto& x : unitsToPlace)
-        {
-            requiredAmount += x.second;
-        }
-
-        auto unused   = grid - usedPositions;
-        auto possible = getAllPlaces(unused);
-
-        if (placementBehavior != UnitPlacementBehavior::DistributeEvenly)
-            possible = centerSort(possible);
-        else
-            possible = distributeSort(possible);
-        if (placementBehavior == UnitPlacementBehavior::OuterFirst)
-            std::reverse(possible.begin(), possible.end());
-
-        if (requiredAmount > possible.size())
-        {
-            success = false;
-            return {};
-        }
-
-        size_t currentCategory = 0;
-        if (requiredAmount == 0)
-        {
-            success = true;
-            return {};
-        }
-        for (auto pos : possible)
-        {
-            WorldBody sub;
-            sub.category = 0;
-            sub.size     = currentSize;
-            sub.position = (glm::dvec2)pos + (glm::dvec2)grid.offset + glm::dvec2(0.5, 0.5);
-            result.push_back(sub);
-            usedPositions.data[pos.x + pos.y * grid.dimension.x] = true;
-            requiredAmount--;
-            if (requiredAmount == 0)
-                break;
-        }
-        success = true;
         return result;
     }
 
@@ -216,39 +163,49 @@ namespace RTSNavigationLib
         center = glm::dvec2(center.x / (double)input.size(), center.y / (double)input.size());
 
         std::sort(result.begin(), result.end(), [center](const glm::ivec2& a, const glm::ivec2& b) { return glm::distance((glm::dvec2)a, center) < glm::distance((glm::dvec2)b, center); });
-
         return result;
     }
 
     // sort for bigger units. tries to distribute evenly
-    std::vector<glm::ivec2> UnitPlacement::distributeSort(const std::vector<glm::ivec2>& input) const
+    std::vector<glm::ivec2> UnitPlacement::distributeSort(const std::vector<glm::ivec2>& input, size_t amountUsed) const
     {
-        auto current = centerSort(input);
-        if (input.size() <= 2)
-            return current;
-        std::vector<glm::ivec2> result = { current[0] };
-        current.erase(current.begin() + 0);
-
-        while (current.size() > 0)
+        //auto   sorted = centerSort(input);
+        double stepsize  = (double)input.size() / (double)amountUsed;
+        std::vector<glm::ivec2> result;
+        result.reserve(input.size());
+        
+        for (size_t i = 0; i < amountUsed; i++)
         {
-            std::sort(current.begin(),
-                      current.end(),
-                      [&result](const glm::ivec2& a, const glm::ivec2& b)
-                      {
-                          double distanceSumA = 0;
-                          double distanceSumB = 0;
-                          for (auto& x : result)
-                          {
-                              distanceSumA += glm::distance((glm::dvec2)a, (glm::dvec2)x);
-                              distanceSumB += glm::distance((glm::dvec2)b, (glm::dvec2)x);
-                          }
-                          return distanceSumA > distanceSumB;
-                      });
-            result.push_back(current[0]);
-            current.erase(current.begin() + 0);
+            size_t index = ((size_t)((i+1) * stepsize)) % input.size();
+            result.push_back(input[index]);
         }
 
         return result;
+
+        // auto& current = input;
+        // if (input.size() <= 2)
+        //     return;
+        // std::vector<glm::ivec2> result = { current[0] };
+        // current.erase(current.begin() + 0);
+        //
+        // while (current.size() > 0)
+        //{
+        //     std::sort(current.begin(),
+        //               current.end(),
+        //               [&result](const glm::ivec2& a, const glm::ivec2& b)
+        //               {
+        //                   double distanceSumA = 0;
+        //                   double distanceSumB = 0;
+        //                   for (auto& x : result)
+        //                   {
+        //                       distanceSumA += glm::distance((glm::dvec2)a, (glm::dvec2)x);
+        //                       distanceSumB += glm::distance((glm::dvec2)b, (glm::dvec2)x);
+        //                   }
+        //                   return distanceSumA > distanceSumB;
+        //               });
+        //     result.push_back(current[0]);
+        //     current.erase(current.begin() + 0);
+        // }
     }
 
     RectangleGrid<bool> UnitPlacement::getUsedPositions() const
