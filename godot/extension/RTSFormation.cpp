@@ -50,6 +50,7 @@ namespace godot
                               "set_children",
                               "get_children");
         ClassDB::bind_method(D_METHOD("calculate", "bodies"), &RTSFormation::calculate);
+        ClassDB::bind_method(D_METHOD("get_result_shapes"), &RTSFormation::getResultShapes);
         ClassDB::bind_method(D_METHOD("toJson"), &RTSFormation::toJSON);
     }
 
@@ -68,19 +69,21 @@ namespace godot
         return godot::String(toFormation()->toJson().dump(2).c_str());
     }
 
-    TypedArray<RTSBody> RTSFormation::calculate(const TypedArray<RTSBody>& pre_bodies) const
+    TypedArray<RTSBody> RTSFormation::calculate(const TypedArray<RTSBody>& pre_bodies)
     {
         std::vector<RTSNavigationLib::WorldBody> bodies;
         for (size_t i = 0; i < pre_bodies.size(); i++)
             bodies.push_back(godot::Object::cast_to<RTSBody>(pre_bodies[i])->toBody());
         auto form = toFormation();
 
-        auto places = RTSNavigationLib::FormationCalculator(*form, bodies).calculate();
+        auto calculator = RTSNavigationLib::FormationCalculator(*form, bodies);
+        auto places     = calculator.calculate();
+        allPolygons     = calculator.getShapes();
+
         TypedArray<RTSBody> result;
 
         for (const auto& x : places)
         {
-          
             Ref<RTSBody> place;
             place.instantiate();
             place->category = x.category;
@@ -89,6 +92,21 @@ namespace godot
             result.push_back(place);
         }
 
+        return result;
+    }
+
+    TypedArray<PackedVector2Array> RTSFormation::getResultShapes() const
+    {
+        TypedArray<PackedVector2Array> result;
+        result.resize(allPolygons.size());
+        for (auto x : allPolygons)
+        {
+            PackedVector2Array poly;
+            poly.resize(x.size());
+            for (size_t i = 0; i < x.size(); i++)
+                poly.set(i, Vector2(x[i].x, x[i].y));
+            result.push_back(poly);
+        }
         return result;
     }
 
@@ -108,7 +126,7 @@ namespace godot
         {
             result->addChild(std::move(godot::Object::cast_to<RTSFormation>(children[i]))->toFormation());
         }
-        
+
         std::vector<size_t> cats;
         cats.reserve(unitCategories.size());
         for (size_t i = 0; i < unitCategories.size(); i++)

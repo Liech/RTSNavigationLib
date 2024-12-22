@@ -14,8 +14,8 @@ namespace UsherTests
 
     TEST_CASE("Usher/single")
     {
-        std::vector<RTSNavigationLib::Body> units  = { RTSNavigationLib::Body(glm::dvec2(0, 0), 0) };
-        std::vector<RTSNavigationLib::Body> places = { RTSNavigationLib::Body(glm::dvec2(0, 0), 0) };
+        std::vector<RTSNavigationLib::WorldBody> units  = { RTSNavigationLib::WorldBody(glm::dvec2(0, 0), 0) };
+        std::vector<RTSNavigationLib::WorldBody> places = { RTSNavigationLib::WorldBody(glm::dvec2(0, 0), 0) };
 
         std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
@@ -28,8 +28,8 @@ namespace UsherTests
 
     TEST_CASE("Usher/swapped")
     {
-        std::vector<RTSNavigationLib::Body> units  = { RTSNavigationLib::Body(glm::dvec2(0, 0), 0), RTSNavigationLib::Body(glm::dvec2(1, 0), 0) };
-        std::vector<RTSNavigationLib::Body> places = { RTSNavigationLib::Body(glm::dvec2(1, 0), 0), RTSNavigationLib::Body(glm::dvec2(0, 0), 0) };
+        std::vector<RTSNavigationLib::WorldBody> units  = { RTSNavigationLib::WorldBody(glm::dvec2(0, 0), 0), RTSNavigationLib::WorldBody(glm::dvec2(1, 0), 0) };
+        std::vector<RTSNavigationLib::WorldBody> places = { RTSNavigationLib::WorldBody(glm::dvec2(1, 0), 0), RTSNavigationLib::WorldBody(glm::dvec2(0, 0), 0) };
 
         std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
@@ -43,15 +43,16 @@ namespace UsherTests
 
     TEST_CASE("Usher/Four")
     {
-        std::vector<RTSNavigationLib::Body> units = {
-            RTSNavigationLib::Body(glm::dvec2(0, 7), 0),
-            RTSNavigationLib::Body(glm::dvec2(4, -5), 0),
-            RTSNavigationLib::Body(glm::dvec2(8, 8), 0),
-            RTSNavigationLib::Body(glm::dvec2(-4, -6), 0),
+        std::vector<RTSNavigationLib::WorldBody> units = {
+            RTSNavigationLib::WorldBody(glm::dvec2(0, 7), 0),
+            RTSNavigationLib::WorldBody(glm::dvec2(4, -5), 0),
+            RTSNavigationLib::WorldBody(glm::dvec2(8, 8), 0),
+            RTSNavigationLib::WorldBody(glm::dvec2(-4, -6), 0),
         };
-        std::vector<RTSNavigationLib::Body> places = {
-            RTSNavigationLib::Body(glm::dvec2(1, 0), 0), RTSNavigationLib::Body(glm::dvec2(-1, 0), 0), RTSNavigationLib::Body(glm::dvec2(0, 1), 0), RTSNavigationLib::Body(glm::dvec2(0, -1), 0)
-        };
+        std::vector<RTSNavigationLib::WorldBody> places = { RTSNavigationLib::WorldBody(glm::dvec2(1, 0), 0),
+                                                            RTSNavigationLib::WorldBody(glm::dvec2(-1, 0), 0),
+                                                            RTSNavigationLib::WorldBody(glm::dvec2(0, 1), 0),
+                                                            RTSNavigationLib::WorldBody(glm::dvec2(0, -1), 0) };
 
         std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);
 
@@ -106,20 +107,20 @@ namespace UsherTests
         auto        formation            = RTSNavigationLib::Formation();
         formation.fromJson(nlohmann::json::parse(formationDescription));
 
-        std::vector<RTSNavigationLib::Body> units;
+        std::vector<RTSNavigationLib::WorldBody> units;
 
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(4, 6), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(-3, 5), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(3, 2), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(5, 3), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(3, 5), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(2, 3), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(0, 1), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(4, 6), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(-3, 5), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(3, 2), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(5, 3), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(3, 5), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(2, 3), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(0, 1), 0, 1));
 
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(-3, -2), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(-2, 4), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(2, -5), 0, 1));
-        units.push_back(RTSNavigationLib::Body(glm::dvec2(-3, -5), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(-3, -2), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(-2, 4), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(2, -5), 0, 1));
+        units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(-3, -5), 0, 1));
 
         auto places = RTSNavigationLib::FormationCalculator(formation, units).calculate();
 
@@ -171,15 +172,15 @@ namespace UsherTests
 
     TEST_CASE("Usher/performance")
     {
-        std::vector<RTSNavigationLib::Body> units;
-        std::vector<RTSNavigationLib::Body> places;
+        std::vector<RTSNavigationLib::WorldBody> units;
+        std::vector<RTSNavigationLib::WorldBody> places;
 
         auto   randf  = []() { return (rand() % 1000) / 50.0 - 10.0; };
         size_t amount = 1000;
         for (size_t i = 0; i < amount; i++)
         {
-            units.push_back(RTSNavigationLib::Body(glm::dvec2(randf(), randf()), 0));
-            places.push_back(RTSNavigationLib::Body(glm::dvec2(randf(), randf()), 0));
+            units.push_back(RTSNavigationLib::WorldBody(glm::dvec2(randf(), randf()), 0));
+            places.push_back(RTSNavigationLib::WorldBody(glm::dvec2(randf(), randf()), 0));
         }
 
         std::vector<size_t> tickets = RTSNavigationLib::Usher::assignPlaces(units, places);

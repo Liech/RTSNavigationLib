@@ -356,7 +356,7 @@ namespace RTSNavigationLib
         for (auto& x : units)
         {
             Body key;
-            key.size = x.size;
+            key.size     = x.size;
             key.category = x.category;
             if (!result.contains(key))
                 result[key] = 1;
@@ -375,6 +375,14 @@ namespace RTSNavigationLib
         std::vector<WorldBody> result = bodies;
         for (auto& x : result)
             x.position -= center;
+        for (auto& poly : allPolygons)
+            for (auto& x : poly)
+                x -= center;
         return result;
+    }
+
+    std::vector<std::vector<glm::dvec2>> FormationCalculator::getShapes() const
+    {
+        return allPolygons;
     }
 }

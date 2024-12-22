@@ -21,6 +21,8 @@ namespace RTSNavigationLib
 
         std::vector<WorldBody> calculate();
 
+        std::vector<std::vector<glm::dvec2>> getShapes() const;
+
       private:
         const Formation& rootFormation;
 

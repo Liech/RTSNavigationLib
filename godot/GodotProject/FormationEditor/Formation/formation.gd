@@ -32,6 +32,7 @@ func randomize()->void:
 	rotation = randf()*PI*2
 	arc = randf()*PI*2
 	shape = [Shape.Rectangle,Shape.Triangle,Shape.Circle].pick_random()
+	@warning_ignore("int_as_enum_without_cast")
 	scaling_behavior = 2
 	hollow = 0
 	size = Vector2(1,1)

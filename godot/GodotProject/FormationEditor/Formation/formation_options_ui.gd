@@ -18,7 +18,6 @@ extends Control
 @onready var size_x_ui : SpinBox= $S/M/Stats/Stats/Size/SizeX
 @onready var size_y_ui : SpinBox= $S/M/Stats/Stats/Size/SizeY
 
-
 func _ready() -> void:
 	FormationEditor.current_formation_changed.connect(current_formation_changed)
 	FormationEditor.categories_changed.connect(categories_changed)
