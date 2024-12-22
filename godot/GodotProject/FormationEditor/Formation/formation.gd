@@ -64,12 +64,8 @@ func toRTS() -> RTSFormation:
 	elif (shape == Shape.Circle):
 		result.shape =RTSShapeArc.new()
 		result.shape.arc_angle_radian = arc
-		
-	print(result.shape.hollow)
-	print(result.shape.base_size)
-	print(result.shape.scaling_behavior)
 	
-	result.shape.hollow = hollow
+	result.shape.hollow = 1-hollow
 	result.shape.base_size = size
 	result.shape.scaling_behavior = scaling_behavior
 		

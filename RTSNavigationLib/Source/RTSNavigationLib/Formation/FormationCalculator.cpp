@@ -202,11 +202,13 @@ namespace RTSNavigationLib
         std::vector<glm::dvec2> polygon = formation.getShape().getPolygon();
 
         double hollownes = 1.0 - std::min(formation.getShape().getHollow(), 1.0);
-        if (hollownes != 1)
+        if (hollownes != 1 && hollownes != 0)
         {
             std::vector<glm::dvec2> hollowPolygon = polygon;
+            hollowPolygon.push_back(hollowPolygon[0]);
             for (auto& x : hollowPolygon)
                 x *= hollownes;
+            polygon.push_back(polygon[0]);
             polygon.insert(polygon.end(), hollowPolygon.begin(), hollowPolygon.end());
         }
 
