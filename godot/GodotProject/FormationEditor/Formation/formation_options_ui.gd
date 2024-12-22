@@ -47,6 +47,10 @@ func current_formation_changed()->void:
 	parent_interface_ui.value = current.parent_interface_point
 	shape_ui.selected = current.shape as int
 	arc_ui.value = current.arc
+	hollow_ui.value = current.hollow
+	scaling_behavior_ui.selected = current.scaling_behavior
+	size_x_ui.value = current.size.x
+	size_y_ui.value = current.size.y
 	
 	for x in range(category_menu_ui.item_count):
 		category_menu_ui.set_item_checked(x,false)

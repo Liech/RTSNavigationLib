@@ -29,7 +29,7 @@ namespace RTSNavigationLib
         std::vector<glm::ivec2> centerSort(const std::vector<glm::ivec2>&) const;
         std::vector<glm::ivec2> distributeSort(const std::vector<glm::ivec2>&, size_t desired) const;
 
-        bool saveSVG = true;
+        bool saveSVG = false;
 
         void saveAsSvg(const std::vector<WorldBody>&);
 

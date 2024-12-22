@@ -140,13 +140,13 @@ layout_mode = 2
 
 [node name="SizeX" type="SpinBox" parent="S/M/Stats/Stats/Size"]
 layout_mode = 2
-min_value = 0.1
+min_value = 1.0
 step = 0.1
 value = 1.0
 
 [node name="SizeY" type="SpinBox" parent="S/M/Stats/Stats/Size"]
 layout_mode = 2
-min_value = 0.1
+min_value = 1.0
 step = 0.1
 value = 1.0
 
