@@ -13,6 +13,10 @@ extends Control
 @onready var arc_label_ui : Label = $S/M/Stats/Stats/ArcLabel
 @onready var arc_ui : Slider = $S/M/Stats/Stats/Arc
 @onready var shape_ui : OptionButton = $S/M/Stats/Stats/Shape
+@onready var hollow_ui : Slider = $S/M/Stats/Stats/Hollow
+@onready var scaling_behavior_ui : OptionButton = $S/M/Stats/Stats/ScalingBehavior
+@onready var size_x_ui : SpinBox= $S/M/Stats/Stats/Size/SizeX
+@onready var size_y_ui : SpinBox= $S/M/Stats/Stats/Size/SizeY
 
 
 func _ready() -> void:
@@ -114,4 +118,21 @@ func _on_category_menu_index_pressed(index: int) -> void:
 		category_ui.text+= x + " "
 
 func _on_category_menu_popup_hide() -> void:
+	FormationEditor.formation_value_changed.emit()
+
+func _on_scaling_behavior_item_selected(index: int) -> void:
+	@warning_ignore("int_as_enum_without_cast")
+	FormationEditor.current_formation.scaling_behavior = index
+	FormationEditor.formation_value_changed.emit()
+
+func _on_hollow_drag_ended(_value_changed: bool) -> void:
+	FormationEditor.current_formation.hollow = hollow_ui.value
+	FormationEditor.formation_value_changed.emit()
+
+func _on_size_y_value_changed(value: float) -> void:
+	FormationEditor.current_formation.size.y = size_y_ui.value
+	FormationEditor.formation_value_changed.emit()
+	
+func _on_size_x_value_changed(value: float) -> void:
+	FormationEditor.current_formation.size.x = size_x_ui.value
 	FormationEditor.formation_value_changed.emit()

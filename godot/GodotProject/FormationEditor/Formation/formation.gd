@@ -13,7 +13,10 @@ enum Shape{Rectangle,Triangle,Circle}
 @export var category : Array[String]
 @export var weight : float
 @export var placement_behavior : RTSFormation.PlacementBehavior       
-@export var shape : Shape       
+@export var shape : Shape      
+@export var hollow : float
+@export var size : Vector2
+@export var scaling_behavior : RTSFormationShape.ScalingBehavior
 @export var arc : float       
 
 func randomize()->void:
@@ -29,6 +32,9 @@ func randomize()->void:
 	rotation = randf()*PI*2
 	arc = randf()*PI*2
 	shape = [Shape.Rectangle,Shape.Triangle,Shape.Circle].pick_random()
+	scaling_behavior = 2
+	hollow = 0
+	size = Vector2(1,1)
 	
 func toRTS() -> RTSFormation:
 	var result : RTSFormation = RTSFormation.new()
@@ -57,6 +63,14 @@ func toRTS() -> RTSFormation:
 	elif (shape == Shape.Circle):
 		result.shape =RTSShapeArc.new()
 		result.shape.arc_angle_radian = arc
+		
+	print(result.shape.hollow)
+	print(result.shape.base_size)
+	print(result.shape.scaling_behavior)
+	
+	result.shape.hollow = hollow
+	result.shape.base_size = size
+	result.shape.scaling_behavior = scaling_behavior
 		
 	for x in children:
 		result.children.push_back(x.toRTS())
