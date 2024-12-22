@@ -27,7 +27,7 @@ namespace RTSNavigationLib
         std::vector<glm::ivec2> getAllPlaces(const RectangleGrid<bool>&);
 
         std::vector<glm::ivec2> centerSort(const std::vector<glm::ivec2>&) const;
-        std::vector<glm::ivec2> distributeSort(const std::vector<glm::ivec2>&, size_t desired) const;
+        std::vector<glm::ivec2> distributeSort(const std::vector<glm::ivec2>&) const;
 
         bool saveSVG = false;
 

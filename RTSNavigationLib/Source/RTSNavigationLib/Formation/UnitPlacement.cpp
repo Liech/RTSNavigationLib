@@ -5,8 +5,8 @@
 #include <stdexcept>
 
 #include "Body.h"
-#include "WorldBody.h"
 #include "Util/svg.h"
+#include "WorldBody.h"
 
 namespace RTSNavigationLib
 {
@@ -71,13 +71,13 @@ namespace RTSNavigationLib
         size_t position = 0;
         for (const auto& x : unitsToPlace)
         {
-          if (x.first.size == size && x.second > 0)
-          {
-              for (size_t i = 0;i < x.second && position < input.size();i++)
-              {
-                  input[position].category = x.first.category;
-                  position++;              
-              }
+            if (x.first.size == size && x.second > 0)
+            {
+                for (size_t i = 0; i < x.second && position < input.size(); i++)
+                {
+                    input[position].category = x.first.category;
+                    position++;
+                }
             }
         }
     }
@@ -85,8 +85,8 @@ namespace RTSNavigationLib
     std::vector<WorldBody> UnitPlacement::placeSizeN(size_t size, size_t amount, bool& success)
     {
         std::vector<WorldBody> result;
-        RectangleGrid<bool> possiblePlaces = grid - usedPositions;
-        auto                get            = [&possiblePlaces](const glm::ivec2& pos) { return possiblePlaces.data[pos.x + pos.y * possiblePlaces.dimension.x]; };
+        RectangleGrid<bool>    possiblePlaces = grid - usedPositions;
+        auto                   get            = [&possiblePlaces](const glm::ivec2& pos) { return possiblePlaces.data[pos.x + pos.y * possiblePlaces.dimension.x]; };
         for (size_t i = 0; i < possiblePlaces.data.size(); i++)
         {
             if (!possiblePlaces.data[i])
@@ -124,7 +124,7 @@ namespace RTSNavigationLib
                 std::reverse(possible.begin(), possible.end());
         }
         else
-            possible = distributeSort(possible, amount);
+            possible = distributeSort(possible);
 
         for (size_t i = 0; i < amount; i++)
         {
@@ -159,7 +159,7 @@ namespace RTSNavigationLib
     std::vector<WorldBody> UnitPlacement::placeSize1(bool& success)
     {
         std::vector<WorldBody> result;
-        size_t            currentSize = 1;
+        size_t                 currentSize = 1;
 
         size_t requiredAmount = 0;
 
@@ -174,8 +174,7 @@ namespace RTSNavigationLib
         if (placementBehavior != UnitPlacementBehavior::DistributeEvenly)
             possible = centerSort(possible);
         else
-            throw std::runtime_error("Not yet reimplemented!");
-        // possible = distributeSort(possible, amountUnits);
+            possible = distributeSort(possible);
         if (placementBehavior == UnitPlacementBehavior::OuterFirst)
             std::reverse(possible.begin(), possible.end());
 
@@ -222,10 +221,10 @@ namespace RTSNavigationLib
     }
 
     // sort for bigger units. tries to distribute evenly
-    std::vector<glm::ivec2> UnitPlacement::distributeSort(const std::vector<glm::ivec2>& input, size_t desired) const
+    std::vector<glm::ivec2> UnitPlacement::distributeSort(const std::vector<glm::ivec2>& input) const
     {
         auto current = centerSort(input);
-        if (desired <= 2)
+        if (input.size() <= 2)
             return current;
         std::vector<glm::ivec2> result = { current[0] };
         current.erase(current.begin() + 0);
