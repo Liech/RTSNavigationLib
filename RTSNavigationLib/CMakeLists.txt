@@ -79,6 +79,8 @@ set(Formation_Files
     "Source/RTSNavigationLib/Formation/UnitPlacement.cpp"			
     "Source/RTSNavigationLib/Formation/UnitPlacementBehavior.h"	
     "Source/RTSNavigationLib/Formation/UnitPlacementBehavior.cpp"		
+    "Source/RTSNavigationLib/Formation/DistributeUniform.h"	
+    "Source/RTSNavigationLib/Formation/DistributeUniform.cpp"		
 )
 source_group("Source/Formation" FILES ${Formation_Files})
 

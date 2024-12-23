@@ -75,18 +75,11 @@ namespace RTSNavigationLib
   bool AssignmentProblemDualKDTree::findMainAxis(const std::vector<size_t>& workerI, const std::vector<size_t>& placesI, const std::vector<glm::dvec2>& workers, const std::vector<glm::dvec2>& places)
   {
     glm::dvec2 center = glm::dvec2(0, 0);
-    //for (const auto& x : workerI)
-    //  center += workers[x];
     for (const auto& x : placesI)
       center += places[x];
-    center /= placesI.size();// +workerI.size();
+    center /= placesI.size();
 
     glm::dvec2 cumVec = glm::dvec2(0, 0);
-    //for (const auto& X : workerI) {
-    //  const auto& x = workers[X];
-    //  auto dir = x - center;
-    //  cumVec += glm::dvec2(std::abs(dir.x), std::abs(dir.y));
-    //}
     for (const auto& X : placesI) {
       const auto& x = places[X];
       auto dir = x - center;

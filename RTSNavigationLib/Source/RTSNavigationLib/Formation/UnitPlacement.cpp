@@ -7,6 +7,7 @@
 #include "Body.h"
 #include "Util/svg.h"
 #include "WorldBody.h"
+#include "DistributeUniform.h"
 
 namespace RTSNavigationLib
 {
@@ -169,18 +170,19 @@ namespace RTSNavigationLib
     // sort for bigger units. tries to distribute evenly
     std::vector<glm::ivec2> UnitPlacement::distributeSort(const std::vector<glm::ivec2>& input, size_t amountUsed) const
     {
+        return DistributeUniform::distribute(input, amountUsed);
         //auto   sorted = centerSort(input);
-        double stepsize  = (double)input.size() / (double)amountUsed;
-        std::vector<glm::ivec2> result;
-        result.reserve(input.size());
-        
-        for (size_t i = 0; i < amountUsed; i++)
-        {
-            size_t index = ((size_t)((i+1) * stepsize)) % input.size();
-            result.push_back(input[index]);
-        }
-
-        return result;
+        //double stepsize  = (double)input.size() / (double)amountUsed;
+        //std::vector<glm::ivec2> result;
+        //result.reserve(input.size());
+        //
+        //for (size_t i = 0; i < amountUsed; i++)
+        //{
+        //    size_t index = ((size_t)((i+1) * stepsize)) % input.size();
+        //    result.push_back(input[index]);
+        //}
+        //
+        //return result;
 
         // auto& current = input;
         // if (input.size() <= 2)

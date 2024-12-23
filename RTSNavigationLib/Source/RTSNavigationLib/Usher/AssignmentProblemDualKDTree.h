@@ -9,6 +9,7 @@ namespace RTSNavigationLib {
   //but the alternating axis proved less effective than measuring the main axis of the positions for splitting
   //
   //Results in not 100% correct, but O(n*log(n)) fast results (compared to mcf with O(n^3))
+  //similar implementation to the DistributeUniform.h problem
 
   class AssignmentProblemDualKDTree
   {
