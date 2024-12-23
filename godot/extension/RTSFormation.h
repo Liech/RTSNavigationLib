@@ -21,7 +21,9 @@ namespace godot
         {
             center_first_rts      = 0,
             outer_first_rts       = 1,
-            distribute_evenly_rts = 2
+            distribute_evenly_rts = 2,
+            front_first_rts       = 3,
+            rear_first_rts        = 4
         };
 
       protected:

@@ -77,11 +77,12 @@ namespace RTSNavigationLib
                 tries = maxTries;
 
             lastPlaced                  = result.size();
-            glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, parentRotation, parentInterfaceWidth, scale);
+            double    rotation          = parentRotation;
+            glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, rotation, parentInterfaceWidth, scale);
             formationCenter             = toFormationCenter * glm::dvec4(0, 0, 0, 1);
 
             grid        = getGrid(formation, toFormationCenter);
-            auto placer = UnitPlacement(grid, unitsPlacedHere, formation.getPlacementBehavior());
+            auto placer = UnitPlacement(grid, unitsPlacedHere, rotation, formation.getPlacementBehavior());
             result      = placer.place(allPlaced);
             grid        = placer.getUsedPositions();
 
@@ -148,6 +149,7 @@ namespace RTSNavigationLib
         result = glm::rotate(result, rotation, glm::dvec3(0, 0, 1));
         result = glm::scale(result, vectorScale);
         result = glm::translate(result, glm::dvec3(interfacePoint, 0));
+        parentRotation = rotation;
         return result;
     }
 

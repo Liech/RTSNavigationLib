@@ -11,11 +11,12 @@
 
 namespace RTSNavigationLib
 {
-    UnitPlacement::UnitPlacement(const RectangleGrid<bool>& unitGrid, const std::map<Body, size_t>& unitList, UnitPlacementBehavior placementStrategy)
+    UnitPlacement::UnitPlacement(const RectangleGrid<bool>& unitGrid, const std::map<Body, size_t>& unitList, double rotation_, UnitPlacementBehavior placementStrategy)
       : grid(unitGrid)
       , unitsToPlace(unitList)
     {
         placementBehavior = placementStrategy;
+        rotation          = rotation_;
 
         usedPositions.dimension = grid.dimension;
         usedPositions.offset    = grid.offset;
@@ -113,7 +114,7 @@ namespace RTSNavigationLib
         {
             auto result= centerSort(places);
             if (placementBehavior == UnitPlacementBehavior::OuterFirst)
-                std::reverse(places.begin(), places.end());
+                std::reverse(result.begin(), result.end());
             return result;
         }
         else
@@ -171,43 +172,6 @@ namespace RTSNavigationLib
     std::vector<glm::ivec2> UnitPlacement::distributeSort(const std::vector<glm::ivec2>& input, size_t amountUsed) const
     {
         return DistributeUniform::distribute(input, amountUsed);
-        //auto   sorted = centerSort(input);
-        //double stepsize  = (double)input.size() / (double)amountUsed;
-        //std::vector<glm::ivec2> result;
-        //result.reserve(input.size());
-        //
-        //for (size_t i = 0; i < amountUsed; i++)
-        //{
-        //    size_t index = ((size_t)((i+1) * stepsize)) % input.size();
-        //    result.push_back(input[index]);
-        //}
-        //
-        //return result;
-
-        // auto& current = input;
-        // if (input.size() <= 2)
-        //     return;
-        // std::vector<glm::ivec2> result = { current[0] };
-        // current.erase(current.begin() + 0);
-        //
-        // while (current.size() > 0)
-        //{
-        //     std::sort(current.begin(),
-        //               current.end(),
-        //               [&result](const glm::ivec2& a, const glm::ivec2& b)
-        //               {
-        //                   double distanceSumA = 0;
-        //                   double distanceSumB = 0;
-        //                   for (auto& x : result)
-        //                   {
-        //                       distanceSumA += glm::distance((glm::dvec2)a, (glm::dvec2)x);
-        //                       distanceSumB += glm::distance((glm::dvec2)b, (glm::dvec2)x);
-        //                   }
-        //                   return distanceSumA > distanceSumB;
-        //               });
-        //     result.push_back(current[0]);
-        //     current.erase(current.begin() + 0);
-        // }
     }
 
     RectangleGrid<bool> UnitPlacement::getUsedPositions() const

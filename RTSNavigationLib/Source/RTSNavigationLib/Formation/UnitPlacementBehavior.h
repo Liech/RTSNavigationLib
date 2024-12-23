@@ -8,7 +8,9 @@ namespace RTSNavigationLib
     {
         CenterFirst      = 0,
         OuterFirst       = 1,
-        DistributeEvenly = 2
+        DistributeEvenly = 2,
+        FrontFirst       = 3,
+        RearFirst        = 4
     };
 
     std::string           UnitPlacementBehavior2String(const UnitPlacementBehavior&);

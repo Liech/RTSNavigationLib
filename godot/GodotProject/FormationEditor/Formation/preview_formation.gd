@@ -62,7 +62,6 @@ func _draw() -> void:
 	for poly in result_shapes:
 		if (poly.size()<2):
 			continue;
-		var prev := poly[0]
 		for i in range(1,len(poly)):
 			draw_line(poly[i-1]*scale_factor,poly[i]*scale_factor,Color.WHITE);
 		draw_line(poly[len(poly)-1]*scale_factor,poly[0]*scale_factor,Color.WHITE);

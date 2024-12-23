@@ -14,7 +14,7 @@ namespace RTSNavigationLib
     class UnitPlacement
     {
       public:
-        UnitPlacement(const RectangleGrid<bool>&, const std::map<Body, size_t>&, UnitPlacementBehavior = UnitPlacementBehavior::CenterFirst);
+        UnitPlacement(const RectangleGrid<bool>&, const std::map<Body, size_t>&,double rotation = 0, UnitPlacementBehavior = UnitPlacementBehavior::CenterFirst);
 
         std::vector<WorldBody> place(bool& success);
 
@@ -39,5 +39,6 @@ namespace RTSNavigationLib
         RectangleGrid<bool>           usedPositions;
         size_t                        smallestSize = 1;
         UnitPlacementBehavior         placementBehavior;
+        double                        rotation;
     };
 }

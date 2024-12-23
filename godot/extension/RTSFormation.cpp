@@ -9,6 +9,8 @@ namespace godot
         BIND_ENUM_CONSTANT(center_first_rts);
         BIND_ENUM_CONSTANT(outer_first_rts);
         BIND_ENUM_CONSTANT(distribute_evenly_rts);
+        BIND_ENUM_CONSTANT(front_first_rts);
+        BIND_ENUM_CONSTANT(rear_first_rts);
 
         ClassDB::bind_method(D_METHOD("get_unit_categories"), &RTSFormation::get_unit_categories);
         ClassDB::bind_method(D_METHOD("set_unit_categories", "categories"), &RTSFormation::set_unit_categories);
@@ -41,7 +43,7 @@ namespace godot
         ADD_PROPERTY(PropertyInfo(Variant::INT, "parent_interface_point"), "set_parent_interface_point", "get_parent_interface_point");
         ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, "RTSFormationShape"), "set_shape", "get_shape");
         ClassDB::add_property(get_class_static(),
-                              PropertyInfo(Variant::INT, "placement_behavior", PROPERTY_HINT_ENUM, "center_first,outer_first_rts,distribute_evenly_rts", PROPERTY_USAGE_DEFAULT),
+                              PropertyInfo(Variant::INT, "placement_behavior", PROPERTY_HINT_ENUM, "center_first,outer_first_rts,distribute_evenly_rts,front_first_rts,rear_first_rts", PROPERTY_USAGE_DEFAULT),
                               "set_placement_behavior",
                               "get_placement_behavior");
 
