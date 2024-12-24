@@ -1,6 +1,5 @@
 Todo v2:
 * fix voxelizer
-* even/odd cell center option
 * interface width arc special case
 * distribute units of same size
 * binary search
