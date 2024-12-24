@@ -54,12 +54,16 @@ text = "Placement Behavior:"
 [node name="PlacementBehavior" type="OptionButton" parent="S/M/Stats/Stats"]
 layout_mode = 2
 selected = 0
-item_count = 3
+item_count = 5
 popup/item_0/text = "Center First"
 popup/item_1/text = "Outer First"
 popup/item_1/id = 1
 popup/item_2/text = "Distribute Evenly"
 popup/item_2/id = 2
+popup/item_3/text = "Front First"
+popup/item_3/id = 3
+popup/item_4/text = "Rear First"
+popup/item_4/id = 4
 
 [node name="CategoryLabel" type="Label" parent="S/M/Stats/Stats"]
 layout_mode = 2

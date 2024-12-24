@@ -34,9 +34,9 @@ namespace RTSNavigationLib {
   std::vector<glm::dvec2> TriangleFormationShape::getPolygon() const {
     glm::dvec2 size = getBaseSize() ;
     return std::vector<glm::dvec2>{
-      glm::dvec2(size.x * -0.5, size.y * -0.5),
-      glm::dvec2(size.x *  0.0, size.y * 0.5),
-      glm::dvec2(size.x *  0.5, size.y * -0.5),
+      glm::dvec2(size.x * -0.5, size.y * 0.5),
+      glm::dvec2(size.x *  0.0, size.y * -0.5),
+      glm::dvec2(size.x *  0.5, size.y * 0.5),
     };
   }
 
