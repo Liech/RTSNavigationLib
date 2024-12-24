@@ -131,6 +131,13 @@ namespace RTSNavigationLib
             parentInterfaceNormal  = formation.getParent().getShape().getInterfaceNormal(formation.getParentInterfacePoint());
             parentInterfaceWidth   = formation.getParent().getShape().getInterfaceWidth(formation.getParentInterfacePoint(), vectorScale);
         }
+        else
+        {
+            if (formation.getCenterShift())
+            {
+                parentInterfacePoint = glm::dvec2(0.5, 0.5);
+            }
+        }
 
         glm::dvec2 interfacePoint = -shape.getInterfacePoint(formation.getOwnInterfacePoint());
         glm::dmat4 result         = glm::dmat4(1);
@@ -144,11 +151,11 @@ namespace RTSNavigationLib
             rotation     = parentRotation + angle;
         }
 
-        result = glm::translate(result, glm::dvec3(parentCenter, 0));
-        result = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
-        result = glm::rotate(result, rotation, glm::dvec3(0, 0, 1));
-        result = glm::scale(result, vectorScale);
-        result = glm::translate(result, glm::dvec3(interfacePoint, 0));
+        result         = glm::translate(result, glm::dvec3(parentCenter, 0));
+        result         = glm::translate(result, glm::dvec3(parentInterfacePoint, 0));
+        result         = glm::rotate(result, rotation, glm::dvec3(0, 0, 1));
+        result         = glm::scale(result, vectorScale);
+        result         = glm::translate(result, glm::dvec3(interfacePoint, 0));
         parentRotation = rotation;
         return result;
     }

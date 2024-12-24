@@ -42,6 +42,7 @@ hollow = 0.0
 size = Vector2(1, 1)
 scaling_behavior = 2
 arc = 0.0
+center_shift = false
 
 [node name="Main" type="HBoxContainer"]
 anchors_preset = 15

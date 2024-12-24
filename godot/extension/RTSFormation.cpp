@@ -22,6 +22,8 @@ namespace godot
         ClassDB::bind_method(D_METHOD("set_unit_distribution_weight", "placement_behavior"), &RTSFormation::set_unit_distribution_weight);
         ClassDB::bind_method(D_METHOD("get_rotation"), &RTSFormation::get_rotation);
         ClassDB::bind_method(D_METHOD("set_rotation", "rotation"), &RTSFormation::set_rotation);
+        ClassDB::bind_method(D_METHOD("get_center_shift"), &RTSFormation::get_center_shift);
+        ClassDB::bind_method(D_METHOD("set_center_shift", "center_shift"), &RTSFormation::set_center_shift);
 
         ClassDB::bind_method(D_METHOD("get_rotate_with_interface"), &RTSFormation::get_rotate_with_interface);
         ClassDB::bind_method(D_METHOD("set_rotate_with_interface", "val"), &RTSFormation::set_rotate_with_interface);
@@ -37,6 +39,7 @@ namespace godot
         ADD_PROPERTY(PropertyInfo(Variant::ARRAY, "categories"), "set_unit_categories", "get_unit_categories");
         ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "weight"), "set_unit_distribution_weight", "get_unit_distribution_weight");
         ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "rotation"), "set_rotation", "get_rotation");
+        ADD_PROPERTY(PropertyInfo(Variant::BOOL, "center_shift"), "set_center_shift", "get_center_shift");
         ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rotate_with_interface"), "set_rotate_with_interface", "get_rotate_with_interface");
         ADD_PROPERTY(PropertyInfo(Variant::BOOL, "overwrite_width_with_interface_width"), "set_overwrite_width_with_interface_width", "get_overwrite_width_with_interface_width");
         ADD_PROPERTY(PropertyInfo(Variant::INT, "own_interface_point"), "set_own_interface_point", "get_own_interface_point");
@@ -123,6 +126,7 @@ namespace godot
         result->setUnitDistributionWeight(unitDistributionWeight);
         result->setPlacementBehavior((RTSNavigationLib::UnitPlacementBehavior)placementBehavior);
         result->setShape(shape->toShape());
+        result->setCenterShift(centerShift);
 
         for (size_t i = 0; i < children.size(); i++)
         {
@@ -219,5 +223,13 @@ namespace godot
     void RTSFormation::set_shape(Ref<RTSFormationShape> val)
     {
         shape = val;
+    }
+    bool RTSFormation::get_center_shift() const
+    {
+        return centerShift;
+    }
+    void RTSFormation::set_center_shift(bool active)
+    {
+        centerShift = active;
     }
 }

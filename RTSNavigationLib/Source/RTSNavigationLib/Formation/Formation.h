@@ -31,6 +31,8 @@ namespace RTSNavigationLib
         void   setOverwriteWidthWithInterfaceWidth(bool doIt);
         bool   getRotateWithInterface() const;
         void   setRotateWithInterface(bool v);
+        bool   getCenterShift() const;
+        void   setCenterShift(bool active);
 
         std::vector<size_t>   getUnitCategories() const;
         void                  setUnitCategories(const std::vector<size_t>&);
@@ -52,6 +54,7 @@ namespace RTSNavigationLib
         std::unique_ptr<FormationShape> shape                            = nullptr;
         size_t                          ownInterfacePoint                = 0;
         size_t                          parentInterfacePoint             = 0;
+        bool                            centerShift                      = false;
         bool                            overwriteWidthWithInterfaceWidth = false;
         bool                            rotateWithInterface              = false;
         double                          rotation                         = 0.0;

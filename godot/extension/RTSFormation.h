@@ -48,6 +48,8 @@ namespace godot
         void                           set_own_interface_point(int ptr);
         int                            get_parent_interface_point() const;
         void                           set_parent_interface_point(int ptr);
+        bool                           get_center_shift() const;
+        void                           set_center_shift(bool active);
         Ref<RTSFormationShape>         get_shape() const;
         void                           set_shape(Ref<RTSFormationShape>);
         TypedArray<RTSBody>            calculate(const TypedArray<RTSBody>&);
@@ -65,6 +67,7 @@ namespace godot
         TypedArray<int>        unitCategories;
         float                  unitDistributionWeight = 1.0;
         PlacementBehavior      placementBehavior      = PlacementBehavior::center_first_rts;
+        bool                   centerShift            = false;
 
         std::vector<std::vector<glm::dvec2>> allPolygons;
 

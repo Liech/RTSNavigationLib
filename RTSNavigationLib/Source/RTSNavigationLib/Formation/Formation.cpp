@@ -139,6 +139,16 @@ namespace RTSNavigationLib
         placementBehavior = value;
     }
 
+    bool Formation::getCenterShift() const
+    {
+        return centerShift;
+    }
+
+    void Formation::setCenterShift(bool active)
+    {
+        centerShift = active;
+    }
+
     void Formation::fromJson(const nlohmann::json& input)
     {
         shape = FormationShapeFactory::make(input["Shape"]);
@@ -151,6 +161,7 @@ namespace RTSNavigationLib
         unitCategories                   = std::vector<size_t>(input["UnitCategory"].begin(), input["UnitCategory"].end());
         unitDistributionWeight           = input["UnitDistributionWeight"];
         placementBehavior                = String2UnitPlacementBehavior(input["PlacementBehavior"]);
+        centerShift                      = input["CenterShift"];
 
         children.clear();
         for (auto& child : input["Children"])
@@ -174,6 +185,7 @@ namespace RTSNavigationLib
         result["UnitCategory"]                     = unitCategories;
         result["UnitDistributionWeight"]           = unitDistributionWeight;
         result["PlacementBehavior"]                = UnitPlacementBehavior2String(placementBehavior);
+        result["CenterShift"]                      = centerShift;
 
         result["Children"] = nlohmann::json::array();
         for (auto& child : children)
