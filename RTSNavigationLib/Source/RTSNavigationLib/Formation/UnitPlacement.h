@@ -42,6 +42,7 @@ namespace RTSNavigationLib
         const RectangleGrid<bool>&    grid;
         const std::map<Body, size_t>& unitsToPlace;
         RectangleGrid<bool>           usedPositions;
+        RectangleGrid<bool>           cutPositions;
         size_t                        smallestSize = 1;
         size_t                        overallSize  = 0;
         UnitPlacementBehavior         placementBehavior;

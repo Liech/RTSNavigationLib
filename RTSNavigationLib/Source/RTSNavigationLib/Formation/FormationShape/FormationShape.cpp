@@ -1,73 +1,84 @@
 #include "FormationShape.h"
 
-namespace RTSNavigationLib {
-  FormationShape::FormationShape() {
+namespace RTSNavigationLib
+{
+    FormationShape::FormationShape() {}
 
-  }
+    FormationShape::~FormationShape() {}
 
-  FormationShape::~FormationShape() {
+    std::string FormationShape::getType() const
+    {
+        return "Base";
+    }
 
-  }
+    size_t FormationShape::getNumberOfInterfacePoints() const
+    {
+        return 1;
+    }
 
-  std::string FormationShape::getType() const {
-    return "Base";
-  }
+    glm::dvec2 FormationShape::getInterfacePoint(size_t number) const
+    {
+        return glm::dvec2(0, 0);
+    }
 
-  size_t FormationShape::getNumberOfInterfacePoints() const {
-    return 1;
-  }
+    glm::dvec2 FormationShape::getInterfaceNormal(size_t number) const
+    {
+        return glm::dvec2(0, 1);
+    }
 
-  glm::dvec2 FormationShape::getInterfacePoint(size_t number) const {
-    return glm::dvec2(0, 0);
-  }
+    std::vector<glm::dvec2> FormationShape::getPolygon() const
+    {
+        return {};
+    }
 
-  glm::dvec2 FormationShape::getInterfaceNormal(size_t number) const {
-    return glm::dvec2(0, 1);
-  }
+    double FormationShape::getInterfaceWidth(size_t, const glm::dvec2& scale) const
+    {
+        return 0;
+    }
 
-  std::vector<glm::dvec2> FormationShape::getPolygon() const {
-    return {};
-  }
+    ScalingBehavior FormationShape::getScalingBehavior() const
+    {
+        return scaling;
+    }
 
-  double FormationShape::getInterfaceWidth(size_t, const glm::dvec2& scale) const {
-    return 0;
-  }
+    void FormationShape::setScalingBehavior(const ScalingBehavior& behavior)
+    {
+        scaling = behavior;
+    }
 
-  ScalingBehavior FormationShape::getScalingBehavior() const {
-    return scaling;
-  }
+    glm::dvec2 FormationShape::getBaseSize() const
+    {
+        return baseSize;
+    }
 
-  void FormationShape::setScalingBehavior(const ScalingBehavior& behavior) {
-    scaling = behavior;
-  }
+    void FormationShape::setBaseSize(const glm::dvec2& size)
+    {
+        baseSize = size;
+    }
 
-  glm::dvec2 FormationShape::getBaseSize() const {
-    return baseSize;
-  }
+    double FormationShape::getHollow() const
+    {
+        return hollow;
+    }
 
-  void FormationShape::setBaseSize(const glm::dvec2& size) {
-    baseSize = size;
-  }
+    void FormationShape::setHollow(double value)
+    {
+        hollow = value;
+    }
 
-  double FormationShape::getHollow() const {
-    return hollow;
-  }
-  
-  void FormationShape::setHollow(double value) {
-    hollow = value;
-  }
+    void FormationShape::fromJson(const nlohmann::json& input)
+    {
+        baseSize = glm::dvec2(input["Size"][0], input["Size"][1]);
+        scaling  = String2ScalingBehavior(input["Scaling"]);
+        hollow   = input["Hollow"];
+    }
 
-  void FormationShape::fromJson(const nlohmann::json& input) {
-    baseSize = glm::dvec2(input["Size"][0], input["Size"][1]);
-    scaling  = String2ScalingBehavior(input["Scaling"]);
-    hollow   = input["Hollow"];
-  }
-  
-  nlohmann::json FormationShape::toJson() {
-    nlohmann::json result;
-    result["Size"]    = std::array<double,2>{ baseSize[0],baseSize[0]};
-    result["Scaling"] = ScalingBehavior2String(scaling);
-    result["Hollow"]  = hollow;
-    return result;
-  }
+    nlohmann::json FormationShape::toJson()
+    {
+        nlohmann::json result;
+        result["Size"]    = std::array<double, 2>{ baseSize[0], baseSize[0] };
+        result["Scaling"] = ScalingBehavior2String(scaling);
+        result["Hollow"]  = hollow;
+        return result;
+    }
 }

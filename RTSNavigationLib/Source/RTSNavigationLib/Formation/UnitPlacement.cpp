@@ -27,6 +27,7 @@ namespace RTSNavigationLib
         usedPositions.dimension = grid.dimension;
         usedPositions.offset    = grid.offset;
         usedPositions.data.resize(grid.data.size());
+        cutPositions = usedPositions;
 
         overallSize  = 0;
         smallestSize = std::numeric_limits<size_t>::max();
@@ -173,7 +174,7 @@ namespace RTSNavigationLib
         for (size_t i = overallSize; i < positions.size(); i++)
         {
             const auto& pos                                      = positions[i];
-            usedPositions.data[pos.x + pos.y * grid.dimension.x] = true;
+            cutPositions.data[pos.x + pos.y * grid.dimension.x] = true;
         }
         return true;
     }
@@ -181,7 +182,7 @@ namespace RTSNavigationLib
     std::vector<glm::ivec2> UnitPlacement::getPossiblePositions(size_t size)
     {
         std::vector<glm::ivec2> result;
-        RectangleGrid<bool>     possiblePlaces = grid - usedPositions;
+        RectangleGrid<bool>     possiblePlaces = (grid - usedPositions) - cutPositions;
 
         auto get = [&possiblePlaces](const glm::ivec2& pos) -> bool { return possiblePlaces.data[pos.x + pos.y * possiblePlaces.dimension.x]; };
 

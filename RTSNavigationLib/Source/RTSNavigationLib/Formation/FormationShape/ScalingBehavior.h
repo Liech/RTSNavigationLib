@@ -10,7 +10,7 @@ namespace RTSNavigationLib
         PureY     = 1,
         Isotropic = 2,
         X75Y25    = 3,
-        X25Y75    = 4 
+        X25Y75    = 4
     };
 
     ScalingBehavior String2ScalingBehavior(const std::string&);

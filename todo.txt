@@ -1,6 +1,8 @@
 Todo v2:
 * interface width for center points
-* binary search
+* performance boost with binary search
 * sink into parent option
 * grid type hexagonal
 * green tests
+* fix rotation
+* pick interface points
