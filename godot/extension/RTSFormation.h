@@ -50,6 +50,8 @@ namespace godot
         void                           set_parent_interface_point(int ptr);
         bool                           get_center_shift() const;
         void                           set_center_shift(bool active);
+        bool                           get_remaining_unit_sink() const;
+        void                           set_remaining_unit_sink(bool active);
         Ref<RTSFormationShape>         get_shape() const;
         void                           set_shape(Ref<RTSFormationShape>);
         TypedArray<RTSBody>            calculate(const TypedArray<RTSBody>&);
@@ -68,6 +70,7 @@ namespace godot
         float                  unitDistributionWeight = 1.0;
         PlacementBehavior      placementBehavior      = PlacementBehavior::center_first_rts;
         bool                   centerShift            = false;
+        bool                   remainingUnitsSink     = false;
 
         std::vector<std::vector<glm::dvec2>> allPolygons;
 

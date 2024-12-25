@@ -33,6 +33,8 @@ namespace godot
         ClassDB::bind_method(D_METHOD("set_own_interface_point", "val"), &RTSFormation::set_own_interface_point);
         ClassDB::bind_method(D_METHOD("get_parent_interface_point"), &RTSFormation::get_parent_interface_point);
         ClassDB::bind_method(D_METHOD("set_parent_interface_point", "val"), &RTSFormation::set_parent_interface_point);
+        ClassDB::bind_method(D_METHOD("get_remaining_unit_sink"), &RTSFormation::get_remaining_unit_sink);
+        ClassDB::bind_method(D_METHOD("set_remaining_unit_sink", "val"), &RTSFormation::set_remaining_unit_sink);
         ClassDB::bind_method(D_METHOD("get_shape"), &RTSFormation::get_shape);
         ClassDB::bind_method(D_METHOD("set_shape", "val"), &RTSFormation::set_shape);
 
@@ -42,6 +44,7 @@ namespace godot
         ADD_PROPERTY(PropertyInfo(Variant::BOOL, "center_shift"), "set_center_shift", "get_center_shift");
         ADD_PROPERTY(PropertyInfo(Variant::BOOL, "rotate_with_interface"), "set_rotate_with_interface", "get_rotate_with_interface");
         ADD_PROPERTY(PropertyInfo(Variant::BOOL, "overwrite_width_with_interface_width"), "set_overwrite_width_with_interface_width", "get_overwrite_width_with_interface_width");
+        ADD_PROPERTY(PropertyInfo(Variant::BOOL, "remaining_unit_sink"), "set_remaining_unit_sink", "get_remaining_unit_sink");
         ADD_PROPERTY(PropertyInfo(Variant::INT, "own_interface_point"), "set_own_interface_point", "get_own_interface_point");
         ADD_PROPERTY(PropertyInfo(Variant::INT, "parent_interface_point"), "set_parent_interface_point", "get_parent_interface_point");
         ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, "RTSFormationShape"), "set_shape", "get_shape");
@@ -127,6 +130,7 @@ namespace godot
         result->setPlacementBehavior((RTSNavigationLib::UnitPlacementBehavior)placementBehavior);
         result->setShape(shape->toShape());
         result->setCenterShift(centerShift);
+        result->setIsRemainingUnitSink(remainingUnitsSink);
 
         for (size_t i = 0; i < children.size(); i++)
         {
@@ -232,4 +236,13 @@ namespace godot
     {
         centerShift = active;
     }
+    bool RTSFormation::get_remaining_unit_sink() const
+    {
+        return remainingUnitsSink;
+    }
+    void RTSFormation::set_remaining_unit_sink(bool active)
+    {
+        remainingUnitsSink = active;
+    }
+
 }

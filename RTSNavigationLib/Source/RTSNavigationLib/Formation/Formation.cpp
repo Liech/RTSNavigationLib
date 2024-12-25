@@ -148,6 +148,15 @@ namespace RTSNavigationLib
     {
         centerShift = active;
     }
+    bool Formation::getIsRemainingUnitSink() const
+    {
+        return remainingUnitsSink;
+    }
+
+    void Formation::setIsRemainingUnitSink(bool active)
+    {
+        remainingUnitsSink = active;
+    }
 
     void Formation::fromJson(const nlohmann::json& input)
     {
@@ -162,6 +171,7 @@ namespace RTSNavigationLib
         unitDistributionWeight           = input["UnitDistributionWeight"];
         placementBehavior                = String2UnitPlacementBehavior(input["PlacementBehavior"]);
         centerShift                      = input["CenterShift"];
+        remainingUnitsSink               = input["RemainingUnitSink"];
 
         children.clear();
         for (auto& child : input["Children"])
@@ -186,6 +196,7 @@ namespace RTSNavigationLib
         result["UnitDistributionWeight"]           = unitDistributionWeight;
         result["PlacementBehavior"]                = UnitPlacementBehavior2String(placementBehavior);
         result["CenterShift"]                      = centerShift;
+        result["RemainingUnitSink"]                                 = remainingUnitsSink;
 
         result["Children"] = nlohmann::json::array();
         for (auto& child : children)

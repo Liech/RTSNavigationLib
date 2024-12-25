@@ -76,6 +76,13 @@ alignment = 0
 text_overrun_behavior = 3
 clip_text = true
 
+[node name="RemainingUnitSinkLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Remaining Unit Sink:"
+
+[node name="RemainingUnitSink" type="CheckBox" parent="S/M/Stats/Stats"]
+layout_mode = 2
+
 [node name="CenterShiftLabel" type="Label" parent="S/M/Stats/Stats"]
 layout_mode = 2
 text = "Center Shift:"
@@ -215,6 +222,7 @@ item_1/id = 1
 [connection signal="text_submitted" from="S/M/Stats/Stats/Name" to="." method="_on_name_text_submitted"]
 [connection signal="item_selected" from="S/M/Stats/Stats/PlacementBehavior" to="." method="_on_placement_behavior_item_selected"]
 [connection signal="pressed" from="S/M/Stats/Stats/Category" to="." method="_on_category_pressed"]
+[connection signal="toggled" from="S/M/Stats/Stats/RemainingUnitSink" to="." method="_on_remaining_unit_sink_toggled"]
 [connection signal="toggled" from="S/M/Stats/Stats/CenterShift" to="." method="_on_center_shift_toggled"]
 [connection signal="toggled" from="S/M/Stats/Stats/RotateWithInterface" to="." method="_on_rotate_with_interface_toggled"]
 [connection signal="drag_ended" from="S/M/Stats/Stats/Rotation" to="." method="_on_rotation_drag_ended"]

@@ -323,6 +323,18 @@ namespace RTSNavigationLib
                 unitsLeftToPlace[unit.first] -= amount;
             }
         }
+        if (formation.getIsRemainingUnitSink())
+        {
+            for (const auto& unit : overall)
+            {
+                if (!weightSumPerCategory.contains(unit.first.category) && unitsLeftToPlace[unit.first] > 0)
+                {
+                    unitAmount[unit.first] = unit.second;
+                    unitsLeftToPlace[unit.first] -= unit.second;
+                }
+            }
+        }
+
         return unitAmount;
     }
 

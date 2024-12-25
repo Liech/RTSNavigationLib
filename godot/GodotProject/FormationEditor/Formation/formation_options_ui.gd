@@ -18,6 +18,7 @@ extends Control
 @onready var size_x_ui : SpinBox= $S/M/Stats/Stats/Size/SizeX
 @onready var size_y_ui : SpinBox= $S/M/Stats/Stats/Size/SizeY
 @onready var center_shift_ui : CheckBox= $S/M/Stats/Stats/CenterShift
+@onready var remaining_unit_sink_ui : CheckBox= $S/M/Stats/Stats/RemainingUnitSink
 
 func _ready() -> void:
 	FormationEditor.current_formation_changed.connect(current_formation_changed)
@@ -52,6 +53,7 @@ func current_formation_changed()->void:
 	size_x_ui.value = current.size.x
 	size_y_ui.value = current.size.y
 	center_shift_ui.button_pressed = current.center_shift
+	remaining_unit_sink_ui.button_pressed = current.reamining_unit_sink
 	
 	for x in range(category_menu_ui.item_count):
 		category_menu_ui.set_item_checked(x,false)
@@ -144,4 +146,8 @@ func _on_size_x_value_changed(value: float) -> void:
 
 func _on_center_shift_toggled(toggled_on: bool) -> void:
 	FormationEditor.current_formation.center_shift = toggled_on
+	FormationEditor.formation_value_changed.emit()
+
+func _on_remaining_unit_sink_toggled(toggled_on: bool) -> void:
+	FormationEditor.current_formation.reamining_unit_sink = toggled_on
 	FormationEditor.formation_value_changed.emit()

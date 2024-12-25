@@ -19,6 +19,7 @@ enum Shape{Rectangle,Triangle,Circle}
 @export var scaling_behavior : RTSFormationShape.ScalingBehavior
 @export var arc : float       
 @export var center_shift : bool
+@export var reamining_unit_sink : bool
 
 func randomize()->void:
 	#randomize
@@ -37,6 +38,7 @@ func randomize()->void:
 	scaling_behavior = 2
 	hollow = 0
 	center_shift = [false,true].pick_random()
+	reamining_unit_sink= false;
 	size = Vector2(1,1)
 	
 func toRTS() -> RTSFormation:
@@ -59,6 +61,7 @@ func toRTS() -> RTSFormation:
 	result.weight = weight
 	result.placement_behavior = placement_behavior
 	result.center_shift = center_shift
+	result.remaining_unit_sink = reamining_unit_sink;
 	
 	if (shape == Shape.Rectangle):
 		result.shape =RTSShapeRect.new()

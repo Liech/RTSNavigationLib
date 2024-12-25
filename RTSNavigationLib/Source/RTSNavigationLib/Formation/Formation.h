@@ -33,6 +33,8 @@ namespace RTSNavigationLib
         void   setRotateWithInterface(bool v);
         bool   getCenterShift() const;
         void   setCenterShift(bool active);
+        bool   getIsRemainingUnitSink() const;
+        void   setIsRemainingUnitSink(bool active); // if not set in one child the root is it. All units not appearing in categories appear here
 
         std::vector<size_t>   getUnitCategories() const;
         void                  setUnitCategories(const std::vector<size_t>&);
@@ -61,6 +63,7 @@ namespace RTSNavigationLib
         std::vector<size_t>             unitCategories;
         double                          unitDistributionWeight = 1;
         UnitPlacementBehavior           placementBehavior      = UnitPlacementBehavior::CenterFirst;
+        bool                            remainingUnitsSink     = false;
 
         std::vector<std::unique_ptr<Formation>> children;
         const Formation*                        parent = nullptr;

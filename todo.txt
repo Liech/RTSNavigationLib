@@ -1,8 +1,7 @@
 Todo v2:
 * fix voxelizer
-* interface width arc special case
+* interface width for center points
 * distribute units of same size
 * binary search
 * cut behavior
 * sink into parent option
-* handle rest of units

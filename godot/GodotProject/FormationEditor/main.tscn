@@ -43,6 +43,7 @@ size = Vector2(1, 1)
 scaling_behavior = 2
 arc = 0.0
 center_shift = false
+reamining_unit_sink = false
 
 [node name="Main" type="HBoxContainer"]
 anchors_preset = 15
