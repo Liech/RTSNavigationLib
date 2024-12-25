@@ -91,6 +91,12 @@ namespace RTSNavigationLib
             {
                 allGrids.push_back(grid);
                 allPolygons.push_back(lastpolygon);
+
+                if (debugShowGrid)
+                allPolygons.push_back({ glm::dvec2(grid.offset),
+                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension.x, 0),
+                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension),
+                                        glm::dvec2(grid.offset) + glm::dvec2(0, grid.dimension.y) });
                 break;
             }
             scale++;
@@ -226,8 +232,8 @@ namespace RTSNavigationLib
         lastpolygon = polygon;
 
         auto       minMax    = getMinMax(polygon);
-        glm::dvec2 centroid  = Geometry2D::findCentroid(polygon);
         glm::dvec2 span      = glm::vec2(minMax.second - minMax.first);
+        glm::dvec2 centroid  = (minMax.first + minMax.second) / 2.0;
         glm::ivec2 dimension = glm::ivec2((int)std::ceil(span.x), (int)std::ceil(span.y)) + glm::ivec2(2, 2);
         glm::ivec2 offset    = centroid - ((glm::dvec2)dimension) / 2.0;
 
