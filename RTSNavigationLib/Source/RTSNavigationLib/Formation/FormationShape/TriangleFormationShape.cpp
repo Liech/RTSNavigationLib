@@ -58,13 +58,13 @@ namespace RTSNavigationLib
     {
         if (number == 0)
             return glm::dvec2(0, 1);
-        size_t edge   = (number - 1) % 3;
+        size_t edge   = ((number - 1) / 2) % 3;
         bool   center = (number - 1) % 2 == 1;
         if (!center)
             return glm::dvec2(0, 1);
         auto       poly   = getPolygon();
         glm::dvec2 result = glm::normalize(poly[(edge + 1) % 3] - poly[edge]);
-        result            = glm::dvec2(-result.y, result.x);
+        result            = glm::dvec2(result.y, -result.x);
         if (glm::length(result) < 1e-5)
             return glm::dvec2(0, 1);
         return result;

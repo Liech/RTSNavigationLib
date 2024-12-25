@@ -84,7 +84,7 @@ namespace RTSNavigationLib
         size_t     edge   = (number - 1) % numberPolygons;
         auto       poly   = getPolygon();
         glm::dvec2 result = glm::normalize(poly[(edge + 1) % numberPolygons] - poly[edge]);
-        result            = glm::dvec2(-result.y, result.x);
+        result            = glm::dvec2(result.y, -result.x);
         if (glm::length(result) < 1e-5)
             return glm::dvec2(0, 1);
         return result;

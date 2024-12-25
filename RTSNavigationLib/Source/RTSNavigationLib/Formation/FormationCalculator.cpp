@@ -154,7 +154,7 @@ namespace RTSNavigationLib
         if (formation.getRotateWithInterface())
         {
             double angle = Geometry2D::getAngle(glm::dvec2(0, 1), parentInterfaceNormal);
-            rotation     = parentRotation + angle;
+            rotation     += angle;
         }
 
         result         = glm::translate(result, glm::dvec3(parentCenter, 0));

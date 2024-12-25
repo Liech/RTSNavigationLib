@@ -57,7 +57,7 @@ namespace RTSNavigationLib
     {
         if (number == 0)
             return glm::dvec2(0, 1);
-        size_t edge   = (number - 1) % 4;
+        size_t edge   = ((number - 1) / 2) % 4;
         bool   center = (number - 1) % 2 == 1;
         if (!center)
             return glm::dvec2(0, 1);
