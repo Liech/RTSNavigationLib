@@ -2,5 +2,4 @@ Todo v2:
 * performance boost with binary search
 * grid type hexagonal
 * green tests
-* fix rotation
 * pick interface points
