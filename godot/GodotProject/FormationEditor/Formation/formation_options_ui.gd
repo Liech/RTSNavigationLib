@@ -41,6 +41,7 @@ func current_formation_changed()->void:
 	var current := FormationEditor.current_formation
 	name_ui.text = current.name
 	placement_behavior_ui.select(int(current.placement_behavior))
+	cut_behavior_ui.select(int(current.cut_behavior))
 	rotate_with_interface_ui.button_pressed = current.rotate_with_interface
 	rotation_ui.value = current.rotation
 	interface_width_ui.button_pressed = current.overwrite_width_with_interface_width

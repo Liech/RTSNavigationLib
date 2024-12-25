@@ -44,7 +44,9 @@ namespace RTSNavigationLib
         if (grid.data.size() < overallSize)
             return {};
 
-        cutPlaces();
+        bool cutSuccess = cutPlaces();
+        if (!cutSuccess)
+            return {};
 
         std::vector<WorldBody> result;
 
@@ -65,8 +67,8 @@ namespace RTSNavigationLib
             auto sub = placeSizeN(sizeVec[i], amountToPlace, success);
             if (!success)
                 return {};
-            assignCategories(sub, sizeVec[i]);
-            result.insert(result.end(), sub.begin(), sub.end());
+            auto bodies = assignCategories(sub, sizeVec[i]);
+            result.insert(result.end(), bodies.begin(), bodies.end());
         }
 
         success = true;
@@ -74,26 +76,33 @@ namespace RTSNavigationLib
         return result;
     }
 
-    void UnitPlacement::assignCategories(std::vector<WorldBody>& input, size_t size)
+    std::vector<WorldBody> UnitPlacement::assignCategories(std::vector<glm::ivec2>& input, size_t size)
     {
-        size_t position = 0;
+        std::vector<WorldBody> result;
         for (const auto& x : unitsToPlace)
         {
             if (x.first.size == size && x.second > 0)
             {
-                for (size_t i = 0; i < x.second && position < input.size(); i++)
+                input = rankSortPlaces(input, x.second, placementBehavior);
+                for (size_t i = 0; i < x.second; i++)
                 {
-                    input[position].category = x.first.category;
-                    position++;
+                    WorldBody sub;
+                    sub.category = x.first.category;
+                    sub.size     = size;
+                    sub.position = (glm::dvec2)input[i] + (glm::dvec2)grid.offset + glm::dvec2(size, size) / 2.0;
+
+                    result.push_back(sub);
                 }
+                input.erase(input.begin(), input.begin() + x.second);
             }
         }
+        return result;
     }
 
-    std::vector<WorldBody> UnitPlacement::placeSizeN(size_t size, size_t amount, bool& success)
+    std::vector<glm::ivec2> UnitPlacement::placeSizeN(size_t size, size_t amount, bool& success)
     {
-        std::vector<WorldBody> result;
-        auto                   places = getPossiblePositions(size);
+        std::vector<glm::ivec2> result;
+        auto                    places = getPossiblePositions(size);
         if (places.size() < amount)
         {
             success = false;
@@ -103,11 +112,7 @@ namespace RTSNavigationLib
 
         for (size_t i = 0; i < amount; i++)
         {
-            WorldBody sub;
-            sub.category = 0;
-            sub.size     = size;
-            sub.position = (glm::dvec2)places[i] + (glm::dvec2)grid.offset + glm::dvec2(size, size) / 2.0;
-            result.push_back(sub);
+            result.push_back(places[i]);
 
             for (size_t x = 0; x < size && x + places[i].x < grid.dimension.x; x++)
                 for (size_t y = 0; y < size && y + places[i].y < grid.dimension.y; y++)
@@ -143,7 +148,7 @@ namespace RTSNavigationLib
         }
     }
 
-    void UnitPlacement::cutPlaces()
+    bool UnitPlacement::cutPlaces()
     {
         // gather all positions
         std::vector<glm::ivec2> positions;
@@ -156,8 +161,12 @@ namespace RTSNavigationLib
             }
         }
 
+        if (positions.size() < overallSize)
+            return false;
+
         // rank them
         positions = rankSortPlaces(positions, overallSize, cutBehavior);
+
 
         // mark unecessary positions as used
         size_t currentPlace = 0;
@@ -166,6 +175,7 @@ namespace RTSNavigationLib
             const auto& pos                                      = positions[i];
             usedPositions.data[pos.x + pos.y * grid.dimension.x] = true;
         }
+        return true;
     }
 
     std::vector<glm::ivec2> UnitPlacement::getPossiblePositions(size_t size)

@@ -1,6 +1,5 @@
 Todo v2:
 * interface width for center points
-* distribute units of same size
 * binary search
 * sink into parent option
 * grid type hexagonal

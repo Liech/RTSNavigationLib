@@ -14,9 +14,9 @@ namespace RTSNavigationLib
         static std::vector<glm::ivec2> distribute(const std::vector<glm::ivec2>& places, size_t amountToPlace);
 
       private:
-        static std::vector<glm::ivec2> placeRecursive(std::vector<glm::ivec2>& places, size_t amountToPlace);
-        static bool                    findMainAxis(const std::vector<glm::ivec2>& places);
-        static glm::ivec2              placeLast(const std::vector<glm::ivec2>& places);
-        static glm::dvec2              getCenter(const std::vector<glm::ivec2>& places);
+        static std::vector<size_t> placeRecursive(std::vector<size_t>& indexes, const std::vector<glm::ivec2>& places, size_t amountToPlace);
+        static bool                findMainAxis(std::vector<size_t>& indexes, const std::vector<glm::ivec2>& places);
+        static size_t              placeLast(std::vector<size_t>& indexes, const std::vector<glm::ivec2>& places);
+        static glm::dvec2          getCenter(std::vector<size_t>& indexes, const std::vector<glm::ivec2>& places);
     };
 }

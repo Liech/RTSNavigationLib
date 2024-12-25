@@ -16,8 +16,8 @@ namespace RTSNavigationLib
       public:
         UnitPlacement(const RectangleGrid<bool>&,
                       const std::map<Body, size_t>&,
-                      double                rotation  = 0,
-                      UnitPlacementBehavior cutBehavior = UnitPlacementBehavior::FrontFirst,
+                      double                rotation          = 0,
+                      UnitPlacementBehavior cutBehavior       = UnitPlacementBehavior::FrontFirst,
                       UnitPlacementBehavior placementBehavior = UnitPlacementBehavior::DistributeEvenly);
 
         std::vector<WorldBody> place(bool& success);
@@ -25,9 +25,9 @@ namespace RTSNavigationLib
         RectangleGrid<bool> getUsedPositions() const;
 
       private:
-        std::vector<WorldBody> placeSizeN(size_t size, size_t amount, bool& success);
-        void                   assignCategories(std::vector<WorldBody>&, size_t size);
-        void                   cutPlaces();
+        std::vector<glm::ivec2> placeSizeN(size_t size, size_t amount, bool& success);
+        std::vector<WorldBody>  assignCategories(std::vector<glm::ivec2>&, size_t size);
+        bool                    cutPlaces();
 
         std::vector<glm::ivec2> rankSortPlaces(std::vector<glm::ivec2>&, size_t amountUsed, UnitPlacementBehavior strategy);
         std::vector<glm::ivec2> centerSort(const std::vector<glm::ivec2>&) const;
@@ -43,7 +43,7 @@ namespace RTSNavigationLib
         const std::map<Body, size_t>& unitsToPlace;
         RectangleGrid<bool>           usedPositions;
         size_t                        smallestSize = 1;
-        size_t                        overallSize   = 0;
+        size_t                        overallSize  = 0;
         UnitPlacementBehavior         placementBehavior;
         UnitPlacementBehavior         cutBehavior;
         double                        rotation;
