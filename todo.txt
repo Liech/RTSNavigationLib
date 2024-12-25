@@ -1,5 +1,4 @@
 Todo v2:
-* fix voxelizer
 * interface width for center points
 * distribute units of same size
 * binary search
