@@ -1,6 +1,5 @@
 Todo v2:
 * performance boost with binary search
-* sink into parent option
 * grid type hexagonal
 * green tests
 * fix rotation
