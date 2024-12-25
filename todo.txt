@@ -1,5 +1,4 @@
 Todo v2:
-* interface width for center points
 * performance boost with binary search
 * sink into parent option
 * grid type hexagonal
