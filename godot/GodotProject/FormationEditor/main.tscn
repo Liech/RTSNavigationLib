@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bcf50atqa4ytt"]
+[gd_scene load_steps=13 format=3 uid="uid://bcf50atqa4ytt"]
 
 [ext_resource type="Script" path="res://FormationEditor/main.gd" id="1_84o8j"]
 [ext_resource type="PackedScene" uid="uid://cuyqjnydxmlf0" path="res://FormationEditor/Units/unit_type_ui.tscn" id="1_86nhx"]
@@ -25,6 +25,14 @@ emoji = "🧙"
 category = "Support"
 size = 1
 
+[sub_resource type="Resource" id="Resource_ci6x1"]
+script = ExtResource("2_1nw7d")
+color = Color(0.191524, 0.170654, 0.0414051, 1)
+name = "Ogre"
+emoji = "🧌"
+category = "Melee"
+size = 2
+
 [sub_resource type="Resource" id="Resource_avk3v"]
 script = ExtResource("4_piqbr")
 children = Array[ExtResource("4_piqbr")]([])
@@ -37,6 +45,7 @@ rotation = 0.0
 category = Array[String](["Melee"])
 weight = 1.0
 placement_behavior = 0
+cut_behavior = 0
 shape = 0
 hollow = 0.0
 size = Vector2(1, 1)
@@ -52,7 +61,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_84o8j")
-start_unit_types = Array[ExtResource("2_1nw7d")]([ExtResource("3_ov0ip"), SubResource("Resource_wn2hc"), SubResource("Resource_hc2w6")])
+start_unit_types = Array[ExtResource("2_1nw7d")]([ExtResource("3_ov0ip"), SubResource("Resource_wn2hc"), SubResource("Resource_hc2w6"), SubResource("Resource_ci6x1")])
 start_categories = Array[String](["Melee", "Ranged", "Support"])
 start_formations = Array[ExtResource("4_piqbr")]([SubResource("Resource_avk3v")])
 

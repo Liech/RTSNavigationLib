@@ -82,7 +82,7 @@ namespace RTSNavigationLib
             formationCenter             = toFormationCenter * glm::dvec4(0, 0, 0, 1);
 
             grid        = getGrid(formation, toFormationCenter);
-            auto placer = UnitPlacement(grid, unitsPlacedHere, rotation, formation.getPlacementBehavior());
+            auto placer = UnitPlacement(grid, unitsPlacedHere, rotation, formation.getCutBehavior(), formation.getPlacementBehavior());
             result      = placer.place(allPlaced);
             grid        = placer.getUsedPositions();
 

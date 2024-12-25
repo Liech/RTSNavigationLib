@@ -2,6 +2,7 @@ extends Control
 
 @onready var name_ui : LineEdit = $S/M/Stats/Stats/Name
 @onready var placement_behavior_ui : OptionButton = $S/M/Stats/Stats/PlacementBehavior
+@onready var cut_behavior_ui : OptionButton = $S/M/Stats/Stats/CutBehavior
 @onready var category_ui : Button = $S/M/Stats/Stats/Category
 @onready var category_menu_ui : PopupMenu = $CategoryMenu
 @onready var rotate_with_interface_ui : CheckBox = $S/M/Stats/Stats/RotateWithInterface
@@ -74,6 +75,9 @@ func _on_name_text_submitted(_new_text: String) -> void:
 	FormationEditor.formations_changed.emit()
 func _on_placement_behavior_item_selected(index: int) -> void:
 	FormationEditor.current_formation.placement_behavior = index as RTSFormation.PlacementBehavior
+	FormationEditor.formation_value_changed.emit()
+func _on_cut_behavior_item_selected(index: int) -> void:
+	FormationEditor.current_formation.cut_behavior = index as RTSFormation.PlacementBehavior
 	FormationEditor.formation_value_changed.emit()
 func _on_rotate_with_interface_toggled(toggled_on: bool) -> void:
 	FormationEditor.current_formation.rotate_with_interface = toggled_on

@@ -12,27 +12,39 @@
 
 namespace RTSNavigationLib
 {
-    UnitPlacement::UnitPlacement(const RectangleGrid<bool>& unitGrid, const std::map<Body, size_t>& unitList, double rotation_, UnitPlacementBehavior placementStrategy)
+    UnitPlacement::UnitPlacement(const RectangleGrid<bool>&    unitGrid,
+                                 const std::map<Body, size_t>& unitList,
+                                 double                        rotation_,
+                                 UnitPlacementBehavior         cutStrategy,
+                                 UnitPlacementBehavior         placementStrategy)
       : grid(unitGrid)
       , unitsToPlace(unitList)
     {
         placementBehavior = placementStrategy;
+        cutBehavior       = cutStrategy;
         rotation          = rotation_;
 
         usedPositions.dimension = grid.dimension;
         usedPositions.offset    = grid.offset;
         usedPositions.data.resize(grid.data.size());
 
+        overallSize  = 0;
         smallestSize = std::numeric_limits<size_t>::max();
         for (auto& x : unitList)
         {
             smallestSize = std::min(smallestSize, x.first.size);
+            overallSize += x.second * x.first.size * x.first.size;
         }
     }
 
     std::vector<WorldBody> UnitPlacement::place(bool& success)
     {
         success = false;
+
+        if (grid.data.size() < overallSize)
+            return {};
+
+        cutPlaces();
 
         std::vector<WorldBody> result;
 
@@ -87,7 +99,7 @@ namespace RTSNavigationLib
             success = false;
             return {};
         }
-        places = rankSortPlaces(places, amount);
+        places = rankSortPlaces(places, amount, placementBehavior);
 
         for (size_t i = 0; i < amount; i++)
         {
@@ -108,15 +120,15 @@ namespace RTSNavigationLib
         return result;
     }
 
-    std::vector<glm::ivec2> UnitPlacement::rankSortPlaces(std::vector<glm::ivec2>& places, size_t amountUsed)
+    std::vector<glm::ivec2> UnitPlacement::rankSortPlaces(std::vector<glm::ivec2>& places, size_t amountUsed, UnitPlacementBehavior strategy)
     {
-        switch (placementBehavior)
+        switch (strategy)
         {
             case UnitPlacementBehavior::FrontFirst:
             case UnitPlacementBehavior::RearFirst:
-                glm::dvec2 direction = glm::rotate(glm::dmat4(1), rotation, glm::dvec3(0, 0, 1)) * glm::dvec4(0,1,0,1);
-                std::ranges::sort(places, [direction](const glm::ivec2& a, const glm::ivec2& b) { return glm::dot(direction, glm::dvec2(a)) < glm::dot(direction, glm::dvec2(b)); });                
-                if (placementBehavior == UnitPlacementBehavior::RearFirst)
+                glm::dvec2 direction = glm::rotate(glm::dmat4(1), rotation, glm::dvec3(0, 0, 1)) * glm::dvec4(0, 1, 0, 1);
+                std::ranges::sort(places, [direction](const glm::ivec2& a, const glm::ivec2& b) { return glm::dot(direction, glm::dvec2(a)) < glm::dot(direction, glm::dvec2(b)); });
+                if (strategy == UnitPlacementBehavior::RearFirst)
                     std::ranges::reverse(places);
                 return places;
             case UnitPlacementBehavior::DistributeEvenly:
@@ -128,6 +140,31 @@ namespace RTSNavigationLib
                 if (placementBehavior == UnitPlacementBehavior::OuterFirst)
                     std::ranges::reverse(result);
                 return result;
+        }
+    }
+
+    void UnitPlacement::cutPlaces()
+    {
+        // gather all positions
+        std::vector<glm::ivec2> positions;
+        for (size_t i = 0; i < grid.data.size(); i++)
+        {
+            if (grid.data[i])
+            {
+                glm::ivec2 pos = glm::ivec2(i % grid.dimension.x, i / grid.dimension.x);
+                positions.push_back(pos);
+            }
+        }
+
+        // rank them
+        positions = rankSortPlaces(positions, overallSize, cutBehavior);
+
+        // mark unecessary positions as used
+        size_t currentPlace = 0;
+        for (size_t i = overallSize; i < positions.size(); i++)
+        {
+            const auto& pos                                      = positions[i];
+            usedPositions.data[pos.x + pos.y * grid.dimension.x] = true;
         }
     }
 

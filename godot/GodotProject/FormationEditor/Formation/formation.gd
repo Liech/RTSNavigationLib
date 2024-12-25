@@ -13,6 +13,7 @@ enum Shape{Rectangle,Triangle,Circle}
 @export var category : Array[String]
 @export var weight : float
 @export var placement_behavior : RTSFormation.PlacementBehavior       
+@export var cut_behavior : RTSFormation.PlacementBehavior       
 @export var shape : Shape      
 @export var hollow : float
 @export var size : Vector2
@@ -27,6 +28,7 @@ func randomize()->void:
 	var suffix : String = ["Squirrel", "Hawk", "Cheeta","Stoat", "Turtle", "Mare", "Fox", "Hound", "Hare", "Cat", "Elefant", "Toddler"].pick_random()
 	name = prefix+suffix
 	placement_behavior = [RTSFormation.PlacementBehavior.center_first_rts,RTSFormation.PlacementBehavior.distribute_evenly_rts,RTSFormation.PlacementBehavior.outer_first_rts].pick_random() 
+	cut_behavior = [RTSFormation.PlacementBehavior.center_first_rts,RTSFormation.PlacementBehavior.distribute_evenly_rts,RTSFormation.PlacementBehavior.outer_first_rts].pick_random() 
 	category = [FormationEditor.categories.pick_random()]
 	rotate_with_interface = [false,true].pick_random()
 	overwrite_width_with_interface_width = [false,true].pick_random()
@@ -62,6 +64,7 @@ func toRTS() -> RTSFormation:
 	result.placement_behavior = placement_behavior
 	result.center_shift = center_shift
 	result.remaining_unit_sink = reamining_unit_sink;
+	result.cut_behavior = cut_behavior;
 	
 	if (shape == Shape.Rectangle):
 		result.shape =RTSShapeRect.new()

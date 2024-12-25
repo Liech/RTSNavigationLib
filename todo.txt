@@ -2,7 +2,6 @@ Todo v2:
 * interface width for center points
 * distribute units of same size
 * binary search
-* place cut behavior seperate from placement behavior
 * sink into parent option
 * grid type hexagonal
 * green tests

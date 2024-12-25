@@ -18,6 +18,8 @@ namespace godot
         ClassDB::bind_method(D_METHOD("set_children", "children"), &RTSFormation::set_children);
         ClassDB::bind_method(D_METHOD("get_placement_behavior"), &RTSFormation::get_placement_behavior);
         ClassDB::bind_method(D_METHOD("set_placement_behavior", "placement_behavior"), &RTSFormation::set_placement_behavior);
+        ClassDB::bind_method(D_METHOD("get_cut_behavior"), &RTSFormation::get_cut_behavior);
+        ClassDB::bind_method(D_METHOD("set_cut_behavior", "cut_behavior"), &RTSFormation::set_cut_behavior);
         ClassDB::bind_method(D_METHOD("get_unit_distribution_weight"), &RTSFormation::get_unit_distribution_weight);
         ClassDB::bind_method(D_METHOD("set_unit_distribution_weight", "placement_behavior"), &RTSFormation::set_unit_distribution_weight);
         ClassDB::bind_method(D_METHOD("get_rotation"), &RTSFormation::get_rotation);
@@ -48,10 +50,16 @@ namespace godot
         ADD_PROPERTY(PropertyInfo(Variant::INT, "own_interface_point"), "set_own_interface_point", "get_own_interface_point");
         ADD_PROPERTY(PropertyInfo(Variant::INT, "parent_interface_point"), "set_parent_interface_point", "get_parent_interface_point");
         ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "shape", PROPERTY_HINT_RESOURCE_TYPE, "RTSFormationShape"), "set_shape", "get_shape");
-        ClassDB::add_property(get_class_static(),
-                              PropertyInfo(Variant::INT, "placement_behavior", PROPERTY_HINT_ENUM, "center_first,outer_first_rts,distribute_evenly_rts,front_first_rts,rear_first_rts", PROPERTY_USAGE_DEFAULT),
-                              "set_placement_behavior",
-                              "get_placement_behavior");
+        ClassDB::add_property(
+          get_class_static(),
+          PropertyInfo(Variant::INT, "placement_behavior", PROPERTY_HINT_ENUM, "center_first,outer_first_rts,distribute_evenly_rts,front_first_rts,rear_first_rts", PROPERTY_USAGE_DEFAULT),
+          "set_placement_behavior",
+          "get_placement_behavior");
+        ClassDB::add_property(
+          get_class_static(),
+          PropertyInfo(Variant::INT, "cut_behavior", PROPERTY_HINT_ENUM, "center_first,outer_first_rts,distribute_evenly_rts,front_first_rts,rear_first_rts", PROPERTY_USAGE_DEFAULT),
+          "set_cut_behavior",
+          "get_cut_behavior");
 
         ClassDB::add_property("RTSFormation",
                               PropertyInfo(Variant::ARRAY, "children", PROPERTY_HINT_TYPE_STRING, String::num(Variant::OBJECT) + "/" + String::num(PROPERTY_HINT_RESOURCE_TYPE) + ":RTSFormation"),
@@ -62,15 +70,9 @@ namespace godot
         ClassDB::bind_method(D_METHOD("toJson"), &RTSFormation::toJSON);
     }
 
-    RTSFormation::RTSFormation()
-    {
-        // Initialize any variables here.
-    }
+    RTSFormation::RTSFormation() {}
 
-    RTSFormation::~RTSFormation()
-    {
-        // Add your cleanup here.
-    }
+    RTSFormation::~RTSFormation() {}
 
     godot::String RTSFormation::toJSON() const
     {
@@ -128,6 +130,7 @@ namespace godot
         result->setRotation(rotation);
         result->setUnitDistributionWeight(unitDistributionWeight);
         result->setPlacementBehavior((RTSNavigationLib::UnitPlacementBehavior)placementBehavior);
+        result->setCutBehavior((RTSNavigationLib::UnitPlacementBehavior)cutBehavior);
         result->setShape(shape->toShape());
         result->setCenterShift(centerShift);
         result->setIsRemainingUnitSink(remainingUnitsSink);
@@ -171,6 +174,14 @@ namespace godot
     RTSFormation::PlacementBehavior RTSFormation::get_placement_behavior() const
     {
         return placementBehavior;
+    }
+    void RTSFormation::set_cut_behavior(const RTSFormation::PlacementBehavior b)
+    {
+        cutBehavior = b;
+    }
+    RTSFormation::PlacementBehavior RTSFormation::get_cut_behavior() const
+    {
+        return cutBehavior;
     }
     void RTSFormation::set_unit_distribution_weight(const float w)
     {

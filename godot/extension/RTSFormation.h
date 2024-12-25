@@ -32,6 +32,8 @@ namespace godot
       private:
         void                           set_placement_behavior(const PlacementBehavior cat);
         PlacementBehavior              get_placement_behavior() const;
+        void                           set_cut_behavior(const PlacementBehavior cat);
+        PlacementBehavior              get_cut_behavior() const;
         void                           set_unit_categories(const TypedArray<int>& cat);
         TypedArray<int>                get_unit_categories() const;
         void                           set_unit_distribution_weight(const float cat);
@@ -69,6 +71,7 @@ namespace godot
         TypedArray<int>        unitCategories;
         float                  unitDistributionWeight = 1.0;
         PlacementBehavior      placementBehavior      = PlacementBehavior::center_first_rts;
+        PlacementBehavior      cutBehavior            = PlacementBehavior::center_first_rts;
         bool                   centerShift            = false;
         bool                   remainingUnitsSink     = false;
 

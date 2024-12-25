@@ -48,6 +48,24 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 placeholder_text = "e.g. Inner Wall"
 
+[node name="CutBehaviorLabel" type="Label" parent="S/M/Stats/Stats"]
+layout_mode = 2
+text = "Cut Behavior:"
+
+[node name="CutBehavior" type="OptionButton" parent="S/M/Stats/Stats"]
+layout_mode = 2
+selected = 0
+item_count = 5
+popup/item_0/text = "Center First"
+popup/item_1/text = "Outer First"
+popup/item_1/id = 1
+popup/item_2/text = "Distribute Evenly"
+popup/item_2/id = 2
+popup/item_3/text = "Front First"
+popup/item_3/id = 3
+popup/item_4/text = "Rear First"
+popup/item_4/id = 4
+
 [node name="PlacementBehaviorLabel" type="Label" parent="S/M/Stats/Stats"]
 layout_mode = 2
 text = "Placement Behavior:"
@@ -221,6 +239,7 @@ item_1/checkable = 1
 item_1/id = 1
 
 [connection signal="text_submitted" from="S/M/Stats/Stats/Name" to="." method="_on_name_text_submitted"]
+[connection signal="item_selected" from="S/M/Stats/Stats/CutBehavior" to="." method="_on_cut_behavior_item_selected"]
 [connection signal="item_selected" from="S/M/Stats/Stats/PlacementBehavior" to="." method="_on_placement_behavior_item_selected"]
 [connection signal="pressed" from="S/M/Stats/Stats/Category" to="." method="_on_category_pressed"]
 [connection signal="toggled" from="S/M/Stats/Stats/RemainingUnitSink" to="." method="_on_remaining_unit_sink_toggled"]

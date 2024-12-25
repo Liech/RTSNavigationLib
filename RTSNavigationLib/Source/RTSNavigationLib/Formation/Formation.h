@@ -42,6 +42,8 @@ namespace RTSNavigationLib
         void                  setUnitDistributionWeight(double v);
         UnitPlacementBehavior getPlacementBehavior() const;
         void                  setPlacementBehavior(UnitPlacementBehavior);
+        UnitPlacementBehavior getCutBehavior() const;
+        void                  setCutBehavior(UnitPlacementBehavior);
 
         void            setShape(std::unique_ptr<FormationShape> shape);
         FormationShape& getShape();
@@ -63,6 +65,7 @@ namespace RTSNavigationLib
         std::vector<size_t>             unitCategories;
         double                          unitDistributionWeight = 1;
         UnitPlacementBehavior           placementBehavior      = UnitPlacementBehavior::CenterFirst;
+        UnitPlacementBehavior           cutBehavior            = UnitPlacementBehavior::CenterFirst;
         bool                            remainingUnitsSink     = false;
 
         std::vector<std::unique_ptr<Formation>> children;

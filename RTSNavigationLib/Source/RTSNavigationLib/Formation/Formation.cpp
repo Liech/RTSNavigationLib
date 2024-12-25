@@ -139,6 +139,16 @@ namespace RTSNavigationLib
         placementBehavior = value;
     }
 
+    UnitPlacementBehavior Formation::getCutBehavior() const
+    {
+        return cutBehavior;
+    }
+
+    void Formation::setCutBehavior(UnitPlacementBehavior value)
+    {
+        cutBehavior = value;
+    }
+
     bool Formation::getCenterShift() const
     {
         return centerShift;
@@ -196,7 +206,7 @@ namespace RTSNavigationLib
         result["UnitDistributionWeight"]           = unitDistributionWeight;
         result["PlacementBehavior"]                = UnitPlacementBehavior2String(placementBehavior);
         result["CenterShift"]                      = centerShift;
-        result["RemainingUnitSink"]                                 = remainingUnitsSink;
+        result["RemainingUnitSink"]                = remainingUnitsSink;
 
         result["Children"] = nlohmann::json::array();
         for (auto& child : children)
