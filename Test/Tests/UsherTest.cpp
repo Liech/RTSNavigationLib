@@ -95,6 +95,9 @@ namespace UsherTests
         "UnitDistributionWeight"           : 1,
         "Children"                         : {},
         "PlacementBehavior"                : "CenterFirst",
+        "CutBehavior"                      : "CenterFirst",
+        "CenterShift"                      : false,
+        "RemainingUnitSink"                : true,
 
         "Shape" : {
           "Type"    : "Rectangle",

@@ -59,40 +59,49 @@ namespace RTSNavigationLib
 
     std::vector<WorldBody> FormationCalculator::recurse(const FormationCalculator_formation_input& input)
     {
-        size_t scale           = 1;
-        auto   unitsPlacedHere = gatherUnits(*input.formation);
-        auto   formationSize   = getSizeSum(unitsPlacedHere);
+        auto unitsPlacedHere = gatherUnits(*input.formation);
+        auto formationSize   = getSizeSum(unitsPlacedHere);
 
         std::vector<WorldBody> result;
 
         glm::dvec2 formationCenter = glm::dvec2(0, 0);
 
-        int       maxTries   = 150;
-        int       tries      = maxTries;
-        long long lastPlaced = -1;
-        bool      allPlaced  = false;
-        while (!allPlaced)
-        {
-            if (lastPlaced == result.size())
-            {
-                tries--;
-                if (tries <= 0)
-                    break;
-            }
-            else
-                tries = maxTries;
-            lastPlaced = result.size();
+        size_t scale           = 30;
+        size_t range           = 30;
+        bool   upperLimitFound = false;
+        bool   allPlaced       = false;
 
-            bool success = recurse_try(input, scale, unitsPlacedHere, formationCenter,result);
-            if (success)
+        for (size_t tryNo = 0; tryNo < 50; tryNo++)
+        {
+            bool success = recurse_try(input, scale, unitsPlacedHere, formationCenter, result, range == 1);
+
+            if (!success && !upperLimitFound)
+            {
+                scale += range;
+            }
+            else if (range == 1 && success)
             {
                 allPlaced = true;
                 break;
             }
-            scale++;
+            else if (range == 1 && !success)
+            {
+                scale++;
+            }
+            else if (!success)
+            {
+                range /= 2;
+                scale += range;
+            }
+            else
+            {
+                upperLimitFound = true;
+                range /= 2;
+                scale -= range;
+            }
         }
 
-        if (tries <= 0)
+        if (!allPlaced)
             return {};
 
         for (size_t i = 0; i < input.formation->getChildrenCount(); i++)
@@ -118,7 +127,8 @@ namespace RTSNavigationLib
                                           size_t                                     scale,
                                           const std::map<Body, size_t>&              unitsPlacedHere,
                                           glm::dvec2&                                formationCenter,
-                                          std::vector<WorldBody>&                    result)
+                                          std::vector<WorldBody>&                    result,
+                                          bool                                       saveOnSuccess)
     {
         bool      allPlaced;
         double    rotation          = input.parentRotation;
@@ -131,7 +141,7 @@ namespace RTSNavigationLib
         grid                       = placer.getUsedPositions();
 
         saveAsSvg(result, grid, lastpolygon);
-        if (allPlaced)
+        if (allPlaced && saveOnSuccess)
         {
             allGrids.push_back(grid);
             allPolygons.push_back(lastpolygon);
@@ -143,6 +153,8 @@ namespace RTSNavigationLib
                                         glm::dvec2(grid.offset) + glm::dvec2(0, grid.dimension.y) });
             return true;
         }
+        else if (allPlaced)
+            return true;
         return false;
     }
 

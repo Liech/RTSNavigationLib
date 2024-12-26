@@ -47,7 +47,12 @@ namespace RTSNavigationLib
         bool debugShowGrid = false;
 
         std::vector<WorldBody>            recurse(const FormationCalculator_formation_input& input);
-        bool recurse_try(const FormationCalculator_formation_input& input, size_t scale, const std::map<Body, size_t>& unitsPlacedHere, glm::dvec2& formationCenter, std::vector<WorldBody>& result);
+        bool                              recurse_try(const FormationCalculator_formation_input& input,
+                                                      size_t                                     scale,
+                                                      const std::map<Body, size_t>&              unitsPlacedHere,
+                                                      glm::dvec2&                                formationCenter,
+                                                      std::vector<WorldBody>&                    result,
+                                                      bool                                       saveOnSuccess = true);
         void                              saveAsSvg(const std::vector<WorldBody>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon);
         glm::dvec3                        getScalingVector(const Formation&, double parentInterfaceWidth, size_t scale);
         RectangleGrid<bool>               getGrid(const Formation&, const glm::dmat4& transformation);

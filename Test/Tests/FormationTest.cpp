@@ -607,13 +607,13 @@ namespace FormationTests {
     c.size = 1;
 
     std::vector<RTSNavigationLib::Body> input;
-    for (size_t i = 0; i < 30; i++)
+    for (size_t i = 0; i < 300; i++)
       input.push_back(a);
-    for (size_t i = 0; i < 5; i++)
-      input.push_back(a2);
-    for (size_t i = 0; i < 70; i++)
-      input.push_back(b);
     for (size_t i = 0; i < 50; i++)
+      input.push_back(a2);
+    for (size_t i = 0; i < 700; i++)
+      input.push_back(b);
+    for (size_t i = 0; i < 500; i++)
       input.push_back(c);
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::ArcFormationShape>());
@@ -660,8 +660,8 @@ namespace FormationTests {
     REQUIRE(places.size() == input.size());
 
     auto categories = countCategories(places);
-    REQUIRE(categories[0] == 35);
-    REQUIRE(categories[1] == 70);
-    REQUIRE(categories[2] == 50);
+    REQUIRE(categories[0] == 350);
+    REQUIRE(categories[1] == 700);
+    REQUIRE(categories[2] == 500);
   }
 }
