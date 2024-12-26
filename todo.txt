@@ -1,5 +1,7 @@
 Todo v2:
-* performance boost with binary search
-* grid type hexagonal
 * green tests
 * pick interface points
+* release/web build
+
+Todo v3:
+* grid type hexagonal
