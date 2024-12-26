@@ -44,20 +44,26 @@ namespace RTSNavigationLib
         double     parentRotation       = 0;
         double     parentInterfaceWidth = 0;
 
-        std::vector<WorldBody> result         = recurse(parentCenter, parentSize, parentRotation, parentInterfaceWidth, rootFormation);
+        FormationCalculator_formation_input f;
+
+        f.parentCenter         = parentCenter;
+        f.parentSize           = parentSize;
+        f.parentRotation       = parentRotation;
+        f.parentInterfaceWidth = parentInterfaceWidth;
+        f.formation            = &rootFormation;
+
+        std::vector<WorldBody> result         = recurse(f);
         std::vector<WorldBody> centeredResult = centerBodies(result);
         return centeredResult;
     }
 
-    std::vector<WorldBody> FormationCalculator::recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation& formation)
+    std::vector<WorldBody> FormationCalculator::recurse(const FormationCalculator_formation_input& input)
     {
         size_t scale           = 1;
-        auto   unitsPlacedHere = gatherUnits(formation);
+        auto   unitsPlacedHere = gatherUnits(*input.formation);
         auto   formationSize   = getSizeSum(unitsPlacedHere);
 
         std::vector<WorldBody> result;
-
-        RectangleGrid<bool> grid;
 
         glm::dvec2 formationCenter = glm::dvec2(0, 0);
 
@@ -75,28 +81,12 @@ namespace RTSNavigationLib
             }
             else
                 tries = maxTries;
+            lastPlaced = result.size();
 
-            lastPlaced                  = result.size();
-            double    rotation          = parentRotation;
-            glm::mat4 toFormationCenter = getLocalTransformation(formation, parentCenter, parentSize, rotation, parentInterfaceWidth, scale);
-            formationCenter             = toFormationCenter * glm::dvec4(0, 0, 0, 1);
-
-            grid        = getGrid(formation, toFormationCenter);
-            auto placer = UnitPlacement(grid, unitsPlacedHere, rotation, formation.getCutBehavior(), formation.getPlacementBehavior());
-            result      = placer.place(allPlaced);
-            grid        = placer.getUsedPositions();
-
-            saveAsSvg(result, grid, lastpolygon);
-            if (allPlaced)
+            bool success = recurse_try(input, scale, unitsPlacedHere, formationCenter,result);
+            if (success)
             {
-                allGrids.push_back(grid);
-                allPolygons.push_back(lastpolygon);
-
-                if (debugShowGrid)
-                allPolygons.push_back({ glm::dvec2(grid.offset),
-                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension.x, 0),
-                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension),
-                                        glm::dvec2(grid.offset) + glm::dvec2(0, grid.dimension.y) });
+                allPlaced = true;
                 break;
             }
             scale++;
@@ -105,16 +95,55 @@ namespace RTSNavigationLib
         if (tries <= 0)
             return {};
 
-        for (size_t i = 0; i < formation.getChildrenCount(); i++)
+        for (size_t i = 0; i < input.formation->getChildrenCount(); i++)
         {
-            auto&      child       = formation.getChild(i);
-            glm::dvec3 vectorScale = getScalingVector(formation, parentInterfaceWidth, parentSize);
-            auto       sub         = recurse(formationCenter, scale, parentRotation, formation.getShape().getInterfaceWidth(child.getParentInterfacePoint(), vectorScale), child);
+            auto&                               child       = input.formation->getChild(i);
+            glm::dvec3                          vectorScale = getScalingVector(*input.formation, input.parentInterfaceWidth, input.parentSize);
+            FormationCalculator_formation_input f;
+            f.formation            = &child;
+            f.parentRotation       = input.parentRotation;
+            f.parentSize           = scale;
+            f.parentInterfaceWidth = input.formation->getShape().getInterfaceWidth(child.getParentInterfacePoint(), vectorScale);
+            f.parentCenter         = formationCenter;
+
+            auto sub = recurse(f);
             result.insert(result.end(), sub.begin(), sub.end());
         }
 
-        saveAsSvg(result, grid, lastpolygon);
+        // saveAsSvg(result, grid, lastpolygon);
         return result;
+    }
+
+    bool FormationCalculator::recurse_try(const FormationCalculator_formation_input& input,
+                                          size_t                                     scale,
+                                          const std::map<Body, size_t>&              unitsPlacedHere,
+                                          glm::dvec2&                                formationCenter,
+                                          std::vector<WorldBody>&                    result)
+    {
+        bool      allPlaced;
+        double    rotation          = input.parentRotation;
+        glm::mat4 toFormationCenter = getLocalTransformation(*input.formation, input.parentCenter, input.parentSize, rotation, input.parentInterfaceWidth, scale);
+        formationCenter             = toFormationCenter * glm::dvec4(0, 0, 0, 1);
+
+        RectangleGrid<bool> grid   = getGrid(*input.formation, toFormationCenter);
+        auto                placer = UnitPlacement(grid, unitsPlacedHere, rotation, input.formation->getCutBehavior(), input.formation->getPlacementBehavior());
+        result                     = placer.place(allPlaced);
+        grid                       = placer.getUsedPositions();
+
+        saveAsSvg(result, grid, lastpolygon);
+        if (allPlaced)
+        {
+            allGrids.push_back(grid);
+            allPolygons.push_back(lastpolygon);
+
+            if (debugShowGrid)
+                allPolygons.push_back({ glm::dvec2(grid.offset),
+                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension.x, 0),
+                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension),
+                                        glm::dvec2(grid.offset) + glm::dvec2(0, grid.dimension.y) });
+            return true;
+        }
+        return false;
     }
 
     glm::dmat4 FormationCalculator::getLocalTransformation(const Formation&  formation,
@@ -154,7 +183,7 @@ namespace RTSNavigationLib
         if (formation.getRotateWithInterface())
         {
             double angle = Geometry2D::getAngle(glm::dvec2(0, 1), parentInterfaceNormal);
-            rotation     += angle;
+            rotation += angle;
         }
 
         result         = glm::translate(result, glm::dvec3(parentCenter, 0));

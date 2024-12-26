@@ -12,6 +12,15 @@ namespace RTSNavigationLib
 {
     class Formation;
 
+    struct FormationCalculator_formation_input
+    {
+        glm::dvec2       parentCenter;
+        size_t           parentSize;
+        double           parentRotation;
+        double           parentInterfaceWidth;
+        const Formation* formation;
+    };
+
     class FormationCalculator
     {
       public:
@@ -34,10 +43,11 @@ namespace RTSNavigationLib
         std::vector<glm::dvec2>              lastpolygon;
         std::vector<std::vector<glm::dvec2>> allPolygons;
 
-        bool saveSVG = false;
+        bool saveSVG       = false;
         bool debugShowGrid = false;
 
-        std::vector<WorldBody>            recurse(const glm::dvec2& parentCenter, size_t parentSize, double parentRotation, double parentInterfaceWidth, const Formation&);
+        std::vector<WorldBody>            recurse(const FormationCalculator_formation_input& input);
+        bool recurse_try(const FormationCalculator_formation_input& input, size_t scale, const std::map<Body, size_t>& unitsPlacedHere, glm::dvec2& formationCenter, std::vector<WorldBody>& result);
         void                              saveAsSvg(const std::vector<WorldBody>& bodies, const RectangleGrid<bool>& grid, const std::vector<glm::dvec2>& currentPolygon);
         glm::dvec3                        getScalingVector(const Formation&, double parentInterfaceWidth, size_t scale);
         RectangleGrid<bool>               getGrid(const Formation&, const glm::dmat4& transformation);
