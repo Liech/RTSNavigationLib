@@ -189,12 +189,12 @@ namespace BodyUtilTests
         a.size     = 1;
 
         RTSNavigationLib::Body b;
-        a.category = 123;
-        a.size     = 2;
+        b.category = 123;
+        b.size     = 2;
 
         RTSNavigationLib::Body c;
-        a.category = 123;
-        a.size     = 3;
+        c.category = 123;
+        c.size     = 3;
 
         unitsToPlace[a] = 5;
         unitsToPlace[b] = 1;

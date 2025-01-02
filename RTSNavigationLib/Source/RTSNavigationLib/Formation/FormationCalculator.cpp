@@ -66,8 +66,8 @@ namespace RTSNavigationLib
 
         glm::dvec2 formationCenter = glm::dvec2(0, 0);
 
-        size_t scale           = 30;
-        size_t range           = 30;
+        size_t scale           = 40;
+        size_t range           = 40;
         bool   upperLimitFound = false;
         bool   allPlaced       = false;
 

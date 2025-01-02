@@ -348,7 +348,7 @@ namespace FormationTests {
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
     formation2->setUnitCategories({ 1 });
     formation2->setParentInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::RightMiddle);
-    formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
+    formation2->setOwnInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Bottom);
     formation2->setRotateWithInterface(true);
     formation2->setOverwriteWidthWithInterfaceWidth(true);
     formation2->getShape().setBaseSize(glm::dvec2(5, 0.1));
@@ -555,6 +555,7 @@ namespace FormationTests {
     RTSNavigationLib::Formation formation;
     formation.setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());
     formation.setUnitCategories({ 0 });
+    formation.setCenterShift(false);
 
     std::unique_ptr<RTSNavigationLib::Formation> formation2 = std::make_unique<RTSNavigationLib::Formation>();
 
@@ -563,6 +564,7 @@ namespace FormationTests {
     formation3->setUnitCategories({ 2 });
     formation3->setParentInterfacePoint((int)RTSNavigationLib::RectangleInterfacePoint::Top);
     formation3->setOwnInterfacePoint((int)RTSNavigationLib::TriangleInterfacePoint::BottomCenter);
+    formation3->setRotateWithInterface(true);
     formation2->addChild(std::move(formation3));
 
     formation2->setShape(std::make_unique<RTSNavigationLib::RectangleFormationShape>());

@@ -1,5 +1,6 @@
 Todo v2:
 * green tests
+  * fix rotation: Formation/InterfaceWidth
 * pick interface points
 * release/web build
 
