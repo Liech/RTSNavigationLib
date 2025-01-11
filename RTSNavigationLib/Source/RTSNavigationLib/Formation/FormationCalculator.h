@@ -31,6 +31,7 @@ namespace RTSNavigationLib
         std::vector<WorldBody> calculate();
 
         std::vector<std::vector<glm::dvec2>> getShapes() const;
+        std::vector<std::vector<glm::dvec2>> getDebugShapes() const;
 
       private:
         const Formation& rootFormation;
@@ -42,9 +43,9 @@ namespace RTSNavigationLib
 
         std::vector<glm::dvec2>              lastpolygon;
         std::vector<std::vector<glm::dvec2>> allPolygons;
+        std::vector<std::vector<glm::dvec2>> debugPolys;
 
         bool saveSVG       = false;
-        bool debugShowGrid = false;
 
         std::vector<WorldBody>            recurse(const FormationCalculator_formation_input& input);
         bool                              recurse_try(const FormationCalculator_formation_input& input,

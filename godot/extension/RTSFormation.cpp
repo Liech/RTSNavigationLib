@@ -67,6 +67,7 @@ namespace godot
                               "get_children");
         ClassDB::bind_method(D_METHOD("calculate", "bodies"), &RTSFormation::calculate);
         ClassDB::bind_method(D_METHOD("get_result_shapes"), &RTSFormation::getResultShapes);
+        ClassDB::bind_method(D_METHOD("get_debug_shapes"), &RTSFormation::getDebugShapes);
         ClassDB::bind_method(D_METHOD("toJson"), &RTSFormation::toJSON);
     }
 
@@ -89,6 +90,7 @@ namespace godot
         auto calculator = RTSNavigationLib::FormationCalculator(*form, bodies);
         auto places     = calculator.calculate();
         allPolygons     = calculator.getShapes();
+        debugPolygons     = calculator.getDebugShapes();
 
         TypedArray<RTSBody> result;
 
@@ -108,8 +110,22 @@ namespace godot
     TypedArray<PackedVector2Array> RTSFormation::getResultShapes() const
     {
         TypedArray<PackedVector2Array> result;
-        result.resize(allPolygons.size());
         for (auto x : allPolygons)
+        {
+            PackedVector2Array poly;
+            poly.resize(x.size());
+            for (size_t i = 0; i < x.size(); i++)
+                poly.set(i, Vector2(x[i].x, x[i].y));
+            result.push_back(poly);
+        }
+        return result;
+    }
+    
+    TypedArray<PackedVector2Array> RTSFormation::getDebugShapes() const
+    {
+        TypedArray<PackedVector2Array> result;
+        result.resize(debugPolygons.size());
+        for (auto x : debugPolygons)
         {
             PackedVector2Array poly;
             poly.resize(x.size());

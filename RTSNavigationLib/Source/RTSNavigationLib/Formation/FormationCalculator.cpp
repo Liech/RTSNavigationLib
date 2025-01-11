@@ -146,11 +146,10 @@ namespace RTSNavigationLib
             allGrids.push_back(grid);
             allPolygons.push_back(lastpolygon);
 
-            if (debugShowGrid)
-                allPolygons.push_back({ glm::dvec2(grid.offset),
-                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension.x, 0),
-                                        glm::dvec2(grid.offset) + glm::dvec2(grid.dimension),
-                                        glm::dvec2(grid.offset) + glm::dvec2(0, grid.dimension.y) });
+            debugPolys.push_back({ glm::dvec2(grid.offset),
+                                   glm::dvec2(grid.offset) + glm::dvec2(grid.dimension.x, 0),
+                                   glm::dvec2(grid.offset) + glm::dvec2(grid.dimension),
+                                   glm::dvec2(grid.offset) + glm::dvec2(0, grid.dimension.y) });
             return true;
         }
         else if (allPlaced)
@@ -454,5 +453,9 @@ namespace RTSNavigationLib
     std::vector<std::vector<glm::dvec2>> FormationCalculator::getShapes() const
     {
         return allPolygons;
+    }
+    std::vector<std::vector<glm::dvec2>> FormationCalculator::getDebugShapes() const
+    {
+        return debugPolys;
     }
 }

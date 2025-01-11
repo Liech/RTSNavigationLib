@@ -4,13 +4,13 @@ var unit_scene := preload("res://FormationEditor/Formation/preview_unit.tscn")
 
 @onready var camera : Camera2D = $Camera2D
 @onready var units : Node2D = $Units
-
-@export var scale_factor : float = 30
+@onready var interface_points := $FormationInterface
 
 var start_position : Vector2;
 var start_zoom : Vector2;
 
 var result_shapes : Array[PackedVector2Array];
+var debug_shapes : Array[PackedVector2Array];
 
 func _ready() -> void:
 	FormationEditor.current_formation_changed.connect(formation_changed)
@@ -45,7 +45,8 @@ func formation_changed() -> void:
 		counter += 1
 	print(formation.toJson())
 	var result := formation.calculate(bodies)
-	result_shapes = formation.get_result_shapes()
+	FormationEditor.formation_shapes = formation.get_result_shapes()
+	debug_shapes = formation.get_debug_shapes()
 	for n in units.get_children():
 		units.remove_child(n)
 		n.queue_free()
@@ -54,14 +55,6 @@ func formation_changed() -> void:
 		var pos := x.position
 		var unit := unit_scene.instantiate() as FormationPreviewUnit
 		unit.type = FormationEditor.unit_types[x.category]
-		unit.position = pos * scale_factor
+		unit.position = pos * FormationEditor.scale_factor
 		units.add_child(unit)
-	queue_redraw()
-
-func _draw() -> void:
-	for poly in result_shapes:
-		if (poly.size()<2):
-			continue;
-		for i in range(1,len(poly)):
-			draw_line(poly[i-1]*scale_factor,poly[i]*scale_factor,Color.WHITE);
-		draw_line(poly[len(poly)-1]*scale_factor,poly[0]*scale_factor,Color.WHITE);
+	interface_points.formation_changed()

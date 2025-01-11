@@ -9,13 +9,18 @@
 [node name="FormationInspector" type="MarginContainer"]
 anchors_preset = 9
 anchor_bottom = 1.0
-offset_right = 424.0
+offset_left = 3.0
+offset_top = -53.0
+offset_right = 637.0
+offset_bottom = 50.0
 grow_vertical = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+mouse_filter = 2
 
 [node name="C" type="HBoxContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Toolbox2" type="VBoxContainer" parent="C"]
 layout_mode = 2
@@ -36,6 +41,7 @@ layout_mode = 2
 [node name="Inspector" parent="C/Toolbox" instance=ExtResource("4_ya0pf")]
 layout_mode = 2
 size_flags_stretch_ratio = 0.11
+mouse_force_pass_scroll_events = false
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 2

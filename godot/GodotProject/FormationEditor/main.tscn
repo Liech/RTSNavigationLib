@@ -75,12 +75,7 @@ arc = 0.0
 center_shift = false
 reamining_unit_sink = false
 
-[node name="Main" type="HBoxContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Main" type="Node"]
 script = ExtResource("1_84o8j")
 start_unit_types = Array[ExtResource("2_1nw7d")]([ExtResource("3_ov0ip"), SubResource("Resource_wn2hc"), SubResource("Resource_hc2w6"), SubResource("Resource_ci6x1")])
 start_categories = Array[String](["Melee", "Ranged", "Support"])
@@ -94,10 +89,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="Scenes" type="Control" parent="CanvasLayer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
+mouse_filter = 2
 
 [node name="UnitScene" type="HBoxContainer" parent="CanvasLayer/HBoxContainer/Scenes"]
 visible = false
@@ -121,6 +118,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 751.0
 grow_horizontal = 2
+mouse_filter = 2
 
 [node name="FormationInspector" parent="CanvasLayer/HBoxContainer/Scenes/Formations" instance=ExtResource("6_xdwt5")]
 layout_mode = 2
